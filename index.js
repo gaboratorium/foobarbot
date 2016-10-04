@@ -8,6 +8,6 @@ app.get('/', function (req, res) {
   res.send('Hello World!');
 });
 
-app.listen(5000, function (data) {
+app.listen(process.env.PORT || 5000, function (data) {
   console.log(`Example app listening!`);
 });
