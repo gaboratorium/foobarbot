@@ -16,7 +16,7 @@
     "url": "https://gitlab.com/e-skimos/project-lines/issues"
   },
   "homepage": "https://gitlab.com/e-skimos/project-lines#README",
-  "devDependencies": {
+  "dependencies":{
     "express": "^4.14.0"
   },
   "engines":{
