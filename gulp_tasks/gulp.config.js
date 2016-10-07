@@ -1,7 +1,7 @@
 // Global paths for client
 var globalPath = {
-    dist : "client/dist/",
-    src: "client/src/",
+    dist : "app/client/dist/",
+    src: "app/client/src/",
     npm : "node_modules/"
 };
 
@@ -15,7 +15,7 @@ module.exports = {
             /* Angular: Polyfill(s) for older browsers */
             globalPath.npm+"core-js/client/shim.min.js",
             /* Angular: Other Angular stuff */
-            globalPath.npm+"zone.js/dist/zone.js",
+            // globalPath.npm+"zone.js/dist/zone.js",
             globalPath.npm+"reflect-metadata/Reflect.js",
             globalPath.npm+"systemjs/dist/system.src.js"
 

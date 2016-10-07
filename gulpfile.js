@@ -13,4 +13,4 @@ require('./gulp_tasks/gulp.copy')(gulp);
 require('./gulp_tasks/gulp.clear')(gulp);
 
 // Build dist
-gulp.task('build', ['clear', 'copy', 'libs.concat', 'typescript']);
+gulp.task('build', ['copy', 'libs.concat', 'typescript']);
