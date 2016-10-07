@@ -15,15 +15,9 @@ module.exports = {
             /* Angular: Polyfill(s) for older browsers */
             globalPath.npm+"core-js/client/shim.min.js",
             /* Angular: Other Angular stuff */
-            // globalPath.npm+"zone.js/dist/zone.js",
+            globalPath.npm+"zone.js/dist/zone.js",
             globalPath.npm+"reflect-metadata/Reflect.js",
             globalPath.npm+"systemjs/dist/system.src.js"
-
-            // globalPath.npm+"@angular/core/bundles/core.umd.js",
-            // globalPath.npm+"node_modules/@angular/common/bundles/common.umd.js",
-            // globalPath.npm+"@angular/compiler/bundles/compiler.umd.js",
-            // globalPath.npm+"node_modules/@angular/platform-browser/bundles/platform-browser.umd.js",
-            // globalPath.npm+"angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js"
         ],
 
         // CSS Libraries
