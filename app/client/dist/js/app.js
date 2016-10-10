@@ -5,7 +5,9 @@
             template: '<h1>Hello World</h1>'
         })
             .Class({
-            constructor: function () { }
+            constructor: function () {
+                // Constructor...
+            }
         });
 })(window.app || (window.app = {}));
 
@@ -17,7 +19,9 @@
             bootstrap: [app.AppComponent]
         })
             .Class({
-            constructor: function () { }
+            constructor: function () {
+                // Constructor
+            }
         });
 })(window.app || (window.app = {}));
 
@@ -28,12 +32,3 @@
             .bootstrapModule(app.AppModule);
     });
 })(window.app || (window.app = {}));
-
-// class Greeter {
-//     constructor(public greeting: string) { }
-//     greet() {
-//         return "<h1>" + this.greeting + "</h1>";
-//     }
-// };
-// var greeter = new Greeter("Hello, world!");
-// document.getElementById('container').innerHTML = greeter.greet(); 

@@ -48,7 +48,7 @@ module.exports = {
             // globalPath.src + "**/app.helloworld.ts"
             // globalPath.src + "**/app.helloworld.ts"
             // globalPath.src + "app.ts"
-            globalPath.src + "*.ts"
+            globalPath.src + "ts/*.ts"
         ],
         sass: [
             // Sass to compile...
