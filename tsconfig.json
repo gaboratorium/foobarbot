@@ -2,12 +2,18 @@
   "compilerOptions": {
     "outDir": "app/client/dist/js",
     "target": "es5",
-    "module": "commonjs",
+    "module": "system",
     "moduleResolution": "node",
     "sourceMap": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "typeRoots": [
+      "../node_modules/@types"
+    ],
+    "types": [
+      "core-js"
+    ]
   }
 }

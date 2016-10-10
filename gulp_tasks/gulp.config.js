@@ -11,13 +11,22 @@ module.exports = {
     libs: {
         // JavaScript Libraries
         js: [
-            /* Angular */
-            /* Angular: Polyfill(s) for older browsers */
+            /* Polyfill(s) for IE */
             globalPath.npm+"core-js/client/shim.min.js",
-            /* Angular: Other Angular stuff */
+
+            /* Reactive Extensions RxJS library */
             globalPath.npm+"zone.js/dist/zone.js",
             globalPath.npm+"reflect-metadata/Reflect.js",
-            globalPath.npm+"systemjs/dist/system.src.js"
+            
+            /* Angular */
+            globalPath.npm+"rxjs/bundles/Rx.js",
+            globalPath.npm+"@angular/core/bundles/core.umd.min.js",
+            globalPath.npm+"@angular/common/bundles/common.umd.js",
+            globalPath.npm+"@angular/compiler/bundles/compiler.umd.js",
+            globalPath.npm+"@angular/platform-browser/bundles/platform-browser.umd.js",
+            globalPath.npm+"@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js",
+            
+            
         ],
 
         // CSS Libraries
@@ -32,14 +41,14 @@ module.exports = {
     src: {
         root: globalPath.src,
         js: [
-            // client'app/app.component.js'></script>
-            // <script src='app/app.module.js'></script>
-            // <script src='app/main.js'></script>
 
         ],
         ts: [
             // Typescript to compile...
-            globalPath.src + "**/*.ts"
+            // globalPath.src + "**/app.helloworld.ts"
+            // globalPath.src + "**/app.helloworld.ts"
+            // globalPath.src + "app.ts"
+            globalPath.src + "*.ts"
         ],
         sass: [
             // Sass to compile...

@@ -1,8 +1,11 @@
-// import { NgModule }      from '@angular/core';
-// import { BrowserModule } from '@angular/platform-browser';
-
-// @NgModule({
-//   imports:      [ BrowserModule ],
-// })
-
-// export class AppModule { }
+(function(app) {
+  app.AppModule =
+    ng.core.NgModule({
+      imports: [ ng.platformBrowser.BrowserModule ],
+      declarations: [ app.AppComponent ],
+      bootstrap: [ app.AppComponent ]
+    })
+    .Class({
+      constructor: function() {}
+    });
+})(window.app || (window.app = {}));

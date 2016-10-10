@@ -19,6 +19,8 @@
   "homepage": "https://gitlab.com/e-skimos/project-lines#README",
   "dependencies": {
     "express": "^4.14.0",
+    "@angular/core": "~2.0.2",
+    "@angular/platform-browser-dynamic": "~2.0.2",
     "core-js": "^2.4.1",
     "zone.js": "^0.6.25",
     "reflect-metadata": "^0.1.8",
@@ -29,6 +31,7 @@
     "node": "4.2.3"
   },
   "devDependencies": {
+    "@types/core-js": "^0.9.34",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
