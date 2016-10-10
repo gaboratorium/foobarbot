@@ -8,10 +8,24 @@ Site is available at [http://project-lines.herokuapp.com/](http://project-lines.
 
 ## Structure
 
-  - **app** - server application, containing models and controllers (NodeJS & Express)
-  - **config** - configuration files 
-  - **public** - front end files (Angular 2, TypeScript)
-  - **/** - `server.js`, `bower.json`, `package.json`, `Procfile` etc.
+Changes may occour in structure.
+
+**2016-10-10**
+
+  - `app` contains the server side and client side applications
+  - `app/client` contains the `source` and `dist` (production - compiled code)
+  - `gulp_tasks` contians gulp tasks such as TypeScript compiling, concatenating, minifying etc.
+  - `typings` contains libraries for TypeScript compiler
+
+## Workflow
+
+  1. Pick an issue assigned to you, or create a new one and assign it to yourself. When creating a new issue provide detailed information about the task.
+  2. Create a new branch with the branch name referencing the issue (e.g.: `f-set-up-app` -> Set up app (feature))
+  3. After solving the issue, test, test and then test
+  4. Pull master, merge it to your branch
+  5. If you have conflicts, resolve them
+  6. Push changes to your branch
+  5. On GitLab create a Merge Request assigned to someone else to review your code. Also reference the issue with ID (e.g.: `#1`).
 
 ## Tutorials
 
