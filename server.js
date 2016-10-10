@@ -36,8 +36,6 @@ app.get('/js/app.js', function (req, res) {
 });
 
 // Start listening on port 5000
-app.listen(process.env.PORT || 5000, function (data) {
+app.listen(process.env.PORT || 3000, function (data) {
   console.log(`Example app listening!`);
 });
-
-
