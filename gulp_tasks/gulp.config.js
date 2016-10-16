@@ -13,6 +13,7 @@ module.exports = {
         js: [
             /* Vue */
             globalPath.npm+"vue/dist/vue.js",
+            globalPath.npm+"vue-router/dist/vue-router.js"
         ],
 
         // CSS Libraries
@@ -30,13 +31,13 @@ module.exports = {
         copy_assets: globalPath.src + 'assets/**/*.*',
         js: [
             // JavaScript to concat
-            globalPath.src + "app.js"
+            globalPath.src + "components/app.js"
         ],
         ts: [
             // Typescript to compile...
         ],
         sass: [
-            // Sass to compile...
+            globalPath.src + "sass/**/*.scss"
         ]
     },
 

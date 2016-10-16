@@ -23,6 +23,7 @@ var defaultPort = 3000;
 var indexHtml = fs.readFileSync(__dirname + globalPath.client.dist + "index.html", "utf8");
 var libsJs = fs.readFileSync(__dirname + globalPath.client.dist + "js/libs.js", "utf8");
 var appJs = fs.readFileSync(__dirname + globalPath.client.dist + "js/app.js", "utf8");
+var appCss = fs.readFileSync(__dirname + globalPath.client.dist + "css/app.css", "utf8");
 
 // Serving Angular
 app.get('/', function (req, res) {
@@ -35,6 +36,11 @@ app.get('/js/libs.js', function (req, res) {
 });
 app.get('/js/app.js', function (req, res) {
   res.send(appJs);
+});
+app.get('/css/app.css', function (req, res) {
+	res.writeHead(200, {'Content-Type': 'text/css'});
+    res.write(appCss);
+    res.end();
 });
 
 // Start listening on port 5000
