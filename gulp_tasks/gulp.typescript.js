@@ -1,6 +1,6 @@
 // Import gulp typescript
 const typescript = require('gulp-typescript');
-const tscConfig = require('./../tsconfig.json');
+// const tscConfig = require('./../tsconfig.json');
 const sourcemaps = require('gulp-sourcemaps');
 const concat = require('gulp-concat');
 
@@ -14,7 +14,8 @@ module.exports = function(gulp){
 	  return gulp
 	    .src(config.src.ts)
 	    // .pipe(sourcemaps.init())
-	    .pipe(typescript(tscConfig.compilerOptions))
+	    // .pipe(typescript(tscConfig.compilerOptions))
+	    .pipe(typescript())
 	    // .pipe(sourcemaps.write('.'))
 	    .pipe(concat('app.js'))
 	    .pipe(gulp.dest(config.dist.js));
