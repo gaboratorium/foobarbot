@@ -29,7 +29,7 @@ window.onload  = function(){
 
 			// Settings
 			{
-				path: '/settings',
+				path: '/kukucs',
 				name: 'settings',
 				component: SettingsComponent
 			}
