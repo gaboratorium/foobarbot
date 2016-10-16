@@ -1,20 +1,13 @@
 // app.js
 // Initialises the application and sets the routing options
-var fs = require('fs');
 
 
 window.onload  = function(){
 	
 	///////////////////////////////////////	
 	// Components
-	var html = fs.readFileSync(__dirname + '/login/components.login.html', 'utf8');
-	const LoginComponent = {
-		template: html
-	}
-	
-	const SettingsComponent = {
-		template: require('./settings/components.settings.js')
-	}
+	const LoginComponent = require('./login/components.login.js');
+	const SettingsComponent = require('./settings/components.settings.js');
 
 	///////////////////////////////////////	
 	// Routes

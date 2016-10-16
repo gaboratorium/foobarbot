@@ -1,1 +1,9 @@
-module.exports = '<h1>Login from login.settings.js</h1>';
+// Login Component
+// Template
+var fs = require('fs');
+var html = fs.readFileSync(__dirname + '/components.login.html', 'utf8');
+
+// Export component
+module.exports = {
+	template: html
+}
