@@ -5,12 +5,15 @@ window.onload  = function(){
 	
 	///////////////////////////////////////	
 	// Create router
+	var importedFoo = require('./foo.js');
 	const Foo = {
-		template: '<h1>foo</h1>'
+		template: importedFoo
 	}
 
+	var importedBarBar = require('./barbar.js');
+	
 	const Bar = {
-		template: '<h1>barbar</h1>'
+		template: importedBarBar
 	}
 
 	const router = new VueRouter({

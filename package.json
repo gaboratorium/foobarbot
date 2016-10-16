@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "typings": "typings"
+    "typings": "typings",
+    "bundle": "browserify app/client/src/components/app.js -o app/client/src/components/bundle.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   "dependencies": {
     "express": "^4.14.0",
     "foundation-apps": "^1.2.0",
+    "vinyl-source-stream": "^1.1.0",
     "vue": "^2.0.3",
     "vue-router": "^2.0.1"
   },
@@ -27,6 +29,7 @@
     "node": "4.2.3"
   },
   "devDependencies": {
+    "browserify": "^13.1.0",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
