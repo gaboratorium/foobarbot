@@ -43,3 +43,6 @@ jspm_packages
 # Some Temporary files
 *.tmp
 *.bak
+
+# Editor config files
+jsconfig.json

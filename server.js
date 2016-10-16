@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 // Import modules
 var express = require('express');
 var fs = require('fs');
@@ -15,7 +17,7 @@ var globalPath = {
 	"server": {
 		"root": "/server/"
 	}
-}
+};
 
 var defaultPort = 3000;
 
@@ -38,6 +40,7 @@ app.get('/js/libs.js', function (req, res) {
 app.get('/js/app.js', function (req, res) {
   res.send(appJs);
 });
+
 app.get('/css/app.css', function (req, res) {
 	res.writeHead(200, {'Content-Type': 'text/css'});
     res.write(appCss);
@@ -53,3 +56,6 @@ app.get('/css/libs.css', function (req, res) {
 app.listen(process.env.PORT || defaultPort, function (data) {
   console.log(`Example app listening on port ` + defaultPort);
 });
+
+//run the database.js file
+var database = require('./app/server/src/database.js');
