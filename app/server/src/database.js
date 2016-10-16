@@ -6,6 +6,7 @@
 var mongoose = require('mongoose');
 //mlab connection URI (can be seen in "$ heroku config")
 var mongodbUri = "mongodb://heroku_6lt22ghm:te2b1dta8i2glj7ss4lk71vjnm@ds037814.mlab.com:37814/heroku_6lt22ghm";
+var mongodbUriJade = "mongodb://heroku_x2kvg897:l9un0e09ivtqtg98df2r3ciiup@ds059145.mlab.com:59145/heroku_x2kvg897";
 //if we want to connect to another database, we have to change the mongodbUri (eg: dev and live database detection)
 
 
@@ -39,7 +40,7 @@ function testQuery() {
 		age: Number,
 		avatar: String
 	});
-
+	
 	//setting a model structure. database name will ALWAYS be the lower-case version +s of the first parameter, second is the entry template
 	// database name will be "kiskutyas"
 	var User = mongoose.model('user', userSchema);
@@ -79,5 +80,7 @@ function testQuery() {
 			results[1].save();			
 		}
 	});
+
+	
 
 }

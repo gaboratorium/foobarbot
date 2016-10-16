@@ -17,7 +17,7 @@ var globalPath = {
 	"server": {
 		"root": "/server/"
 	}
-}
+};
 
 var defaultPort = 3000;
 
