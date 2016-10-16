@@ -1,1 +1,0 @@
-module.exports = '<h1>barbar from barbar.js</h1>';

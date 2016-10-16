@@ -29,6 +29,7 @@
     "node": "4.2.3"
   },
   "devDependencies": {
+    "brfs": "^1.4.3",
     "browserify": "^13.1.0",
     "del": "^2.2.2",
     "gulp": "^3.9.1",

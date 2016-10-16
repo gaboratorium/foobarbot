@@ -1,1 +1,0 @@
-module.exports = '<h1>foo from foo.js</h1>';

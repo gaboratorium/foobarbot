@@ -1,0 +1,1 @@
+module.exports = '<h1>Settings from components.settings.js</h1>';

@@ -1,0 +1,1 @@
+module.exports = '<h1>Login from login.settings.js</h1>';

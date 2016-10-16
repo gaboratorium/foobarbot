@@ -1,32 +1,44 @@
 // app.js
 // Initialises the application and sets the routing options
+var fs = require('fs');
+
 
 window.onload  = function(){
 	
 	///////////////////////////////////////	
-	// Create router
-	var importedFoo = require('./foo.js');
-	const Foo = {
-		template: importedFoo
+	// Components
+	var html = fs.readFileSync(__dirname + '/login/components.login.html', 'utf8');
+	const LoginComponent = {
+		template: html
 	}
-
-	var importedBarBar = require('./barbar.js');
 	
-	const Bar = {
-		template: importedBarBar
+	const SettingsComponent = {
+		template: require('./settings/components.settings.js')
 	}
 
+	///////////////////////////////////////	
+	// Routes
 	const router = new VueRouter({
 		routes: [
+
+			// Home
 			{
-				path: '/foo',
-				name: 'foo',
-				component: Foo
+				path: '/',
+				redirect: '/login'
 			},
+			
+			// Login
 			{
-				path: '/bar',
-				name: 'bar',
-				component: Bar
+				path: '/login',
+				name: 'login',
+				component: LoginComponent
+			}, 
+
+			// Settings
+			{
+				path: '/settings',
+				name: 'settings',
+				component: SettingsComponent
 			}
 		]
 	})

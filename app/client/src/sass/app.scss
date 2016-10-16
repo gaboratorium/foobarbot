@@ -1,11 +1,11 @@
-// ITCSS - only imports
+// app.scss following ITCSS model
+// do not put css here, only import
 
-$primar-color: blue;
+// Settings
+@import 'settings.colors';
 
-h1 {
-	color: $primar-color;
-}
+// Base HTML tags
+@import 'base.typography';
 
-.menu-group--navbar {
-	background-color: #FAFAFA;
-}
+// UI components
+@import 'components.menu-group';
