@@ -1,24 +1,34 @@
-// Init vue
+// app.js
+// Initialises the application and sets the routing options
+
 window.onload  = function(){
 	
+	///////////////////////////////////////	
 	// Create router
 	const Foo = {
-		template: '<div>foo</div>'
+		template: '<h1>foo</h1>'
 	}
 
 	const Bar = {
-		template: '<div>bar</div>'
+		template: '<h1>barbar</h1>'
 	}
 
-	const routes = [
-		{ path: '/foo', component: Foo },
-		{ path: '/bar', component: Bar }
-	]
-
 	const router = new VueRouter({
-		routes
+		routes: [
+			{
+				path: '/foo',
+				name: 'foo',
+				component: Foo
+			},
+			{
+				path: '/bar',
+				name: 'bar',
+				component: Bar
+			}
+		]
 	})
 
+	///////////////////////////////////////
 	// Init Vue app
 	var app = new Vue({
 	  el: '#app',

@@ -3,26 +3,38 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Project Lines</title>
+
+	<!-- Foundation for Apps CDN - temporary -->
+	<link rel="stylesheet" type="text/css" href="css/libs.css">
+
+	<!-- App css -->
 	<link rel="stylesheet" type="text/css" href="css/app.css">
 
+	<!-- Vendor js -->
 	<script src="js/libs.js"></script>
-	<script src="js/app.js"></script>
 
+	<!-- App js -->
+	<script src="js/app.js"></script>
 </head>
 <body>
-	<h1>Project Lines</h1>
 	<div id="app">
-	  <p>{{ message }}</p>
-	
-		<h2>Navigation</h2>
-	 	<router-link to="/foo">Go to Foo</router-link>
-	    <router-link to="/bar">Go to Bar</router-link>
-	    
 
-	    <h2>Page</h2>
+		<!-- Navigation -->
+		<div class="dark menu-group">
+			<div class="menu-group-left">
+				<ul class="menu-bar">
+					<li><a href="#">Project Lines</a></li>
+				</ul>
+			</div>
+			<div class="menu-group-right">
+				<ul class="menu-bar">
+					<li><router-link to="/foo">Go to Foo</router-link></li>
+					<li><router-link to="/bar">Go to Bar</router-link></li>
+				</ul>
+			</div>
+		</div>		 	    
+	
 	 	<router-view></router-view>
 	</div>
-
-	
 </body>
 </html>

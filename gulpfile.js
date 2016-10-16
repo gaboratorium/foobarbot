@@ -6,6 +6,10 @@ var config = require('./gulp_tasks/gulp.config.js');
 require('./gulp_tasks/gulp.libs.js.concat')(gulp);
 require('./gulp_tasks/gulp.app.js.concat')(gulp);
 
+// Concat css
+require('./gulp_tasks/gulp.libs.css.concat')(gulp);
+
+
 // Compile and concat sass
 require('./gulp_tasks/gulp.sass')(gulp);
 
@@ -18,7 +22,7 @@ require('./gulp_tasks/gulp.clear')(gulp);
 
 // Build dist
 gulp.task('build', "Build solution", function(){
-	runSequence('clear', 'copy_index', 'sass', 'libs.js.concat', 'app.js.concat')
+	runSequence('clear', 'copy_index', 'libs.css.concat', 'sass', 'libs.js.concat', 'app.js.concat')
 });
 
 gulp.task('watch', 'Builds the solution, then starts watching the files', function () {

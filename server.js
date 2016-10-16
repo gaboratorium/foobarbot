@@ -24,13 +24,14 @@ var indexHtml = fs.readFileSync(__dirname + globalPath.client.dist + "index.html
 var libsJs = fs.readFileSync(__dirname + globalPath.client.dist + "js/libs.js", "utf8");
 var appJs = fs.readFileSync(__dirname + globalPath.client.dist + "js/app.js", "utf8");
 var appCss = fs.readFileSync(__dirname + globalPath.client.dist + "css/app.css", "utf8");
+var libsCss = fs.readFileSync(__dirname + globalPath.client.dist + "css/libs.css", "utf8");
 
-// Serving Angular
+// Serving index
 app.get('/', function (req, res) {
   res.send(indexHtml);
 });
 
-// Serving Angular
+// Serving vendor and app css and js
 app.get('/js/libs.js', function (req, res) {
   res.send(libsJs);
 });
@@ -40,6 +41,11 @@ app.get('/js/app.js', function (req, res) {
 app.get('/css/app.css', function (req, res) {
 	res.writeHead(200, {'Content-Type': 'text/css'});
     res.write(appCss);
+    res.end();
+});
+app.get('/css/libs.css', function (req, res) {
+	res.writeHead(200, {'Content-Type': 'text/css'});
+    res.write(libsCss);
     res.end();
 });
 

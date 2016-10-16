@@ -19,6 +19,7 @@
   "homepage": "https://gitlab.com/e-skimos/project-lines#README",
   "dependencies": {
     "express": "^4.14.0",
+    "foundation-apps": "^1.2.0",
     "vue": "^2.0.3",
     "vue-router": "^2.0.1"
   },

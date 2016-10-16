@@ -18,8 +18,7 @@ module.exports = {
 
         // CSS Libraries
         css: [
-            // Foundation for Apps...
-            // Google Fonts...
+            globalPath.npm+"foundation-apps/dist/css/foundation-apps.css"
             // Material icons...
         ]
     },
