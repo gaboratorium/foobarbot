@@ -1,18 +1,40 @@
-<html>
-  <head>
-    <title>Angular Application</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-    <!-- Build by gulp -->
-    <script src="js/libs.js"></script>
-    <script src="js/app.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Project Lines</title>
 
-  </head>
-  <!-- 3. Display the application -->
-  <body>
-    <my-app>Hello, this is myApp</my-app>
-    <div id="container"></div>
+	<!-- Foundation for Apps - temporary -->
+	<link rel="stylesheet" type="text/css" href="css/libs.css">
 
-  </body>
+	<!-- App css -->
+	<link rel="stylesheet" type="text/css" href="css/app.css">
+
+	<!-- Vendor js -->
+	<script src="js/libs.js"></script>
+
+	<!-- App js -->
+	<script src="js/app.js"></script>
+</head>
+<body>
+	<div id="app">
+
+		<!-- Navigation -->
+		<div class="menu-group menu-group--navbar">
+			<div class="menu-group-left">
+				<ul class="menu-bar">
+					<li><a href="#">Project Lines</a></li>
+				</ul>
+			</div>
+			<div class="menu-group-right">
+				<ul class="menu-bar">
+					<li><router-link to="/login">Login</router-link></li>
+					<li><router-link to="/settings">Settings</router-link></li>
+				</ul>
+			</div>
+		</div>		 	    
+	
+	 	<router-view></router-view>
+	</div>
+</body>
 </html>

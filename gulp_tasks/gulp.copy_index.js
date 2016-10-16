@@ -2,11 +2,10 @@
 var config = require('./gulp.config.js');
 
 module.exports = function(gulp) {
-	gulp.task('copy', "Copy static files and assets to dist", function() {
+	gulp.task('copy_index', "Copy index", function() {
 	  return gulp
 	  	.src([
-	  		config.src.root + 'index.html',
-	  		config.src.root + 'styles.css'
+	  		config.src.copy_index,
 	  		])
 	    .pipe(gulp.dest(config.dist.root))
 	});

@@ -1,0 +1,11 @@
+// app.scss following ITCSS model
+// do not put css here, only import
+
+// Settings
+@import 'settings.colors';
+
+// Base HTML tags
+@import 'base.typography';
+
+// UI components
+@import 'components.menu-group';
