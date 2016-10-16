@@ -17,6 +17,8 @@ var globalPath = {
 	}
 }
 
+var defaultPort = 3000;
+
 // Prepare to deliver for client, save to RAM
 var indexHtml = fs.readFileSync(__dirname + globalPath.client.dist + "index.html", "utf8");
 var libsJs = fs.readFileSync(__dirname + globalPath.client.dist + "js/libs.js", "utf8");
@@ -36,6 +38,6 @@ app.get('/js/app.js', function (req, res) {
 });
 
 // Start listening on port 5000
-app.listen(process.env.PORT || 3000, function (data) {
-  console.log(`Example app listening!`);
+app.listen(process.env.PORT || defaultPort, function (data) {
+  console.log(`Example app listening on port ` + defaultPort);
 });

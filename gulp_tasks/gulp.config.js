@@ -26,6 +26,8 @@ module.exports = {
     // Source assets
     src: {
         root: globalPath.src,
+        copy_index: globalPath.src + 'index.html',
+        copy_assets: globalPath.src + 'assets/**/*.*',
         js: [
             // JavaScript to concat
             globalPath.src + "app.js"
@@ -43,5 +45,6 @@ module.exports = {
         root: globalPath.dist,
         js: globalPath.dist + "js/",
         css: globalPath.dist + "css/",
+        assets: globalPath.dist + "assets/"
     }
 };
