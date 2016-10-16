@@ -28,6 +28,7 @@ module.exports = {
         root: globalPath.src,
         js: [
             // JavaScript to concat
+            globalPath.src + "app.js"
         ],
         ts: [
             // Typescript to compile...

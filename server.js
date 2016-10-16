@@ -20,7 +20,7 @@ var globalPath = {
 // Prepare to deliver for client, save to RAM
 var indexHtml = fs.readFileSync(__dirname + globalPath.client.dist + "index.html", "utf8");
 var libsJs = fs.readFileSync(__dirname + globalPath.client.dist + "js/libs.js", "utf8");
-var appJs = fs.readFileSync(__dirname + globalPath.client.dist + "app.js", "utf8");
+var appJs = fs.readFileSync(__dirname + globalPath.client.dist + "js/app.js", "utf8");
 
 // Serving Angular
 app.get('/', function (req, res) {

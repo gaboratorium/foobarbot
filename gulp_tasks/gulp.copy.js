@@ -6,7 +6,6 @@ module.exports = function(gulp) {
 	  return gulp
 	  	.src([
 	  		config.src.root + 'index.html',
-	  		config.src.root + 'app.js',
 	  		])
 	    .pipe(gulp.dest(config.dist.root))
 	});

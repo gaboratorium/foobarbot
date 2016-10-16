@@ -6,7 +6,7 @@ var config = require('./gulp.config.js');
 
 module.exports = function(gulp){
 
-	gulp.task('libs.concat', 'Process the scripts from the external libs' , function() {
+	gulp.task('libs.js.concat', 'Concatenates the scripts from external libs' , function() {
 		return gulp
 			.src(config.libs.js)
 			.pipe(concat('libs.js'))
