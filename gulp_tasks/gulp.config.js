@@ -11,28 +11,14 @@ module.exports = {
     libs: {
         // JavaScript Libraries
         js: [
-            /* Polyfill(s) for IE */
-            globalPath.npm+"core-js/client/shim.min.js",
-
-            /* Reactive Extensions RxJS library */
-            globalPath.npm+"zone.js/dist/zone.js",
-            globalPath.npm+"reflect-metadata/Reflect.js",
-            
-            /* Angular */
-            globalPath.npm+"rxjs/bundles/Rx.js",
-            globalPath.npm+"@angular/core/bundles/core.umd.min.js",
-            globalPath.npm+"@angular/common/bundles/common.umd.js",
-            globalPath.npm+"@angular/compiler/bundles/compiler.umd.js",
-            globalPath.npm+"@angular/platform-browser/bundles/platform-browser.umd.js",
-            globalPath.npm+"@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js",
-            
-            
+            /* Vue */
+            globalPath.npm+"vue/dist/vue.js",
+            globalPath.npm+"vue-router/dist/vue-router.js"
         ],
 
         // CSS Libraries
         css: [
-            // Foundation for Apps...
-            // Google Fonts...
+            globalPath.npm+"foundation-apps/dist/css/foundation-apps.css"
             // Material icons...
         ]
     },
@@ -40,18 +26,17 @@ module.exports = {
     // Source assets
     src: {
         root: globalPath.src,
+        copy_index: globalPath.src + 'index.html',
+        copy_assets: globalPath.src + 'assets/**/*.*',
         js: [
-
+            // JavaScript to concat
+            globalPath.src + "components/app.js"
         ],
         ts: [
             // Typescript to compile...
-            // globalPath.src + "**/app.helloworld.ts"
-            // globalPath.src + "**/app.helloworld.ts"
-            // globalPath.src + "app.ts"
-            globalPath.src + "ts/*.ts"
         ],
         sass: [
-            // Sass to compile...
+            globalPath.src + "sass/**/*.scss"
         ]
     },
 
@@ -60,5 +45,6 @@ module.exports = {
         root: globalPath.dist,
         js: globalPath.dist + "js/",
         css: globalPath.dist + "css/",
+        assets: globalPath.dist + "assets/"
     }
 };

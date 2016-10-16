@@ -6,10 +6,10 @@ var config = require('./gulp.config.js');
 
 module.exports = function(gulp){
 
-	gulp.task('libs.concat', 'Process the scripts from the external libs' , function() {
+	gulp.task('libs.css.concat', 'Concatenates css from external libs' , function() {
 		return gulp
-			.src(config.libs.js)
-			.pipe(concat('libs.js'))
-			.pipe(gulp.dest(config.dist.js));
+			.src(config.libs.css)
+			.pipe(concat('libs.css'))
+			.pipe(gulp.dest(config.dist.css));
 	});
 };
