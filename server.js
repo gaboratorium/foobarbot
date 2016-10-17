@@ -93,6 +93,61 @@ var apiRoutes = express.Router();
 // apply the routes to our application with the prefix /api
 app.use('/api', apiRoutes);
 
+apiRoutes.post('/authenticate', function(req, res){
+
+	// Hard coded user
+	var expectedUser = "admin";
+	var expectedPassword = "admin";
+
+	console.log(req.body.name);
+	console.log(req.body.password);
+
+	// Succesful login
+	if (req.body.name == expectedUser && req.body.password == expectedPassword) {
+
+		// Create user object
+		var user = {
+			"name": "admin"
+		}
+
+		// Create token
+		var token = jwt.sign(user, app.get('superSecret'), {
+			expiresIn : 1440 // 24 hours
+		});
+
+		// Send back token
+		res.json({success: true, message: "Good request", token: token})
+
+	// Unsuccesful login - error msg
+	} else {
+		res.status(400).json({success: false, message: "Bad request, user name or password was not received or was invalid"})
+	}
+})
+
+// route middleware to verify a token
+apiRoutes.use(function(req, res, next){
+
+	 // check header or url parameters or post parameters for token
+	var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+	if (token){
+		jwt.verify(token, app.get('superSecret'), function(err, decoded){
+
+			// Failed to authenticate token
+			if (err){
+				return res.json({success: false, message: 'Failed to authenticate token...'})
+
+			// Succesfull authentication
+			} else {
+				req.decoded = decoded;
+				next();
+			}
+		})
+	} else {
+		return res.status(403).send({success: false, message: "No token provided."})
+	}
+})
+
 apiRoutes.get('/setup', function(req, res) {
 
 	
@@ -126,21 +181,6 @@ apiRoutes.get('/users', function(req, res) {
   });
 });
 
-apiRoutes.post('/authenticate', function(req, res){
-
-	// Hard coded user
-	var expectedUser = "admin";
-	var expectedPassword = "admin";
-
-	console.log(req.body.name);
-	console.log(req.body.password);
-
-	if (req.body.name && req.body.password) {
-		res.json({success: true, message: "Good request"})
-	} else {
-		res.json({success: false, message: "Bad request, user name or password was not received"})
-	}
-})
 
 
 apiRoutes.get('/gabor', function(req, res){

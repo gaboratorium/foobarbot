@@ -13,8 +13,6 @@
 	<!-- Vendor js -->
 	<script src="js/libs.js"></script>
 
-	<!-- App js -->
-	<script src="js/app.js"></script>
 </head>
 <body>
 	<div id="app">
@@ -44,6 +42,7 @@
 			<h2>Load all users</h2>
 		 	<div class='grid-block grid-content'>
 				<a href="#" class="button" @click.stop="loadUsers">Load users</a>
+				<a href="#" class="button" @click.stop="resetUsers">Reset users</a>
 			</div>
 
 			<h2>Login to create a json web token</h2>
@@ -52,7 +51,8 @@
 			<div class='grid-block grid-content'>
 				<input type="text" placeholder="Type your name..." v-model="myusername">
 				<input type="password" placeholder="Type your password..." v-model="mypassword">
-				<a href="#" class="button" @click.stop="postRequest">Login as {{ myusername }} with {{ mypassword }} </a>
+				<a href="#" class="button" @click.stop="loginUser">Login as {{ myusername }} with {{ mypassword }} </a>
+				<a href="#" class="button" @click.stop="logoutUser">Logout</a>
 			</div>
 
 
@@ -61,5 +61,8 @@
 		 	<pre>{{ $data }}</pre>
 	 	</div>
 	</div>
+
+	<!-- App js -->
+	<script src="js/app.js"></script>
 </body>
 </html>

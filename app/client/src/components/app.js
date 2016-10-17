@@ -44,13 +44,14 @@ window.onload  = function(){
 	  data: {
 	  	debug: true,
 	    message: 'Hello Vue, how you doin\'?',
+	    userToken: '',
 	    myusername: "",
 	    mypassword: "",
 	    users: []
 	  },
 	  methods: {
 	  	loadUsers: function(){
-	  		this.$http.get('/api/users').then(function(response) {
+	  		this.$http.get('/api/users', { headers: {'x-access-token': app.userToken}}).then(function(response) {
 	  			this.users = response.body;
 	  		}, function(response){
 	  			// fail
@@ -58,18 +59,34 @@ window.onload  = function(){
 	  		)
 	  	},
 
-	  	postRequest: function(){
+	  	loginUser: function(){
 
 	  		var body = {
 	  			"name": app.myusername,
 	  			"password": app.mypassword
 	  		};
 
-	  		this.$http.post('/api/authenticate', body).then(function(){
-	  			// success
+	  		this.$http.post('/api/authenticate', body).then(function(response){
+	  			if (response.ok) {
+	  				console.log(response.body.token);
+	  				app.userToken = response.body.token;
+	  			}
 	  		}, function(){
 	  			// success
 	  		});
+	  	},
+
+	  	logoutUser: function(){
+	  		if (app.userToken !== null && app.userToken !== "") {
+	  			app.userToken = "";
+	  			console.log("You have logged out!");
+	  		} else {
+	  			console.log("You are not even logged in bro...");
+	  		}
+	  	},
+
+	  	resetUsers: function(){
+	  		app.users = [];
 	  	}
 	  },
 	  router
