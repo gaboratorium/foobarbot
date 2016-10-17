@@ -41,9 +41,20 @@
 		 	<router-view></router-view>
 			
 			<!-- Load stuff: -->
+			<div>
 		 	<a href="#"
            class="btn btn-success"
-           @click.stop="loadUsers">Load Users</a>
+           @click.stop="loadUsers">Load Gabor</a>
+           </div>
+	
+			<!-- Send post request -->
+           <div>
+		 	<a href="#"
+           class="btn btn-success"
+           @click.stop="postRequest">Make Post request</a>
+           </div>
+
+
 
 			<!-- Vuejs debug data -->
 		 	<h1>Vuejs debug data</h1>

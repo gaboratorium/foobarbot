@@ -57,6 +57,20 @@ window.onload  = function(){
 	  			console.log("fail", response)
 	  		}
 	  		)
+	  	},
+
+	  	postRequest: function(){
+
+	  		var body = {
+	  			"name": "Post request Pete",
+	  			"password": "asd1234"
+	  		};
+
+	  		this.$http.post('/api/authenticate', body).then(function(){
+	  			// success
+	  		}, function(){
+	  			// success
+	  		});
 	  	}
 	  },
 	  router

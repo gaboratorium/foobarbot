@@ -76,6 +76,12 @@ var Schema = mongoose.Schema;
 // Connect to db with mongoose
 mongoose.connect("mongodb://heroku_6lt22ghm:te2b1dta8i2glj7ss4lk71vjnm@ds037814.mlab.com:37814/heroku_6lt22ghm");
 
+// Create mongoose model
+var User = mongoose.model('User', new Schema({ 
+    name: String, 
+    password: String, 
+    admin: Boolean 
+}));
 
 
 // Set a secret
@@ -89,12 +95,7 @@ app.use('/api', apiRoutes);
 
 apiRoutes.get('/setup', function(req, res) {
 
-	// Create mongoose model
-	var User = mongoose.model('User', new Schema({ 
-	    name: String, 
-	    password: String, 
-	    admin: Boolean 
-	}));
+	
 
   // create a sample user
   var nick = new User({ 
@@ -125,9 +126,13 @@ apiRoutes.get('/users', function(req, res) {
   });
 });
 
+apiRoutes.post('/authenticate', function(req, res){
+	console.log(req.body.name);
+	console.log(req.body.password);
+})
 
 
-apiRoutes.get('/test', function(req, res){
+apiRoutes.get('/gabor', function(req, res){
 	var testObj = { 'name': 'Gabor', 'age': 24 };
 	res.setHeader("Content-Type", "application/json");
 	testObjAsString = JSON.stringify(testObj);
