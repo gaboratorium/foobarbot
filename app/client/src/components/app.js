@@ -29,7 +29,7 @@ window.onload  = function(){
 
 			// Settings
 			{
-				path: '/kukucs',
+				path: '/settings',
 				name: 'settings',
 				component: SettingsComponent
 			}
@@ -40,8 +40,23 @@ window.onload  = function(){
 	// Init Vue app
 	var app = new Vue({
 	  el: '#app',
+	  name: "myVueApp",
 	  data: {
-	    message: 'Hello Vue, how you doin\'?'
+	  	debug: true,
+	    message: 'Hello Vue, how you doin\'?',
+	    users: []
+	  },
+	  methods: {
+	  	loadUsers: function(){
+	  		console.log("button clicked");
+	  		this.$http.get('http://jsonplaceholder.typicode.com/users').then(function(response) {
+	  			console.log("success", response)
+	  			this.users = response.body;
+	  		}, function(response){
+	  			console.log("fail", response)
+	  		}
+	  		)
+	  	}
 	  },
 	  router
 	}).$mount('#app');

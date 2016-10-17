@@ -33,8 +33,22 @@
 				</ul>
 			</div>
 		</div>		 	    
-	
-	 	<router-view></router-view>
+
+		<!-- App content -->
+		<div class="grid-content">
+			
+			<!-- Page content -->
+		 	<router-view></router-view>
+			
+			Load stuff:
+		 	<a href="#"
+           class="btn btn-success"
+           @click.stop="loadUsers">Load Users</a>
+
+			<!-- Vuejs debug data -->
+		 	<h1>Vuejs debug data</h1>
+		 	<pre>{{ $data }}</pre>
+	 	</div>
 	</div>
 </body>
 </html>

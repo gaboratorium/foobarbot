@@ -26,6 +26,8 @@ gulp.task('build', "Build solution", function(){
 	runSequence('clear', 'copy_index', 'libs.css.concat', 'sass', 'libs.js.concat', 'browserify')
 });
 
+gulp.task('toljadneki', ['watch']);
+
 gulp.task('watch', 'Builds the solution, then starts watching the files', function () {
     runSequence('build', 'watch-files');
 });
