@@ -49,7 +49,8 @@ window.onload  = function(){
 	  methods: {
 	  	loadUsers: function(){
 	  		console.log("button clicked");
-	  		this.$http.get('http://jsonplaceholder.typicode.com/users').then(function(response) {
+	  		// this.$http.get('http://jsonplaceholder.typicode.com/users').then(function(response) {
+	  		this.$http.get('/api/test').then(function(response) {
 	  			console.log("success", response)
 	  			this.users = response.body;
 	  		}, function(response){

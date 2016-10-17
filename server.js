@@ -52,6 +52,14 @@ app.get('/css/libs.css', function (req, res) {
     res.end();
 });
 
+// Webapi
+app.get('/api/test', function(req, res){
+	var testObj = { 'name': 'Gabor', 'age': 24 };
+	res.setHeader("Content-Type", "application/json");
+	testObjAsString = JSON.stringify(testObj);
+	res.send(testObjAsString);
+})
+
 // Start listening on port 5000
 app.listen(process.env.PORT || defaultPort, function (data) {
   console.log(`Example app listening on port ` + defaultPort);
