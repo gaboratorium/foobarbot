@@ -52,13 +52,35 @@ app.get('/css/libs.css', function (req, res) {
     res.end();
 });
 
-// Webapi
+
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+// API and authentication
+//body parser to parameters from POST and URL
+var bodyParser  = require('body-parser');
+// json web token authentication
+var jwt    = require('jsonwebtoken');
+// log requests to the console
+var morgan      = require('morgan');
+
+// use body parser so we can get info from POST and/or URL parameters
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+// Start morgan log
+app.use(morgan('dev'));
+
+
 app.get('/api/test', function(req, res){
 	var testObj = { 'name': 'Gabor', 'age': 24 };
 	res.setHeader("Content-Type", "application/json");
 	testObjAsString = JSON.stringify(testObj);
 	res.send(testObjAsString);
 })
+
+app.set('superSecret', 'supersuperserverserverseecret');
+
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
 
 // Start listening on port 5000
 app.listen(process.env.PORT || defaultPort, function (data) {
