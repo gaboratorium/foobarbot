@@ -127,8 +127,19 @@ apiRoutes.get('/users', function(req, res) {
 });
 
 apiRoutes.post('/authenticate', function(req, res){
+
+	// Hard coded user
+	var expectedUser = "admin";
+	var expectedPassword = "admin";
+
 	console.log(req.body.name);
 	console.log(req.body.password);
+
+	if (req.body.name && req.body.password) {
+		res.json({success: true, message: "Good request"})
+	} else {
+		res.json({success: false, message: "Bad request, user name or password was not received"})
+	}
 })
 
 

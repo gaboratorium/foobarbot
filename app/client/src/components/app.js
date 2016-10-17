@@ -44,17 +44,16 @@ window.onload  = function(){
 	  data: {
 	  	debug: true,
 	    message: 'Hello Vue, how you doin\'?',
+	    myusername: "",
+	    mypassword: "",
 	    users: []
 	  },
 	  methods: {
 	  	loadUsers: function(){
-	  		console.log("button clicked");
-	  		// this.$http.get('http://jsonplaceholder.typicode.com/users').then(function(response) {
-	  		this.$http.get('/api/test').then(function(response) {
-	  			console.log("success", response)
+	  		this.$http.get('/api/users').then(function(response) {
 	  			this.users = response.body;
 	  		}, function(response){
-	  			console.log("fail", response)
+	  			// fail
 	  		}
 	  		)
 	  	},
@@ -62,8 +61,8 @@ window.onload  = function(){
 	  	postRequest: function(){
 
 	  		var body = {
-	  			"name": "Post request Pete",
-	  			"password": "asd1234"
+	  			"name": app.myusername,
+	  			"password": app.mypassword
 	  		};
 
 	  		this.$http.post('/api/authenticate', body).then(function(){

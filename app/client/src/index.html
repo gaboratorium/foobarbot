@@ -38,22 +38,22 @@
 		<div class="grid-content">
 			
 			<!-- Page content -->
+			<h1>Current component</h1>
 		 	<router-view></router-view>
-			
-			<!-- Load stuff: -->
-			<div>
-		 	<a href="#"
-           class="btn btn-success"
-           @click.stop="loadUsers">Load Gabor</a>
-           </div>
-	
-			<!-- Send post request -->
-           <div>
-		 	<a href="#"
-           class="btn btn-success"
-           @click.stop="postRequest">Make Post request</a>
-           </div>
 
+			<h2>Load all users</h2>
+		 	<div class='grid-block grid-content'>
+				<a href="#" class="button" @click.stop="loadUsers">Load users</a>
+			</div>
+
+			<h2>Login to create a json web token</h2>
+			<p>Correct credentials are 'admin' & 'admin'</p>
+
+			<div class='grid-block grid-content'>
+				<input type="text" placeholder="Type your name..." v-model="myusername">
+				<input type="password" placeholder="Type your password..." v-model="mypassword">
+				<a href="#" class="button" @click.stop="postRequest">Login as {{ myusername }} with {{ mypassword }} </a>
+			</div>
 
 
 			<!-- Vuejs debug data -->
