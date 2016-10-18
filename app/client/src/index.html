@@ -30,31 +30,16 @@
 					<li><router-link to="/settings">Settings</router-link></li>
 				</ul>
 			</div>
-		</div>		 	    
+		</div>   
 
 		<!-- App content -->
 		<div class="grid-content">
 			
-			<!-- Page content -->
-			<h1>Current component</h1>
+			<!-- Component -->
 		 	<router-view></router-view>
 
-			<h2>Load all users</h2>
-		 	<div class='grid-block grid-content'>
-				<a href="#" class="button" @click.stop="loadUsers">Load users</a>
-				<a href="#" class="button" @click.stop="resetUsers">Reset users</a>
-			</div>
-
-			<h2>Login to create a json web token</h2>
-			<p>Correct credentials are 'admin' & 'admin'</p>
-
-			<div class='grid-block grid-content'>
-				<input type="text" placeholder="Type your name..." v-model="myusername">
-				<input type="password" placeholder="Type your password..." v-model="mypassword">
-				<a href="#" class="button" @click.stop="loginUser">Login as {{ myusername }} with {{ mypassword }} </a>
-				<a href="#" class="button" @click.stop="logoutUser">Logout</a>
-			</div>
-
+		 	<!-- Settings very component -->
+		 	<settings-component message='hello copenhagen'></settings-component>
 
 			<!-- Vuejs debug data -->
 		 	<h1>Vuejs debug data</h1>
@@ -62,7 +47,7 @@
 	 	</div>
 	</div>
 
-	<!-- App js -->
+	<!-- Initialize app -->
 	<script src="js/app.js"></script>
 </body>
 </html>

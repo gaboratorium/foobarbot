@@ -1,1 +1,11 @@
-<h2>Login component</h2>
+<div>
+	<h2>Login to create a json web token</h2>
+	<p>Correct credentials are 'admin' & 'admin'</p>
+
+	<div class='grid-block grid-content'>
+		<input type="text" placeholder="Type your name..." v-model="myusername">
+		<input type="password" placeholder="Type your password..." v-model="mypassword">
+		<a href="#" class="button" @click.stop="loginUser">Login as {{ myusername }} with {{ mypassword }} </a>
+		<a href="#" class="button" @click.stop="logoutUser">Logout</a>
+	</div>
+</div>
