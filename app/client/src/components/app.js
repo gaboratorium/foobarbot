@@ -1,7 +1,8 @@
 ///////////////////////////////////////	
 // Components
-const LoginComponent =  require('./login/components.login.js');
-const SettingsComponent = require('./settings/components.settings.js');
+const LoginViewComponent =  require('./login/components.login.js');
+const SettingsViewComponent = require('./settings/components.settings.js');
+const NavbarComponent = require('./navbar/components.navbar.js');
 
 ///////////////////////////////////////	
 // Routes
@@ -18,14 +19,14 @@ const router = new VueRouter({
 		{
 			path: '/login',
 			name: 'login',
-			component: LoginComponent
+			component: LoginViewComponent
 		}, 
 
 		// Settings
 		{
 			path: '/settings',
 			name: 'settings',
-			component: SettingsComponent
+			component: SettingsViewComponent
 		}
 	]
 })
@@ -37,16 +38,22 @@ var app = new Vue({
   name: "myVueApp",
   data: {
   	debug: true,
+  	userName: "Gabor",
     message: 'Hello Vue, how you doin\'?',
     userToken: '',
     users: []
   },
   components: {
-  	'login-component': LoginComponent,
-  	'settings-component': SettingsComponent,
+  	// View Components
+  	'login-view-component': LoginViewComponent,
+  	'settings-view-component': SettingsViewComponent,
+  	// Components
+  	'navbar': NavbarComponent
   },
   methods: {
-  	
+  	authenticate: function(){
+  		console.log("appcomponent authenticates");
+  	}
   },
   router
 }).$mount('#app');

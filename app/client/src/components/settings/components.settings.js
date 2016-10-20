@@ -15,12 +15,8 @@ module.exports =  {
 	methods: {
 		loadUsers: function(e){
 			e.preventDefault();
-			// console.log(app.userToken);
-			// console.log(app.users);
 	  		this.$http.get('/api/users', { headers: {'x-access-token': app.userToken}}).then(function(response) {
-	  			console.log("GABORATORIUMKA");
-	  			// app.users = response.body;gu
-	  			// console.log(response);
+	  			// success
 	  		}, function(response){
 	  			// fail
 	  		}

@@ -16,19 +16,21 @@ module.exports = {
 	methods: {
 		loginUser: function(){
 
-	  		var body = {
-	  			"name": this.myusername,
-	  			"password": this.mypassword
-	  		};
+			console.log("component.login loginUser triggered");
 
-	  		this.$http.post('/api/authenticate', body).then(function(response){
-	  			if (response.ok) {
-	  				console.log(response.body.token);
-	  				app.userToken = response.body.token;
-	  			}
-	  		}, function(){
-	  			// success
-	  		});
+	  		// var body = {
+	  		// 	"name": this.myusername,
+	  		// 	"password": this.mypassword
+	  		// };
+
+	  		// this.$http.post('/api/authenticate', body).then(function(response){
+	  		// 	if (response.ok) {
+	  		// 		console.log(response.body.token);
+	  		// 		app.userToken = response.body.token;
+	  		// 	}
+	  		// }, function(){
+	  		// 	// success
+	  		// });
 	  	},
 
 	  	logoutUser: function(){
