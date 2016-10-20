@@ -29,9 +29,13 @@ module.exports = {
         root: globalPath.src,
         copy_index: globalPath.src + 'index.html',
         copy_assets: globalPath.src + 'assets/**/*.*',
-        js: [
-            // JavaScript to concat
+        browserify: [
+            // Browserify entry point to bundle
             globalPath.src + "components/app.js"
+        ],
+        // JavaScript to watch
+        js: [
+            globalPath.src + "components/**/*.js"
         ],
         ts: [
             // Typescript to compile...

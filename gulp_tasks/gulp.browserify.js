@@ -8,7 +8,7 @@ var config = require('./gulp.config.js');
 module.exports = function(gulp){
 	gulp.task('browserify', 'Bundles app components' , function() {
 
-		return browserify(config.src.js)
+		return browserify(config.src.browserify)
 			.transform('brfs')
 			.bundle()
 			.pipe(source('app.js'))
