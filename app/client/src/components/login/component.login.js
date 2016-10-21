@@ -1,7 +1,7 @@
 // Login Component
 // Template
 var fs = require('fs');
-var html = fs.readFileSync(__dirname + '/components.login.html', 'utf8');
+var html = fs.readFileSync(__dirname + '/component.login.html', 'utf8');
 
 // Export global component
 module.exports = {
@@ -17,6 +17,7 @@ module.exports = {
 		loginUser: function(){
 
 			console.log("component.login loginUser triggered");
+			authenticator.$emit('authenticate');
 
 	  		// var body = {
 	  		// 	"name": this.myusername,

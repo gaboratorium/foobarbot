@@ -1,8 +1,23 @@
 ///////////////////////////////////////	
 // Components
-const LoginViewComponent =  require('./login/components.login.js');
-const SettingsViewComponent = require('./settings/components.settings.js');
-const NavbarComponent = require('./navbar/components.navbar.js');
+const LoginViewComponent =  require('./login/component.login.js');
+const SettingsViewComponent = require('./settings/component.settings.js');
+const NavbarComponent = require('./navbar/component.navbar.js');
+
+/////////////////////////////////////
+// Instances
+var authenticator = new Vue({
+  name: "authenticator",
+  data: {
+
+  },
+  method: {
+    authenticate: function(){
+      console.log("Authenticator's authenticate is used");
+    }
+  }
+});
+
 
 ///////////////////////////////////////	
 // Routes

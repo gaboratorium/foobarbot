@@ -1,7 +1,7 @@
 // Settings component
 // Template
 var fs = require('fs');
-var html = fs.readFileSync(__dirname + '/components.navbar.html', 'utf8')
+var html = fs.readFileSync(__dirname + '/component.navbar.html', 'utf8')
 
 // Export global component
 module.exports =  {
