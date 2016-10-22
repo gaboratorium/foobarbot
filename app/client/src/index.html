@@ -19,8 +19,9 @@
 		
 		<!-- Navigation Bar -->
 		<navbar 
-			v-bind:user="user"
-			v-on:applogout="deleteToken"
+			v-bind:user-for-navbar="user"
+			v-bind:csencs="csencs"
+			v-on:delete-token="deleteToken"
 			>
 		</navbar>
 		

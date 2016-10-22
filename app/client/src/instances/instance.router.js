@@ -16,7 +16,8 @@ const authRequired = function(to, from, next){
 	}
 
 	let token = localStorage.token;
-	tokenService.verifyToken(token);
+	// tokenService.verifyToken(token);
+	next();
 }
 
 const authNotAllowed = function(to, from, next){

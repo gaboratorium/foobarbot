@@ -2,6 +2,7 @@
 // Template
 var fs = require('fs');
 var html = fs.readFileSync(__dirname + '/component.login.html', 'utf8');
+var router = require('./../../instances/instance.router.js');
 
 // Export global component
 module.exports = {
@@ -10,14 +11,17 @@ module.exports = {
 	props: {
 		user: Object,
 		apiResponse: {
-			statusCode: Number,
+			isSuccessful: Boolean,
 			package: Object,
 			message: String
 		}
 	},
 	watch: {
 		apiResponse: function(newResponse){
-			console.log("Package from API", newResponse);
+			console.log("login comp watcher triggered");
+			if (newResponse.isSuccessful) {
+				// router.push('about');
+			}
 		}
 	},
 	data: function(){

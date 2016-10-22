@@ -1,4 +1,4 @@
-// Settings component
+	// Settings component
 // Template
 var fs = require('fs');
 var html = fs.readFileSync(__dirname + '/component.settings.html', 'utf8')
