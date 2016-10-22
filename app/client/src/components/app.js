@@ -70,7 +70,10 @@ var app = new Vue({
   	userName: "Gabor",
     message: 'Hello Vue, how you doin\'?',
     userToken: '',
-    users: []
+    users: [],
+    user: {
+      name: "Gabor"
+    }
   },
   components: {
   	// View Components

@@ -3,7 +3,7 @@
 	
 			<!-- Login tab -->
 			<div v-if="tab == 'login'" class="card card-section">
-				<h2>Login</h2>
+				<h2>Login, {{ user.name }}</h2>
 				<div class='grid-block grid-content'>
 					<input type="text" placeholder="Type your name..." v-model="myusername">
 					<input type="password" placeholder="Type your password..." v-model="mypassword">

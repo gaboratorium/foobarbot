@@ -7,6 +7,9 @@ var html = fs.readFileSync(__dirname + '/component.login.html', 'utf8');
 module.exports = {
 	name: "LoginComponent",
 	template: html,
+	props: {
+		user: Object
+	},
 	data: function(){
 		return {
 			myusername: "",
@@ -16,7 +19,7 @@ module.exports = {
 	},
 	methods: {
 		loginUser: function(){
-
+			console.log("component.login got the user: ", this.user.name);
 			console.log("component.login loginUser triggered");
 			// authenticator.$emit('authenticate');
 			this.$emit('send-test', 'Message from login component printed by app instance');
