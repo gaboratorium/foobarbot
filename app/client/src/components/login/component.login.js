@@ -8,7 +8,8 @@ module.exports = {
 	name: "LoginComponent",
 	template: html,
 	props: {
-		user: Object
+		user: Object,
+		feedbackMessage: String
 	},
 	data: function(){
 		return {
@@ -21,6 +22,7 @@ module.exports = {
 		loginUser: function(e){
 			e.preventDefault();
 			this.$emit('create-token', this.loginform__username, this.loginform__password);
+			console.log(app.data);
 	  	},
 
 	  	switchTab: function(tab){

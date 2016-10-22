@@ -27,6 +27,7 @@
 		<!-- ViewComponent -->
 	 	<router-view 
 	 		v-bind:user="user"
+	 		v-bind:feedback-message="messageToShow"
 	 		v-on:create-token="createToken"
 	 		v-on:verify-token="verifyToken"
 	 		v-on:delete-token="deleteToken"

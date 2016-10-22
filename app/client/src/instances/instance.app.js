@@ -1,6 +1,6 @@
 // Instances
 const RouterInstance = require('./instance.router.js');
-const tokenService = require('./instance.token-service.js');
+const TokenService = require('./instance.token-service.js');
 
 // Components
 const LoginViewComponent =  require('./../components/login/component.login.js');
@@ -13,7 +13,7 @@ module.exports = new Vue({
   el: '#app',
   name: "myVueApp",
   data: {
-  	debug: true,
+    messageToShow: "Something",    
     user: {
       name: "",
       token: ""
@@ -27,19 +27,52 @@ module.exports = new Vue({
   },
   methods: {
     createToken: function(name, password){
-      tokenService.createToken(name, password);
-      // Do some logic
+      console.log("creating token");
+      let data = {
+        name: name,
+        password: password
+      };
+
+      console.log("sending http req");
+
+      this.$http.post('/api/token/create', data).then(
+          function(response) {
+            console.log(response);
+            this.messageToShow = "Yay, good credentials!";
+            console.log(this.feedbackMessage);
+
+          }, function(err){
+            // console.log(err);
+            this.messageToShow = "Boo, bad credentials!"
+            console.log(this.feedbackMessage);
+          }
+        );
     },
 
     verifyToken: function(token){
-      tokenService.verifyToken(token);
-      // Do some logic
+      
+      data = {
+        token: token
+      }
+
+      this.$http.post('/api/token/verify', data).then(
+          function(response) {
+            this.feedbackMessage = "Yay, good credentials!";
+
+          }, function(err){
+            this.feedbackMessage = "Boo, bad credentials!"
+          }
+        );
     },
 
     deleteToken: function(msg){
-      tokenService.deleteToken(token);
+      TokenService.deleteToken(token);
       delete localStorage.token;
       delete localStorage.name;
+    },
+
+    receiveResponse: function(response){
+      console.log("App got this response", response);
     }
   },
   router: RouterInstance

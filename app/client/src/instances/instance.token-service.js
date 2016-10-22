@@ -1,3 +1,6 @@
+// Services should be one instance
+// with multiple components...
+
 module.exports = new Vue({
   name: "tokenService",
   data: {
@@ -5,33 +8,50 @@ module.exports = new Vue({
   },
   methods: {
     verifyToken: function(token){
-      console.log("I am veryfing the token...", token);
-            // this.$http.post('/api/token/create', data).then(
-      //     function(response) {
-      //       // success
-      //       console.log("You have been authenticated as admin.");
-      //       this.user.name = response.body.user.name;
-      //       this.user.token = response.body.user.token;
+  		console.log("I am veryfing the token...", token);
+    	
+  		data = {
+  			token: token
+  		}
 
-      //       localStorage.setItem("token", this.user.token);
-      //       localStorage.setItem("name", this.user.name);
+    	// this.$http.post('/api/token/verify', data).then(
+     //      function(response) {
+     //        // success
+     //        console.log("You token is ok");
+     //        location.reload();
 
-      //       window.location="/#/about";
-      //       location.reload();
-
-      //     }, function(response){
-      //       // fail
-      //       console.log("Its not ok.", response);
-      //     }
-      //   );
+     //      }, function(err){
+     //        console.log("Your token is not ok", err);
+     //      }
+     //    );
     },
 
     createToken: function(name, password){
-    	// do something
+
+    	let data = {
+    		name: name,
+    		password: password
+    	}
+
+    	this.$http.post('/api/token/create', data).then(
+    		function(response){
+    			console.log("Request was ok", response.body);
+    			this.$emit('send-response', response.body);
+    		},
+    		function(err){
+    			console.log(err);
+    			console.log("Response body", err.body);
+    			this.$emit('send-response', response.body);
+    		}
+    	);
     },
 
     deleteToken: function(token){
     	// do something
+    },
+
+    receiveResponse: function(response){
+      console.log("App got this response", response);
     }
   }
 });
