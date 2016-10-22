@@ -14,22 +14,21 @@
 
 </head>
 <body>
-	<!-- Application -->
+	<!-- App frame -->
 	<div id="app">
+		
 		<!-- Navigation Bar -->
-		<navbar></navbar>
-		<!-- App content -->
-		<div class="grid-content">
-			<!-- Component -->
-		 	<router-view 
-		 		v-bind:user="user"
-		 		v-on:send-test="authenticate">
-		 	</router-view>
-			<!-- Vuejs debug data -->
-		 	<!-- <h1>Vuejs debug data</h1> -->
-		 	<!-- <pre>{{ $data }}</pre> -->
-	 	</div>
+		<navbar v-bind:user="user"></navbar>
+		
+		<!-- ViewComponent -->
+	 	<router-view 
+	 		v-bind:user="user"
+	 		v-on:create-token="createToken"
+	 		v-on:applogout="deleteToken"
+	 		>
+	 	</router-view>
 	</div>
+	
 	<!-- Initialize app -->
 	<script src="js/app.js"></script>
 </body>

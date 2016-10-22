@@ -7,6 +7,9 @@ var html = fs.readFileSync(__dirname + '/component.settings.html', 'utf8')
 module.exports =  {
 	name: "SettingsComponent",
 	template: html,
+	props: {
+		user: Object
+	},
 	data: function(){
 		return {
 			users: []
@@ -15,12 +18,16 @@ module.exports =  {
 	methods: {
 		loadUsers: function(e){
 			e.preventDefault();
-	  		this.$http.get('/api/users', { headers: {'x-access-token': app.userToken}}).then(function(response) {
-	  			// success
-	  		}, function(response){
-	  			// fail
-	  		}
-	  		)
+			console.log(this.user);
+	  		this.$http.get('/api/users', { headers: {'x-access-token': this.user.token}}).then(
+	  			function(response) {
+		  			// success
+		  			console.log("Here you go.", response);
+	  			}, function(response){
+		  			// fail
+		  			console.log("Sorry, only administrators can get the list of users.", response);
+	  			}
+	  		);
 	  	},
 
 	  	resetUsers: function(e){

@@ -7,12 +7,17 @@ var html = fs.readFileSync(__dirname + '/component.navbar.html', 'utf8')
 module.exports =  {
 	name: "NavbarComponent",
 	template: html,
+	props: {
+		user: Object
+	},
 	data: function(){
 		return {
-			userName: "Gabor",
-			isUserLoggedIn: true
+		
 		}
 	},
 	methods: {
+		isUserLoggedIn: function(){
+			return false;
+		}
 	}
 };

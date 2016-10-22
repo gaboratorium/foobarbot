@@ -2,34 +2,19 @@
 // Components
 const LoginViewComponent =  require('./login/component.login.js');
 const SettingsViewComponent = require('./settings/component.settings.js');
+const AboutViewComponent = require('./about/component.about.js');
 const NavbarComponent = require('./navbar/component.navbar.js');
-
-/////////////////////////////////////
-// Instances
-var authenticator = new Vue({
-  name: "authenticator",
-  data: {
-
-  },
-  method: {
-    authenticate: function(){
-      console.log("Authenticator's authenticate is used");
-    }
-  }
-});
 
 /////////////////////////////////////// 
 // Navigation guards
-var ensureAuthenticated = function(to, from, next){
-  console.log('Navigation guard says not ok, go back to login...');
-  next('/login');
-}
+const checkToken = function(to, from, next){
 
-var ensureNotAuthenticated = function(to, from, next){
-  console.log('Navigation guard says ok...');
-  next();
+  if (true){
+    next();
+  } else {
+    next('/login');
+  }
 }
-
 
 ///////////////////////////////////////	
 // Routes
@@ -47,15 +32,22 @@ const router = new VueRouter({
 			path: '/login',
 			name: 'login',
 			component: LoginViewComponent,
-      beforeEnter: ensureNotAuthenticated
+      beforeEnter: checkToken
 		}, 
+
+    // About
+    {
+      path: '/about',
+      name: 'about',
+      component: AboutViewComponent
+    }, 
 
 		// Settings
 		{
 			path: '/settings',
 			name: 'settings',
 			component: SettingsViewComponent,
-      beforeEnter: ensureAuthenticated
+      beforeEnter: checkToken
 		}
 	]
 })
@@ -72,27 +64,42 @@ var app = new Vue({
     userToken: '',
     users: [],
     user: {
-      name: "Gabor"
+      name: "Alfred",
+      token: ""
     }
   },
   components: {
   	// View Components
   	'login-view-component': LoginViewComponent,
-  	'settings-view-component': SettingsViewComponent,
+    'settings-view-component': SettingsViewComponent,
+  	'about-view-component': AboutViewComponent,
   	// Components
   	'navbar': NavbarComponent
   },
   methods: {
-  	authenticate: function(msg){
+    createToken: function(userName, password){
+
+      this.$http.get('/api/users', { headers: {'x-access-token': userName}}).then(
+          function(response) {
+            // success
+            console.log("Here you go.", response);
+          }, function(response){
+            // fail
+            console.log("Sorry, only administrators can get the list of users.", response);
+          }
+        );
+    },
+
+  	verifyToken: function(msg){
+      // Send cookie to verification
   		console.log("appcomponent authenticates", msg);
-  	}
+  	},
+
+    deleteToken: function(msg){
+      // Send cookie to delete token
+      // and delete cookie
+      console.log("User logging out...", msg);
+    }
   },
   router
 });
-
-app.$on('test', function (msg){
-  console.log(msg);
-  console.log(this.userName);
-})
-
-app.$emit('test', 'hi');

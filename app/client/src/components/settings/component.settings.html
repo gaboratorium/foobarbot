@@ -1,7 +1,23 @@
-<div>
-	<h2>Settings</h2>
- 	<div class='grid-block grid-content'>
-		<a href="" class="button" @click.stop="loadUsers">Load users</a>
-		<a href="" class="button" @click.stop="resetUsers">Reset users</a>
+<div class="grid-block align-center">
+	<div class="grid-block vertical medium-6">
+		<div class="grid-block">
+			<div class="grid-content">
+				<div class="card card-section">
+					<h2>Settings</h2>
+					<p>Here you can load the list of users</p>
+					<a href="" class="button" @click.stop="loadUsers">Load users</a>
+					<a href="" class="button" @click.stop="resetUsers">Reset users</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="grid-block">
+			<div class="grid-content">
+				<div class="card card-section">
+					<h2>Users</h2>
+					<p>No users have been loaded.</p>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
