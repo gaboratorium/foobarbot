@@ -13,7 +13,7 @@ module.exports = new Vue({
   el: '#app',
   name: "myVueApp",
   data: {
-    messageToShow: "Something",    
+    resultPackage: {},    
     user: {
       name: "",
       token: ""
@@ -26,25 +26,29 @@ module.exports = new Vue({
   	'navbar': NavbarComponent
   },
   methods: {
+
+    createResultPackage(statusCode, package, message){
+      console.log("Building result package....");
+      let resultPackage = {statusCode, package, message}
+      this.resultPackage = resultPackage;
+      return resultPackage;
+    },
+
     createToken: function(name, password){
-      console.log("creating token");
       let data = {
         name: name,
         password: password
       };
 
-      console.log("sending http req");
 
       this.$http.post('/api/token/create', data).then(
           function(response) {
             console.log(response);
-            this.messageToShow = "Yay, good credentials!";
-            console.log(this.feedbackMessage);
+            this.resultPackage = this.createResultPackage(200, null, "OK");
 
           }, function(err){
-            // console.log(err);
-            this.messageToShow = "Boo, bad credentials!"
-            console.log(this.feedbackMessage);
+            console.log(err);
+            this.resultPackage = this.createResultPackage(500, null, "Not ok");
           }
         );
     },
