@@ -18,7 +18,8 @@ module.exports = {
 		}
 	},
 	methods: {
-		loginUser: function(){
+		loginUser: function(e){
+			e.preventDefault();
 			this.$emit('create-token', this.loginform__username, this.loginform__password);
 	  	},
 

@@ -5,7 +5,7 @@
 		<ul class="menu-bar">
 			<li><a href="#">Project Lines</a></li>
 			<li>
-				<span class="inline-label">
+				<span class="inline-label" style='margin: 0.25rem'>
 					<input type="search" placeholder="Search a thing">
 					<a href="#" class="button">Search</a>
 				</span>
@@ -15,7 +15,8 @@
 	<div class="menu-group-right">
 		<!-- Right menu for user -->
 		<ul class="menu-bar" v-if='isUserLoggedIn()'>
-			<li><a href="">Hello {{ user.name }}</a></li>
+			<li><a href="">
+				<span>Hello <span class='o-text--strong'>{{ user.name }}</span></span></a></li>
 			<li><router-link to="/about">About</router-link></li>
 			<li><router-link to="/settings">Settings</router-link></li>
 			<li><a href="#" @click.stop="logout()">Logout</a></li>
@@ -23,7 +24,7 @@
 		<!-- Right menu for visitor -->
 		<ul class="menu-bar" v-if='!isUserLoggedIn()'>
 			<li><router-link to="/about">About</router-link></li>
-			<li><a href="#">Log in</a></li>
+			<li><router-link to="/login">Log in</router-link></li>
 		<!-- 	<li>
 				<span class="inline-label" style='margin: 0;'>
 					<a href="#" class='button'>Sign up</a>

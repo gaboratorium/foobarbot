@@ -93,7 +93,7 @@ var apiRoutes = express.Router();
 // apply the routes to our application with the prefix /api
 app.use('/api', apiRoutes);
 
-apiRoutes.post('/authenticate', function(req, res){
+apiRoutes.post('/token/create', function(req, res){
 
 	// Hard coded user
 	var expectedUser = "admin";
@@ -129,10 +129,26 @@ apiRoutes.post('/authenticate', function(req, res){
 	}
 })
 
+apiRoutes.post('/token/verify', function(req, res){
+	// check header or url parameters or post parameters for token
+	var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+	if (token){
+		jww.verify(token, app.get('superSecret'), function(err, decoded){
+			if (err) {
+				return res.json({success: false, message: 'Failed to authenticate token...'})
+			} else {
+				req.decode = req
+				return res.json({success: true, message: 'Token is valid'})
+			}
+		})
+	}
+})
+
 // route middleware to verify a token
 apiRoutes.use(function(req, res, next){
 
-	 // check header or url parameters or post parameters for token
+	// check header or url parameters or post parameters for token
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
 	if (token){

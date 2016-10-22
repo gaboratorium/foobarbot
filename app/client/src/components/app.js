@@ -8,6 +8,19 @@ const NavbarComponent = require('./navbar/component.navbar.js');
 /////////////////////////////////////// 
 // Navigation guards
 const checkToken = function(to, from, next){
+
+  let userViews = ["settings"];
+  let visitorViews = ["login", "about"];
+  let requestedView = to.name
+
+  if (_.includes(userViews, requestedView)) {
+    console.log("You are going to a user view");
+  }
+
+  if (_.includes(visitorViews, requestedView)) {
+    console.log("You are going to a visitor view");
+  }
+
   next();
 }
 
@@ -19,7 +32,7 @@ const router = new VueRouter({
 		// Home
 		{
 			path: '/',
-			redirect: '/login',
+			redirect: '/about',
 		},
 		
 		// Login
@@ -34,7 +47,8 @@ const router = new VueRouter({
     {
       path: '/about',
       name: 'about',
-      component: AboutViewComponent
+      component: AboutViewComponent,
+      beforeEnter: checkToken
     }, 
 
 		// Settings
@@ -48,6 +62,13 @@ const router = new VueRouter({
 })
 
 ///////////////////////////////////////
+// Check localStorage
+if (localStorage.name == undefined || localStorage.token == undefined){
+  delete localStorage.name;
+  delete localStorage.token;
+}
+
+///////////////////////////////////////
 // Init Vue app
 var app = new Vue({
   el: '#app',
@@ -59,7 +80,7 @@ var app = new Vue({
     userToken: '',
     users: [],
     user: {
-      name: "Alfred",
+      name: "",
       token: ""
     }
   },
@@ -79,7 +100,7 @@ var app = new Vue({
         password: password
       };
 
-      this.$http.post('/api/authenticate', data).then(
+      this.$http.post('/api/token/create', data).then(
           function(response) {
             // success
             console.log("You have been authenticated as admin.");
@@ -89,6 +110,9 @@ var app = new Vue({
             localStorage.setItem("token", this.user.token);
             localStorage.setItem("name", this.user.name);
 
+            window.location="/#/about";
+            location.reload();
+
           }, function(response){
             // fail
             console.log("Its not ok.", response);
@@ -96,15 +120,24 @@ var app = new Vue({
         );
     },
 
-  	verifyToken: function(msg){
+    verifyToken: function(token){
       // Send cookie to verification
-  		console.log("appcomponent authenticates", msg);
-  	},
+      console.log("appcomponent authenticates", msg);
+
+      let data = {
+        token: token
+      }
+
+      this.$http.post('/api/token/verify', data).then(function(response){
+        console.log(response);
+      })
+    },
 
     deleteToken: function(msg){
       console.log("You have been logged out");
       delete localStorage.token;
-
+      delete localStorage.name;
+      location.reload();  
     }
   },
   router

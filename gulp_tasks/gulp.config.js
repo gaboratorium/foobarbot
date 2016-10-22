@@ -14,7 +14,10 @@ module.exports = {
             /* Vue */
             globalPath.npm+"vue/dist/vue.js",
             globalPath.npm+"vue-router/dist/vue-router.js",
-            globalPath.npm+"vue-resource/dist/vue-resource.js"
+            globalPath.npm+"vue-resource/dist/vue-resource.js",
+
+            /* Other libs */
+            globalPath.npm+"lodash/lodash.js"
         ],
 
         // CSS Libraries
