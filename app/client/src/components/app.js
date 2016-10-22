@@ -20,6 +20,15 @@ var authenticator = new Vue({
 
 /////////////////////////////////////// 
 // Navigation guards
+var ensureAuthenticated = function(to, from, next){
+  console.log('Navigation guard says not ok, go back to login...');
+  next('/login');
+}
+
+var ensureNotAuthenticated = function(to, from, next){
+  console.log('Navigation guard says ok...');
+  next();
+}
 
 
 ///////////////////////////////////////	
@@ -38,11 +47,7 @@ const router = new VueRouter({
 			path: '/login',
 			name: 'login',
 			component: LoginViewComponent,
-      beforeEnter: function(to, from, next) {
-        // Navigation guard...
-        console.log('Navigation guard says ok...');
-        next();
-      }
+      beforeEnter: ensureNotAuthenticated
 		}, 
 
 		// Settings
@@ -50,11 +55,7 @@ const router = new VueRouter({
 			path: '/settings',
 			name: 'settings',
 			component: SettingsViewComponent,
-      beforeEnter: function(to, from, next) {
-        // Navigation guard...
-        console.log('Navigation guard says not ok, go back to login...');
-        next('/login');
-      }
+      beforeEnter: ensureAuthenticated
 		}
 	]
 })
@@ -79,9 +80,16 @@ var app = new Vue({
   	'navbar': NavbarComponent
   },
   methods: {
-  	authenticate: function(){
-  		console.log("appcomponent authenticates");
+  	authenticate: function(msg){
+  		console.log("appcomponent authenticates", msg);
   	}
   },
   router
-}).$mount('#app');
+});
+
+app.$on('test', function (msg){
+  console.log(msg);
+  console.log(this.userName);
+})
+
+app.$emit('test', 'hi');

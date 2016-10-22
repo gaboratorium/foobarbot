@@ -18,7 +18,8 @@ module.exports = {
 		loginUser: function(){
 
 			console.log("component.login loginUser triggered");
-			authenticator.$emit('authenticate');
+			// authenticator.$emit('authenticate');
+			this.$emit('send-test', 'Message from login component printed by app instance');
 
 	  		// var body = {
 	  		// 	"name": this.myusername,
