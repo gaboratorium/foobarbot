@@ -11,6 +11,7 @@ module.exports = {
 		return {
 			myusername: "",
 			mypassword: "",
+			tab: 'login'
 		}
 	},
 	methods: {
@@ -41,6 +42,10 @@ module.exports = {
 	  		} else {
 	  			console.log("You are not even logged in bro...");
 	  		}
+	  	},
+
+	  	switchTab: function(tab){
+	  		this.tab = tab;
 	  	}
 	}
 };

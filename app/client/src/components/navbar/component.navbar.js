@@ -9,7 +9,8 @@ module.exports =  {
 	template: html,
 	data: function(){
 		return {
-			userName: "Gabor"
+			userName: "Gabor",
+			isUserLoggedIn: true
 		}
 	},
 	methods: {

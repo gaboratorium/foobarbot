@@ -18,6 +18,9 @@ var authenticator = new Vue({
   }
 });
 
+/////////////////////////////////////// 
+// Navigation guards
+
 
 ///////////////////////////////////////	
 // Routes
@@ -27,21 +30,31 @@ const router = new VueRouter({
 		// Home
 		{
 			path: '/',
-			redirect: '/login'
+			redirect: '/login',
 		},
 		
 		// Login
 		{
 			path: '/login',
 			name: 'login',
-			component: LoginViewComponent
+			component: LoginViewComponent,
+      beforeEnter: function(to, from, next) {
+        // Navigation guard...
+        console.log('Navigation guard says ok...');
+        next();
+      }
 		}, 
 
 		// Settings
 		{
 			path: '/settings',
 			name: 'settings',
-			component: SettingsViewComponent
+			component: SettingsViewComponent,
+      beforeEnter: function(to, from, next) {
+        // Navigation guard...
+        console.log('Navigation guard says not ok, go back to login...');
+        next('/login');
+      }
 		}
 	]
 })

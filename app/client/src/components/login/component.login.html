@@ -1,9 +1,20 @@
 <div>
-	<h2>Login</h2>
-	<div class='grid-block grid-content'>
-		<input type="text" placeholder="Type your name..." v-model="myusername">
-		<input type="password" placeholder="Type your password..." v-model="mypassword">
-		<a href="#" class="button" @click.stop="loginUser">Login as {{ myusername }} with {{ mypassword }} </a>
-		<a href="#" class="button" @click.stop="logoutUser">Logout</a>
+	<!-- Login tab -->
+	<div v-if="tab == 'login'">
+		<h2>Login</h2>
+		<div class='grid-block grid-content'>
+			<input type="text" placeholder="Type your name..." v-model="myusername">
+			<input type="password" placeholder="Type your password..." v-model="mypassword">
+			<a href="#" class="button" @click.stop="loginUser">Login as {{ myusername }} with {{ mypassword }} </a>
+			<a href="#" @click.stop="switchTab('signup')">...or sign up</a>
+		</div>
 	</div>
+
+	<!-- Sign up tab -->
+	<div v-if="tab == 'signup'">
+		<h2>Sign up</h2>
+		<p>Here you will be able to sign up soon...</p>
+		<a href="#" @click.stop="switchTab('login')">...or sign up</a>
+	</div>
+	
 </div>
