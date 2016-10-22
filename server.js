@@ -127,7 +127,7 @@ apiRoutes.post('/token/create', function(req, res){
 	} else {
 		res.status(400).json({success: false, message: "Bad request, user name or password was not received or was invalid"})
 	}
-})
+});
 
 apiRoutes.post('/token/verify', function(req, res){
 	// check header or url parameters or post parameters for token
@@ -143,7 +143,7 @@ apiRoutes.post('/token/verify', function(req, res){
 			}
 		})
 	}
-})
+});
 
 // route middleware to verify a token
 apiRoutes.use(function(req, res, next){
