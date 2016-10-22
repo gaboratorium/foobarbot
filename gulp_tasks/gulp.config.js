@@ -15,6 +15,7 @@ module.exports = {
             globalPath.npm+"vue/dist/vue.js",
             globalPath.npm+"vue-router/dist/vue-router.js",
             globalPath.npm+"vue-resource/dist/vue-resource.js",
+            globalPath.npm+"vuex/dist/vuex.js",
 
             /* Other libs */
             globalPath.npm+"lodash/lodash.js"
@@ -34,7 +35,7 @@ module.exports = {
         copy_assets: globalPath.src + 'assets/**/*.*',
         browserify: [
             // Browserify entry point to bundle
-            globalPath.src + "app.js"
+            globalPath.src + "main.js"
         ],
         // JavaScript to watch
         js: [

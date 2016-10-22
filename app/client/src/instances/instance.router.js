@@ -1,4 +1,3 @@
-const tokenService = require('./instance.token-service.js');
 const LoginViewComponent =  require('./../components/login/component.login.js');
 const SettingsViewComponent = require('./../components/settings/component.settings.js');
 const AboutViewComponent = require('./../components/about/component.about.js');

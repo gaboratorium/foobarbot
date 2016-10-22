@@ -33,6 +33,7 @@ module.exports = {
 	},
 	methods: {
 		loginUser: function(e){
+			this.$store.commit('increment');
 			e.preventDefault();
 			this.$emit('create-token', this.loginform__username, this.loginform__password);
 	  	},

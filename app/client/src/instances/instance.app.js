@@ -1,6 +1,6 @@
 // Importing Instances
+const StoreInstance = require('./instance.store.js');
 const RouterInstance = require('./instance.router.js');
-const TokenService = require('./instance.token-service.js');
 
 // Importing Components
 const LoginViewComponent =  require('./../components/login/component.login.js');
@@ -47,26 +47,28 @@ module.exports = new Vue({
         password: password
       };
 
+      StoreInstance.commit('increment');
+      console.log(StoreInstance.state.count);
 
-      this.$http.post('/api/token/create', data).then(
-          function(response) {
-            console.log(response);
-            this.resultPackage = this.createResultPackage(true, null, "You have logged in succesfully.");
-            RouterInstance.push('about');
+      // this.$http.post('/api/token/create', data).then(
+      //     function(response) {
+      //       console.log(response);
+      //       this.resultPackage = this.createResultPackage(true, null, "You have logged in succesfully.");
+      //       RouterInstance.push('about');
 
-            this.user.name = response.body.user.name;
-            this.user.token = response.body.user.token;
+      //       this.user.name = response.body.user.name;
+      //       this.user.token = response.body.user.token;
 
-            localStorage.name = this.user.name;
-            localStorage.token = this.user.token;
+      //       localStorage.name = this.user.name;
+      //       localStorage.token = this.user.token;
 
-            this.csencs = "Aj szi no csencsesz";
+      //       this.csencs = "Aj szi no csencsesz";
 
-          }, function(err){
-            console.log(err);
-            this.resultPackage = this.createResultPackage(false, null, "User name or password was wrong.");
-          }
-        );
+      //     }, function(err){
+      //       console.log(err);
+      //       this.resultPackage = this.createResultPackage(false, null, "User name or password was wrong.");
+      //     }
+      //   );
     },
 
     verifyToken: function(token){
@@ -97,5 +99,8 @@ module.exports = new Vue({
   },
 
   // Instance router
-  router: RouterInstance
+  router: RouterInstance,
+
+  // Vuex store
+  store: StoreInstance
 });
