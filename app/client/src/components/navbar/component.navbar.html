@@ -18,7 +18,7 @@
 			<li><a href="">Hello {{ user.name }}</a></li>
 			<li><router-link to="/about">About</router-link></li>
 			<li><router-link to="/settings">Settings</router-link></li>
-			<li><router-link to="/settings">Logout</router-link></li>
+			<li><a href="#" @click.stop="logout()">Logout</a></li>
 		</ul>
 		<!-- Right menu for visitor -->
 		<ul class="menu-bar" v-if='!isUserLoggedIn()'>

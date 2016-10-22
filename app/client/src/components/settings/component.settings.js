@@ -18,11 +18,14 @@ module.exports =  {
 	methods: {
 		loadUsers: function(e){
 			e.preventDefault();
-			console.log(this.user);
-	  		this.$http.get('/api/users', { headers: {'x-access-token': this.user.token}}).then(
+
+
+	  		this.$http.get('/api/users', { headers: {'x-access-token': localStorage.token}}).then(
 	  			function(response) {
 		  			// success
 		  			console.log("Here you go.", response);
+		  			this.users = response.body;
+		  			console.log(this.users);
 	  			}, function(response){
 		  			// fail
 		  			console.log("Sorry, only administrators can get the list of users.", response);

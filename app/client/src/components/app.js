@@ -8,12 +8,7 @@ const NavbarComponent = require('./navbar/component.navbar.js');
 /////////////////////////////////////// 
 // Navigation guards
 const checkToken = function(to, from, next){
-
-  if (true){
-    next();
-  } else {
-    next('/login');
-  }
+  next();
 }
 
 ///////////////////////////////////////	
@@ -77,15 +72,26 @@ var app = new Vue({
   	'navbar': NavbarComponent
   },
   methods: {
-    createToken: function(userName, password){
+    createToken: function(name, password){
 
-      this.$http.get('/api/users', { headers: {'x-access-token': userName}}).then(
+      let data = {
+        name: name,
+        password: password
+      };
+
+      this.$http.post('/api/authenticate', data).then(
           function(response) {
             // success
-            console.log("Here you go.", response);
+            console.log("You have been authenticated as admin.");
+            this.user.name = response.body.user.name;
+            this.user.token = response.body.user.token;
+
+            localStorage.setItem("token", this.user.token);
+            localStorage.setItem("name", this.user.name);
+
           }, function(response){
             // fail
-            console.log("Sorry, only administrators can get the list of users.", response);
+            console.log("Its not ok.", response);
           }
         );
     },
@@ -96,9 +102,9 @@ var app = new Vue({
   	},
 
     deleteToken: function(msg){
-      // Send cookie to delete token
-      // and delete cookie
-      console.log("User logging out...", msg);
+      console.log("You have been logged out");
+      delete localStorage.token;
+
     }
   },
   router

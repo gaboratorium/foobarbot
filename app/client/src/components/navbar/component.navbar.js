@@ -17,7 +17,11 @@ module.exports =  {
 	},
 	methods: {
 		isUserLoggedIn: function(){
-			return false;
+			return localStorage.token !== undefined;
+		},
+		logout: function(){
+			console.log("Logging out...");
+			this.$emit('applogout');
 		}
 	}
 };

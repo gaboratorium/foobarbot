@@ -115,8 +115,13 @@ apiRoutes.post('/authenticate', function(req, res){
 			expiresIn : 1440 // 24 hours
 		});
 
+		var userToSend = {
+			name: user.name,
+			token: token
+		}
+
 		// Send back token
-		res.json({success: true, message: "Good request", token: token})
+		res.json({success: true, message: "Good request", user: userToSend})
 
 	// Unsuccesful login - error msg
 	} else {

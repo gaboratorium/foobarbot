@@ -18,13 +18,18 @@
 	<div id="app">
 		
 		<!-- Navigation Bar -->
-		<navbar v-bind:user="user"></navbar>
+		<navbar 
+			v-bind:user="user"
+			v-on:applogout="deleteToken"
+			>
+		</navbar>
 		
 		<!-- ViewComponent -->
 	 	<router-view 
 	 		v-bind:user="user"
 	 		v-on:create-token="createToken"
-	 		v-on:applogout="deleteToken"
+	 		v-on:verify-token="verifyToken"
+	 		v-on:delete-token="deleteToken"
 	 		>
 	 	</router-view>
 	</div>
