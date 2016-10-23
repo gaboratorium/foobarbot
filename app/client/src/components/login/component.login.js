@@ -42,9 +42,13 @@ module.exports = {
 			console.log(firstTwoLanguages);
 
 			// Dispatch action
-			this.$store.dispatch({type: 'increment', myData: 5}).then((count) => {
-				console.log("Login component receives this count:", count);
+			this.$store.dispatch({type: 'increment', myData: 5}).then((data) => {
+				console.log("Login component receives this data:", data);
 			});
+
+			// this.$store.dispatch({type: 'getStarWars'}).then((response)=>{
+			// 	console.log(response);
+			// })
 			
 
 			e.preventDefault();

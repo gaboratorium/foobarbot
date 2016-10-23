@@ -1,3 +1,5 @@
+const ApiInstance = require('./instance.api.js');
+
 module.exports = new Vuex.Store({
   // state management pattern
   // state
@@ -16,11 +18,27 @@ module.exports = new Vuex.Store({
   // Actions - async calls
   actions: {
     increment: (context, payload) => {
+
+      var myPromise = new Promise((resolve, reject) => {
+        ApiInstance.sayHello().then((data) => {
+          console.log('store recieves this data: ', data);
+          resolve(data);
+        }, (fail) => {
+          console.log(fail);
+          reject()
+        });
+      })
+
+      return myPromise;
+    },
+
+    getStarWars: (context, payload) => {
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          context.commit('increment');
-          resolve(context.state.count);
-        }, 1500)
+        this.$http.get('http://swapi.co/api/starships/9/').then((response) => {
+          resolve(response);
+        }, (fail) => {
+          reject();
+        })
       })
     }
   },
