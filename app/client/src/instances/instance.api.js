@@ -10,19 +10,20 @@ module.exports = new Vue({
 			})
 		},
 
+		// Get a starwars ship
 		getStarWars: () => {
-
 			var myPromise = new Promise((resolve, reject) => {
 				Vue.http.get('http://swapi.co/api/starships/9/').then((response) => {
-					console.log(response);
-					resolve(response);
+					resolve(response.body);
 				}, (fail) => {
-					console.log(fail);
 					reject(fail);
 				})
 			})
-
 			return myPromise;
+		},
+
+		postUserLog: () => {
+			console.log("Logging user activity...");
 		}
 	}
 })

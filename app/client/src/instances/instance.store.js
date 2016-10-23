@@ -17,29 +17,9 @@ module.exports = new Vuex.Store({
 
   // Actions - async calls
   actions: {
-    increment: (context, payload) => {
-
-      var myPromise = new Promise((resolve, reject) => {
-        ApiInstance.getStarWars().then((data) => {
-          console.log('store recieves this data: ', data);
-          resolve(data);
-        }, (fail) => {
-          console.log(fail);
-          reject()
-        });
-      })
-
-      return myPromise;
-    },
-
     getStarWars: (context, payload) => {
-      return new Promise((resolve, reject) => {
-        this.$http.get('http://swapi.co/api/starships/9/').then((response) => {
-          resolve(response);
-        }, (fail) => {
-          reject();
-        })
-      })
+      ApiInstance.postUserLog();
+      return ApiInstance.getStarWars();
     }
   },
 

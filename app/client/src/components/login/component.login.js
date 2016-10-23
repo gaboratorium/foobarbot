@@ -33,6 +33,7 @@ module.exports = {
 	},
 	methods: {
 		loginUser: function(e){
+			e.preventDefault();
 
 			// Commit mutation
 			// this.$store.commit('increment');
@@ -42,16 +43,9 @@ module.exports = {
 			console.log(firstTwoLanguages);
 
 			// Dispatch action
-			this.$store.dispatch({type: 'increment', myData: 5}).then((data) => {
+			this.$store.dispatch({type: 'getStarWars', myData: 5}).then((data) => {
 				console.log("Login component receives this data:", data);
 			});
-
-			// this.$store.dispatch({type: 'getStarWars'}).then((response)=>{
-			// 	console.log(response);
-			// })
-			
-
-			e.preventDefault();
 
 
 			// this.$emit('create-token', this.loginform__username, this.loginform__password);
