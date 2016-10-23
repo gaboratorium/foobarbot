@@ -8,6 +8,21 @@ module.exports = new Vue({
 					resolve(data);
 				}, 1500);
 			})
+		},
+
+		getStarWars: () => {
+
+			var myPromise = new Promise((resolve, reject) => {
+				Vue.http.get('http://swapi.co/api/starships/9/').then((response) => {
+					console.log(response);
+					resolve(response);
+				}, (fail) => {
+					console.log(fail);
+					reject(fail);
+				})
+			})
+
+			return myPromise;
 		}
 	}
 })

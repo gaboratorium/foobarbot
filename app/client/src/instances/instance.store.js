@@ -20,7 +20,7 @@ module.exports = new Vuex.Store({
     increment: (context, payload) => {
 
       var myPromise = new Promise((resolve, reject) => {
-        ApiInstance.sayHello().then((data) => {
+        ApiInstance.getStarWars().then((data) => {
           console.log('store recieves this data: ', data);
           resolve(data);
         }, (fail) => {
