@@ -33,9 +33,24 @@ module.exports = {
 	},
 	methods: {
 		loginUser: function(e){
-			this.$store.commit('increment');
+
+			// Commit mutation
+			// this.$store.commit('increment');
+
+			// Getters
+			var firstTwoLanguages = this.$store.getters.firstTwoLanguages;
+			console.log(firstTwoLanguages);
+
+			// Dispatch action
+			this.$store.dispatch({type: 'increment', myData: 5}).then((count) => {
+				console.log("Login component receives this count:", count);
+			});
+			
+
 			e.preventDefault();
-			this.$emit('create-token', this.loginform__username, this.loginform__password);
+
+
+			// this.$emit('create-token', this.loginform__username, this.loginform__password);
 	  	},
 
 	  	switchTab: function(tab){
