@@ -134,7 +134,7 @@ apiRoutes.post('/token/verify', function(req, res){
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
 	if (token){
-		jww.verify(token, app.get('superSecret'), function(err, decoded){
+		jwt.verify(token, app.get('superSecret'), function(err, decoded){
 			if (err) {
 				return res.json({success: false, message: 'Failed to authenticate token...'})
 			} else {

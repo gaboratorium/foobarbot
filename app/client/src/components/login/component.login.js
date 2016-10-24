@@ -8,22 +8,6 @@ var router = require('./../../instances/instance.router.js');
 module.exports = {
 	name: "LoginComponent",
 	template: html,
-	props: {
-		user: Object,
-		apiResponse: {
-			isSuccessful: Boolean,
-			package: Object,
-			message: String
-		}
-	},
-	watch: {
-		apiResponse: function(newResponse){
-			console.log("login comp watcher triggered");
-			if (newResponse.isSuccessful) {
-				// router.push('about');
-			}
-		}
-	},
 	data: function(){
 		return {
 			loginform__username: "",
@@ -34,18 +18,14 @@ module.exports = {
 	methods: {
 		loginUser: function(e){
 			e.preventDefault();
-
-			// Commit mutation
-			// this.$store.commit('increment');
-
-			// Getters
-			var firstTwoLanguages = this.$store.getters.firstTwoLanguages;
-			console.log(firstTwoLanguages);
-
-			// Dispatch action
-			this.$store.dispatch({type: 'getStarWars', myData: 5}).then((data) => {
-				console.log("Login component receives this data:", data);
-			});
+			this.$store.dispatch({
+					type: "getStarWars",
+					userName: this.loginform__username,
+					userPassword: this.loginform__password
+				}).then((response) => {
+					// if ok, router.push(home)
+					// if not ok, output something for the user
+				})
 
 
 			// this.$emit('create-token', this.loginform__username, this.loginform__password);

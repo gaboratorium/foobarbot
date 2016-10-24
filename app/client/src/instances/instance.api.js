@@ -24,6 +24,19 @@ module.exports = new Vue({
 
 		postUserLog: () => {
 			console.log("Logging user activity...");
+		},
+
+		// Verify token
+		verifyToken: (token) => {
+			var body = { token: token };
+			var myPromise = new Promise((resolve, reject) => {
+				Vue.http.post('api/token/verify', body).then((response) => {
+					resolve(response.body);
+				}, (fail) => {
+					reject(fail);
+				})
+			})
+			return myPromise;
 		}
 	}
 })

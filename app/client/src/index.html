@@ -18,22 +18,11 @@
 	<div id="app">
 		
 		<!-- Navigation Bar -->
-		<navbar 
-			v-bind:user-for-navbar="user"
-			v-bind:csencs="csencs"
-			v-on:delete-token="deleteToken"
-			>
+		<navbar>
 		</navbar>
 		
 		<!-- ViewComponent -->
-	 	<router-view 
-	 		v-bind:user="user"
-	 		v-bind:api-response="resultPackage"
-	 		v-on:create-token="createToken"
-	 		v-on:verify-token="verifyToken"
-	 		v-on:delete-token="deleteToken"
-	 		>
-	 	</router-view>
+	 	<router-view ></router-view>
 	</div>
 	
 	<!-- Initialize app -->

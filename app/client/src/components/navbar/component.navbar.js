@@ -7,17 +7,10 @@ var html = fs.readFileSync(__dirname + '/component.navbar.html', 'utf8')
 module.exports =  {
 	name: "NavbarComponent",
 	template: html,
-	props: {
-		userForNavbar: {
-			name: String,
-			token: String
-		},
-		csencs: String
-	},
 	watch: {
-		csencs: function(newCsencs){
-			console.log("Navbar Watcher trigerred...");
-			if (newCsencs.token !=='') {
+		$route: function(){
+			let ok = this.$store.getters.isUserLoggedIn;
+			if (ok) {
 				this.isUserLoggedIn = true;
 			}
 		}

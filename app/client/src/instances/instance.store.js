@@ -1,17 +1,22 @@
 const ApiInstance = require('./instance.api.js');
 
 module.exports = new Vuex.Store({
-  // state management pattern
-  // state
+
+  // State
   state: {
-    count: 0,
-    snippets: ['typescript', 'coffescript', 'typescript', 'c#', 'delphi']
+    userData: {
+      userToken: undefined,
+      userName: undefined
+    }
   },
 
-  // Get a variaton of state
+  // Getters
   getters: {
-    firstTwoLanguages: state => {
-      return [ state.snippets[0], state.snippets[1] ];
+    userName: state => {
+      return state.userData.userName;
+    },
+    userToken: state => {
+      return state.userData.userToken;
     }
   },
 
@@ -20,12 +25,21 @@ module.exports = new Vuex.Store({
     getStarWars: (context, payload) => {
       ApiInstance.postUserLog();
       return ApiInstance.getStarWars();
+    },
+
+    // Verify Token
+    verifyToken: (context, payload) => {
+      ApiInstance.postUserLog();
+      return ApiInstance.verifyToken(payload.token);
     }
   },
 
   // Mutations - sync calls to change the state
   mutations: {
-    increment: state => state.count++,
-    decrement: state => state.count--
+    logoutUser: state => state.userData = {userToken: undefined, userName: undefined},
+    loginUser: function(state, newUser) {
+      state.userData = newUser;
+
+    }
   }
 })

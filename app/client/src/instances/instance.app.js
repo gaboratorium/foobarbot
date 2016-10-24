@@ -10,20 +10,21 @@ const NavbarComponent = require('./../components/navbar/component.navbar.js');
 
 // App instance
 module.exports = new Vue({
+  
 
   // Instance options
   el: '#app',
   name: "myVueApp",
+  
+  // Inject other instances
+  router: RouterInstance,
+  store: StoreInstance,
+
+  // Properties
   data: {
-    resultPackage: {},    
-    user: {
-      name: "",
-      token: ""
-    },
-    csencs: ""
   },
 
-  // Instance components
+  // Components
   components: {
   	'login-view-component': LoginViewComponent,
     'settings-view-component': SettingsViewComponent,
@@ -31,7 +32,31 @@ module.exports = new Vue({
   	'navbar': NavbarComponent
   },
 
-  // Instance methods
+  // Created hook
+  beforeCreate: function(){
+
+    if (localStorage.token == undefined) {
+      console.log('Token is undefined');
+      // return;
+    }
+
+    // let myToken = localStorage.token;
+    let myToken = "random-token-asd-1234";
+
+    StoreInstance.dispatch({type: 'verifyToken', token: myToken}).then((response) => {
+      // if ok, registerUserInStore
+      console.log(response);
+      
+      // else do nothing
+    })
+
+    let newUser = {userToken: "myUserToken", userName: "myUserName"};
+    StoreInstance.commit('loginUser', newUser);
+
+
+  },
+
+  // Methods
   methods: {
 
     createResultPackage(isSuccessful, package, message){
@@ -49,26 +74,6 @@ module.exports = new Vue({
 
       StoreInstance.commit('increment');
       console.log(StoreInstance.state.count);
-
-      // this.$http.post('/api/token/create', data).then(
-      //     function(response) {
-      //       console.log(response);
-      //       this.resultPackage = this.createResultPackage(true, null, "You have logged in succesfully.");
-      //       RouterInstance.push('about');
-
-      //       this.user.name = response.body.user.name;
-      //       this.user.token = response.body.user.token;
-
-      //       localStorage.name = this.user.name;
-      //       localStorage.token = this.user.token;
-
-      //       this.csencs = "Aj szi no csencsesz";
-
-      //     }, function(err){
-      //       console.log(err);
-      //       this.resultPackage = this.createResultPackage(false, null, "User name or password was wrong.");
-      //     }
-      //   );
     },
 
     verifyToken: function(token){
@@ -96,11 +101,5 @@ module.exports = new Vue({
     receiveResponse: function(response){
       console.log("App got this response", response);
     }
-  },
-
-  // Instance router
-  router: RouterInstance,
-
-  // Vuex store
-  store: StoreInstance
+  }
 });
