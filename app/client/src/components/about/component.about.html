@@ -11,6 +11,21 @@
 			<li>Save snippets instantly with the Chrome extension</li>
 			<li>Insert snippets instantly with Atom/Sublime packages</li>
 		</ul>
-	
+		<h2>Here is an API call:</h2>
+		<p>You should only be able to fetch data when you are logged in:</p>
+		<a href="" class="button" @click.stop="loadUsers">Load users</a>
+		<a href="" class="button" @click.stop="resetUsers">Reset users</a>
+		<div class="grid-block">
+			<div class="grid-content">
+				<div class="card card-section">
+					<h2>Users</h2>
+					<p>No users have been loaded.</p>
+					<p> {{ errorMsg }} </p>
+					<ul>
+						<li v-for="user in users">{{ user }}</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 	 </div>
 </div>

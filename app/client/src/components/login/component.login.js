@@ -19,16 +19,14 @@ module.exports = {
 		loginUser: function(e){
 			e.preventDefault();
 			this.$store.dispatch({
-					type: "getStarWars",
+					type: "createToken",
 					userName: this.loginform__username,
 					userPassword: this.loginform__password
 				}).then((response) => {
-					// if ok, router.push(home)
-					// if not ok, output something for the user
+					this.$router.push('settings');
+				}, (fail) => {
+					console.log('Oops, something went wrong!');					
 				})
-
-
-			// this.$emit('create-token', this.loginform__username, this.loginform__password);
 	  	},
 
 	  	switchTab: function(tab){

@@ -107,7 +107,7 @@ apiRoutes.post('/token/create', function(req, res){
 
 		// Create user object
 		var user = {
-			"name": "admin"
+			"userName": "admin"
 		}
 
 		// Create token
@@ -115,13 +115,13 @@ apiRoutes.post('/token/create', function(req, res){
 			expiresIn : 1440 // 24 hours
 		});
 
-		var userToSend = {
-			name: user.name,
-			token: token
+		var myUserClient = {
+			userName: req.body.name,
+			userToken: token
 		}
 
 		// Send back token
-		res.json({success: true, message: "Good request", user: userToSend})
+		res.json({success: true, message: "Good request", userClient: myUserClient})
 
 	// Unsuccesful login - error msg
 	} else {
@@ -138,8 +138,16 @@ apiRoutes.post('/token/verify', function(req, res){
 			if (err) {
 				return res.json({success: false, message: 'Failed to authenticate token...'})
 			} else {
+				var decodedToken = jwt.verify(token, app.get('superSecret'));
+				console.log(decodedToken.userName) // bar 
 				req.decode = req
-				return res.json({success: true, message: 'Token is valid'})
+
+				var myUserClient = {
+					userName: decodedToken.userName,
+					userToken: token
+				}
+
+				return res.json({success: true, message: 'Token is valid', userClient: myUserClient})
 			}
 		})
 	}
@@ -148,8 +156,12 @@ apiRoutes.post('/token/verify', function(req, res){
 // route middleware to verify a token
 apiRoutes.use(function(req, res, next){
 
+	console.log('haho');
+	
 	// check header or url parameters or post parameters for token
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
+	console.log('server recieves this options', req.body);
+	
 
 	if (token){
 		jwt.verify(token, app.get('superSecret'), function(err, decoded){

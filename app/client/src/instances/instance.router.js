@@ -5,21 +5,21 @@ const NavbarComponent = require('./../components/navbar/component.navbar.js');
 
 /////////////////////////////////////// 
 // Navigation guards
-const authRequired = function(to, from, next){
-	
-	if (localStorage.token == undefined) {
-		delete localStorage.name;
-		delete localStorage.token;
-		console.log("Localstorage token was undefined so this should be the last message");
-		next('/');
+const userClientRequired = function(to, from, next){
+	console.log('userClientRequired');
+	if (localStorage.userName !== undefined && localStorage.userToken !== undefined) {
+		next();
+		return;
 	}
+	next('/about');
+}	
 
-	let token = localStorage.token;
-	// tokenService.verifyToken(token);
-	next();
-}
-
-const authNotAllowed = function(to, from, next){
+const userClientForbidden = function(to, from, next){
+	console.log('userClinetForbidden');
+	if (localStorage.userName !== undefined && localStorage.userToken !== undefined) {
+		next('/about');
+		return;
+	}
 	next();
 }
 
@@ -39,7 +39,7 @@ module.exports = new VueRouter({
 			path: '/login',
 			name: 'login',
 			component: LoginViewComponent,
-      		beforeEnter: authNotAllowed
+      		beforeEnter: userClientForbidden
 		}, 
 
 	    // About
@@ -54,7 +54,7 @@ module.exports = new VueRouter({
 			path: '/settings',
 			name: 'settings',
 			component: SettingsViewComponent,
-	  		beforeEnter: authRequired
+	  		beforeEnter: userClientRequired
 		}
 	]
 })

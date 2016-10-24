@@ -1,15 +1,6 @@
 module.exports = new Vue({
 	name: "Api",
 	methods: {
-		sayHello: () => {
-			var data = "secretData from api";
-			return new Promise((resolve, reject) => {
-				setTimeout(()=>{
-					resolve(data);
-				}, 1500);
-			})
-		},
-
 		// Get a starwars ship
 		getStarWars: () => {
 			var myPromise = new Promise((resolve, reject) => {
@@ -23,15 +14,45 @@ module.exports = new Vue({
 		},
 
 		postUserLog: () => {
-			console.log("Logging user activity...");
+			// console.log("Logging user activity...");
 		},
 
 		// Verify token
-		verifyToken: (token) => {
-			var body = { token: token };
+		verifyToken: (myToken) => {
+			var body = { token: myToken };
 			var myPromise = new Promise((resolve, reject) => {
 				Vue.http.post('api/token/verify', body).then((response) => {
 					resolve(response.body);
+				}, (fail) => {
+					reject(fail);
+				})
+			})
+			return myPromise;
+		},
+
+		// Create token
+		createToken: (userName, userPassword) => {
+			var body = {name: userName, password: userPassword};
+			var myPromise = new Promise((resolve, reject) => {
+				Vue.http.post('api/token/create', body).then((response) => {
+					resolve(response.body);
+				}, (fail) => {
+					reject(fail);
+				})
+			})
+			return myPromise;
+		},
+
+		loadUsers: (myToken) => {
+			var options = { 
+				headers: {
+					'x-access-token': myToken
+				} 
+			};			
+			var myPromise = new Promise((resolve, reject) => {
+				Vue.http.get('/api/users', options).then((response) => {
+					resolve(response.body);
+
 				}, (fail) => {
 					reject(fail);
 				})

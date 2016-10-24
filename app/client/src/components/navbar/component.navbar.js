@@ -9,25 +9,40 @@ module.exports =  {
 	template: html,
 	watch: {
 		$route: function(){
-			let ok = this.$store.getters.isUserLoggedIn;
-			if (ok) {
+			if (localStorage.userName !== undefined && localStorage.userToken !== undefined) {
+				console.log('User is logged in');
 				this.isUserLoggedIn = true;
+
+			} else {
+				console.log('User is logged out');
+				this.isUserLoggedIn = false;
 			}
+
+			this.user.name = this.$store.getters.userName;
 		}
 	},
 	data: function(){
 		return {
 			user: {
-				name: localStorage.name
+				name: ""
 			},
 			isUserLoggedIn: false
 
 		}
 	},
+	created: function(){
+		if (localStorage.userName !== undefined && localStorage.userToken !== undefined) {
+			this.isUserLoggedIn = true;
+		}
+		this.user.name = this.$store.getters.userName;
+		console.log(this.$store.getters.userName);
+		
+	},
 	methods: {
 		logout: function(){
-			console.log("Logging out...");
-			this.$emit('applogout');
+			this.$store.commit('unsetUserClient');
+			this.$router.replace('asd');
+			this.$router.replace('about');
 		}
 	}
 };
