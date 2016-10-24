@@ -12,7 +12,8 @@ module.exports = {
 		return {
 			loginform__username: "",
 			loginform__password: "",
-			tab: 'login'
+			tab: 'login',
+			errorMsg: ""
 		}
 	},
 	methods: {
@@ -25,11 +26,13 @@ module.exports = {
 				}).then((response) => {
 					this.$router.push('settings');
 				}, (fail) => {
-					console.log('Oops, something went wrong!');					
+					console.log('Oops, something went wrong!');		
+					this.errorMsg = "Wrong credentials! Try again!";			
 				})
 	  	},
 
-	  	switchTab: function(tab){
+	  	switchTab: function(e, tab){
+			e.preventDefault();
 	  		this.tab = tab;
 	  	}
 	}

@@ -9,13 +9,14 @@
 				<input type="text" placeholder="Type your name..." v-model="loginform__username">
 				<input type="password" placeholder="Type your password..." v-model="loginform__password">
 				<a href="#" class="button" @click.stop="loginUser">Login </a>
-				<a href="#" @click.stop="switchTab('signup')">...or sign up</a>
+				<!--<a href="#" @click.stop="switchTab('signup')">...or sign up</a>-->
+				<p>{{ errorMsg }}</p>
 			</div>
 
 			<!-- Sign up tab -->
 			<div v-if="tab == 'signup'" class="card card-section">
 				<p>Registration is currently closed.</p>
-				<a href="#" @click.stop="switchTab('login')">...go back.</a>
+				<a href="" @click.stop="switchTab('login')">...go back.</a>
 			</div>
 			
 		</div>
