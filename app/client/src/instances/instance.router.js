@@ -1,6 +1,7 @@
+const AboutViewComponent = require('./../components/about/component.about.js');
 const LoginViewComponent =  require('./../components/login/component.login.js');
 const SettingsViewComponent = require('./../components/settings/component.settings.js');
-const AboutViewComponent = require('./../components/about/component.about.js');
+const NotificationsViewComponent = require('./../components/notifications/component.notifications.js');
 const NavbarComponent = require('./../components/navbar/component.navbar.js');
 
 /////////////////////////////////////// 
@@ -33,6 +34,13 @@ module.exports = new VueRouter({
 			path: '/',
 			redirect: '/about',
 		},
+
+		  // About
+	    {
+	      path: '/about',
+	      name: 'about',
+	      component: AboutViewComponent,
+	    }, 
 		
 		// Login
 		{
@@ -42,19 +50,20 @@ module.exports = new VueRouter({
       		beforeEnter: userClientForbidden
 		}, 
 
-	    // About
-	    {
-	      path: '/about',
-	      name: 'about',
-	      component: AboutViewComponent,
-	    }, 
-
 		// Settings
 		{
 			path: '/settings',
 			name: 'settings',
 			component: SettingsViewComponent,
 	  		beforeEnter: userClientRequired
-		}
+		},
+
+		// Settings
+		{
+			path: '/notifications',
+			name: 'notifications',
+			component: NotificationsViewComponent,
+	  		beforeEnter: userClientRequired
+		},
 	]
-})
+});

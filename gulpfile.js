@@ -23,7 +23,7 @@ require('./gulp_tasks/gulp.clear')(gulp);
 
 // Build dist
 gulp.task('build', "Build solution", function(){
-	runSequence('clear', 'copy_index', 'libs.css.concat', 'sass', 'libs.js.concat', 'browserify')
+	runSequence('clear', 'copy_index', 'copy_assets','libs.css.concat', 'sass', 'libs.js.concat', 'browserify');
 });
 
 gulp.task('toljadneki', ['watch']);

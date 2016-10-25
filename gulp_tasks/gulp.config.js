@@ -28,7 +28,7 @@ module.exports = {
         ]
     },
 
-    // Source assets
+    // Source
     src: {
         root: globalPath.src,
         copy_index: globalPath.src + 'index.html',

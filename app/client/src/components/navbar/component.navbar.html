@@ -17,8 +17,9 @@
 		<ul class="menu-bar" v-if='isUserLoggedIn'>
 			<li><a href="">
 				<span>Hello <span class='o-text--strong'>{{ user.name }}</span></span></a></li>
-			<li><router-link to="/about">About</router-link></li>
-			<li><router-link to="/settings">Settings</router-link></li>
+			<li><router-link to="about">About</router-link></li>
+			<li><router-link to="settings">Settings</router-link></li>
+			<li><router-link to="notifications">Notifications</router-link></li>
 			<li><a href="#" @click.stop="logout()">Logout</a></li>
 		</ul>
 		<!-- Right menu for visitor -->
