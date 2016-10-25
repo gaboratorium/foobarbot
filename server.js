@@ -23,6 +23,7 @@ var defaultPort = 3000;
 
 app.use('/js', express.static(__dirname + globalPath.client.dist + "js/"));
 app.use('/css', express.static(__dirname + globalPath.client.dist + "css/"));
+app.use('/assets', express.static(__dirname + globalPath.client.dist + "assets/"));
 
 // Prepare to deliver for client, save to RAM
 var indexHtml = fs.readFileSync(__dirname + globalPath.client.dist + "index.html", "utf8");
