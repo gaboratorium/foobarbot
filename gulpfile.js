@@ -1,5 +1,5 @@
 var gulp = require('gulp-help')(require('gulp'));
-var runSequence = require('gulp-run-sequence')
+var runSequence = require('gulp-run-sequence');
 var config = require('./gulp_tasks/gulp.config.js');
 
 // Concat js

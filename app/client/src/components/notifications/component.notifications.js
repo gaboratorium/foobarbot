@@ -10,16 +10,34 @@ module.exports =  {
 	data: function(){
 		return {
 			notifMessage: '',
-			notifAudio: ''
+			notifDelay: 0,
+			notifAudio: '',
+			notifications: [
+				{ message: "Hello, I am here" },
+				{ message: "Hello, I am here as well" },
+				{ message: "Gesundheit, ich bin das notification" }
+			]
 		};
 	},
 	created: function(){
 		this.notifAudio = new Audio('./../assets/notification.mp3');
+		this.$store.dispatch({
+			type: 'getNotifications'
+		}).then((response) => {
+			console.log('Response: ', response);
+			
+		}, (fail) => {
+			//fail
+		});
 	},
 	methods: {
+
+		// Push notification
 		notifyMe: function(e){
+			var NotificationComponent = this;
+			console.log(NotificationComponent.notifDelay);
+			
 			e.preventDefault();
-			console.log('You have requested a notifications');
 			
 			// Notify user if notifications are not supported
 			if (!("Notification" in window)) {
@@ -34,8 +52,10 @@ module.exports =  {
 
 			// If notifications are granted, show notif
 			if (Notification.permission === "granted") {
-				var notification = new Notification(this.notifMessage, options);
-				this.notifAudio.play();
+				setTimeout(function(){
+					var notification = new Notification(NotificationComponent.notifMessage, options);
+					NotificationComponent.notifAudio.play();
+				}, NotificationComponent.notifDelay * 1000);
 
 			// If notifs are not granted and not denied, ask for permission
 			} else if (Notification.permission !== "denied") {
@@ -43,11 +63,18 @@ module.exports =  {
 
 					// If permission was granted, show notif
 					if (permission === "granted"){
-						var notification = new Notification(this.notifMessage, options);
-						this.notifAudio.play();
+						setTimeout(function(){
+							var notification = new Notification(NotificationComponent.notifMessage, options);
+							NotificationComponent.notifAudio.play();
+						}, NotificationComponent.notifDelay * 1000);
 					}
 				});
 			}
-	  	}
+	  	},
+
+		resetNotifications: function(e) {
+			e.preventDefault();
+			this.notifications = [];
+		}
 	}
 };

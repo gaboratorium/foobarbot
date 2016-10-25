@@ -37,14 +37,17 @@ module.exports = new Vue({
     var userName = localStorage.userName;
     if (userToken == undefined || userName == undefined) {
       StoreInstance.commit('unsetUserClient');
+      // I WANT TO RESOLVE HERE
       return;
     }
 
     // If token and name is set, verify token
     StoreInstance.dispatch({type: 'verifyToken', token: userToken}).then((response) => {
-      // console.log('App beforeCreate() -> store.verifyToken success: ', response);
+      console.log('Token has been verifyied during app initialisation');
+      
+      // I WANT TO RESOLVE HERE
     }, (fail) => {
-      // console.log('App beforeCreate() -> store.verifyToken fail: ', fail);
+      // I WANT TO RESOLVE HERE
     })
   }
 });

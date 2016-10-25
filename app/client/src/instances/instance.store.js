@@ -81,9 +81,24 @@ module.exports = new Vuex.Store({
     loadUsers: (context, payload) => {
       ApiInstance.postUserLog();
       return ApiInstance.loadUsers(payload.token);
-    }
-  },
+    },
 
+      getNotifications: (context, payload) => {
+        ApiInstance.postUserLog();
+        console.log('getNotification action on store called');
+        console.log(context.getters.userToken);
+        console.log(context.getters.userName);
+        var myPromise =  new Promise((resolve, reject) => {
+          resolve();
+        }, (fail) => {
+          reject();
+        });
+
+        return myPromise;
+        // return ApiInstance.getNotifications();
+      }
+  },
+  // end of actions
   // Mutations - sync calls to change the state
   mutations: {
 
