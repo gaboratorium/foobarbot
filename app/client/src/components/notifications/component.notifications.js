@@ -13,27 +13,43 @@ module.exports =  {
 			notifDelay: 0,
 			notifAudio: '',
 			notifications: [
-				{ message: "Hello, I am here" },
-				{ message: "Hello, I am here as well" },
-				{ message: "Gesundheit, ich bin das notification" }
 			]
 		};
 	},
 	created: function(){
 		this.notifAudio = new Audio('./../assets/notification.mp3');
-		this.$store.dispatch({
-			type: 'getNotifications'
-		}).then((response) => {
-			console.log('Noti comp gets Response: ', response);
-			this.notifications = response;
-			
-		}, (fail) => {
-			//fail
-			console.log('failll', fail);
-			
-		});
+		this.loadNotifications();
 	},
 	methods: {
+
+		loadNotifications: function() {
+			this.$store.dispatch({
+				type: 'getNotifications'
+			}).then((response) => {
+				console.log('Noti comp gets Response: ', response);
+				this.notifications = response;
+				
+				
+			}, (fail) => {
+				//fail
+				console.log('failll', fail);
+				
+			});
+		},
+
+		deleteNotifications: function(e){
+			e.preventDefault();
+			this.$store.dispatch({
+				type: 'deleteNotification'
+			}).then((response) => {
+				console.log(response);
+				this.notifications = [];
+				
+			}, (fail) => {
+				console.log(fail);
+				
+			})
+		},
 
 		// Push notification
 		notifyMe: function(e){
@@ -58,6 +74,7 @@ module.exports =  {
 				setTimeout(function(){
 					var notification = new Notification(NotificationComponent.notifMessage, options);
 					NotificationComponent.notifAudio.play();
+					NotificationComponent.sendNotification();
 				}, NotificationComponent.notifDelay * 1000);
 
 			// If notifs are not granted and not denied, ask for permission
@@ -69,15 +86,25 @@ module.exports =  {
 						setTimeout(function(){
 							var notification = new Notification(NotificationComponent.notifMessage, options);
 							NotificationComponent.notifAudio.play();
+							NotificationComponent.sendNotification();
 						}, NotificationComponent.notifDelay * 1000);
 					}
 				});
 			}
 	  	},
 
-		resetNotifications: function(e) {
-			e.preventDefault();
-			this.notifications = [];
+		sendNotification: function(){
+			var NotificationComponent = this;
+			this.$store.dispatch({
+				type: "postNotification",
+				notificationMessage: NotificationComponent.notifMessage
+			}).then((response) => {
+				console.log('Notification component recieves response:', response);
+				this.loadNotifications();
+			}, (fail) => {
+				console.log('Notification component request went wrong', fail);
+				
+			});
 		}
 	}
 };

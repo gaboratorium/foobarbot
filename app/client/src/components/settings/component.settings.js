@@ -21,6 +21,8 @@ module.exports =  {
 				  type: 'loadUsers',
 				  token: myToken
 			  }).then((response) => {
+				  console.log(response);
+				  
 				  this.users = response;
 			  }, (fail) => {
 				  // Fail

@@ -68,12 +68,42 @@ module.exports = new Vue({
 			};
 			var myPromise = new Promise((resolve, reject) => {
 				Vue.http.get('/api/users/' + userId + '/notifications', options).then((response) => {
+					console.log('api receives:', response);
+					
 					resolve(response.body);
 				}, (fail) => {
 					reject(fail);
 				});
 			});
 			return myPromise;
-		}
+		},
+
+		postNotification: (userName, myToken, myMessage) => {
+			var body = {name: userName, token: myToken, message: myMessage};
+			var myPromise = new Promise((resolve, reject) => {
+				Vue.http.post('/api/users/' + userName + '/notifications', body).then((response) => {
+					resolve(response.body);
+				}, (fail) => {
+					reject(fail);
+				})
+			});
+			return myPromise;
+		},
+
+		deleteNotification: (myUserName, myToken) => {
+			var body = {token: myToken};
+			var options = {
+				headers: { 'x-access-token': myToken },
+				body: body
+			};
+			var myPromise = new Promise((resolve, reject) => {
+				Vue.http.delete('/api/users/' + myUserName + '/notification', options).then((response) => {
+					resolve(response.body);
+				}, (fail) => {
+					reject(fail);
+				})
+			});
+			return myPromise;
+		},
 	}
 })

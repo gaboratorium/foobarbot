@@ -149,35 +149,35 @@ apiRoutes.use(function(req, res, next){
 			// Succesfull authentication
 			} else {
 				req.decoded = decoded;
-				console.log('Middleware verification was succesful');
+				console.log('Middleware token verification was succesful');
 				next();
 			}
 		});
 	} else {
-		console.log('Middleware verification failed. No token was provided');
+		console.log('Middleware token verification failed. No token was provided');
 		return res.status(403).send({success: false, message: "No token provided."});
 	}
 });
 
-apiRoutes.get('/setup', function(req, res) {
+// apiRoutes.get('/setup', function(req, res) {
 
 	
 
-  // create a sample user
-  var nick = new User({ 
-    name: 'Nick Cerminara', 
-    password: 'password',
-    admin: true 
-  });
+//   // create a sample user
+//   var nick = new User({ 
+//     name: 'Nick Cerminara', 
+//     password: 'password',
+//     admin: true 
+//   });
 
-  // save the sample user
-  nick.save(function(err) {
-    if (err) throw err;
+//   // save the sample user
+//   nick.save(function(err) {
+//     if (err) throw err;
 
-    console.log('User saved successfully');
-    res.json({ success: true });
-  });
-});
+//     console.log('User saved successfully');
+//     res.json({ success: true });
+//   });
+// });
 
 
 // route to show a random message (GET http://localhost:3000/api/)
@@ -188,27 +188,56 @@ apiRoutes.get('/', function(req, res) {
 // route to return all users (GET http://localhost:8080/api/users)
 apiRoutes.get('/users', function(req, res) {
   User.find({}, function(err, users) {
+	console.log(users);
+	
     res.json(users);
   });
 });
 
-// route to return all notifications from admin (GET http://localhost:8080/api/users)
-apiRoutes.get('/users/admin/notifications', function(req, res) {
-	response = [
-		{ message: "Fetched from server" },
-		{ message: "Yes" },
-		{ message: "Gesundheit, ich bin das notification" }
-	];
-	res.json(response);
+var schema = new Schema({
+	userId: String, 
+    message: String, 
+    date: Number 
 });
 
+var Notification = mongoose.model('Notification', schema);
 
+// route to return all notifications from admin (GET http://localhost:8080/api/users/admin/notifications)
+apiRoutes.get('/users/admin/notifications', function(req, res) {
+	Notification.find({}, function(err, notifications) {
+		res.json(notifications);
+	});
+});
+// route to create a new notifications
+apiRoutes.post('/users/admin/notifications', function(req, res) {
 
-apiRoutes.get('/gabor', function(req, res){
-	var testObj = { 'name': 'Gabor', 'age': 24 };
-	res.setHeader("Content-Type", "application/json");
-	testObjAsString = JSON.stringify(testObj);
-	res.send(testObjAsString);
+	var userId = "admin";
+	var message = req.body.message;
+	var date = new Date().getTime();
+	
+	
+	console.log(req.body.password);
+
+	var myNotification = new Notification({
+		userId: userId, 
+    	message: message, 
+    	date: date 
+	});
+
+	myNotification.save((err) => {
+		if (err) throw err;
+
+		console.log('Notification saved successfully');
+    	res.json({ success: true });
+	});
+});
+
+apiRoutes.delete('/users/admin/notification', function(req, res) {
+	Notification.remove({}, (err, notification) => {
+		if (err) res.send(err);
+		console.log('Deleting notifications...');
+		res.json({message: "Succesfully deleted"});
+	});
 });
 
 

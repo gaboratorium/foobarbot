@@ -80,12 +80,28 @@ module.exports = new Vuex.Store({
       return ApiInstance.loadUsers(payload.token);
     },
 
-      getNotifications: (context, payload) => {
-        ApiInstance.postUserLog();
-        var userName = context.getters.userName; // should be userId
-        var userToken = context.getters.userToken;
-        return ApiInstance.getNotifications(userName, userToken);
-      }
+    // Get list of notifications
+    getNotifications: (context, payload) => {
+      ApiInstance.postUserLog();
+      var userName = context.getters.userName; // should be userId
+      var userToken = context.getters.userToken;
+      return ApiInstance.getNotifications(userName, userToken);
+    },
+
+    // Post notifications
+    postNotification: (context, payload) => {
+      ApiInstance.postUserLog();
+      var userName = context.getters.userName; // should be userId
+      var userToken = context.getters.userToken;
+      return ApiInstance.postNotification(userName, userToken, payload.notificationMessage);
+    },
+
+    deleteNotification: (context, payload) => {
+      ApiInstance.postUserLog();
+      var userName = context.getters.userName;
+      var userToken = context.getters.userToken;
+      return ApiInstance.deleteNotification(userName, userToken);
+    }
   },
   // end of actions
   // Mutations - sync calls to change the state
