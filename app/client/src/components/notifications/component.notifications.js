@@ -24,10 +24,13 @@ module.exports =  {
 		this.$store.dispatch({
 			type: 'getNotifications'
 		}).then((response) => {
-			console.log('Response: ', response);
+			console.log('Noti comp gets Response: ', response);
+			this.notifications = response;
 			
 		}, (fail) => {
 			//fail
+			console.log('failll', fail);
+			
 		});
 	},
 	methods: {

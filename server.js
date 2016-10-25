@@ -135,13 +135,9 @@ apiRoutes.post('/token/verify', function(req, res){
 
 // route middleware to verify a token
 apiRoutes.use(function(req, res, next){
-
-	console.log('haho');
 	
 	// check header or url parameters or post parameters for token
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
-	console.log('server recieves this options', req.body);
-	
 
 	if (token){
 		jwt.verify(token, app.get('superSecret'), function(err, decoded){
@@ -153,10 +149,12 @@ apiRoutes.use(function(req, res, next){
 			// Succesfull authentication
 			} else {
 				req.decoded = decoded;
+				console.log('Middleware verification was succesful');
 				next();
 			}
 		});
 	} else {
+		console.log('Middleware verification failed. No token was provided');
 		return res.status(403).send({success: false, message: "No token provided."});
 	}
 });
@@ -192,6 +190,16 @@ apiRoutes.get('/users', function(req, res) {
   User.find({}, function(err, users) {
     res.json(users);
   });
+});
+
+// route to return all notifications from admin (GET http://localhost:8080/api/users)
+apiRoutes.get('/users/admin/notifications', function(req, res) {
+	response = [
+		{ message: "Fetched from server" },
+		{ message: "Yes" },
+		{ message: "Gesundheit, ich bin das notification" }
+	];
+	res.json(response);
 });
 
 

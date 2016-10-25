@@ -39,7 +39,7 @@ module.exports = new Vue({
 				}, (fail) => {
 					reject(fail);
 				})
-			})
+			});
 			return myPromise;
 		},
 
@@ -57,6 +57,22 @@ module.exports = new Vue({
 					reject(fail);
 				})
 			})
+			return myPromise;
+		},
+		
+		getNotifications: (userId, myToken) => {
+			var options = { 
+				headers: {
+					'x-access-token': myToken
+				} 
+			};
+			var myPromise = new Promise((resolve, reject) => {
+				Vue.http.get('/api/users/' + userId + '/notifications', options).then((response) => {
+					resolve(response.body);
+				}, (fail) => {
+					reject(fail);
+				});
+			});
 			return myPromise;
 		}
 	}

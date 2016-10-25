@@ -35,8 +35,6 @@ module.exports =  {
 			this.isUserLoggedIn = true;
 		}
 		this.user.name = this.$store.getters.userName;
-		console.log(this.$store.getters.userName);
-		
 	},
 	methods: {
 		logout: function(){

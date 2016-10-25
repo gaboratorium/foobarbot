@@ -27,7 +27,7 @@ module.exports = new Vue({
 
     // If token and name is set, verify token
     StoreInstance.dispatch({type: 'verifyToken', token: userToken}).then((response) => {
-      console.log('Token has been verifyied during app initialisation');
+      console.log('Token has been verifyied during apploader');
       this.initApp();
     }, (fail) => {
       this.initApp();
