@@ -1,2 +1,2 @@
 // Initialize app instance
-const AppInstance = require('./instances/instance.app.js');
+const AppInstance = require('./instances/instance.apploader.js');
