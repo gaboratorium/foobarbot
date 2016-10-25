@@ -13,7 +13,12 @@ module.exports = {
         js: [
             /* Vue */
             globalPath.npm+"vue/dist/vue.js",
-            globalPath.npm+"vue-router/dist/vue-router.js"
+            globalPath.npm+"vue-router/dist/vue-router.js",
+            globalPath.npm+"vue-resource/dist/vue-resource.js",
+            globalPath.npm+"vuex/dist/vuex.js",
+
+            /* Other libs */
+            globalPath.npm+"lodash/lodash.js"
         ],
 
         // CSS Libraries
@@ -28,9 +33,15 @@ module.exports = {
         root: globalPath.src,
         copy_index: globalPath.src + 'index.html',
         copy_assets: globalPath.src + 'assets/**/*.*',
+        browserify: [
+            // Browserify entry point to bundle
+            globalPath.src + "main.js"
+        ],
+        // JavaScript to watch
         js: [
-            // JavaScript to concat
-            globalPath.src + "components/app.js"
+            globalPath.src + "capp.js",
+            globalPath.src + "components/**/*.js",
+            globalPath.src + "instances/**/*.js"
         ],
         ts: [
             // Typescript to compile...

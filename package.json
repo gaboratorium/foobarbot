@@ -19,12 +19,15 @@
   },
   "homepage": "https://gitlab.com/e-skimos/project-lines#README",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "foundation-apps": "^1.2.0",
+    "jsonwebtoken": "^7.1.9",
+    "lodash": "^4.16.4",
     "mongodb": "^2.2.10",
     "mongoose": "^4.6.3",
-    "vinyl-source-stream": "^1.1.0",
     "vue": "^2.0.3",
+    "vue-resource": "^1.0.3",
     "vue-router": "^2.0.1"
   },
   "engines": {
@@ -41,6 +44,10 @@
     "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-typescript": "^3.0.2",
-    "nodemon": "^1.10.2"
+    "morgan": "^1.7.0",
+    "nodemon": "^1.10.2",
+    "vinyl-source-stream": "^1.1.0",
+    "vueify": "^9.2.4",
+    "vuex": "^2.0.0"
   }
 }

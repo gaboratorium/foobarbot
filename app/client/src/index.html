@@ -3,38 +3,29 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Project Lines</title>
-
 	<!-- Foundation for Apps - temporary -->
 	<link rel="stylesheet" type="text/css" href="css/libs.css">
-
 	<!-- App css -->
 	<link rel="stylesheet" type="text/css" href="css/app.css">
-
 	<!-- Vendor js -->
 	<script src="js/libs.js"></script>
+	<!-- Noto -->
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
 
-	<!-- App js -->
-	<script src="js/app.js"></script>
 </head>
 <body>
+	<!-- App frame -->
 	<div id="app">
-
-		<!-- Navigation -->
-		<div class="menu-group menu-group--navbar">
-			<div class="menu-group-left">
-				<ul class="menu-bar">
-					<li><a href="#">Project Lines</a></li>
-				</ul>
-			</div>
-			<div class="menu-group-right">
-				<ul class="menu-bar">
-					<li><router-link to="/login">Login</router-link></li>
-					<li><router-link to="/settings">Settings</router-link></li>
-				</ul>
-			</div>
-		</div>		 	    
-	
-	 	<router-view></router-view>
+		
+		<!-- Navigation Bar -->
+		<navbar>
+		</navbar>
+		
+		<!-- ViewComponent -->
+	 	<router-view ></router-view>
 	</div>
+	
+	<!-- Initialize app -->
+	<script src="js/app.js"></script>
 </body>
 </html>

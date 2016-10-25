@@ -6,6 +6,11 @@
 
 // Base HTML tags
 @import 'base.typography';
+@import 'base.pre';
+
+// Objects
+@import 'objects.grid';
+@import 'objects.text';
 
 // UI components
 @import 'components.menu-group';
