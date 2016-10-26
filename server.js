@@ -78,7 +78,7 @@ app.use('/api', apiRoutes);
 
 apiRoutes.post('/token/create', function(req, res){
 
-	console.log(req.body.userPassword);
+
 	
 
 	User.findOne({userEmail: req.body.userEmail}, function(err, user){
@@ -117,6 +117,9 @@ apiRoutes.post('/token/create', function(req, res){
 });
 
 apiRoutes.post('/token/verify', function(req, res){
+
+
+	
 	// check header or url parameters or post parameters for token
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
@@ -126,7 +129,7 @@ apiRoutes.post('/token/verify', function(req, res){
 				return res.json({success: false, message: 'Failed to authenticate token...'});
 			} else {
 				var decodedToken = jwt.verify(token, app.get('superSecret'));
-				console.log(decodedToken.userName); // bar 
+				
 				req.decode = req;
 
 				var myUserClient = {
@@ -160,7 +163,7 @@ apiRoutes.post('/users', function(req, res) {
 
 		newUser.save(function(err){
 			if (err) throw err;
-			console.log("New user has registered");
+			
 			return res.send({success: true});
 		});
 	});
@@ -168,6 +171,7 @@ apiRoutes.post('/users', function(req, res) {
 
 // route middleware to verify a token
 apiRoutes.use(function(req, res, next){
+
 	
 	// check header or url parameters or post parameters for token
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -221,7 +225,7 @@ apiRoutes.get('/', function(req, res) {
 // route to return all users (GET http://localhost:8080/api/users)
 apiRoutes.get('/users', function(req, res) {
   User.find({}, function(err, users) {
-	console.log(users);
+
 	
     res.json(users);
   });
@@ -236,31 +240,41 @@ var schema = new Schema({
 var Notification = mongoose.model('Notification', schema);
 
 // route to return all notifications from admin (GET http://localhost:8080/api/users/admin/notifications)
-apiRoutes.get('/users/admin/notifications', function(req, res) {
-	Notification.find({}, function(err, notifications) {
-		res.json(notifications);
+apiRoutes.get('/notifications', function(req, res) {
+	console.log('getnotification recieves this body', req.query);
+	
+	myUserId = req.query.userName;
+	Notification.find({userId: myUserId}, function(err, notifications) {
+		if (err) {
+			console.log('notification query went wrong');
+			
+			throw err;
+		}
+		if (notifications){
+			res.json(notifications);
+			return;
+		}
+		res.status(409).send({success:false, message: 'no'})
 	});
 });
 // route to create a new notifications
-apiRoutes.post('/users/admin/notifications', function(req, res) {
+apiRoutes.post('/notifications', function(req, res) {
 
-	var userId = "admin";
-	var message = req.body.message;
-	var date = new Date().getTime();
+	var userName = req.body.userName;
+
 	
-	
-	console.log(req.body.password);
+	var notificationMessage = req.body.notificationMessage;
 
 	var myNotification = new Notification({
-		userId: userId, 
-    	message: message, 
-    	date: date 
+		userId: userName,
+    	message: notificationMessage, 
+    	date: new Date().getTime() 
 	});
 
 	myNotification.save((err) => {
 		if (err) throw err;
 
-		console.log('Notification saved successfully');
+
     	res.json({ success: true });
 	});
 });
@@ -268,7 +282,7 @@ apiRoutes.post('/users/admin/notifications', function(req, res) {
 apiRoutes.delete('/users/admin/notification', function(req, res) {
 	Notification.remove({}, (err, notification) => {
 		if (err) res.send(err);
-		console.log('Deleting notifications...');
+
 		res.json({message: "Succesfully deleted"});
 	});
 });

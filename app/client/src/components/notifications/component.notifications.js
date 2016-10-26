@@ -23,6 +23,8 @@ module.exports =  {
 	methods: {
 
 		loadNotifications: function() {
+			console.log('notification dispatches getnotifications');
+			
 			this.$store.dispatch({
 				type: 'getNotifications'
 			}).then((response) => {

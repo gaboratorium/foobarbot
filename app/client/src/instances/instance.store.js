@@ -6,6 +6,7 @@ module.exports = new Vuex.Store({
   state: {
     userClient: {
       userName: undefined,
+      userEmail: undefined,
       userToken: undefined
     }
   },
@@ -15,8 +16,14 @@ module.exports = new Vuex.Store({
     userName: state => {
       return state.userClient.userName;
     },
+    userEmail: state => {
+      return state.userClient.userName;
+    },
     userToken: state => {
       return state.userClient.userToken;
+    },
+    userClient: state => {
+      return state.userClient;
     }
   },
 
@@ -82,18 +89,21 @@ module.exports = new Vuex.Store({
 
     // Get list of notifications
     getNotifications: (context, payload) => {
+
       ApiInstance.postUserLog();
+      var userToken = context.getters.userToken; // should be userId
       var userName = context.getters.userName; // should be userId
-      var userToken = context.getters.userToken;
-      return ApiInstance.getNotifications(userName, userToken);
+      console.log('store calls apiinstance getnotifications with userclient');
+      
+      return ApiInstance.getNotifications(userToken, userName);
     },
 
     // Post notifications
     postNotification: (context, payload) => {
       ApiInstance.postUserLog();
+      var userToken = context.getters.userToken; // should be userId
       var userName = context.getters.userName; // should be userId
-      var userToken = context.getters.userToken;
-      return ApiInstance.postNotification(userName, userToken, payload.notificationMessage);
+      return ApiInstance.postNotification(userToken, userName, payload.notificationMessage);
     },
 
     // Delete all notifications

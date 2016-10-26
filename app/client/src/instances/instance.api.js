@@ -73,28 +73,48 @@ module.exports = new Vue({
 			return myPromise;
 		},
 		
-		getNotifications: (userId, myToken) => {
+		getNotifications: (myUserToken, myUserName) => {
+			var body = {
+					userName: myUserName,
+					foo: 'bar'
+				};
+
+				console.log('api wants to get notifications');
+				
 			var options = { 
+				params: {
+					userName: myUserName,
+					paramfoo: 'parambar'
+				},
 				headers: {
-					'x-access-token': myToken
-				} 
+					'x-access-token': myUserToken
+				}
 			};
+
+			console.log('api get notifications http req options', options);
+			
 			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.get('/api/users/' + userId + '/notifications', options).then((response) => {
-					console.log('api receives:', response);
-					
+				Vue.http.get('/api/notifications', options).then((response) => {
+					console.log('api getnotifications receives:', response);
 					resolve(response.body);
 				}, (fail) => {
+					console.log('api getnotifications fails', fail);
+					
 					reject(fail);
 				});
 			});
 			return myPromise;
 		},
 
-		postNotification: (userName, myToken, myMessage) => {
-			var body = {name: userName, token: myToken, message: myMessage};
+		postNotification: (myToken, myUserName, myMessage) => {
+			
+			var body = {
+				userName: myUserName,
+				token: myToken,
+				notificationMessage: myMessage
+			};
 			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.post('/api/users/' + userName + '/notifications', body).then((response) => {
+				Vue.http.post('/api/notifications', body).then((response) => {
 					resolve(response.body);
 				}, (fail) => {
 					reject(fail);
