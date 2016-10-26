@@ -96,11 +96,17 @@ module.exports = new Vuex.Store({
       return ApiInstance.postNotification(userName, userToken, payload.notificationMessage);
     },
 
+    // Delete all notifications
     deleteNotification: (context, payload) => {
       ApiInstance.postUserLog();
       var userName = context.getters.userName;
       var userToken = context.getters.userToken;
       return ApiInstance.deleteNotification(userName, userToken);
+    },
+
+    // Sign up user
+    signupUser: (context, payload) => {
+      return ApiInstance.signupUser(payload.userName, payload.userEmail, payload.userPassword);
     }
   },
   // end of actions

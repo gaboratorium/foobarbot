@@ -12,23 +12,29 @@ module.exports = {
 			signupform__username: "",
 			signupform__email: "",
 			signupform__password: "",
-			signupform__password2: ""
+			signupform__password2: "",
+            errorMsg: ""
 		};
 	},
 	methods: {
 		signupUser: function(e){
-            console.log('Signing up user...');
-            
-		// 	this.$store.dispatch({
-		// 			type: "createToken",
-		// 			userName: this.loginform__username,
-		// 			userPassword: this.loginform__password
-		// 		}).then((response) => {
-		// 			this.$router.push('settings');
-		// 		}, (fail) => {
-		// 			console.log('Oops, something went wrong!');		
-		// 			this.errorMsg = "Wrong credentials! Try again!";			
-		// 		});
+            if (this.signupform__password !== this.signupform__password2) {
+                this.errorMsg = "The passwords you entered do not match.";
+                return;
+            }
+
+			this.$store.dispatch({
+					type: "signupUser",
+					userName: this.signupform__username,
+                    userEmail: this.signupform__email,
+					userPassword: this.signupform__password
+				}).then((response) => {
+					console.log("Signup component recieves:", response);
+				}, (fail) => {
+					console.log('Signup component recieves error:', fail);		
+					this.errorMsg = fail;			
+				});
+
 	  	}
 	}
 };

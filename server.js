@@ -133,6 +133,16 @@ apiRoutes.post('/token/verify', function(req, res){
 	}
 });
 
+apiRoutes.post('/users', function(req, res) {
+	var newObj = {
+		userName : req.body.userName + "_new",
+		userEmail : req.body.userEmail + "_new",
+		userPassword : req.body.userPassword + "_new",
+	};
+
+	return res.json(newObj);
+})
+
 // route middleware to verify a token
 apiRoutes.use(function(req, res, next){
 	

@@ -1,3 +1,16 @@
+// Vue resource docs:
+// https://github.com/vuejs/vue-resource/blob/master/docs/http.md
+
+// List of shortcut methods:
+
+// get(url, [options])
+// head(url, [options])
+// delete(url, [options])
+// jsonp(url, [options])
+// post(url, [body], [options])
+// put(url, [body], [options])
+// patch(url, [body], [options])
+
 module.exports = new Vue({
 	name: "Api",
 	methods: {
@@ -85,7 +98,7 @@ module.exports = new Vue({
 					resolve(response.body);
 				}, (fail) => {
 					reject(fail);
-				})
+				});
 			});
 			return myPromise;
 		},
@@ -101,9 +114,27 @@ module.exports = new Vue({
 					resolve(response.body);
 				}, (fail) => {
 					reject(fail);
-				})
+				});
 			});
 			return myPromise;
 		},
+
+		signupUser: (myUserName, myUserEmail, myUserPassword) => {
+			var body = {
+				userName: myUserName,
+				userEmail: myUserEmail,
+				userPassword: myUserPassword
+			};
+
+			var myPromise = new Promise((resolve, reject) => {
+				Vue.http.post('/api/users/', body).then((response) => {
+					resolve(response.body);
+				}, (fail) => {
+					reject(fail);
+				});
+			});
+
+			return myPromise;
+		}
 	}
 })
