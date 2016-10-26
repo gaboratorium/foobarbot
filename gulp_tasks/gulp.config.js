@@ -19,7 +19,7 @@ module.exports = {
 
             /* Other libs */
             globalPath.npm+"lodash/lodash.js",
-            globalPath.npm+"/moment/moment.js"
+            globalPath.npm+"moment/moment.js"
         ],
 
         // CSS Libraries

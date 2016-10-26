@@ -1,6 +1,7 @@
 // Signup Component
 // Template
 var fs = require('fs');
+var passwordHash = require('password-hash');
 var html = fs.readFileSync(__dirname + '/component.signup.html', 'utf8');
 
 // Export global component
@@ -13,7 +14,8 @@ module.exports = {
 			signupform__email: "",
 			signupform__password: "",
 			signupform__password2: "",
-            errorMsg: ""
+            errorMsg: "",
+            isRegistrationSuccesful: false
 		};
 	},
 	methods: {
@@ -27,12 +29,13 @@ module.exports = {
 					type: "signupUser",
 					userName: this.signupform__username,
                     userEmail: this.signupform__email,
-					userPassword: this.signupform__password
+					userPassword: passwordHash.generate(this.signupform__password)
 				}).then((response) => {
 					console.log("Signup component recieves:", response);
+                    this.isRegistrationSuccesful = true;
 				}, (fail) => {
 					console.log('Signup component recieves error:', fail);		
-					this.errorMsg = fail;			
+					this.errorMsg = fail.body.message;			
 				});
 
 	  	}

@@ -44,14 +44,14 @@ module.exports = new Vue({
 		},
 
 		// Create token
-		createToken: (userName, userPassword) => {
-			var body = {name: userName, password: userPassword};
+		createToken: (myUserEmail, myUserPassword) => {
+			var body = {userEmail: myUserEmail, userPassword: myUserPassword};
 			var myPromise = new Promise((resolve, reject) => {
 				Vue.http.post('api/token/create', body).then((response) => {
 					resolve(response.body);
 				}, (fail) => {
 					reject(fail);
-				})
+				});
 			});
 			return myPromise;
 		},

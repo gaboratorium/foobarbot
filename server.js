@@ -3,6 +3,7 @@
 // Import modules
 var express = require('express');
 var fs = require('fs');
+var passwordHash = require('password-hash');
 
 // Init express app
 var app = express();
@@ -58,9 +59,11 @@ mongoose.connect("mongodb://heroku_6lt22ghm:te2b1dta8i2glj7ss4lk71vjnm@ds037814.
 
 // Create mongoose model
 var User = mongoose.model('User', new Schema({ 
-    name: String, 
-    password: String, 
-    admin: Boolean 
+    userName: String, 
+    userEmail: String, 
+    userPassword: String,
+	userRole: String,
+	registrationDate: Number 
 }));
 
 
@@ -75,38 +78,42 @@ app.use('/api', apiRoutes);
 
 apiRoutes.post('/token/create', function(req, res){
 
-	// Hard coded user
-	var expectedUser = "admin";
-	var expectedPassword = "admin";
+	console.log(req.body.userPassword);
+	
 
-	console.log(req.body.name);
-	console.log(req.body.password);
+	User.findOne({userEmail: req.body.userEmail}, function(err, user){
+		if (err) {
+			res.status(500).send({success: false, message: "Something went wrong"});
+			throw err;
+		}
 
-	// Succesful login
-	if (req.body.name == expectedUser && req.body.password == expectedPassword) {
+		if (user && passwordHash.verify(req.body.userPassword, user.userPassword)) {
 
-		// Create user object
-		var user = {
-			"userName": "admin"
-		};
+			// Create user object
+			var user = {
+				"userName": user.userName,
+				"userEmail": user.userEmail,
+			};
 
-		// Create token
-		var token = jwt.sign(user, app.get('superSecret'), {
-			expiresIn : 1440 // 24 hours
-		});
+			// Create token with user object
+			var token = jwt.sign(user, app.get('superSecret'), {
+				expiresIn : 1440 // 24 hours
+			});
 
-		var myUserClient = {
-			userName: req.body.name,
-			userToken: token
-		};
+			// Create userClient with user object and token
+			var myUserClient = {
+				userName: user.userName,
+				userEmail: user.userEmail,
+				userToken: token
+			};
 
-		// Send back token
-		res.json({success: true, message: "Good request", userClient: myUserClient});
-
-	// Unsuccesful login - error msg
-	} else {
-		res.status(400).json({success: false, message: "Bad request, user name or password was not received or was invalid"});
-	}
+			// Send back token
+			res.json({success: true, message: "Good request", userClient: myUserClient});
+		}
+		else {
+			res.status(409).send({success: false, message: "User was not found with this e-mail and password"});
+		}
+	});
 });
 
 apiRoutes.post('/token/verify', function(req, res){
@@ -133,15 +140,31 @@ apiRoutes.post('/token/verify', function(req, res){
 	}
 });
 
+// Registration, signup
 apiRoutes.post('/users', function(req, res) {
+	
 	var newObj = {
-		userName : req.body.userName + "_new",
-		userEmail : req.body.userEmail + "_new",
-		userPassword : req.body.userPassword + "_new",
+		userName : req.body.userName,
+		userEmail : req.body.userEmail,
+		userPassword : req.body.userPassword,
+		userRole: "user",
+		registrationDate: new Date().getTime()
 	};
 
-	return res.json(newObj);
-})
+	User.findOne({ userEmail: req.body.userEmail }, function(err, user) {
+		if (user) {
+			return res.status(409).send({message: "E-mail is already taken..."});
+		}
+
+		var newUser = new User(newObj);
+
+		newUser.save(function(err){
+			if (err) throw err;
+			console.log("New user has registered");
+			return res.send({success: true});
+		});
+	});
+});
 
 // route middleware to verify a token
 apiRoutes.use(function(req, res, next){

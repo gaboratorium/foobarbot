@@ -1,6 +1,7 @@
 // Login Component
 // Template
 var fs = require('fs');
+var passwordHash = require('password-hash');
 var html = fs.readFileSync(__dirname + '/component.login.html', 'utf8');
 
 // Export global component
@@ -9,7 +10,7 @@ module.exports = {
 	template: html,
 	data: function(){
 		return {
-			loginform__username: "",
+			loginform__email: "",
 			loginform__password: "",
 			errorMsg: ""
 		};
@@ -18,7 +19,7 @@ module.exports = {
 		loginUser: function(e){
 			this.$store.dispatch({
 					type: "createToken",
-					userName: this.loginform__username,
+					userEmail: this.loginform__email,
 					userPassword: this.loginform__password
 				}).then((response) => {
 					this.$router.push('settings');

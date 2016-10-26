@@ -58,7 +58,7 @@ module.exports = new Vuex.Store({
     createToken: (context, payload) => {
       ApiInstance.postUserLog();
       var myPromise = new Promise((resolve, reject) => {
-        ApiInstance.createToken(payload.userName, payload.userPassword).then((response) => {
+        ApiInstance.createToken(payload.userEmail, payload.userPassword).then((response) => {
           
           let userClient = response.userClient;
 
