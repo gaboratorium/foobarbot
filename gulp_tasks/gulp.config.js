@@ -18,7 +18,8 @@ module.exports = {
             globalPath.npm+"vuex/dist/vuex.js",
 
             /* Other libs */
-            globalPath.npm+"lodash/lodash.js"
+            globalPath.npm+"lodash/lodash.js",
+            globalPath.npm+"/moment/moment.js"
         ],
 
         // CSS Libraries

@@ -24,6 +24,7 @@
     "foundation-apps": "^1.2.0",
     "jsonwebtoken": "^7.1.9",
     "lodash": "^4.16.4",
+    "moment": "^2.15.2",
     "mongodb": "^2.2.10",
     "mongoose": "^4.6.3",
     "vue": "^2.0.3",
