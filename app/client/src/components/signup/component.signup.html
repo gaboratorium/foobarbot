@@ -1,0 +1,22 @@
+<div class='grid-block align-center'>
+	<div class="grid-block medium-6">
+		<div class="grid-content">
+			
+			<!-- Login tab -->
+			<div class="card card-section">
+				<h2>Signup</h2>
+				<p>Here you can register</p>
+				<form action="" id="signupform" v-on:submit.prevent="signupUser">
+                    <input type="text" placeholder="Type your user name..." v-model="signupform__username">
+                    <input type="email" placeholder="Type your email..." v-model="signupform__email">
+                    <input type="password" placeholder="Type your password..." v-model="signupform__password">
+                    <input type="password" placeholder="Type your password again..." v-model="signupform__password2">
+                    <input type="submit" value="Signup" class="button">
+                </form>
+                <p>Already a member? <router-link to="login">Log in now!</router-link></p>
+				<!--<a href="#" @click.stop="switchTab('signup')">...or sign up</a>-->
+				<p>{{ errorMsg }}</p>
+			</div>
+		</div>
+	</div>
+</div>

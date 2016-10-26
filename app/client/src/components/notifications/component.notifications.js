@@ -38,7 +38,7 @@ module.exports =  {
 		},
 
 		deleteNotifications: function(e){
-			e.preventDefault();
+
 			this.$store.dispatch({
 				type: 'deleteNotification'
 			}).then((response) => {
@@ -55,8 +55,6 @@ module.exports =  {
 		notifyMe: function(e){
 			var NotificationComponent = this;
 			console.log(NotificationComponent.notifDelay);
-			
-			e.preventDefault();
 			
 			// Notify user if notifications are not supported
 			if (!("Notification" in window)) {

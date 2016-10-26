@@ -11,18 +11,18 @@
 	<script src="js/libs.js"></script>
 	<!-- Noto -->
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
-
 </head>
 <body>
 	<!-- App frame -->
 	<div id="app">
 		
 		<!-- Navigation Bar -->
-		<navbar>
-		</navbar>
+		<navbar></navbar>
 		
 		<!-- ViewComponent -->
-	 	<router-view ></router-view>
+		<transition name="component-fade" mode="out-in">
+	 		<router-view ></router-view>
+		</transition>
 	</div>
 	
 	<!-- Initialize app -->
