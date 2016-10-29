@@ -17,7 +17,7 @@ module.exports = new Vuex.Store({
       return state.userClient.userName;
     },
     userEmail: state => {
-      return state.userClient.userName;
+      return state.userClient.userEmail;
     },
     userToken: state => {
       return state.userClient.userToken;
@@ -109,9 +109,11 @@ module.exports = new Vuex.Store({
     // Delete all notifications
     deleteNotification: (context, payload) => {
       ApiInstance.postUserLog();
-      var userName = context.getters.userName;
+      var userEmail = context.getters.userEmail;
+      console.log('store deletenotifications gets this email', userEmail);
+      
       var userToken = context.getters.userToken;
-      return ApiInstance.deleteNotification(userName, userToken);
+      return ApiInstance.deleteNotification(userEmail, userToken);
     },
 
     // Sign up user
@@ -127,7 +129,11 @@ module.exports = new Vuex.Store({
     setUserClient: function(state, userClient) {
       localStorage.userName = userClient.userName;
       localStorage.userToken = userClient.userToken;
-      state.userClient = {userToken: userClient.userToken, userName: userClient.userName};
+      state.userClient = {
+        userToken: userClient.userToken, 
+        userName: userClient.userName,
+        userEmail: userClient.userEmail
+      };
       console.log('Succesfully logged in as ', userClient.userName);
       
       
@@ -137,7 +143,11 @@ module.exports = new Vuex.Store({
     unsetUserClient: function(state) {
       delete localStorage.userName;
       delete localStorage.userToken;
-      state.userClient = {userToken: undefined, userName: undefined};
+      state.userClient = {
+        userToken: undefined,
+        userName: undefined,
+        userEmail: undefined
+      };
       console.log('User logged out.');
     }
   }

@@ -134,6 +134,7 @@ apiRoutes.post('/token/verify', function(req, res){
 
 				var myUserClient = {
 					userName: decodedToken.userName,
+					userEmail: decodedToken.userEmail,
 					userToken: token
 				};
 
@@ -241,7 +242,8 @@ var Notification = mongoose.model('Notification', schema);
 
 // route to return all notifications from admin (GET http://localhost:8080/api/users/admin/notifications)
 apiRoutes.get('/notifications', function(req, res) {
-	console.log('getnotification recieves this body', req.query);
+	console.log('getnotification recieves this query', req.query);
+	console.log('getnotification recieves this body', req.body);
 	
 	myUserId = req.query.userName;
 	Notification.find({userId: myUserId}, function(err, notifications) {
@@ -279,12 +281,15 @@ apiRoutes.post('/notifications', function(req, res) {
 	});
 });
 
-apiRoutes.delete('/users/admin/notification', function(req, res) {
-	Notification.remove({}, (err, notification) => {
-		if (err) res.send(err);
+apiRoutes.delete('/notifications', function(req, res) {
+	console.log('apiroutes delete /notifications recieves body:', req.body);
+	
+	res.json({success: true})
+	// Notification.remove({}, (err, notification) => {
+	// 	if (err) res.send(err);
 
-		res.json({message: "Succesfully deleted"});
-	});
+	// 	res.json({message: "Succesfully deleted"});
+	// });
 });
 
 

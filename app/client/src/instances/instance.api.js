@@ -76,7 +76,7 @@ module.exports = new Vue({
 		getNotifications: (myUserToken, myUserName) => {
 			var body = {
 					userName: myUserName,
-					foo: 'bar'
+					foobody: 'bodybar'
 				};
 
 				console.log('api wants to get notifications');
@@ -88,7 +88,8 @@ module.exports = new Vue({
 				},
 				headers: {
 					'x-access-token': myUserToken
-				}
+				},
+				body: body
 			};
 
 			console.log('api get notifications http req options', options);
@@ -123,14 +124,14 @@ module.exports = new Vue({
 			return myPromise;
 		},
 
-		deleteNotification: (myUserName, myToken) => {
-			var body = {token: myToken};
+		deleteNotification: (myUserEmail, myToken) => {
+			var body = {token: myToken, userEmail: myUserEmail};
 			var options = {
 				headers: { 'x-access-token': myToken },
 				body: body
 			};
 			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.delete('/api/users/' + myUserName + '/notification', options).then((response) => {
+				Vue.http.delete('/api/notifications', options).then((response) => {
 					resolve(response.body);
 				}, (fail) => {
 					reject(fail);
