@@ -1,5 +1,5 @@
 // Importing Instances
-const StoreInstance = require('./instance.store.js');
+const StoreInstance = require('./instance.main.store.js');
 const RouterInstance = require('./instance.router.js');
 
 // Importing Components

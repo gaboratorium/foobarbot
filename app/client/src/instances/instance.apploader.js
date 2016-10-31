@@ -1,5 +1,5 @@
 // Importing Instances
-const StoreInstance = require('./instance.store.js');
+const StoreInstance = require('./instance.main.store.js');
 
 // App instance
 module.exports = new Vue({
