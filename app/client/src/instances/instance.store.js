@@ -92,18 +92,18 @@ module.exports = new Vuex.Store({
 
       ApiInstance.postUserLog();
       var userToken = context.getters.userToken; // should be userId
-      var userName = context.getters.userName; // should be userId
+      var userEmail = context.getters.userEmail; // should be userId
       console.log('store calls apiinstance getnotifications with userclient');
       
-      return ApiInstance.getNotifications(userToken, userName);
+      return ApiInstance.getNotifications(userToken, userEmail);
     },
 
     // Post notifications
     postNotification: (context, payload) => {
       ApiInstance.postUserLog();
       var userToken = context.getters.userToken; // should be userId
-      var userName = context.getters.userName; // should be userId
-      return ApiInstance.postNotification(userToken, userName, payload.notificationMessage);
+      var userEmail = context.getters.userEmail; // should be userId
+      return ApiInstance.postNotification(userToken, userEmail, payload.notificationMessage);
     },
 
     // Delete all notifications

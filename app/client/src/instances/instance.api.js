@@ -73,23 +73,16 @@ module.exports = new Vue({
 			return myPromise;
 		},
 		
-		getNotifications: (myUserToken, myUserName) => {
-			var body = {
-					userName: myUserName,
-					foobody: 'bodybar'
-				};
+		getNotifications: (myUserToken, myUserEmail) => {
 
-				console.log('api wants to get notifications');
-				
 			var options = { 
 				params: {
-					userName: myUserName,
+					userEmail: myUserEmail,
 					paramfoo: 'parambar'
 				},
 				headers: {
 					'x-access-token': myUserToken
-				},
-				body: body
+				}
 			};
 
 			console.log('api get notifications http req options', options);
@@ -107,13 +100,17 @@ module.exports = new Vue({
 			return myPromise;
 		},
 
-		postNotification: (myToken, myUserName, myMessage) => {
+		postNotification: (myToken, myUserEmail, myMessage) => {
 			
 			var body = {
-				userName: myUserName,
+				userEmail: myUserEmail,
 				token: myToken,
 				notificationMessage: myMessage
 			};
+
+			console.log('api instance creates this body:', body);
+			
+
 			var myPromise = new Promise((resolve, reject) => {
 				Vue.http.post('/api/notifications', body).then((response) => {
 					resolve(response.body);
@@ -125,7 +122,11 @@ module.exports = new Vue({
 		},
 
 		deleteNotification: (myUserEmail, myToken) => {
-			var body = {token: myToken, userEmail: myUserEmail};
+			var body = {
+				token: myToken,
+				userEmail: myUserEmail
+			};
+			
 			var options = {
 				headers: { 'x-access-token': myToken },
 				body: body

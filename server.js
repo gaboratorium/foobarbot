@@ -233,7 +233,7 @@ apiRoutes.get('/users', function(req, res) {
 });
 
 var schema = new Schema({
-	userId: String, 
+	userEmail: String, 
     message: String, 
     date: Number 
 });
@@ -245,8 +245,8 @@ apiRoutes.get('/notifications', function(req, res) {
 	console.log('getnotification recieves this query', req.query);
 	console.log('getnotification recieves this body', req.body);
 	
-	myUserId = req.query.userName;
-	Notification.find({userId: myUserId}, function(err, notifications) {
+	myUserEmail = req.query.userEmail;
+	Notification.find({userEmail: myUserEmail}, function(err, notifications) {
 		if (err) {
 			console.log('notification query went wrong');
 			
@@ -262,13 +262,16 @@ apiRoutes.get('/notifications', function(req, res) {
 // route to create a new notifications
 apiRoutes.post('/notifications', function(req, res) {
 
-	var userName = req.body.userName;
+
+	var userEmail = req.body.userEmail;
+	console.log('serverjs apiroutes post notification recieves this body', req.body);
+	
 
 	
 	var notificationMessage = req.body.notificationMessage;
 
 	var myNotification = new Notification({
-		userId: userName,
+		userEmail: userEmail,
     	message: notificationMessage, 
     	date: new Date().getTime() 
 	});
@@ -284,12 +287,12 @@ apiRoutes.post('/notifications', function(req, res) {
 apiRoutes.delete('/notifications', function(req, res) {
 	console.log('apiroutes delete /notifications recieves body:', req.body);
 	
-	res.json({success: true})
-	// Notification.remove({}, (err, notification) => {
-	// 	if (err) res.send(err);
+	var myUserEmail = req.body.userEmail;
 
-	// 	res.json({message: "Succesfully deleted"});
-	// });
+	Notification.remove({userEmail: myUserEmail}, (err, notification) => {
+		if (err) res.send(err);
+		res.json({message: "Succesfully deleted"});
+	});
 });
 
 
