@@ -14,9 +14,10 @@ module.exports = new Vuex.Store({
   state: {
     userClient: {
       userName: undefined,
-      userEmail: undefined,
+      userEmail: "testemail",
       userToken: undefined
-    }
+    },
+    testsign: "testsign"
   },
 
   // Modules
@@ -28,19 +29,11 @@ module.exports = new Vuex.Store({
 
   // Getters
   getters: {
-    userName: state => {
-      return state.userClient.userName;
+    userName: state => { return state.userClient.userName; },
+    userEmail: state => { return state.userClient.userEmail; },
+    userToken: state => { return state.userClient.userToken; },
+    userClient: state => { return state.userClient; }
     },
-    userEmail: state => {
-      return state.userClient.userEmail;
-    },
-    userToken: state => {
-      return state.userClient.userToken;
-    },
-    userClient: state => {
-      return state.userClient;
-    }
-  },
 
   // Mutations - sync calls to change the state
   mutations: {
@@ -70,7 +63,7 @@ module.exports = new Vuex.Store({
       // Update state
       state.userClient = {
         userToken: undefined,
-        userName: undefined,
+        userName: "unsetTest",
         userEmail: undefined
       };
     }
