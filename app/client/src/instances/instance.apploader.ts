@@ -1,5 +1,6 @@
 // Importing store
-import { MainStore } from './../stores/store.main.js';
+import { MainStore } from './../stores/store.main';
+import { AppInstance } from './instance.app';
 
 // App instance
 export const { AppLoaderInstance }  = new Vue({
@@ -9,7 +10,7 @@ export const { AppLoaderInstance }  = new Vue({
   methods: {
     initApp: () => {
       console.log('Initialising Vuejs app...');
-      var myApp = require('./instance.app.js');
+      var myApp = AppInstance;
     }
   },
 

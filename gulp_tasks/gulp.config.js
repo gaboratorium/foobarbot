@@ -37,7 +37,27 @@ module.exports = {
         browserify: [
             // Browserify entry point to bundle
             // globalPath.src + "main.js",
-            globalPath.src + "main.ts"
+            globalPath.src + "main.ts",
+
+            // Components
+            globalPath.src + "components/about/component.about.ts",
+            globalPath.src + "components/login/component.login.ts",
+            globalPath.src + "components/navbar/component.navbar.ts",
+            globalPath.src + "components/notifications/component.notifications.ts",
+            globalPath.src + "components/settings/component.settings.ts",
+            globalPath.src + "components/signup/component.signup.ts",
+
+            // Instances
+            globalPath.src + "instances/instance.api.ts",
+            globalPath.src + "instances/instance.app.ts",
+            globalPath.src + "instances/instance.apploader.ts",
+            globalPath.src + "instances/instance.router.ts",
+
+            // Stores
+            globalPath.src + "stores/store.main.ts",
+            globalPath.src + "stores/store.notification.ts",
+            globalPath.src + "stores/store.token.ts",
+            globalPath.src + "stores/store.user.ts"
         ],
         // JavaScript to watch
         js: [

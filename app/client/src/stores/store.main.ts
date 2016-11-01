@@ -5,7 +5,7 @@
 // Importing the Api and other stores
 import { TokenStore } from "./store.token";
 import { NotificationStore } from "./store.notification";
-import { UserStore } from "./store.user.js";
+import { UserStore } from "./store.user";
 
 // const TokenStore = require('./store.token.js');
 // const NotificationStore = require('./store.notification.js');

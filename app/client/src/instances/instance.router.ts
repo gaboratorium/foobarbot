@@ -1,10 +1,10 @@
 // Importing Components
-import { AboutViewComponent } from './../components/about/component.about.js';
-import { LoginViewComponent } from  './../components/login/component.login.js';
-import { SignupViewComponent } from  './../components/signup/component.signup.js';
-import { SettingsViewComponent } from './../components/settings/component.settings.js';
-import { NotificationsViewComponent } from './../components/notifications/component.notifications.js';
-import { NavbarComponent } from './../components/navbar/component.navbar.js';
+import { AboutViewComponent } from './../components/about/component.about';
+import { LoginViewComponent } from  './../components/login/component.login';
+import { SignupViewComponent } from  './../components/signup/component.signup';
+import { SettingsViewComponent } from './../components/settings/component.settings';
+import { NotificationsViewComponent } from './../components/notifications/component.notifications';
+import { NavbarComponent } from './../components/navbar/component.navbar';
 
 /////////////////////////////////////// 
 // Navigation guards

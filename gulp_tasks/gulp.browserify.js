@@ -11,8 +11,8 @@ module.exports = function(gulp){
 	gulp.task('browserify', 'Bundles app components' , function() {
 
 		return browserify(config.src.browserify)
-			.transform('brfs')
 			.plugin(tsify, { noImplicitAny: true })
+			.transform('brfs')
 			.bundle()
 			.on('error', function (error) { console.error(error.toString()); })
 			.pipe(source('app.js'))
