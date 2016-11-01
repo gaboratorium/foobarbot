@@ -40,20 +40,20 @@ module.exports = {
             // ApiInstance.postUserLog();
             var myPromise = new Promise((resolve, reject) => {
 
-                var myUserEmail = context.getters["mainstore/userEmail"];
+                var myUserEmail = payload.userEmail;
+                var myUserPassword = payload.userPassword;
 
-                console.log('token store gets this user client email:', myUserEmail);
 
-                ApiInstance.createToken(myUserEmail, payload.userPassword).then((response) => {
+                ApiInstance.createToken(myUserEmail, myUserPassword).then((response) => {
                 
-                let userClient = response.userClient;
+                    let userClient = response.userClient;
 
-                context.commit('setUserClient', userClient);
-                resolve();
-                }, (fail) => {
-                // fail
-                context.commit('unsetUserClient');
-                reject(fail);
+                    context.commit('setUserClient', userClient);
+                    resolve();
+                    }, (fail) => {
+                    // fail
+                    context.commit('unsetUserClient');
+                    reject(fail);
                 })
             })
             

@@ -6,19 +6,19 @@ module.exports = {
         // Get a list of users
         loadUsers: (context, payload) => {
 
-        var myUserToken = context.getters.userToken;
-        
-        ApiInstance.postUserLog();
-        return ApiInstance.loadUsers(myUserToken);
+            var myUserToken = context.getters["mainstore/userToken"];
+            
+            ApiInstance.postUserLog();
+            return ApiInstance.loadUsers(myUserToken);
         },
 
         // Sign up user
         signupUser: (context, payload) => {
 
-        var myUserName = context.getters.userName;
-        var myUserEmail = context.getters.userEmail;
+            var myUserName = context.getters["mainstore/userName"];
+            var myUserEmail = context.getters["mainstore/userEmail"];
 
-        return ApiInstance.signupUser(payload.userName, payload.userEmail, payload.userPassword);
+            return ApiInstance.signupUser(payload.userName, payload.userEmail, payload.userPassword);
         }
     }
 }
