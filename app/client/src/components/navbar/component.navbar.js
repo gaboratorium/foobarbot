@@ -18,8 +18,8 @@ module.exports =  {
 	},
 	created: function(){
 		console.log('navbar created');
-		
-		if (localStorage.userName !== undefined && localStorage.userToken !== undefined) {
+		var isUserLoggedIn = this.$store.getters["mainstore/isUserLoggedIn"];
+		if (isUserLoggedIn) {
 			this.user.name = this.$store.getters["mainstore/userName"];
 			this.isUserLoggedIn = true;
 		}
