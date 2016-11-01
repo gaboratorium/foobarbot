@@ -1,4 +1,4 @@
-# Project Lines
+# Foobarbot
 
 Web application built with the purpose of having fun and learning new web technologies. Built with **Heroku** and **MEAN stack**.
 
