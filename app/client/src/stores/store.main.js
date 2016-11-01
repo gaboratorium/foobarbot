@@ -31,8 +31,15 @@ module.exports = new Vuex.Store({
     "mainstore/userName": state => { return state.userClient.userName; },
     "mainstore/userEmail": state => { return state.userClient.userEmail; },
     "mainstore/userToken": state => { return state.userClient.userToken; },
-    "mainstore/userClient": state => { return state.userClient; }
-    },
+    "mainstore/userClient": state => { return state.userClient; },
+    "mainstore/isUserLoggedIn": state => { 
+      if ( state.userClient.userName !== undefined && state.userClient.userEmail !== undefined && state.userClient.userToken !== undefined ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  },
 
   // Mutations - sync calls to change the state
   mutations: {

@@ -10,7 +10,7 @@ module.exports =  {
 	data: function(){
 		return {
 			user: {
-				name: ""
+				name: undefined
 			},
 			isUserLoggedIn: false
 
@@ -26,17 +26,13 @@ module.exports =  {
 	},
 	watch: {
 		$route: function(){
-			if (localStorage.userName !== undefined && localStorage.userToken !== undefined) {
-				console.log('User is logged in');
-				
-				console.log('navbar user name', this.user.name);
+			var isUserLoggedIn = this.$store.getters["mainstore/isUserLoggedIn"];
+			
+			if (isUserLoggedIn) {				
 				this.user.name = this.$store.getters["mainstore/userName"];
-				console.log('navbar user name', this.user.name);
-				
 				this.isUserLoggedIn = true;
-
 			} else {
-				console.log('User is logged out');
+				this.user.name = undefined;
 				this.isUserLoggedIn = false;
 			}
 		}
