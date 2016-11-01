@@ -7,20 +7,6 @@ var html = fs.readFileSync(__dirname + '/component.navbar.html', 'utf8')
 module.exports =  {
 	name: "NavbarComponent",
 	template: html,
-	watch: {
-		$route: function(){
-			if (localStorage.userName !== undefined && localStorage.userToken !== undefined) {
-				console.log('User is logged in');
-				this.isUserLoggedIn = true;
-
-			} else {
-				console.log('User is logged out');
-				this.isUserLoggedIn = false;
-			}
-
-			this.user.name = this.$store.getters.userName;
-		}
-	},
 	data: function(){
 		return {
 			user: {
@@ -31,15 +17,34 @@ module.exports =  {
 		}
 	},
 	created: function(){
+		console.log('navbar created');
+		
 		if (localStorage.userName !== undefined && localStorage.userToken !== undefined) {
+			this.user.name = this.$store.getters["mainstore/userName"];
 			this.isUserLoggedIn = true;
 		}
-		this.user.name = this.$store.getters.userName;
+	},
+	watch: {
+		$route: function(){
+			if (localStorage.userName !== undefined && localStorage.userToken !== undefined) {
+				console.log('User is logged in');
+				
+				console.log('navbar user name', this.user.name);
+				this.user.name = this.$store.getters["mainstore/userName"];
+				console.log('navbar user name', this.user.name);
+				
+				this.isUserLoggedIn = true;
+
+			} else {
+				console.log('User is logged out');
+				this.isUserLoggedIn = false;
+			}
+		}
 	},
 	methods: {
 		logout: function(){
 			this.$store.commit('unsetUserClient');
-			this.$router.replace('asd');
+			this.$router.replace('dummy-replacement-so-we-force-router-change');
 			this.$router.replace('about');
 		}
 	}

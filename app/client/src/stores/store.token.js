@@ -1,33 +1,35 @@
-const ApiInstance = require('./instance.api.js');
+const ApiInstance = require('./../instances/instance.api.js');
 
 // Token store
 module.exports = {
     actions: {
-        // Recieves and forwards a token for verification
-        // Resolves if token was verified succesfully, rejects if not.
+        // Expects and forwards a token (payload.token) for verification
+        // Resolves and returns userClient obj if token verification was succesful
         verifyToken: (context, payload) => {
-        
+            
+            // Log request
             ApiInstance.postUserLog();
 
-            var myUserToken = context.getters["mainstore/userToken"];
-
+            // Send verification
+            var myUserToken = payload.token;
             var myPromise = new Promise((resolve, reject) => {
                 ApiInstance.verifyToken(myUserToken).then((response) => {
                 
+                // Rejects if not succesful
                 if (!response.success) {
-                    context.commit('unsetUserClient');
                     reject();
                 }
                 
-                let userClient = response.userClient;
+                // Resolves and returns userClient if succesful
+                resolve(response.userClient);
 
-                context.commit('setUserClient', userClient);
-                resolve();
+                // Rejects if request fails
                 }, (fail) => {
-                context.commit('unsetUserClient');
-                reject(fail);
+                    reject(fail);
                 })
             })
+
+            // Return promise
             return myPromise;
         },
 

@@ -14,18 +14,6 @@
 module.exports = new Vue({
 	name: "Api",
 	methods: {
-		// Get a starwars ship
-		getStarWars: () => {
-			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.get('http://swapi.co/api/starships/9/').then((response) => {
-					resolve(response.body);
-				}, (fail) => {
-					reject(fail);
-				})
-			})
-			return myPromise;
-		},
-
 		postUserLog: () => {
 			// console.log("Logging user activity...");
 		},

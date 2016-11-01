@@ -123,6 +123,9 @@ apiRoutes.post('/token/verify', function(req, res){
 	// check header or url parameters or post parameters for token
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
+	console.log('token/verify recieves this token:', token);
+	
+
 	if (token){
 		jwt.verify(token, app.get('superSecret'), function(err, decoded){
 			if (err) {
