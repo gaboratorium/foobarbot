@@ -49,6 +49,7 @@ module.exports = {
                 ApiInstance.createToken(myUserEmail, myUserPassword).then((response) => {
                 
                     let userClient = response.userClient;
+                    console.log('token store create token gets this userClient response', response.userClient);                    
 
                     context.commit('setUserClient', userClient);
                     resolve();

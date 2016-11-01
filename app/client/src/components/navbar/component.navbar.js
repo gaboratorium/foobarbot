@@ -17,8 +17,10 @@ module.exports =  {
 		}
 	},
 	created: function(){
-		console.log('navbar created');
 		var isUserLoggedIn = this.$store.getters["mainstore/isUserLoggedIn"];
+		console.log('navbar created, recieves this isUserLoggedin from store', isUserLoggedIn);
+		
+		
 		if (isUserLoggedIn) {
 			this.user.name = this.$store.getters["mainstore/userName"];
 			this.isUserLoggedIn = true;
@@ -27,6 +29,7 @@ module.exports =  {
 	watch: {
 		$route: function(){
 			var isUserLoggedIn = this.$store.getters["mainstore/isUserLoggedIn"];
+			var myUserId = this.$store.getters["mainstore/userId"];
 			
 			if (isUserLoggedIn) {				
 				this.user.name = this.$store.getters["mainstore/userName"];

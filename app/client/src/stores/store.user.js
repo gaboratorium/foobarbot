@@ -5,9 +5,7 @@ module.exports = {
     actions: {
         // Get a list of users
         loadUsers: (context, payload) => {
-
             var myUserToken = context.getters["mainstore/userToken"];
-            
             ApiInstance.postUserLog();
             return ApiInstance.loadUsers(myUserToken);
         },

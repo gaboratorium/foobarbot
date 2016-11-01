@@ -58,12 +58,13 @@ var Schema = mongoose.Schema;
 mongoose.connect("mongodb://heroku_6lt22ghm:te2b1dta8i2glj7ss4lk71vjnm@ds037814.mlab.com:37814/heroku_6lt22ghm");
 
 // Create mongoose model
-var User = mongoose.model('User', new Schema({ 
+var User = mongoose.model('User', new Schema({
+	userId: String,
     userName: String, 
     userEmail: String, 
     userPassword: String,
 	userRole: String,
-	registrationDate: Number 
+	registrationDate: Number
 }));
 
 
@@ -89,22 +90,24 @@ apiRoutes.post('/token/create', function(req, res){
 
 		if (user && passwordHash.verify(req.body.userPassword, user.userPassword)) {
 
-			// Create user object
-			var user = {
-				"userName": user.userName,
+			// Create user object to encode in token
+			var userToEncode = {
+				"userId": user.userId,
 				"userEmail": user.userEmail,
+				"userName": user.userName
 			};
 
-			// Create token with user object
-			var token = jwt.sign(user, app.get('superSecret'), {
+			// Create token with user object encoded in it
+			var token = jwt.sign(userToEncode, app.get('superSecret'), {
 				expiresIn : 1440 // 24 hours
 			});
 
 			// Create userClient with user object and token
 			var myUserClient = {
-				userName: user.userName,
+				userToken: token,
+				userId: user.userId,
 				userEmail: user.userEmail,
-				userToken: token
+				userName: user.userName
 			};
 
 			// Send back token
@@ -117,8 +120,6 @@ apiRoutes.post('/token/create', function(req, res){
 });
 
 apiRoutes.post('/token/verify', function(req, res){
-
-
 	
 	// check header or url parameters or post parameters for token
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -136,9 +137,10 @@ apiRoutes.post('/token/verify', function(req, res){
 				req.decode = req;
 
 				var myUserClient = {
-					userName: decodedToken.userName,
+					userToken: token,
+					userId: decodedToken.userId,
 					userEmail: decodedToken.userEmail,
-					userToken: token
+					userName: decodedToken.userName
 				};
 
 				return res.json({success: true, message: 'Token is valid', userClient: myUserClient});
@@ -151,6 +153,7 @@ apiRoutes.post('/token/verify', function(req, res){
 apiRoutes.post('/users', function(req, res) {
 	
 	var newObj = {
+		userId: String(new Date().getTime())+String(Math.floor(Math.random()*1000)),
 		userName : req.body.userName,
 		userEmail : req.body.userEmail,
 		userPassword : req.body.userPassword,

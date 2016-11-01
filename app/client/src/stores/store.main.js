@@ -13,9 +13,10 @@ module.exports = new Vuex.Store({
   // State
   state: {
     userClient: {
-      userName: undefined,
+      userToken: undefined,
+      userId: undefined,
       userEmail: undefined,
-      userToken: undefined
+      userName: undefined
     },
   },
 
@@ -28,14 +29,19 @@ module.exports = new Vuex.Store({
 
   // Getters
   getters: {
-    "mainstore/userName": state => { return state.userClient.userName; },
-    "mainstore/userEmail": state => { return state.userClient.userEmail; },
     "mainstore/userToken": state => { return state.userClient.userToken; },
+    "mainstore/userId": state => { return state.userClient.userId; },
+    "mainstore/userEmail": state => { return state.userClient.userEmail; },
+    "mainstore/userName": state => { return state.userClient.userName; },
     "mainstore/userClient": state => { return state.userClient; },
     "mainstore/isUserLoggedIn": state => { 
-      if ( state.userClient.userName !== undefined && state.userClient.userEmail !== undefined && state.userClient.userToken !== undefined ) {
+      if ( state.userClient.userName !== undefined && state.userClient.userEmail !== undefined && state.userClient.userToken !== undefined && state.userClient.userId) {
         return true;
       } else {
+        if (state.userClient.userToken !== undefined) console.log("state.userClient.userToken is undefined.");
+        if (state.userClient.userId !== undefined) console.log("state.userClient.userId is undefined.");
+        if (state.userClient.userEmail !== undefined) console.log("state.userClient.userEmail is undefined.");
+        if (state.userClient.userName !== undefined) console.log("state.userClient.userName is undefined.");
         return false;
       }
     }
@@ -46,6 +52,9 @@ module.exports = new Vuex.Store({
 
     // Set up new userClient
     setUserClient: function(state, userClient) {
+
+      console.log('main store setUserClient gets this userClient', userClient);
+      
       
       // Save user name and token to local storage 
       localStorage.userName = userClient.userName;
@@ -54,8 +63,9 @@ module.exports = new Vuex.Store({
       // Update state
       state.userClient = {
         userToken: userClient.userToken, 
-        userName: userClient.userName,
-        userEmail: userClient.userEmail
+        userId: userClient.userId,
+        userEmail: userClient.userEmail,
+        userName: userClient.userName
       };
     },
     
@@ -69,8 +79,9 @@ module.exports = new Vuex.Store({
       // Update state
       state.userClient = {
         userToken: undefined,
-        userName: undefined,
-        userEmail: undefined
+        userId: undefined,
+        userEmail: undefined,
+        userName: undefined
       };
     }
   }
