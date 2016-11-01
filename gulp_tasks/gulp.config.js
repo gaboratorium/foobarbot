@@ -22,6 +22,11 @@ module.exports = {
             globalPath.npm+"moment/moment.js"
         ],
 
+        // Typescript definition types
+        types: [
+            globalPath.npm+"/vue/types/index.d.ts"
+        ],
+
         // CSS Libraries
         css: [
             globalPath.npm+"foundation-apps/dist/css/foundation-apps.css"

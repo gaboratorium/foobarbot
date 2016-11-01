@@ -1,6 +1,10 @@
 {
-    "parserOptions" : {
-        "ecmaVersion": 6,
-        "sourceType": "module"
-    }
+    "compilerOptions": {
+        "target": "ES6",
+        "removeComments": true,
+        "lib": ["es5", "es2015.promise"]
+    },
+    "files": [
+        "typings/es6-promise/es6-promise.d.ts"
+    ]
 }

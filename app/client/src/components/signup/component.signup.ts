@@ -1,5 +1,6 @@
 // Signup Component
 // Template
+// GABORATORIUM
 var fs = require('fs');
 var passwordHash = require('password-hash');
 var html = fs.readFileSync(__dirname + '/component.signup.html', 'utf8');

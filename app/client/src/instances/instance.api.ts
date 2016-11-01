@@ -1,16 +1,3 @@
-// Vue resource docs:
-// https://github.com/vuejs/vue-resource/blob/master/docs/http.md
-
-// List of shortcut methods:
-
-// get(url, [options])
-// head(url, [options])
-// delete(url, [options])
-// jsonp(url, [options])
-// post(url, [body], [options])
-// put(url, [body], [options])
-// patch(url, [body], [options])
-
 export const ApiInstance = new Vue({
 	name: "Api",
 	methods: {
