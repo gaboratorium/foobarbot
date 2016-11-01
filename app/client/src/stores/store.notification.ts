@@ -1,5 +1,7 @@
 import { ApiInstance } from './../instances/instance.api';
 
+console.log("store.notification recieves this api instance", ApiInstance);
+
 // Notification store
 export const NotificationStore = {
     actions: {

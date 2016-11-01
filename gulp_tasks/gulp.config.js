@@ -35,9 +35,7 @@ module.exports = {
         copy_index: globalPath.src + 'index.html',
         copy_assets: globalPath.src + 'assets/**/*.*',
         browserify: [
-            // Browserify entry point to bundle
-            // globalPath.src + "main.js",
-            globalPath.src + "main.ts",
+            // TS files to compile. Order matters!
 
             // Components
             globalPath.src + "components/about/component.about.ts",
@@ -48,16 +46,23 @@ module.exports = {
             globalPath.src + "components/signup/component.signup.ts",
 
             // Instances
-            globalPath.src + "instances/instance.api.ts",
-            globalPath.src + "instances/instance.app.ts",
-            globalPath.src + "instances/instance.apploader.ts",
             globalPath.src + "instances/instance.router.ts",
+            globalPath.src + "instances/instance.api.ts",
 
-            // Stores
-            globalPath.src + "stores/store.main.ts",
+            //Substores
             globalPath.src + "stores/store.notification.ts",
             globalPath.src + "stores/store.token.ts",
-            globalPath.src + "stores/store.user.ts"
+            globalPath.src + "stores/store.user.ts",
+
+            // Main store
+            globalPath.src + "stores/store.main.ts",
+
+            // App and app loader
+            globalPath.src + "instances/instance.app.ts",
+            globalPath.src + "instances/instance.apploader.ts",
+
+            // Main.ts
+            globalPath.src + "main.ts",
         ],
         // JavaScript to watch
         js: [

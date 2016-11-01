@@ -10,6 +10,8 @@ import { SettingsViewComponent } from './../components/settings/component.settin
 import { NotificationsViewComponent } from './../components/notifications/component.notifications';
 import { NavbarComponent } from './../components/navbar/component.navbar';
 
+console.log("app recieves this mainstore: ", {MainStore});
+
 // App instance
 export const AppInstance = new Vue({
   

@@ -11,7 +11,7 @@
 // put(url, [body], [options])
 // patch(url, [body], [options])
 
-export const { ApiInstance } = new Vue({
+export const ApiInstance = new Vue({
 	name: "Api",
 	methods: {
 		postUserLog: () => {

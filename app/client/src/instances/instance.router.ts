@@ -6,6 +6,9 @@ import { SettingsViewComponent } from './../components/settings/component.settin
 import { NotificationsViewComponent } from './../components/notifications/component.notifications';
 import { NavbarComponent } from './../components/navbar/component.navbar';
 
+console.log("router instance recieves this loginvewcomponent", LoginViewComponent);
+
+
 /////////////////////////////////////// 
 // Navigation guards
 const userClientRequired = function(to, from, next){

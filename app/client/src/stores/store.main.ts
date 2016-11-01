@@ -7,10 +7,6 @@ import { TokenStore } from "./store.token";
 import { NotificationStore } from "./store.notification";
 import { UserStore } from "./store.user";
 
-// const TokenStore = require('./store.token.js');
-// const NotificationStore = require('./store.notification.js');
-// const UserStore = require('./store.user.js');
-
 // Main store with modularized actions
 export const MainStore = new Vuex.Store({
 
