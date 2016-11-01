@@ -43,6 +43,7 @@ module.exports =  {
 	methods: {
 		logout: function(){
 			this.$store.commit('unsetUserClient');
+			// Double redirection for forcing router state change
 			this.$router.replace('dummy-replacement-so-we-force-router-change');
 			this.$router.replace('about');
 		}
