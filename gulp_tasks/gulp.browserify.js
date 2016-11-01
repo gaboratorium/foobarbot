@@ -1,5 +1,7 @@
 var browserify = require('browserify');
+var tsify = require('tsify');
 var source = require('vinyl-source-stream');
+// brfs
 var fs = require('fs');
 
 // Import config
@@ -10,7 +12,9 @@ module.exports = function(gulp){
 
 		return browserify(config.src.browserify)
 			.transform('brfs')
+			.plugin(tsify, { noImplicitAny: true })
 			.bundle()
+			.on('error', function (error) { console.error(error.toString()); })
 			.pipe(source('app.js'))
 			.pipe(gulp.dest(config.dist.js));
 	});

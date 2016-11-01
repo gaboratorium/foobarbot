@@ -1,7 +1,7 @@
 const ApiInstance = require('./../instances/instance.api.js');
 
 // Notification store
-module.exports = {
+export const NotificationStore = {
     actions: {
         // Get list of notifications
         getNotifications: (context, payload) => {

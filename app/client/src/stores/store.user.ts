@@ -1,7 +1,7 @@
 const ApiInstance = require('./../instances/instance.api.js');
 
 // User store
-module.exports = {
+export const UserStore = {
     actions: {
         // Get a list of users
         loadUsers: (context, payload) => {

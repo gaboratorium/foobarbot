@@ -3,12 +3,16 @@
 // Communicates with App Components and the Api instance
 
 // Importing the Api and other stores
-const TokenStore = require('./store.token.js');
-const NotificationStore = require('./store.notification.js');
-const UserStore = require('./store.user.js');
+import { TokenStore } from "./store.token";
+import { NotificationStore } from "./store.notification";
+import { UserStore } from "./store.user.js";
+
+// const TokenStore = require('./store.token.js');
+// const NotificationStore = require('./store.notification.js');
+// const UserStore = require('./store.user.js');
 
 // Main store with modularized actions
-module.exports = new Vuex.Store({
+export const MainStore = new Vuex.Store({
 
   // State
   state: {

@@ -1,7 +1,7 @@
 const ApiInstance = require('./../instances/instance.api.js');
 
 // Token store
-module.exports = {
+export const TokenStore = {
     actions: {
         // Expects and forwards a token (payload.token) for verification
         // Resolves and returns userClient obj if token verification was succesful

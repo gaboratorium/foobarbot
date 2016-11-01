@@ -1,10 +1,10 @@
 // Importing store
-const StoreInstance = require('./../stores/store.main.js');
+import { MainStore } from './../stores/store.main.js';
 
 // App instance
-module.exports = new Vue({
+export const AppLoader  = new Vue({
   name: "appLoader",
-  store: StoreInstance,
+  store: MainStore,
 
   methods: {
     initApp: () => {
@@ -21,17 +21,17 @@ module.exports = new Vue({
     var userName = localStorage.userName;
     
     if (userToken == undefined || userName == undefined) {
-      StoreInstance.commit('unsetUserClient');
+      MainStore.commit('unsetUserClient');
       this.initApp();
     }
 
     // If token and name is set, verify token
-    StoreInstance.dispatch({type: 'verifyToken', token: userToken}).then((responseAsUserClient) => {
+    MainStore.dispatch({type: 'verifyToken', token: userToken}).then((responseAsUserClient) => {
       console.log('Token has been verifyied during apploader');
-      StoreInstance.commit('setUserClient', responseAsUserClient);
+      MainStore.commit('setUserClient', responseAsUserClient);
       this.initApp();
     }, (fail) => {
-      StoreInstance.commit('unsetUserClient');
+      MainStore.commit('unsetUserClient');
       this.initApp();
     });
   }

@@ -11,7 +11,7 @@ const NotificationsViewComponent = require('./../components/notifications/compon
 const NavbarComponent = require('./../components/navbar/component.navbar.js');
 
 // App instance
-module.exports = new Vue({
+export const StoreModule = new Vue({
   
   // Instance options
   el: '#app',
