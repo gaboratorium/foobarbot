@@ -1,14 +1,14 @@
 // Importing the router instance and main store
-const StoreInstance = require('./../stores/store.main.js');
-const RouterInstance = require('./instance.router.js');
+import { RouterInstance } from './instance.router';
+import { MainStore } from './../stores/store.main';
 
 // Importing Components
-const AboutViewComponent = require('./../components/about/component.about.js');
-const LoginViewComponent =  require('./../components/login/component.login.js');
-const SignupViewComponent =  require('./../components/signup/component.signup.js');
-const SettingsViewComponent = require('./../components/settings/component.settings.js');
-const NotificationsViewComponent = require('./../components/notifications/component.notifications.js');
-const NavbarComponent = require('./../components/navbar/component.navbar.js');
+import { AboutViewComponent } from './../components/about/component.about.js';
+import { LoginViewComponent } from  './../components/login/component.login.js';
+import { SignupViewComponent } from  './../components/signup/component.signup.js';
+import { SettingsViewComponent } from './../components/settings/component.settings.js';
+import { NotificationsViewComponent } from './../components/notifications/component.notifications.js';
+import { NavbarComponent } from './../components/navbar/component.navbar.js';
 
 // App instance
 export const StoreModule = new Vue({
@@ -17,7 +17,7 @@ export const StoreModule = new Vue({
   el: '#app',
   name: "myVueApp",
   router: RouterInstance,
-  store: StoreInstance,
+  store: MainStore,
 
   // Components
   components: {

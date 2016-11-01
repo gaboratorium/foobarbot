@@ -1,9 +1,10 @@
-const AboutViewComponent = require('./../components/about/component.about.js');
-const LoginViewComponent =  require('./../components/login/component.login.js');
-const SignupViewComponent =  require('./../components/signup/component.signup.js');
-const SettingsViewComponent = require('./../components/settings/component.settings.js');
-const NotificationsViewComponent = require('./../components/notifications/component.notifications.js');
-const NavbarComponent = require('./../components/navbar/component.navbar.js');
+// Importing Components
+import { AboutViewComponent } from './../components/about/component.about.js';
+import { LoginViewComponent } from  './../components/login/component.login.js';
+import { SignupViewComponent } from  './../components/signup/component.signup.js';
+import { SettingsViewComponent } from './../components/settings/component.settings.js';
+import { NotificationsViewComponent } from './../components/notifications/component.notifications.js';
+import { NavbarComponent } from './../components/navbar/component.navbar.js';
 
 /////////////////////////////////////// 
 // Navigation guards
@@ -31,7 +32,7 @@ const userClientForbidden = function(to, from, next){
 
 ///////////////////////////////////////	
 // Routes
-module.exports = new VueRouter({
+export const RouterInstance = new VueRouter({
 	routes: [
 
 		// Home

@@ -1,4 +1,4 @@
-const ApiInstance = require('./../instances/instance.api.js');
+import { ApiInstance } from './../instances/instance.api';
 
 // User store
 export const UserStore = {

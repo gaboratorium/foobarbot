@@ -2,7 +2,7 @@
 import { MainStore } from './../stores/store.main.js';
 
 // App instance
-export const AppLoader  = new Vue({
+export const { AppLoaderInstance }  = new Vue({
   name: "appLoader",
   store: MainStore,
 

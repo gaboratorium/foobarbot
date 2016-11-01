@@ -5,7 +5,7 @@ var passwordHash = require('password-hash');
 var html = fs.readFileSync(__dirname + '/component.signup.html', 'utf8');
 
 // Export global component
-module.exports = {
+export const SignupViewComponent = {
 	name: "LoginComponent",
 	template: html,
 	data: function(){

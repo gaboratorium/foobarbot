@@ -4,7 +4,7 @@ var fs = require('fs');
 var html = fs.readFileSync(__dirname + '/component.about.html', 'utf8');
 
 // Export global component
-module.exports = {
+export const AboutViewComponent = {
 	name: "AboutComponent",
 	template: html,
 	data: function(){

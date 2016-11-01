@@ -36,11 +36,12 @@ module.exports = {
         copy_assets: globalPath.src + 'assets/**/*.*',
         browserify: [
             // Browserify entry point to bundle
-            globalPath.src + "main.js"
+            // globalPath.src + "main.js",
+            globalPath.src + "main.ts"
         ],
         // JavaScript to watch
         js: [
-            globalPath.src + "capp.js",
+            globalPath.src + "app.js",
             globalPath.src + "components/**/*.js",
             globalPath.src + "instances/**/*.js"
         ],

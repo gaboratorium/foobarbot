@@ -4,7 +4,7 @@ var fs = require('fs');
 var html = fs.readFileSync(__dirname + '/component.notifications.html', 'utf8');
 
 // Export global component
-module.exports =  {
+export const NotificationsViewComponent =  {
 	name: "NotificationsComponent",
 	template: html,
 	data: function(){
