@@ -7,8 +7,7 @@ import { NotificationsViewComponent } from './../components/notifications/compon
 import { NavbarComponent } from './../components/navbar/component.navbar';
 
 declare var localStorage: any;
-// declare var VueRouter: any;
-import * as VueRouter from 'vue-router';
+declare var VueRouter: any;
 
 console.log("router instance recieves this loginvewcomponent", LoginViewComponent);
 
@@ -39,61 +38,52 @@ const userClientForbidden = function(to: any, from: any, next: any){
 
 ///////////////////////////////////////	
 // Routes
-export class MyVueRouter extends Vue {
-	
-	constructor(){
-		super();
-		console.log("My router says hello?");
+export const RouterInstance = new VueRouter({
+	routes: [
+
+		// Home
+		{
+			path: '/',
+			redirect: '/about',
+		},
+
+		  // About
+	    {
+	      path: '/about',
+	      name: 'about',
+	      component: AboutViewComponent,
+	    }, 
 		
-	}
-	
-	
+		// Login
+		{
+			path: '/login',
+			name: 'login',
+			component: LoginViewComponent,
+      		beforeEnter: userClientForbidden
+		},
 
-	// routes: [
+		// Signup
+		{
+			path: '/signup',
+			name: 'signup',
+			component: SignupViewComponent,
+      		beforeEnter: userClientForbidden
+		}, 
 
-	// 	// Home
-	// 	{
-	// 		path: '/',
-	// 		redirect: '/about',
-	// 	},
+		// Settings
+		{
+			path: '/settings',
+			name: 'settings',
+			component: SettingsViewComponent,
+	  		beforeEnter: userClientRequired
+		},
 
-	// 	  // About
-	//     {
-	//       path: '/about',
-	//       name: 'about',
-	//       component: AboutViewComponent,
-	//     }, 
-		
-	// 	// Login
-	// 	{
-	// 		path: '/login',
-	// 		name: 'login',
-	// 		component: LoginViewComponent,
-    //   		beforeEnter: userClientForbidden
-	// 	},
-
-	// 	// Signup
-	// 	{
-	// 		path: '/signup',
-	// 		name: 'signup',
-	// 		component: SignupViewComponent,
-    //   		beforeEnter: userClientForbidden
-	// 	}, 
-
-	// 	// Settings
-	// 	{
-	// 		path: '/settings',
-	// 		name: 'settings',
-	// 		component: SettingsViewComponent,
-	//   		beforeEnter: userClientRequired
-	// 	},
-
-	// 	// Settings
-	// 	{
-	// 		path: '/notifications',
-	// 		name: 'notifications',
-	// 		component: NotificationsViewComponent,
-	//   		beforeEnter: userClientRequired
-	// 	},
-	// ]
-};
+		// Settings
+		{
+			path: '/notifications',
+			name: 'notifications',
+			component: NotificationsViewComponent,
+	  		beforeEnter: userClientRequired
+		},
+	]
+});

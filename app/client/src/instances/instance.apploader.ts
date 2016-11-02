@@ -2,8 +2,6 @@
 import { MainStore } from './../stores/store.main';
 import { AppInstance } from './instance.app';
 
-import * as Vue from 'vue';
-
 declare var localStorage: any;
 
 // App instance
@@ -20,9 +18,6 @@ export const AppLoaderInstance  = new Vue({
 
   // Lifecycle hook
   created: function(){
-
-    console.log("apploader created");
-    
 
     // If token or name is not set, unset user client
     var userToken = localStorage.userToken;

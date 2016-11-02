@@ -17,7 +17,6 @@ export const NavbarComponent =  {
 		}
 	},
 	created: () => {
-		// var isUserLoggedIn = false;
 		var isUserLoggedIn = this.$store.getters["mainstore/isUserLoggedIn"];
 		console.log('navbar created, recieves this isUserLoggedin from store', isUserLoggedIn);
 		
