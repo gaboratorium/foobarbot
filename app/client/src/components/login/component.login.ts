@@ -8,7 +8,7 @@ var html = fs.readFileSync(__dirname + '/component.login.html', 'utf8');
 export const LoginViewComponent = {
 	name: "LoginComponent",
 	template: html,
-	data: () => {
+	data: function(){
 		return {
 			loginform__email: "",
 			loginform__password: "",
@@ -16,18 +16,16 @@ export const LoginViewComponent = {
 		};
 	},
 	methods: {
-		loginUser: () => {
+		loginUser: function(e){
 			this.$store.dispatch({
 					type: "createToken",
 					userEmail: this.loginform__email,
 					userPassword: this.loginform__password
-				}).then((response: any) => {
-					console.log('createTOken response', response);
-					
+				}).then((response) => {
 					// Double redirection for forcing router state change
 					this.$router.replace('dummy-replacement-so-we-force-router-change');
 					this.$router.push('settings');
-				}, (fail: any) => {
+				}, (fail) => {
 					console.log('Oops, something went wrong!');		
 					this.errorMsg = "Wrong credentials! Try again!";			
 				})

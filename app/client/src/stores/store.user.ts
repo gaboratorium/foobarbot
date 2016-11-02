@@ -4,7 +4,7 @@ import { ApiInstance } from './../instances/instance.api';
 export const UserStore = {
     actions: {
         // Get a list of users
-        loadUsers: (context: any, payload: any) => {
+        loadUsers: (context, payload) => {
             console.log("store.user loadUsers is fired");
             
             var myUserToken = context.getters["mainstore/userToken"];
@@ -18,7 +18,7 @@ export const UserStore = {
         },
 
         // Sign up user
-        signupUser: (context: any, payload: any) => {
+        signupUser: (context, payload) => {
 
             var myUserName = context.getters["mainstore/userName"];
             var myUserEmail = context.getters["mainstore/userEmail"];

@@ -13,8 +13,8 @@
 		</ul>
 		<h2>Here is an API call:</h2>
 		<p>You should only be able to fetch data when you are logged in:</p>
-		<a href="" class="button" v-on:click.prevent="loadUsers">Load users</a>
-		<a href="" class="button" v-on:click.prevent="resetUsers">Reset users</a>
+		<a href="" class="button" @click.stop="loadUsers">Load users</a>
+		<a href="" class="button" @click.stop="resetUsers">Reset users</a>
 		<div class="grid-block">
 			<div class="grid-content">
 				<div class="card card-section">

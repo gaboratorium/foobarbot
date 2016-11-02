@@ -9,26 +9,26 @@ export const SettingsViewComponent =  {
 	template: html,
 	data: function(){
 		return {
-			users: Array
+			users: []
 		}
 	},
 	methods: {
-		loadUsers: function(){
+		loadUsers: function(e){
 			var myToken = this.$store.getters.userToken;
 			
 	  		this.$store.dispatch({
 				  type: 'loadUsers',
 				  token: myToken
-			  }).then((response: any) => {
+			  }).then((response) => {
 				  console.log(response);
 				  
 				  this.users = response;
-			  }, (fail: any) => {
+			  }, (fail) => {
 				  // Fail
 			  });
 	  	},
 
-	  	resetUsers: function(){
+	  	resetUsers: function(e){
 	  		this.users = [];
 	  	}
 	}

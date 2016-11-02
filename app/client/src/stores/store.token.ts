@@ -8,7 +8,7 @@ export const TokenStore = {
     actions: {
         // Expects and forwards a token (payload.token) for verification
         // Resolves and returns userClient obj if token verification was succesful
-        verifyToken: (context: any, payload: any) => {
+        verifyToken: (context, payload) => {
             
             // Log request
             ApiInstance.postUserLog();
@@ -16,7 +16,7 @@ export const TokenStore = {
             // Send verification
             var myUserToken = payload.token;
             var myPromise = new Promise((resolve, reject) => {
-                ApiInstance.verifyToken(myUserToken).then((response: any) => {
+                ApiInstance.verifyToken(myUserToken).then((response) => {
                 
                 // Rejects if not succesful
                 if (!response.success) {
@@ -27,7 +27,7 @@ export const TokenStore = {
                 resolve(response.userClient);
 
                 // Rejects if request fails
-                }, (fail: any) => {
+                }, (fail) => {
                     reject(fail);
                 })
             })
@@ -39,7 +39,7 @@ export const TokenStore = {
         // Recieves and forwards a name and password for token creation
         // Resolves if user and pw were correct and token was created
         // Saves token to state and localStorage
-        createToken: (context: any, payload: any) => {
+        createToken: (context, payload) => {
 
             console.log('Create token in token store has been called....');
             // ApiInstance.postUserLog();
@@ -49,14 +49,14 @@ export const TokenStore = {
                 var myUserPassword = payload.userPassword;
 
 
-                ApiInstance.createToken(myUserEmail, myUserPassword).then((response: any) => {
+                ApiInstance.createToken(myUserEmail, myUserPassword).then((response) => {
                 
                     let userClient = response.userClient;
                     console.log('token store create token gets this userClient response', response.userClient);                    
 
                     context.commit('setUserClient', userClient);
                     resolve();
-                    }, (fail: any) => {
+                    }, (fail) => {
                     // fail
                     context.commit('unsetUserClient');
                     reject(fail);

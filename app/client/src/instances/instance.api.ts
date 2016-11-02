@@ -1,3 +1,5 @@
+/// <reference path="./../../../../node_modules/vue/types/index.d.ts" />
+
 export const ApiInstance = new Vue({
 	name: "Api",
 	methods: {
@@ -6,12 +8,12 @@ export const ApiInstance = new Vue({
 		},
 
 		// Verify token
-		verifyToken: (myToken: any) => {
+		verifyToken: (myToken) => {
 			var body = { token: myToken };
 			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.post('api/token/verify', body).then((response: any) => {
+				Vue.http.post('api/token/verify', body).then((response) => {
 					resolve(response.body);
-				}, (fail: any) => {
+				}, (fail) => {
 					reject(fail);
 				})
 			})
@@ -19,36 +21,36 @@ export const ApiInstance = new Vue({
 		},
 
 		// Create token
-		createToken: (myUserEmail: any, myUserPassword: any) => {
+		createToken: (myUserEmail, myUserPassword) => {
 			var body = {userEmail: myUserEmail, userPassword: myUserPassword};
 			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.post('api/token/create', body).then((response: any) => {
+				Vue.http.post('api/token/create', body).then((response) => {
 					resolve(response.body);
-				}, (fail: any) => {
+				}, (fail) => {
 					reject(fail);
 				});
 			});
 			return myPromise;
 		},
 
-		loadUsers: (myToken: any) => {
+		loadUsers: (myToken) => {
 			var options = { 
 				headers: {
 					'x-access-token': myToken
 				} 
 			};			
 			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.get('/api/users', options).then((response: any) => {
+				Vue.http.get('/api/users', options).then((response) => {
 					resolve(response.body);
 
-				}, (fail: any) => {
+				}, (fail) => {
 					reject(fail);
 				})
 			})
 			return myPromise;
 		},
 		
-		getNotifications: (myUserToken: any, myUserEmail: any) => {
+		getNotifications: (myUserToken, myUserEmail) => {
 
 			var options = { 
 				params: {
@@ -63,10 +65,10 @@ export const ApiInstance = new Vue({
 			console.log('api get notifications http req options', options);
 			
 			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.get('/api/notifications', options).then((response: any) => {
+				Vue.http.get('/api/notifications', options).then((response) => {
 					console.log('api getnotifications receives:', response);
 					resolve(response.body);
-				}, (fail: any) => {
+				}, (fail) => {
 					console.log('api getnotifications fails', fail);
 					
 					reject(fail);
@@ -75,7 +77,7 @@ export const ApiInstance = new Vue({
 			return myPromise;
 		},
 
-		postNotification: (myToken: any, myUserEmail: any, myMessage: any) => {
+		postNotification: (myToken, myUserEmail, myMessage) => {
 			
 			var body = {
 				userEmail: myUserEmail,
@@ -87,16 +89,16 @@ export const ApiInstance = new Vue({
 			
 
 			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.post('/api/notifications', body).then((response: any) => {
+				Vue.http.post('/api/notifications', body).then((response) => {
 					resolve(response.body);
-				}, (fail: any) => {
+				}, (fail) => {
 					reject(fail);
 				});
 			});
 			return myPromise;
 		},
 
-		deleteNotification: (myUserEmail: any, myToken: any) => {
+		deleteNotification: (myUserEmail, myToken) => {
 			var body = {
 				token: myToken,
 				userEmail: myUserEmail
@@ -107,16 +109,16 @@ export const ApiInstance = new Vue({
 				body: body
 			};
 			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.delete('/api/notifications', options).then((response: any) => {
+				Vue.http.delete('/api/notifications', options).then((response) => {
 					resolve(response.body);
-				}, (fail: any) => {
+				}, (fail) => {
 					reject(fail);
 				});
 			});
 			return myPromise;
 		},
 
-		signupUser: (myUserName: any, myUserEmail: any, myUserPassword: any) => {
+		signupUser: (myUserName, myUserEmail, myUserPassword) => {
 			var body = {
 				userName: myUserName,
 				userEmail: myUserEmail,
@@ -124,9 +126,9 @@ export const ApiInstance = new Vue({
 			};
 
 			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.post('/api/users/', body).then((response: any) => {
+				Vue.http.post('/api/users/', body).then((response) => {
 					resolve(response.body);
-				}, (fail: any) => {
+				}, (fail) => {
 					reject(fail);
 				});
 			});

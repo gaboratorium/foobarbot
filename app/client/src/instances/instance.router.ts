@@ -1,3 +1,4 @@
+/// <reference path="./../../../../node_modules/vue-router/types/index.d.ts" />
 // Importing Components
 import { AboutViewComponent } from './../components/about/component.about';
 import { LoginViewComponent } from  './../components/login/component.login';
@@ -6,15 +7,12 @@ import { SettingsViewComponent } from './../components/settings/component.settin
 import { NotificationsViewComponent } from './../components/notifications/component.notifications';
 import { NavbarComponent } from './../components/navbar/component.navbar';
 
-declare var localStorage: any;
-declare var VueRouter: any;
-
 console.log("router instance recieves this loginvewcomponent", LoginViewComponent);
 
 
 /////////////////////////////////////// 
 // Navigation guards
-const userClientRequired = function(to: any, from: any, next: any){
+const userClientRequired = function(to, from, next){
 	console.log('Visiting a view where authentication is required...');
 	if (localStorage.userName !== undefined && localStorage.userToken !== undefined) {
 		console.log('View access granted');
@@ -25,7 +23,7 @@ const userClientRequired = function(to: any, from: any, next: any){
 	next('/about');
 }	
 
-const userClientForbidden = function(to: any, from: any, next: any){
+const userClientForbidden = function(to, from, next){
 	console.log('Visiting a view where authentication is forbidden...');
 	if (localStorage.userName !== undefined && localStorage.userToken !== undefined) {
 		console.log('View access denied. You are logged in.');
