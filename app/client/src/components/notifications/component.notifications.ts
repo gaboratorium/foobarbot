@@ -3,58 +3,60 @@
 var fs = require('fs');
 var html = fs.readFileSync(__dirname + '/component.notifications.html', 'utf8');
 
+// chrome type definitions should work, but it doesn't
+declare var Notification: any;
+
 // Export global component
 export const NotificationsViewComponent =  {
 	name: "NotificationsComponent",
 	template: html,
-	data: function(){
+	data: () => {
 		return {
 			notifMessage: '',
 			notifDelay: 0,
 			notifAudio: '',
-			notifications: [
-			]
+			notifications: Array
 		};
 	},
-	created: function(){
+	created: () => {
 		this.notifAudio = new Audio('./../assets/notification.mp3');
 		this.loadNotifications();
 	},
 	methods: {
 
-		loadNotifications: function() {
+		loadNotifications: () => {
 			console.log('notification dispatches getnotifications');
 			
 			this.$store.dispatch({
 				type: 'getNotifications'
-			}).then((response) => {
+			}).then((response: any) => {
 				console.log('Noti comp gets Response: ', response);
 				this.notifications = response;
 				
 				
-			}, (fail) => {
+			}, (fail: any) => {
 				//fail
 				console.log('failll', fail);
 				
 			});
 		},
 
-		deleteNotifications: function(e){
+		deleteNotifications: () => {
 
 			this.$store.dispatch({
 				type: 'deleteNotification'
-			}).then((response) => {
+			}).then((response: any) => {
 				console.log(response);
 				this.notifications = [];
 				
-			}, (fail) => {
+			}, (fail: any) => {
 				console.log(fail);
 				
 			})
 		},
 
 		// Push notification
-		notifyMe: function(e){
+		notifyMe: () => {
 			var NotificationComponent = this;
 			console.log(NotificationComponent.notifDelay);
 			
@@ -79,7 +81,7 @@ export const NotificationsViewComponent =  {
 
 			// If notifs are not granted and not denied, ask for permission
 			} else if (Notification.permission !== "denied") {
-				Notification.requestPermission((permission) => {
+				Notification.requestPermission((permission: any) => {
 
 					// If permission was granted, show notif
 					if (permission === "granted"){
@@ -93,15 +95,15 @@ export const NotificationsViewComponent =  {
 			}
 	  	},
 
-		sendNotification: function(){
+		sendNotification: () => {
 			var NotificationComponent = this;
 			this.$store.dispatch({
 				type: "postNotification",
 				notificationMessage: NotificationComponent.notifMessage
-			}).then((response) => {
+			}).then((response: any) => {
 				console.log('Notification component recieves response:', response);
 				this.loadNotifications();
-			}, (fail) => {
+			}, (fail: any) => {
 				console.log('Notification component request went wrong', fail);
 				
 			});

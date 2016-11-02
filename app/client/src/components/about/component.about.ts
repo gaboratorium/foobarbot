@@ -3,35 +3,39 @@
 var fs = require('fs');
 var html = fs.readFileSync(__dirname + '/component.about.html', 'utf8');
 
+interface IUsers {
+	users: Array<any>
+}
+
 // Export global component
 export const AboutViewComponent = {
 	name: "AboutComponent",
 	template: html,
-	data: function(){
+	data: () => {
 		return {
 			users: Array,
 			errorMsg: String
 		}
 	},
 	methods: {
-		loadUsers: function(e){
-			e.preventDefault();
+		loadUsers: () => {
 			var myToken = this.$store.getters.userToken;
 			
 	  		this.$store.dispatch({
 				  type: 'loadUsers',
 				  token: myToken
-			  }).then((response) => {
+			  }).then((response: IUsers) => {
+				  console.log(response);
+				  
 				  this.users = response;
-			  }, (fail) => {
+			  }, (fail:any) => {
 				  // Fail
 				  this.errorMsg = "You are not logged in.";
 				  
 			  });
 	  	},
 
-	  	resetUsers: function(e){
-			e.preventDefault();
+	  	resetUsers: () => {
 	  		this.users = [];
 			this.errorMsg = "";
 	  	}

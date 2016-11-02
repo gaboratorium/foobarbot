@@ -1,7 +1,8 @@
-/// <reference path="./../../../../node_modules/vue/types/index.d.ts" />
 // Importing store
 import { MainStore } from './../stores/store.main';
 import { AppInstance } from './instance.app';
+
+declare var localStorage: any;
 
 // App instance
 export const AppLoaderInstance  = new Vue({
@@ -28,11 +29,11 @@ export const AppLoaderInstance  = new Vue({
     }
 
     // If token and name is set, verify token
-    MainStore.dispatch({type: 'verifyToken', token: userToken}).then((responseAsUserClient) => {
+    MainStore.dispatch({type: 'verifyToken', token: userToken}).then((responseAsUserClient: any) => {
       console.log('Token has been verifyied during apploader');
       MainStore.commit('setUserClient', responseAsUserClient);
       this.initApp();
-    }, (fail) => {
+    }, (fail: any) => {
       MainStore.commit('unsetUserClient');
       this.initApp();
     });

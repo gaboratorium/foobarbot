@@ -7,16 +7,16 @@ var html = fs.readFileSync(__dirname + '/component.navbar.html', 'utf8')
 export const NavbarComponent =  {
 	name: "NavbarComponent",
 	template: html,
-	data: function(){
+	data: () => {
 		return {
 			user: {
-				name: undefined
+				name: String
 			},
 			isUserLoggedIn: false
 
 		}
 	},
-	created: function(){
+	created: () => {
 		var isUserLoggedIn = this.$store.getters["mainstore/isUserLoggedIn"];
 		console.log('navbar created, recieves this isUserLoggedin from store', isUserLoggedIn);
 		
@@ -27,7 +27,7 @@ export const NavbarComponent =  {
 		}
 	},
 	watch: {
-		$route: function(){
+		$route: () => {
 			var isUserLoggedIn = this.$store.getters["mainstore/isUserLoggedIn"];
 			var myUserId = this.$store.getters["mainstore/userId"];
 			
@@ -41,7 +41,7 @@ export const NavbarComponent =  {
 		}
 	},
 	methods: {
-		logout: function(){
+		logout: () => {
 			this.$store.commit('unsetUserClient');
 			// Double redirection for forcing router state change
 			this.$router.replace('dummy-replacement-so-we-force-router-change');

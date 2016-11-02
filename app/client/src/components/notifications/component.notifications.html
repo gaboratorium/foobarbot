@@ -11,7 +11,7 @@
 					<input type="text" id="notifDelay" v-model="notifDelay" placeholder="Set timer in seconds" autofocus="autofocus">
 					<label for="notifMessage">Enter your notification message</label>
 					<input type="text" id="notifMessage" v-model="notifMessage" placeholder='What would you like to see?'>
-					<a href="#" class='button' v-on:click.prevent="notifyMe($event)">Push notification</a>
+					<a href="#" class='button' v-on:click.prevent="notifyMe()">Push notification</a>
 				</div>
 			</div>
 		</div>
@@ -22,7 +22,7 @@
 				<div class="card card-section">
 					<h1>Notifications</h1>
 					<p>Here you can see the list of your notifications.</p>
-					<a href="#" v-on:click.prevent="deleteNotifications($event)" class="button">Delete all notifications</a>
+					<a href="#" v-on:click.prevent="deleteNotifications()" class="button">Delete all notifications</a>
 					<ul v-if="notifications.length > 0">
 						<li v-for="notif in notifications"> {{ notif }} </li>
 					</ul>
