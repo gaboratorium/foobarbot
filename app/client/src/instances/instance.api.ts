@@ -1,3 +1,5 @@
+/// <reference path="./../../../../node_modules/vue/types/index.d.ts" />
+
 export const ApiInstance = new Vue({
 	name: "Api",
 	methods: {

@@ -9,8 +9,8 @@ export const AboutViewComponent = {
 	template: html,
 	data: function(){
 		return {
-			users: [],
-			errorMsg: ''
+			users: Array,
+			errorMsg: String
 		}
 	},
 	methods: {

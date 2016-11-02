@@ -1,3 +1,4 @@
+/// <reference path="./../../../../node_modules/vue/types/index.d.ts" />
 // Importing store
 import { MainStore } from './../stores/store.main';
 import { AppInstance } from './instance.app';

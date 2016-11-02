@@ -1,3 +1,4 @@
+/// <reference path="./../../../../node_modules/vue-router/types/index.d.ts" />
 // Importing Components
 import { AboutViewComponent } from './../components/about/component.about';
 import { LoginViewComponent } from  './../components/login/component.login';
