@@ -2,6 +2,8 @@
 import { RouterInstance } from './instance.router';
 import { MainStore } from './../stores/store.main';
 
+import * as Vue from 'vue';
+
 // Importing Components
 import { AboutViewComponent } from './../components/about/component.about';
 import { LoginViewComponent } from  './../components/login/component.login';

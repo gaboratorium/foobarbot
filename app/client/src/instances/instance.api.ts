@@ -1,3 +1,5 @@
+import * as Vue from 'vue';
+
 export const ApiInstance = new Vue({
 	name: "Api",
 	methods: {
