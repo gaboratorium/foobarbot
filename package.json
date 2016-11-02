@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "brfs": "^1.4.3",
-    "browserify": "^13.1.0",
+    "browserify": "^13.1.1",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
@@ -45,9 +45,11 @@
     "gulp-run-sequence": "^0.3.2",
     "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^1.6.0",
-    "gulp-typescript": "^3.0.2",
+    "gulp-typescript": "^3.1.2",
     "morgan": "^1.7.0",
     "nodemon": "^1.10.2",
+    "tsify": "^2.0.2",
+    "typescript": "^2.0.6",
     "vinyl-source-stream": "^1.1.0",
     "vueify": "^9.2.4",
     "vuex": "^2.0.0"

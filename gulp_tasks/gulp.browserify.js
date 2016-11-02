@@ -10,7 +10,7 @@ var config = require('./gulp.config.js');
 module.exports = function(gulp){
 	gulp.task('browserify', 'Bundles app components' , function() {
 
-		return browserify(config.src.browserify)
+		return browserify(config.src.ts)
 			.add(config.libs.types)
 			.plugin(tsify, { noImplicitAny: true })
 			.transform('brfs')

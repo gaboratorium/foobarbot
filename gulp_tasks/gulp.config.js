@@ -39,7 +39,7 @@ module.exports = {
         root: globalPath.src,
         copy_index: globalPath.src + 'index.html',
         copy_assets: globalPath.src + 'assets/**/*.*',
-        browserify: [
+        ts: [
             // TS files to compile. Order matters!
 
             // Components
@@ -69,15 +69,15 @@ module.exports = {
             // Main.ts
             globalPath.src + "main.ts",
         ],
+        
         // JavaScript to watch
         js: [
             globalPath.src + "app.js",
             globalPath.src + "components/**/*.js",
             globalPath.src + "instances/**/*.js"
         ],
-        ts: [
-            // Typescript to compile...
-        ],
+
+        // Sass to compile
         sass: [
             globalPath.src + "sass/**/*.scss"
         ]

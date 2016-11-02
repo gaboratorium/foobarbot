@@ -14,6 +14,9 @@ require('./gulp_tasks/gulp.libs.css.concat')(gulp);
 // Compile and concat sass
 require('./gulp_tasks/gulp.sass')(gulp);
 
+// Compile TS
+require('./gulp_tasks/gulp.ts')(gulp);
+
 // Copy static
 require('./gulp_tasks/gulp.copy_index')(gulp);
 require('./gulp_tasks/gulp.copy_assets')(gulp);
