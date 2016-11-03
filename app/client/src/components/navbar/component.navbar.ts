@@ -10,7 +10,7 @@ export const NavbarComponent =  {
 	data: function(){
 		return {
 			user: {
-				name: undefined
+				name: String
 			},
 			isUserLoggedIn: false
 
@@ -24,6 +24,8 @@ export const NavbarComponent =  {
 		if (isUserLoggedIn) {
 			this.user.name = this.$store.getters["mainstore/userName"];
 			this.isUserLoggedIn = true;
+		} else {
+			this.user.name = "";
 		}
 	},
 	watch: {
