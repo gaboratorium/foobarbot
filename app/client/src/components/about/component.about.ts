@@ -14,24 +14,22 @@ export const AboutViewComponent = {
 		}
 	},
 	methods: {
-		loadUsers: function(e){
-			e.preventDefault();
+		loadUsers: function(){
 			var myToken = this.$store.getters.userToken;
 			
 	  		this.$store.dispatch({
 				  type: 'loadUsers',
 				  token: myToken
-			  }).then((response) => {
+			  }).then((response: any) => {
 				  this.users = response;
-			  }, (fail) => {
+			  }, (fail: any) => {
 				  // Fail
 				  this.errorMsg = "You are not logged in.";
 				  
 			  });
 	  	},
 
-	  	resetUsers: function(e){
-			e.preventDefault();
+	  	resetUsers: function(){
 	  		this.users = [];
 			this.errorMsg = "";
 	  	}
