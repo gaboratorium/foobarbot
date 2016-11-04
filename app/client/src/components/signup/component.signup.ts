@@ -20,7 +20,7 @@ export const SignupViewComponent = {
 		};
 	},
 	methods: {
-		signupUser: function(e){
+		signupUser: function(){
             if (this.signupform__password !== this.signupform__password2) {
                 this.errorMsg = "The passwords you entered do not match.";
                 return;
@@ -31,10 +31,10 @@ export const SignupViewComponent = {
 					userName: this.signupform__username,
                     userEmail: this.signupform__email,
 					userPassword: passwordHash.generate(this.signupform__password)
-				}).then((response) => {
+				}).then((response: any) => {
 					console.log("Signup component recieves:", response);
                     this.isRegistrationSuccesful = true;
-				}, (fail) => {
+				}, (fail: any) => {
 					console.log('Signup component recieves error:', fail);		
 					this.errorMsg = fail.body.message;			
 				});
