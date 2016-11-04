@@ -2,6 +2,7 @@
 import { AboutViewComponent } from './../components/about/component.about';
 import { LoginViewComponent } from  './../components/login/component.login';
 import { SignupViewComponent } from  './../components/signup/component.signup';
+import { UserViewComponent } from  './../components/user/component.user';
 import { SettingsViewComponent } from './../components/settings/component.settings';
 import { NotificationsViewComponent } from './../components/notifications/component.notifications';
 import { NavbarComponent } from './../components/navbar/component.navbar';
@@ -59,6 +60,13 @@ export const RouterInstance = new VueRouter({
 			name: 'signup',
 			component: SignupViewComponent,
       		beforeEnter: userClientForbidden
+		},
+
+		// Signup
+		{
+			path: '/user/:id',
+			name: 'user',
+			component: UserViewComponent
 		}, 
 
 		// Settings
@@ -75,6 +83,13 @@ export const RouterInstance = new VueRouter({
 			name: 'notifications',
 			component: NotificationsViewComponent,
 	  		beforeEnter: userClientRequired
+		},
+
+		// 404
+		{
+			path: '/:anythingElse',
+			name: '404',
+			redirect: '/about'
 		},
 	]
 });
