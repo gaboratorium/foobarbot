@@ -7,12 +7,22 @@
 
 // Importing store
 import { MainStore } from './../stores/store.main';
+import { AppInstance } from './instance.app';
 declare var localStorage: any;
+
+var hibilihabala = 5;
 
 // App instance
 export const AppLoaderInstance  = new Vue({
   name: "appLoader",
   store: MainStore,
+
+  // methods: {
+  //   initApp: function(appName: string){
+  //     console.log("App is ready to init..");
+  //     var myApp = eval(appName);
+  //   }
+  // },
 
   // Lifecycle hook
   beforeCreate: function(){
@@ -23,13 +33,17 @@ export const AppLoaderInstance  = new Vue({
     
     if (userToken == undefined || userName == undefined) {
       MainStore.commit('unsetUserClient');
+      return;
     }
 
     // If token and name is set, verify token
     MainStore.dispatch({type: 'verifyToken', token: userToken}).then((responseAsUserClient: any) => {
       MainStore.commit('setUserClient', responseAsUserClient);
+      console.log("User client has been set in store");
+      
     }, (fail: any) => {
       MainStore.commit('unsetUserClient');
+      console.log("User client has been unset in store");
     });
   }
 });

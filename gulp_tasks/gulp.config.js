@@ -29,7 +29,9 @@ module.exports = {
 
         // CSS Libraries
         css: [
-            globalPath.npm+"foundation-apps/dist/css/foundation-apps.css"
+            globalPath.npm+"foundation-apps/dist/css/foundation-apps.css",
+            // globalPath.npm+"font-awesome/css/font-awesome.css"
+            
             // Material icons...
         ]
     },
@@ -80,6 +82,7 @@ module.exports = {
 
         // Sass to compile
         sass: [
+            // globalPath.npm+"font-awesome/scss/font-awesome.scss",
             globalPath.src + "sass/**/*.scss"
         ]
     },

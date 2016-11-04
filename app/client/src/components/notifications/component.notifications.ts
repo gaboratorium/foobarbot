@@ -12,17 +12,50 @@ export const NotificationsViewComponent =  {
 	template: html,
 	data: function(){
 		return {
-			notifMessage: '',
-			notifDelay: 0,
+			formNotifMessage: '',
+			formNotifDelay: 0,
 			notifAudio: '',
-			notifications: Array
+			notifications: Array,
+			dataStatus: String
 		};
 	},
 	created: function(){
+
+		this.dataStatus = "loading";
 		this.notifAudio = new Audio('./../assets/notification.mp3');
-		this.loadNotifications();
+
+		// Load content if userToken is set
+		if (this.$store.getters["mainstore/userToken"] !== undefined){
+			this.loadNotifications();
+		} else {
+			// Interval attempts
+			var attempt: number = 0;
+			var maxAttempt: number = 8;
+			var attemptSpeed = 800;
+
+			// Start timer
+			var myTimer = setInterval(()=>{
+				
+				// Stop timer if userToken is set
+				if (this.$store.getters["mainstore/userToken"] !== undefined) {
+					this.loadNotifications();
+					clearInterval(myTimer);	
+				} 
+
+				// Stop timer if max attempt number reached
+				if (attempt == maxAttempt) {
+					clearInterval(myTimer);
+					this.dataStatus = "failed";
+				}
+
+				attempt++;
+
+			}, attemptSpeed);
+		}
 	},
 	methods: {
+
+
 
 		loadNotifications: function() {
 			console.log('notification dispatches getnotifications');
@@ -31,11 +64,12 @@ export const NotificationsViewComponent =  {
 			}).then((response: any) => {
 				console.log('Noti comp gets Response: ', response);
 				this.notifications = response;
-				
+				this.dataStatus = "loaded";
 				
 			}, (fail: any) => {
 				//fail
 				console.log('failll', fail);
+				this.dataStatus = "failed";
 				
 			});
 		},
