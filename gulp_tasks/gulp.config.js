@@ -49,6 +49,7 @@ module.exports = {
             globalPath.src + "components/notifications/component.notifications.ts",
             globalPath.src + "components/settings/component.settings.ts",
             globalPath.src + "components/signup/component.signup.ts",
+            globalPath.src + "components/appfooter/component.appfooter.ts",
 
             // Instances
             globalPath.src + "instances/instance.router.ts",

@@ -9,6 +9,7 @@ import { SignupViewComponent } from  './../components/signup/component.signup';
 import { SettingsViewComponent } from './../components/settings/component.settings';
 import { NotificationsViewComponent } from './../components/notifications/component.notifications';
 import { NavbarComponent } from './../components/navbar/component.navbar';
+import { AppfooterComponent } from './../components/appfooter/component.appfooter';
 
 console.log("app recieves this mainstore: ", {MainStore});
 
@@ -28,6 +29,7 @@ export const AppInstance = new Vue({
   	'signup-view-component': SignupViewComponent,
     'settings-view-component': SettingsViewComponent,
     'notifications-view-component': NotificationsViewComponent,
-  	'navbar': NavbarComponent
+  	'navbar': NavbarComponent,
+  	'appfooter': AppfooterComponent
   }
 });

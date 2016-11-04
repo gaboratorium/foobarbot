@@ -40,5 +40,5 @@ gulp.task('watch-files', 'Watch files for change to execute tasks', function(){
     gulp.watch(config.src.sass, ['sass']);
     gulp.watch(config.src.copy_assets, ['copy_assets']);
     gulp.watch(config.libs.js, ['libs.js.concat']);
-    gulp.watch(config.src.js, ['browserify']);
+    gulp.watch(config.src.ts, ['browserify']);
 });
