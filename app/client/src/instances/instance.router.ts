@@ -9,30 +9,21 @@ import { NavbarComponent } from './../components/navbar/component.navbar';
 declare var localStorage: any;
 declare var VueRouter: any;
 
-console.log("router instance recieves this loginvewcomponent", LoginViewComponent);
-
-
 /////////////////////////////////////// 
 // Navigation guards
 const userClientRequired = function(to: any, from: any, next: any){
-	console.log('Visiting a view where authentication is required...');
 	if (localStorage.userName !== undefined && localStorage.userToken !== undefined) {
-		console.log('View access granted');
 		next();
 		return;
 	}
-	console.log('View access denied. You are not logged in.');
 	next('/about');
 }	
 
 const userClientForbidden = function(to: any, from: any, next: any){
-	console.log('Visiting a view where authentication is forbidden...');
 	if (localStorage.userName !== undefined && localStorage.userToken !== undefined) {
-		console.log('View access denied. You are logged in.');
 		next('/about');
 		return;
 	}
-	console.log('View access granted.');
 	next();
 }
 

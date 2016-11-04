@@ -3,9 +3,6 @@ import { ApiInstance } from './../instances/instance.api';
 
 // const ApiInstance = require("./../instances/instance.api")
 
-console.log("store.token recieves this api instance", ApiInstance);
-
-
 // Token store
 export const TokenStore = {
     actions: {

@@ -3,6 +3,8 @@
 var fs = require('fs');
 var html = fs.readFileSync(__dirname + '/component.navbar.html', 'utf8')
 
+declare const localStorage: any;
+
 // Export global component
 export const NavbarComponent =  {
 	name: "NavbarComponent",
@@ -17,12 +19,12 @@ export const NavbarComponent =  {
 		}
 	},
 	created: function(){
-		var isUserLoggedIn = this.$store.getters["mainstore/isUserLoggedIn"];
-		console.log('navbar created, recieves this isUserLoggedin from store', isUserLoggedIn);
+		var isUserLoggedIn = localStorage.userName !== undefined && localStorage.userToken !== undefined;
+		console.log('navbar created', isUserLoggedIn);
 		
 		
 		if (isUserLoggedIn) {
-			this.user.name = this.$store.getters["mainstore/userName"];
+			this.user.name = localStorage.userName;
 			this.isUserLoggedIn = true;
 		} else {
 			this.user.name = "";

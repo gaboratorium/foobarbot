@@ -1,7 +1,12 @@
+// Reads userName and userToken from localStorage
+// If one is missing, deletes both
+// If token is incorrect, deletes both
+// If token is ok, then it's ok
+// Please not that this is an async call,
+// so app gets initialized before this (unfortunately)
+
 // Importing store
 import { MainStore } from './../stores/store.main';
-import { AppInstance } from './instance.app';
-
 declare var localStorage: any;
 
 // App instance
@@ -9,15 +14,8 @@ export const AppLoaderInstance  = new Vue({
   name: "appLoader",
   store: MainStore,
 
-  methods: {
-    initApp: () => {
-      console.log('Initialising Vuejs app...');
-      var myApp = AppInstance;
-    }
-  },
-
   // Lifecycle hook
-  created: function(){
+  beforeCreate: function(){
 
     // If token or name is not set, unset user client
     var userToken = localStorage.userToken;
@@ -25,17 +23,13 @@ export const AppLoaderInstance  = new Vue({
     
     if (userToken == undefined || userName == undefined) {
       MainStore.commit('unsetUserClient');
-      this.initApp();
     }
 
     // If token and name is set, verify token
     MainStore.dispatch({type: 'verifyToken', token: userToken}).then((responseAsUserClient: any) => {
-      console.log('Token has been verifyied during apploader');
       MainStore.commit('setUserClient', responseAsUserClient);
-      this.initApp();
     }, (fail: any) => {
       MainStore.commit('unsetUserClient');
-      this.initApp();
     });
   }
 });

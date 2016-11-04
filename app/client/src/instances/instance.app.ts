@@ -11,8 +11,6 @@ import { NotificationsViewComponent } from './../components/notifications/compon
 import { NavbarComponent } from './../components/navbar/component.navbar';
 import { AppfooterComponent } from './../components/appfooter/component.appfooter';
 
-console.log("app recieves this mainstore: ", {MainStore});
-
 // App instance
 export const AppInstance = new Vue({
   
@@ -21,6 +19,10 @@ export const AppInstance = new Vue({
   name: "myVueApp",
   router: RouterInstance,
   store: MainStore,
+
+  created: function() {
+    console.log("AppInstance has been created");
+  },
 
   // Components
   components: {
