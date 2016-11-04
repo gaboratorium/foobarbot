@@ -1,4 +1,12 @@
-export const ApiInstance = new Vue({
+
+interface IApiInstance {
+	// These are implemented as methods not properties,
+	// so this buildup should be changed into a class module
+	postUserLog?: any,
+
+}
+
+export const ApiInstance: IApiInstance= new Vue({
 	name: "Api",
 	methods: {
 		postUserLog: () => {
@@ -134,4 +142,4 @@ export const ApiInstance = new Vue({
 			return myPromise;
 		}
 	}
-})
+}) as IApiInstance;
