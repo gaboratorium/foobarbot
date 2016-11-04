@@ -2,8 +2,20 @@
 interface IApiInstance {
 	// These are implemented as methods not properties,
 	// so this buildup should be changed into a class module
-	postUserLog?: any,
 
+	// User methods
+	postUserLog?: any,
+	signupUser?: any
+	loadUsers?: any,
+
+	// Token methods
+	verifyToken?: any,
+	createToken?: any,
+
+	// Notification methods
+	getNotifications?: any,
+	postNotification?: any,
+	deleteNotification?: any,
 }
 
 export const ApiInstance: IApiInstance= new Vue({

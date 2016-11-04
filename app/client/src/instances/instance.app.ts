@@ -1,4 +1,3 @@
-/// <reference path="./../../../../node_modules/vue/types/index.d.ts" />
 // Importing the router instance and main store
 import { RouterInstance } from './instance.router';
 import { MainStore } from './../stores/store.main';
