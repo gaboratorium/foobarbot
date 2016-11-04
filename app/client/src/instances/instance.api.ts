@@ -63,7 +63,7 @@ export const ApiInstance = new Vue({
 			console.log('api get notifications http req options', options);
 			
 			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.get('/api/notifications', options).then((response) => {
+				Vue.http.get('/api/notifications', options).then((response: any) => {
 					console.log('api getnotifications receives:', response);
 					resolve(response.body);
 				}, (fail) => {

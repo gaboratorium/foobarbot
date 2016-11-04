@@ -7,6 +7,10 @@ import { TokenStore } from "./store.token";
 import { NotificationStore } from "./store.notification";
 import { UserStore } from "./store.user";
 
+// No DT typings
+import * as Vuex from "vuex";
+declare var localStorage: any;
+
 // Main store with modularized actions
 export const MainStore = new Vuex.Store({
 

@@ -28,7 +28,7 @@ export const SettingsViewComponent =  {
 			  });
 	  	},
 
-	  	resetUsers: function(e){
+	  	resetUsers: function(){
 	  		this.users = [];
 	  	}
 	}

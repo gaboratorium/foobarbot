@@ -1,12 +1,16 @@
 import { ApiInstance } from './../instances/instance.api';
 
+// const ApiInstance = require("./../instances/instance.api")
+// declare var ApiInstance: any;
+// import * as ApiInstance from './../instances/instance.api';
+
 console.log("store.notification recieves this api instance", ApiInstance);
 
 // Notification store
 export const NotificationStore = {
     actions: {
         // Get list of notifications
-        getNotifications: (context, payload) => {
+        getNotifications: (context: any, payload: any) => {
             var userToken = context.getters["mainstore/userToken"]; // should be userId
             var userEmail = context.getters["mainstore/userEmail"]; // should be userId
             ApiInstance.postUserLog();
@@ -14,7 +18,7 @@ export const NotificationStore = {
         },
 
         // Post notifications
-        postNotification: (context, payload) => {
+        postNotification: (context: any, payload: any) => {
             var userToken = context.getters["mainstore/userToken"]; // should be userId
             var userEmail = context.getters["mainstore/userEmail"]; // should be userId
             ApiInstance.postUserLog();
@@ -22,7 +26,7 @@ export const NotificationStore = {
         },
 
         // Delete all notifications
-        deleteNotification: (context, payload) => {
+        deleteNotification: (context: any, payload: any) => {
         var userEmail = context.getters["mainstore/userEmail"];
         var userToken = context.getters["mainstore/userToken"];
         ApiInstance.postUserLog();
