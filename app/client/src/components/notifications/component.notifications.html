@@ -32,7 +32,11 @@
 					<div v-if="dataStatus=='loaded'">
 						<a href="#" v-on:click.prevent="deleteNotifications($event)" class="button">Delete all notifications</a>
 						<ul v-if="notifications.length > 0">
-							<li v-for="notif in notifications"> {{ notif }} </li>
+							<li v-for="notif in notifications"> 
+								<span class="o-text--block">From: {{notif.userEmail}}</span> 
+								<span class="o-text--block">Message: {{notif.message}}</span> 
+								<span class="o-text--block">Date: {{notif.date}}</span> 
+							</li>
 						</ul>
 						<p v-if="notifications.length == 0">Currently you have no notifications. Why not push one?</p>
 					</div>

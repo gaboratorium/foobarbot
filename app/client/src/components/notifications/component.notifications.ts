@@ -91,7 +91,7 @@ export const NotificationsViewComponent =  {
 		// Push notification
 		notifyMe: function(){
 			var NotificationComponent = this;
-			console.log(NotificationComponent.notifDelay);
+			console.log(NotificationComponent.formNotifDelay);
 			
 			// Notify user if notifications are not supported
 			if (!("Notification" in window)) {
@@ -107,10 +107,10 @@ export const NotificationsViewComponent =  {
 			// If notifications are granted, show notif
 			if (Notification.permission === "granted") {
 				setTimeout(function(){
-					var notification = new Notification(NotificationComponent.notifMessage, options);
+					var notification = new Notification(NotificationComponent.formNotifMessage, options);
 					NotificationComponent.notifAudio.play();
 					NotificationComponent.sendNotification();
-				}, NotificationComponent.notifDelay * 1000);
+				}, NotificationComponent.formNotifDelay * 1000);
 
 			// If notifs are not granted and not denied, ask for permission
 			} else if (Notification.permission !== "denied") {
@@ -119,10 +119,10 @@ export const NotificationsViewComponent =  {
 					// If permission was granted, show notif
 					if (permission === "granted"){
 						setTimeout(function(){
-							var notification = new Notification(NotificationComponent.notifMessage, options);
+							var notification = new Notification(NotificationComponent.formNotifMessage, options);
 							NotificationComponent.notifAudio.play();
 							NotificationComponent.sendNotification();
-						}, NotificationComponent.notifDelay * 1000);
+						}, NotificationComponent.formNotifDelay * 1000);
 					}
 				});
 			}
@@ -132,7 +132,7 @@ export const NotificationsViewComponent =  {
 			var NotificationComponent = this;
 			this.$store.dispatch({
 				type: "postNotification",
-				notificationMessage: NotificationComponent.notifMessage
+				notificationMessage: NotificationComponent.formNotifMessage
 			}).then((response: any) => {
 				console.log('Notification component recieves response:', response);
 				this.loadNotifications();
