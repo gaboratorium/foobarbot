@@ -28,6 +28,15 @@ export const UserStore = {
             var myUserEmail = context.getters["mainstore/userEmail"];
 
             return ApiInstance.signupUser(payload.userName, payload.userEmail, payload.userPassword);
+        },
+
+        // Get user
+        getUser: (context: any, payload: any) => {
+            var myPromise = new Promise((resolve: any, reject: any) => {
+                resolve({userName: "Testuser"});
+            });
+
+            return myPromise;
         }
     }
 }
