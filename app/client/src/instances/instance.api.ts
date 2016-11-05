@@ -7,6 +7,7 @@ interface IApiInstance {
 	postUserLog?: any,
 	signupUser?: any
 	loadUsers?: any,
+	getUser?: any,
 
 	// Token methods
 	verifyToken?: any,
@@ -65,6 +66,27 @@ export const ApiInstance: IApiInstance= new Vue({
 					reject(fail);
 				})
 			})
+			return myPromise;
+		},
+
+		getUser: (myUserId: any) => {
+			var myPromise = new Promise((resolve, reject) => {
+
+				// Send requested user ID as parameter
+				var options = {
+					params: {
+						userId: myUserId
+					}
+				};
+
+				// Make HTTP request
+				Vue.http.get('/api/user', options).then((response: any) => {
+					resolve(response.body);
+				}, (fail: any) => {
+					reject(fail);
+				})
+			})
+
 			return myPromise;
 		},
 		

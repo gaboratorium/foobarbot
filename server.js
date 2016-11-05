@@ -176,6 +176,23 @@ apiRoutes.post('/users', function(req, res) {
 	});
 });
 
+
+apiRoutes.get('/user', function(req, res) {
+	var myUserId = req.query.userId;
+
+	console.log('Endpoint recieved this userID', myUserId);
+	
+
+	User.findOne({ userId: myUserId}, function(err, user){
+		if (user) {
+			// if user profile is public
+			return res.json({success: true, message: "Good request", user: user});
+		} else {
+			return res.status(404).send({success: false, message: "No user was found with this Id"});
+		}
+	});
+});
+
 // route middleware to verify a token
 apiRoutes.use(function(req, res, next){
 

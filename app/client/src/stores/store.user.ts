@@ -32,11 +32,13 @@ export const UserStore = {
 
         // Get user
         getUser: (context: any, payload: any) => {
-            var myPromise = new Promise((resolve: any, reject: any) => {
-                resolve({userName: "Testuser"});
-            });
+            // var myPromise = new Promise((resolve: any, reject: any) => {
+            //     resolve({userName: payload.userId});
+            // });
 
-            return myPromise;
+            // return myPromise;
+
+            return ApiInstance.getUser(payload.userId);
         }
     }
 }
