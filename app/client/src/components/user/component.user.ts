@@ -33,7 +33,7 @@ export const UserViewComponent = {
 					
 				}, (fail: any) => {
 					this.dataStatus = "failed";
-					// this.$router.push('about');
+					this.$router.push({name: "about"});
 
 				})
 	  	}
