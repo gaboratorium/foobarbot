@@ -17,7 +17,17 @@ export const UserViewComponent = {
 	// Created hook
 	created: function(){
 		this.dataStatus = "loading"
-		this.loadUser(this.$route.params.id);
+		var requestedId: string = this.$route.params.id;
+
+		console.log("requested id", requestedId);
+		console.log("is user logged in", this.$store.getters["mainstore/isUserLoggedIn"]);
+		
+		
+		if (requestedId == "me" && this.$store.getters["mainstore/isUserLoggedIn"]) {
+			requestedId = this.$store.getters["mainstore/userId"];
+		}
+
+		this.loadUser(requestedId);
 	},
 
 	// Methods

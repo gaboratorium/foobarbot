@@ -17,9 +17,10 @@
 		<ul class="menu-bar" v-if='isUserLoggedIn'>
 			<li><router-link to="">
 				<span>Hello <span class='o-text--strong'>{{ user.name }}</span></span></router-link></li>
-			<li><router-link to="about">About</router-link></li>
-			<li><router-link to="settings">Settings</router-link></li>
-			<li><router-link to="notifications">Notifications</router-link></li>
+			<li><router-link to="/about">About</router-link></li>
+			<li><router-link to="/settings">Settings</router-link></li>
+			<li><router-link to="/notifications">Notifications</router-link></li>
+			<li><router-link to="/user/me">My profile</router-link></li>
 			<li><a href="#" @click.stop="logout()">Logout</a></li>
 		</ul>
 		<!-- Right menu for visitor -->
