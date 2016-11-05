@@ -2,14 +2,17 @@
 import { RouterInstance } from './instance.router';
 import { MainStore } from './../stores/store.main';
 
-// Importing Components
+// View Components
 import { AboutViewComponent } from './../components/about/component.about';
 import { LoginViewComponent } from  './../components/login/component.login';
 import { SignupViewComponent } from  './../components/signup/component.signup';
 import { SettingsViewComponent } from './../components/settings/component.settings';
 import { NotificationsViewComponent } from './../components/notifications/component.notifications';
+
+// Other components
 import { NavbarComponent } from './../components/navbar/component.navbar';
 import { AppfooterComponent } from './../components/appfooter/component.appfooter';
+import { ComposeModalComponent } from './../components/composemodal/component.composemodal';
 
 // App instance
 export const AppInstance = new Vue({
@@ -19,6 +22,10 @@ export const AppInstance = new Vue({
   name: "myVueApp",
   router: RouterInstance,
   store: MainStore,
+
+  data: {
+    showModal: false
+  },
 
   created: function() {
     console.log("AppInstance has been created");
@@ -32,6 +39,7 @@ export const AppInstance = new Vue({
     'settings-view-component': SettingsViewComponent,
     'notifications-view-component': NotificationsViewComponent,
   	'navbar': NavbarComponent,
-  	'appfooter': AppfooterComponent
+  	'appfooter': AppfooterComponent,
+  	'modal': ComposeModalComponent
   }
 });
