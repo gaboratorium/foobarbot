@@ -1,8 +1,16 @@
 <div class="modal-mask">
-    <div class="modal-wrapper">
+    <div class="modal-wrapper" v-on:click="closeModal">
         <div class="modal-container">
+            <h1>Create new snippet</h1>
+            <form v-on:submit.prevent="postSnippet">
+                <label>Snippet</label>
+                <input type="text">
+                <label>Tags</label>
+                <input type="text">
+                <input type="submit" value="Submit">
+            </form>
 
-            <div class="modal-header">
+            <!--<div class="modal-header">
             <slot name="header">
                 default header
             </slot>
@@ -21,7 +29,7 @@
                 OK
                 </button>
             </slot>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>
