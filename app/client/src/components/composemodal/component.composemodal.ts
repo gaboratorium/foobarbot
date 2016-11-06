@@ -16,11 +16,14 @@ export const ComposeModalComponent = {
     methods: {
         postSnippet: function(){
             console.log("YYou are trying t o post a snippet");
-            console.log(this.composeform__tag1);
-            console.log(this.composeform__tag2);
-            console.log(this.composeform__tag3);
-            console.log(this.composeform__snippet);
+            this.$store.dispatch({
+                type: "postSnippet",
+                snippetText: this.composeform__snippet
+            }).then((response: any) => {
+                console.log("ok");
+            });
             this.$emit("close");
+
             
         },
 
