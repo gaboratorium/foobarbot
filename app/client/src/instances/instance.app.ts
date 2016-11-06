@@ -12,7 +12,6 @@ import { NotificationsViewComponent } from './../components/notifications/compon
 // Other components
 import { NavbarComponent } from './../components/navbar/component.navbar';
 import { AppfooterComponent } from './../components/appfooter/component.appfooter';
-import { ComposeModalComponent } from './../components/composemodal/component.composemodal';
 
 // App instance
 export const AppInstance = new Vue({
@@ -22,10 +21,6 @@ export const AppInstance = new Vue({
   name: "myVueApp",
   router: RouterInstance,
   store: MainStore,
-
-  data: {
-    showModal: false
-  },
 
   created: function() {
     console.log("AppInstance has been created");
@@ -39,7 +34,6 @@ export const AppInstance = new Vue({
     'settings-view-component': SettingsViewComponent,
     'notifications-view-component': NotificationsViewComponent,
   	'navbar': NavbarComponent,
-  	'appfooter': AppfooterComponent,
-  	'modal': ComposeModalComponent
+  	'appfooter': AppfooterComponent
   }
 });

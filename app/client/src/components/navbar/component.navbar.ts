@@ -1,7 +1,9 @@
 // Settings component
 // Template
 var fs = require('fs');
-var html = fs.readFileSync(__dirname + '/component.navbar.html', 'utf8')
+var html = fs.readFileSync(__dirname + '/component.navbar.html', 'utf8');
+
+import { ComposeModalComponent } from './../composemodal/component.composemodal';
 
 declare const localStorage: any;
 
@@ -9,12 +11,17 @@ declare const localStorage: any;
 export const NavbarComponent =  {
 	name: "NavbarComponent",
 	template: html,
+	components: {
+		"modal": ComposeModalComponent
+	},
+	
 	data: function(){
 		return {
 			user: {
 				name: String
 			},
-			isUserLoggedIn: false
+			isUserLoggedIn: false,
+			showModal: false
 
 		}
 	},
