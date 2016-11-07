@@ -1,17 +1,24 @@
-// Vue resource docs:
-// https://github.com/vuejs/vue-resource/blob/master/docs/http.md
 
-// List of shortcut methods:
+interface IApiInstance {
+	// These are implemented as methods not properties,
+	// so this buildup should be changed into a class module
 
-// get(url, [options])
-// head(url, [options])
-// delete(url, [options])
-// jsonp(url, [options])
-// post(url, [body], [options])
-// put(url, [body], [options])
-// patch(url, [body], [options])
+	// User methods
+	postUserLog?: any,
+	signupUser?: any
+	loadUsers?: any,
 
-module.exports = new Vue({
+	// Token methods
+	verifyToken?: any,
+	createToken?: any,
+
+	// Notification methods
+	getNotifications?: any,
+	postNotification?: any,
+	deleteNotification?: any,
+}
+
+export const ApiInstance: IApiInstance= new Vue({
 	name: "Api",
 	methods: {
 		postUserLog: () => {
@@ -19,10 +26,10 @@ module.exports = new Vue({
 		},
 
 		// Verify token
-		verifyToken: (myToken) => {
+		verifyToken: (myToken: any) => {
 			var body = { token: myToken };
 			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.post('api/token/verify', body).then((response) => {
+				Vue.http.post('api/token/verify', body).then((response: any) => {
 					resolve(response.body);
 				}, (fail) => {
 					reject(fail);
@@ -32,26 +39,26 @@ module.exports = new Vue({
 		},
 
 		// Create token
-		createToken: (myUserEmail, myUserPassword) => {
+		createToken: (myUserEmail: any, myUserPassword: any) => {
 			var body = {userEmail: myUserEmail, userPassword: myUserPassword};
 			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.post('api/token/create', body).then((response) => {
+				Vue.http.post('api/token/create', body).then((response: any) => {
 					resolve(response.body);
-				}, (fail) => {
+				}, (fail: any) => {
 					reject(fail);
 				});
 			});
 			return myPromise;
 		},
 
-		loadUsers: (myToken) => {
+		loadUsers: (myToken: any) => {
 			var options = { 
 				headers: {
 					'x-access-token': myToken
 				} 
 			};			
 			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.get('/api/users', options).then((response) => {
+				Vue.http.get('/api/users', options).then((response: any) => {
 					resolve(response.body);
 
 				}, (fail) => {
@@ -61,7 +68,7 @@ module.exports = new Vue({
 			return myPromise;
 		},
 		
-		getNotifications: (myUserToken, myUserEmail) => {
+		getNotifications: (myUserToken: any, myUserEmail: any) => {
 
 			var options = { 
 				params: {
@@ -76,7 +83,7 @@ module.exports = new Vue({
 			console.log('api get notifications http req options', options);
 			
 			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.get('/api/notifications', options).then((response) => {
+				Vue.http.get('/api/notifications', options).then((response: any) => {
 					console.log('api getnotifications receives:', response);
 					resolve(response.body);
 				}, (fail) => {
@@ -88,7 +95,7 @@ module.exports = new Vue({
 			return myPromise;
 		},
 
-		postNotification: (myToken, myUserEmail, myMessage) => {
+		postNotification: (myToken: any, myUserEmail: any, myMessage: any) => {
 			
 			var body = {
 				userEmail: myUserEmail,
@@ -100,7 +107,7 @@ module.exports = new Vue({
 			
 
 			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.post('/api/notifications', body).then((response) => {
+				Vue.http.post('/api/notifications', body).then((response: any) => {
 					resolve(response.body);
 				}, (fail) => {
 					reject(fail);
@@ -109,7 +116,7 @@ module.exports = new Vue({
 			return myPromise;
 		},
 
-		deleteNotification: (myUserEmail, myToken) => {
+		deleteNotification: (myUserEmail: any, myToken: any) => {
 			var body = {
 				token: myToken,
 				userEmail: myUserEmail
@@ -120,7 +127,7 @@ module.exports = new Vue({
 				body: body
 			};
 			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.delete('/api/notifications', options).then((response) => {
+				Vue.http.delete('/api/notifications', options).then((response: any) => {
 					resolve(response.body);
 				}, (fail) => {
 					reject(fail);
@@ -129,7 +136,7 @@ module.exports = new Vue({
 			return myPromise;
 		},
 
-		signupUser: (myUserName, myUserEmail, myUserPassword) => {
+		signupUser: (myUserName: any, myUserEmail: any, myUserPassword: any) => {
 			var body = {
 				userName: myUserName,
 				userEmail: myUserEmail,
@@ -137,7 +144,7 @@ module.exports = new Vue({
 			};
 
 			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.post('/api/users/', body).then((response) => {
+				Vue.http.post('/api/users/', body).then((response: any) => {
 					resolve(response.body);
 				}, (fail) => {
 					reject(fail);
@@ -147,4 +154,4 @@ module.exports = new Vue({
 			return myPromise;
 		}
 	}
-})
+}) as IApiInstance;

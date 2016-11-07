@@ -14,6 +14,9 @@ require('./gulp_tasks/gulp.libs.css.concat')(gulp);
 // Compile and concat sass
 require('./gulp_tasks/gulp.sass')(gulp);
 
+// Compile TS
+require('./gulp_tasks/gulp.ts')(gulp);
+
 // Copy static
 require('./gulp_tasks/gulp.copy_index')(gulp);
 require('./gulp_tasks/gulp.copy_assets')(gulp);
@@ -37,5 +40,5 @@ gulp.task('watch-files', 'Watch files for change to execute tasks', function(){
     gulp.watch(config.src.sass, ['sass']);
     gulp.watch(config.src.copy_assets, ['copy_assets']);
     gulp.watch(config.libs.js, ['libs.js.concat']);
-    gulp.watch(config.src.js, ['browserify']);
+    gulp.watch(config.src.ts, ['browserify']);
 });

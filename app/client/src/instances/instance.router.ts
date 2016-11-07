@@ -1,37 +1,35 @@
-const AboutViewComponent = require('./../components/about/component.about.js');
-const LoginViewComponent =  require('./../components/login/component.login.js');
-const SignupViewComponent =  require('./../components/signup/component.signup.js');
-const SettingsViewComponent = require('./../components/settings/component.settings.js');
-const NotificationsViewComponent = require('./../components/notifications/component.notifications.js');
-const NavbarComponent = require('./../components/navbar/component.navbar.js');
+// Importing Components
+import { AboutViewComponent } from './../components/about/component.about';
+import { LoginViewComponent } from  './../components/login/component.login';
+import { SignupViewComponent } from  './../components/signup/component.signup';
+import { SettingsViewComponent } from './../components/settings/component.settings';
+import { NotificationsViewComponent } from './../components/notifications/component.notifications';
+import { NavbarComponent } from './../components/navbar/component.navbar';
+
+declare var localStorage: any;
+declare var VueRouter: any;
 
 /////////////////////////////////////// 
 // Navigation guards
-const userClientRequired = function(to, from, next){
-	console.log('Visiting a view where authentication is required...');
+const userClientRequired = function(to: any, from: any, next: any){
 	if (localStorage.userName !== undefined && localStorage.userToken !== undefined) {
-		console.log('View access granted');
 		next();
 		return;
 	}
-	console.log('View access denied. You are not logged in.');
 	next('/about');
 }	
 
-const userClientForbidden = function(to, from, next){
-	console.log('Visiting a view where authentication is forbidden...');
+const userClientForbidden = function(to: any, from: any, next: any){
 	if (localStorage.userName !== undefined && localStorage.userToken !== undefined) {
-		console.log('View access denied. You are logged in.');
 		next('/about');
 		return;
 	}
-	console.log('View access granted.');
 	next();
 }
 
 ///////////////////////////////////////	
 // Routes
-module.exports = new VueRouter({
+export const RouterInstance = new VueRouter({
 	routes: [
 
 		// Home

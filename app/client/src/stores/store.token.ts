@@ -1,11 +1,14 @@
-const ApiInstance = require('./../instances/instance.api.js');
+import { ApiInstance } from './../instances/instance.api';
+// declare var ApiInstance: any;
+
+// const ApiInstance = require("./../instances/instance.api")
 
 // Token store
-module.exports = {
+export const TokenStore = {
     actions: {
         // Expects and forwards a token (payload.token) for verification
         // Resolves and returns userClient obj if token verification was succesful
-        verifyToken: (context, payload) => {
+        verifyToken: (context: any, payload: any) => {
             
             // Log request
             ApiInstance.postUserLog();
@@ -13,7 +16,7 @@ module.exports = {
             // Send verification
             var myUserToken = payload.token;
             var myPromise = new Promise((resolve, reject) => {
-                ApiInstance.verifyToken(myUserToken).then((response) => {
+                ApiInstance.verifyToken(myUserToken).then((response: any) => {
                 
                 // Rejects if not succesful
                 if (!response.success) {
@@ -24,7 +27,7 @@ module.exports = {
                 resolve(response.userClient);
 
                 // Rejects if request fails
-                }, (fail) => {
+                }, (fail: any) => {
                     reject(fail);
                 })
             })
@@ -36,7 +39,7 @@ module.exports = {
         // Recieves and forwards a name and password for token creation
         // Resolves if user and pw were correct and token was created
         // Saves token to state and localStorage
-        createToken: (context, payload) => {
+        createToken: (context: any, payload: any) => {
 
             console.log('Create token in token store has been called....');
             // ApiInstance.postUserLog();
@@ -46,14 +49,14 @@ module.exports = {
                 var myUserPassword = payload.userPassword;
 
 
-                ApiInstance.createToken(myUserEmail, myUserPassword).then((response) => {
+                ApiInstance.createToken(myUserEmail, myUserPassword).then((response: any) => {
                 
                     let userClient = response.userClient;
                     console.log('token store create token gets this userClient response', response.userClient);                    
 
                     context.commit('setUserClient', userClient);
                     resolve();
-                    }, (fail) => {
+                    }, (fail: any) => {
                     // fail
                     context.commit('unsetUserClient');
                     reject(fail);

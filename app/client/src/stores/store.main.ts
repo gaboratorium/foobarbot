@@ -3,12 +3,17 @@
 // Communicates with App Components and the Api instance
 
 // Importing the Api and other stores
-const TokenStore = require('./store.token.js');
-const NotificationStore = require('./store.notification.js');
-const UserStore = require('./store.user.js');
+import { TokenStore } from "./store.token";
+import { NotificationStore } from "./store.notification";
+import { UserStore } from "./store.user";
+
+// No DT typings
+// import * as Vuex from "vuex";
+declare var localStorage: any;
+declare var Vuex: any
 
 // Main store with modularized actions
-module.exports = new Vuex.Store({
+export const MainStore = new Vuex.Store({
 
   // State
   state: {
@@ -29,12 +34,12 @@ module.exports = new Vuex.Store({
 
   // Getters
   getters: {
-    "mainstore/userToken": state => { return state.userClient.userToken; },
-    "mainstore/userId": state => { return state.userClient.userId; },
-    "mainstore/userEmail": state => { return state.userClient.userEmail; },
-    "mainstore/userName": state => { return state.userClient.userName; },
-    "mainstore/userClient": state => { return state.userClient; },
-    "mainstore/isUserLoggedIn": state => { 
+    "mainstore/userToken": (state: any) => { return state.userClient.userToken; },
+    "mainstore/userId": (state: any) => { return state.userClient.userId; },
+    "mainstore/userEmail": (state: any) => { return state.userClient.userEmail; },
+    "mainstore/userName": (state: any) => { return state.userClient.userName; },
+    "mainstore/userClient": (state: any) => { return state.userClient; },
+    "mainstore/isUserLoggedIn": (state: any) => { 
       if ( state.userClient.userName !== undefined && state.userClient.userEmail !== undefined && state.userClient.userToken !== undefined && state.userClient.userId) {
         return true;
       } else {
@@ -51,7 +56,7 @@ module.exports = new Vuex.Store({
   mutations: {
 
     // Set up new userClient
-    setUserClient: function(state, userClient) {
+    setUserClient: function(state: any, userClient: any) {
 
       console.log('main store setUserClient gets this userClient', userClient);
       
@@ -70,7 +75,7 @@ module.exports = new Vuex.Store({
     },
     
     // Resetting userClient
-    unsetUserClient: function(state) {
+    unsetUserClient: function(state: any) {
       
       // Delete user name nad token from local storage
       delete localStorage.userName;

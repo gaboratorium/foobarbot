@@ -5,7 +5,7 @@ var passwordHash = require('password-hash');
 var html = fs.readFileSync(__dirname + '/component.login.html', 'utf8');
 
 // Export global component
-module.exports = {
+export const LoginViewComponent = {
 	name: "LoginComponent",
 	template: html,
 	data: function(){
@@ -16,16 +16,16 @@ module.exports = {
 		};
 	},
 	methods: {
-		loginUser: function(e){
+		loginUser: function(){
 			this.$store.dispatch({
 					type: "createToken",
 					userEmail: this.loginform__email,
 					userPassword: this.loginform__password
-				}).then((response) => {
+				}).then((response: any) => {
 					// Double redirection for forcing router state change
 					this.$router.replace('dummy-replacement-so-we-force-router-change');
 					this.$router.push('settings');
-				}, (fail) => {
+				}, (fail: any) => {
 					console.log('Oops, something went wrong!');		
 					this.errorMsg = "Wrong credentials! Try again!";			
 				})
