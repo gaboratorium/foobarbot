@@ -307,8 +307,25 @@ apiRoutes.post('/notifications', function(req, res) {
 	});
 });
 
+var schema = new Schema({
+	snippetCode: String,
+	tag1: String,
+	tag2: String,
+	tag3: String
+});
+
+var Snippet = mongoose.model('snippet', schema);
+
 apiRoutes.post('/snippets', function(req, res) {
-	console.log("YOU ARE HITTING THE SNIPPETS ENDPOINT");
+	console.log("YOU ARE HITTING THE SNIPPETS ENDPOINT recieved snippet:", req.body.snippet);
+	
+	var mySnippet = new Snippet(req.body.snippet);
+
+	mySnippet.save((err) => {
+		if (err) throw err;
+
+		res.json({success: true});
+	});
 });
 
 apiRoutes.delete('/notifications', function(req, res) {

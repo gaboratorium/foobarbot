@@ -181,7 +181,8 @@ export const ApiInstance: IApiInstance= new Vue({
 
 		postSnippet: (myToken: any, mySnippet: any) => {
 			var body = {
-				snippet: mySnippet
+				snippet: mySnippet,
+				token: myToken
 			}
 
 			var myPromise = new Promise((resolve, reject) => {
