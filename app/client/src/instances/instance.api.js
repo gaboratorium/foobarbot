@@ -1,3 +1,16 @@
+// Vue resource docs:
+// https://github.com/vuejs/vue-resource/blob/master/docs/http.md
+
+// List of shortcut methods:
+
+// get(url, [options])
+// head(url, [options])
+// delete(url, [options])
+// jsonp(url, [options])
+// post(url, [body], [options])
+// put(url, [body], [options])
+// patch(url, [body], [options])
+
 module.exports = new Vue({
 	name: "Api",
 	methods: {
@@ -31,14 +44,14 @@ module.exports = new Vue({
 		},
 
 		// Create token
-		createToken: (userName, userPassword) => {
-			var body = {name: userName, password: userPassword};
+		createToken: (myUserEmail, myUserPassword) => {
+			var body = {userEmail: myUserEmail, userPassword: myUserPassword};
 			var myPromise = new Promise((resolve, reject) => {
 				Vue.http.post('api/token/create', body).then((response) => {
 					resolve(response.body);
 				}, (fail) => {
 					reject(fail);
-				})
+				});
 			});
 			return myPromise;
 		},
@@ -60,16 +73,46 @@ module.exports = new Vue({
 			return myPromise;
 		},
 		
-		getNotifications: (userId, myToken) => {
+		getNotifications: (myUserToken, myUserEmail) => {
+
 			var options = { 
+				params: {
+					userEmail: myUserEmail,
+					paramfoo: 'parambar'
+				},
 				headers: {
-					'x-access-token': myToken
-				} 
+					'x-access-token': myUserToken
+				}
 			};
+
+			console.log('api get notifications http req options', options);
+			
 			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.get('/api/users/' + userId + '/notifications', options).then((response) => {
-					console.log('api receives:', response);
+				Vue.http.get('/api/notifications', options).then((response) => {
+					console.log('api getnotifications receives:', response);
+					resolve(response.body);
+				}, (fail) => {
+					console.log('api getnotifications fails', fail);
 					
+					reject(fail);
+				});
+			});
+			return myPromise;
+		},
+
+		postNotification: (myToken, myUserEmail, myMessage) => {
+			
+			var body = {
+				userEmail: myUserEmail,
+				token: myToken,
+				notificationMessage: myMessage
+			};
+
+			console.log('api instance creates this body:', body);
+			
+
+			var myPromise = new Promise((resolve, reject) => {
+				Vue.http.post('/api/notifications', body).then((response) => {
 					resolve(response.body);
 				}, (fail) => {
 					reject(fail);
@@ -78,32 +121,42 @@ module.exports = new Vue({
 			return myPromise;
 		},
 
-		postNotification: (userName, myToken, myMessage) => {
-			var body = {name: userName, token: myToken, message: myMessage};
-			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.post('/api/users/' + userName + '/notifications', body).then((response) => {
-					resolve(response.body);
-				}, (fail) => {
-					reject(fail);
-				})
-			});
-			return myPromise;
-		},
-
-		deleteNotification: (myUserName, myToken) => {
-			var body = {token: myToken};
+		deleteNotification: (myUserEmail, myToken) => {
+			var body = {
+				token: myToken,
+				userEmail: myUserEmail
+			};
+			
 			var options = {
 				headers: { 'x-access-token': myToken },
 				body: body
 			};
 			var myPromise = new Promise((resolve, reject) => {
-				Vue.http.delete('/api/users/' + myUserName + '/notification', options).then((response) => {
+				Vue.http.delete('/api/notifications', options).then((response) => {
 					resolve(response.body);
 				}, (fail) => {
 					reject(fail);
-				})
+				});
 			});
 			return myPromise;
 		},
+
+		signupUser: (myUserName, myUserEmail, myUserPassword) => {
+			var body = {
+				userName: myUserName,
+				userEmail: myUserEmail,
+				userPassword: myUserPassword
+			};
+
+			var myPromise = new Promise((resolve, reject) => {
+				Vue.http.post('/api/users/', body).then((response) => {
+					resolve(response.body);
+				}, (fail) => {
+					reject(fail);
+				});
+			});
+
+			return myPromise;
+		}
 	}
 })

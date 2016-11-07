@@ -6,6 +6,7 @@ module.exports = new Vuex.Store({
   state: {
     userClient: {
       userName: undefined,
+      userEmail: undefined,
       userToken: undefined
     }
   },
@@ -15,8 +16,14 @@ module.exports = new Vuex.Store({
     userName: state => {
       return state.userClient.userName;
     },
+    userEmail: state => {
+      return state.userClient.userEmail;
+    },
     userToken: state => {
       return state.userClient.userToken;
+    },
+    userClient: state => {
+      return state.userClient;
     }
   },
 
@@ -58,7 +65,7 @@ module.exports = new Vuex.Store({
     createToken: (context, payload) => {
       ApiInstance.postUserLog();
       var myPromise = new Promise((resolve, reject) => {
-        ApiInstance.createToken(payload.userName, payload.userPassword).then((response) => {
+        ApiInstance.createToken(payload.userEmail, payload.userPassword).then((response) => {
           
           let userClient = response.userClient;
 
@@ -82,25 +89,36 @@ module.exports = new Vuex.Store({
 
     // Get list of notifications
     getNotifications: (context, payload) => {
+
       ApiInstance.postUserLog();
-      var userName = context.getters.userName; // should be userId
-      var userToken = context.getters.userToken;
-      return ApiInstance.getNotifications(userName, userToken);
+      var userToken = context.getters.userToken; // should be userId
+      var userEmail = context.getters.userEmail; // should be userId
+      console.log('store calls apiinstance getnotifications with userclient');
+      
+      return ApiInstance.getNotifications(userToken, userEmail);
     },
 
     // Post notifications
     postNotification: (context, payload) => {
       ApiInstance.postUserLog();
-      var userName = context.getters.userName; // should be userId
-      var userToken = context.getters.userToken;
-      return ApiInstance.postNotification(userName, userToken, payload.notificationMessage);
+      var userToken = context.getters.userToken; // should be userId
+      var userEmail = context.getters.userEmail; // should be userId
+      return ApiInstance.postNotification(userToken, userEmail, payload.notificationMessage);
     },
 
+    // Delete all notifications
     deleteNotification: (context, payload) => {
       ApiInstance.postUserLog();
-      var userName = context.getters.userName;
+      var userEmail = context.getters.userEmail;
+      console.log('store deletenotifications gets this email', userEmail);
+      
       var userToken = context.getters.userToken;
-      return ApiInstance.deleteNotification(userName, userToken);
+      return ApiInstance.deleteNotification(userEmail, userToken);
+    },
+
+    // Sign up user
+    signupUser: (context, payload) => {
+      return ApiInstance.signupUser(payload.userName, payload.userEmail, payload.userPassword);
     }
   },
   // end of actions
@@ -111,7 +129,11 @@ module.exports = new Vuex.Store({
     setUserClient: function(state, userClient) {
       localStorage.userName = userClient.userName;
       localStorage.userToken = userClient.userToken;
-      state.userClient = {userToken: userClient.userToken, userName: userClient.userName};
+      state.userClient = {
+        userToken: userClient.userToken, 
+        userName: userClient.userName,
+        userEmail: userClient.userEmail
+      };
       console.log('Succesfully logged in as ', userClient.userName);
       
       
@@ -121,7 +143,11 @@ module.exports = new Vuex.Store({
     unsetUserClient: function(state) {
       delete localStorage.userName;
       delete localStorage.userToken;
-      state.userClient = {userToken: undefined, userName: undefined};
+      state.userClient = {
+        userToken: undefined,
+        userName: undefined,
+        userEmail: undefined
+      };
       console.log('User logged out.');
     }
   }

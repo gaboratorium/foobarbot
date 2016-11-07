@@ -14,7 +14,6 @@ module.exports =  {
 	},
 	methods: {
 		loadUsers: function(e){
-			e.preventDefault();
 			var myToken = this.$store.getters.userToken;
 			
 	  		this.$store.dispatch({
@@ -30,7 +29,6 @@ module.exports =  {
 	  	},
 
 	  	resetUsers: function(e){
-			e.preventDefault();
 	  		this.users = [];
 	  	}
 	}

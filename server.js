@@ -3,6 +3,7 @@
 // Import modules
 var express = require('express');
 var fs = require('fs');
+var passwordHash = require('password-hash');
 
 // Init express app
 var app = express();
@@ -58,9 +59,11 @@ mongoose.connect("mongodb://heroku_6lt22ghm:te2b1dta8i2glj7ss4lk71vjnm@ds037814.
 
 // Create mongoose model
 var User = mongoose.model('User', new Schema({ 
-    name: String, 
-    password: String, 
-    admin: Boolean 
+    userName: String, 
+    userEmail: String, 
+    userPassword: String,
+	userRole: String,
+	registrationDate: Number 
 }));
 
 
@@ -75,41 +78,48 @@ app.use('/api', apiRoutes);
 
 apiRoutes.post('/token/create', function(req, res){
 
-	// Hard coded user
-	var expectedUser = "admin";
-	var expectedPassword = "admin";
 
-	console.log(req.body.name);
-	console.log(req.body.password);
+	
 
-	// Succesful login
-	if (req.body.name == expectedUser && req.body.password == expectedPassword) {
+	User.findOne({userEmail: req.body.userEmail}, function(err, user){
+		if (err) {
+			res.status(500).send({success: false, message: "Something went wrong"});
+			throw err;
+		}
 
-		// Create user object
-		var user = {
-			"userName": "admin"
-		};
+		if (user && passwordHash.verify(req.body.userPassword, user.userPassword)) {
 
-		// Create token
-		var token = jwt.sign(user, app.get('superSecret'), {
-			expiresIn : 1440 // 24 hours
-		});
+			// Create user object
+			var user = {
+				"userName": user.userName,
+				"userEmail": user.userEmail,
+			};
 
-		var myUserClient = {
-			userName: req.body.name,
-			userToken: token
-		};
+			// Create token with user object
+			var token = jwt.sign(user, app.get('superSecret'), {
+				expiresIn : 1440 // 24 hours
+			});
 
-		// Send back token
-		res.json({success: true, message: "Good request", userClient: myUserClient});
+			// Create userClient with user object and token
+			var myUserClient = {
+				userName: user.userName,
+				userEmail: user.userEmail,
+				userToken: token
+			};
 
-	// Unsuccesful login - error msg
-	} else {
-		res.status(400).json({success: false, message: "Bad request, user name or password was not received or was invalid"});
-	}
+			// Send back token
+			res.json({success: true, message: "Good request", userClient: myUserClient});
+		}
+		else {
+			res.status(409).send({success: false, message: "User was not found with this e-mail and password"});
+		}
+	});
 });
 
 apiRoutes.post('/token/verify', function(req, res){
+
+
+	
 	// check header or url parameters or post parameters for token
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
@@ -119,11 +129,12 @@ apiRoutes.post('/token/verify', function(req, res){
 				return res.json({success: false, message: 'Failed to authenticate token...'});
 			} else {
 				var decodedToken = jwt.verify(token, app.get('superSecret'));
-				console.log(decodedToken.userName); // bar 
+				
 				req.decode = req;
 
 				var myUserClient = {
 					userName: decodedToken.userName,
+					userEmail: decodedToken.userEmail,
 					userToken: token
 				};
 
@@ -133,8 +144,35 @@ apiRoutes.post('/token/verify', function(req, res){
 	}
 });
 
+// Registration, signup
+apiRoutes.post('/users', function(req, res) {
+	
+	var newObj = {
+		userName : req.body.userName,
+		userEmail : req.body.userEmail,
+		userPassword : req.body.userPassword,
+		userRole: "user",
+		registrationDate: new Date().getTime()
+	};
+
+	User.findOne({ userEmail: req.body.userEmail }, function(err, user) {
+		if (user) {
+			return res.status(409).send({message: "E-mail is already taken..."});
+		}
+
+		var newUser = new User(newObj);
+
+		newUser.save(function(err){
+			if (err) throw err;
+			
+			return res.send({success: true});
+		});
+	});
+});
+
 // route middleware to verify a token
 apiRoutes.use(function(req, res, next){
+
 	
 	// check header or url parameters or post parameters for token
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -188,14 +226,14 @@ apiRoutes.get('/', function(req, res) {
 // route to return all users (GET http://localhost:8080/api/users)
 apiRoutes.get('/users', function(req, res) {
   User.find({}, function(err, users) {
-	console.log(users);
+
 	
     res.json(users);
   });
 });
 
 var schema = new Schema({
-	userId: String, 
+	userEmail: String, 
     message: String, 
     date: Number 
 });
@@ -203,39 +241,56 @@ var schema = new Schema({
 var Notification = mongoose.model('Notification', schema);
 
 // route to return all notifications from admin (GET http://localhost:8080/api/users/admin/notifications)
-apiRoutes.get('/users/admin/notifications', function(req, res) {
-	Notification.find({}, function(err, notifications) {
-		res.json(notifications);
+apiRoutes.get('/notifications', function(req, res) {
+	console.log('getnotification recieves this query', req.query);
+	console.log('getnotification recieves this body', req.body);
+	
+	myUserEmail = req.query.userEmail;
+	Notification.find({userEmail: myUserEmail}, function(err, notifications) {
+		if (err) {
+			console.log('notification query went wrong');
+			
+			throw err;
+		}
+		if (notifications){
+			res.json(notifications);
+			return;
+		}
+		res.status(409).send({success:false, message: 'no'})
 	});
 });
 // route to create a new notifications
-apiRoutes.post('/users/admin/notifications', function(req, res) {
+apiRoutes.post('/notifications', function(req, res) {
 
-	var userId = "admin";
-	var message = req.body.message;
-	var date = new Date().getTime();
+
+	var userEmail = req.body.userEmail;
+	console.log('serverjs apiroutes post notification recieves this body', req.body);
 	
+
 	
-	console.log(req.body.password);
+	var notificationMessage = req.body.notificationMessage;
 
 	var myNotification = new Notification({
-		userId: userId, 
-    	message: message, 
-    	date: date 
+		userEmail: userEmail,
+    	message: notificationMessage, 
+    	date: new Date().getTime() 
 	});
 
 	myNotification.save((err) => {
 		if (err) throw err;
 
-		console.log('Notification saved successfully');
+
     	res.json({ success: true });
 	});
 });
 
-apiRoutes.delete('/users/admin/notification', function(req, res) {
-	Notification.remove({}, (err, notification) => {
+apiRoutes.delete('/notifications', function(req, res) {
+	console.log('apiroutes delete /notifications recieves body:', req.body);
+	
+	var myUserEmail = req.body.userEmail;
+
+	Notification.remove({userEmail: myUserEmail}, (err, notification) => {
 		if (err) res.send(err);
-		console.log('Deleting notifications...');
 		res.json({message: "Succesfully deleted"});
 	});
 });
