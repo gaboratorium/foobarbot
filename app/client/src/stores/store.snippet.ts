@@ -13,11 +13,10 @@ export const SnippetStore = {
 
         // Post notifications
         postSnippet: (context: any, payload: any) => {
-            // var userToken = context.getters["mainstore/userToken"]; // should be userId
-            // var userEmail = context.getters["mainstore/userEmail"]; // should be userId
-            // ApiInstance.postUserLog();
-            // return ApiInstance.postNotification(userToken, userEmail, payload.notificationMessage);
-            console.log("snippet store recieves this snippet", payload.snippetText);
+            var userToken = context.getters["mainstore/userToken"]; // should be userId
+            var snippet = payload.snippet;
+            ApiInstance.postUserLog();
+            return ApiInstance.postSnippet(userToken, snippet);
             
         },
 

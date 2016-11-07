@@ -1,9 +1,15 @@
+// Requirements
 var fs = require('fs');
 var html = fs.readFileSync(__dirname + '/component.composemodal.html', 'utf8');
 
+// Component
 export const ComposeModalComponent = {
+
+    // Component properties
     name: "modal",
     template: html,
+
+    // Component data
     data: function(){
         return {
             composeform__snippet: "",
@@ -13,12 +19,23 @@ export const ComposeModalComponent = {
 			errorMsg: ""
         }
     },
+
+    // Component methods
     methods: {
         postSnippet: function(){
-            console.log("YYou are trying t o post a snippet");
+            
+            // Create snippet object
+            var snippet = {
+                snippetCode: this.composeform__snippet,
+                tag1: this.composeform__tag1,
+                tag2: this.composeform__tag2,
+                tag3: this.composeform__tag3,
+            }
+
+            // Dispatch postSnippet action
             this.$store.dispatch({
                 type: "postSnippet",
-                snippetText: this.composeform__snippet
+                snippet: snippet
             }).then((response: any) => {
                 console.log("ok");
             });
