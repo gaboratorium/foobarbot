@@ -307,6 +307,10 @@ apiRoutes.post('/notifications', function(req, res) {
 	});
 });
 
+apiRoutes.post('/snippets', function(req, res) {
+	console.log("YOU ARE HITTING THE SNIPPETS ENDPOINT");
+});
+
 apiRoutes.delete('/notifications', function(req, res) {
 	console.log('apiroutes delete /notifications recieves body:', req.body);
 	

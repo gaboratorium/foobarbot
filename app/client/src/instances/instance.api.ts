@@ -17,6 +17,9 @@ interface IApiInstance {
 	getNotifications?: any,
 	postNotification?: any,
 	deleteNotification?: any,
+
+	// Snippte methods
+	postSnippet?: any
 }
 
 export const ApiInstance: IApiInstance= new Vue({
