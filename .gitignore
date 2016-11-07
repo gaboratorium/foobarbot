@@ -1,3 +1,6 @@
+# Dist
+app/client/dist
+
 # Logs
 logs
 *.log

@@ -1,25 +1,30 @@
+const AboutViewComponent = require('./../components/about/component.about.js');
 const LoginViewComponent =  require('./../components/login/component.login.js');
 const SettingsViewComponent = require('./../components/settings/component.settings.js');
-const AboutViewComponent = require('./../components/about/component.about.js');
+const NotificationsViewComponent = require('./../components/notifications/component.notifications.js');
 const NavbarComponent = require('./../components/navbar/component.navbar.js');
 
 /////////////////////////////////////// 
 // Navigation guards
 const userClientRequired = function(to, from, next){
-	console.log('userClientRequired');
+	console.log('Visiting a view where authentication is required...');
 	if (localStorage.userName !== undefined && localStorage.userToken !== undefined) {
+		console.log('View access granted');
 		next();
 		return;
 	}
+	console.log('View access denied. You are not logged in.');
 	next('/about');
 }	
 
 const userClientForbidden = function(to, from, next){
-	console.log('userClinetForbidden');
+	console.log('Visiting a view where authentication is forbidden...');
 	if (localStorage.userName !== undefined && localStorage.userToken !== undefined) {
+		console.log('View access denied. You are logged in.');
 		next('/about');
 		return;
 	}
+	console.log('View access granted.');
 	next();
 }
 
@@ -33,6 +38,13 @@ module.exports = new VueRouter({
 			path: '/',
 			redirect: '/about',
 		},
+
+		  // About
+	    {
+	      path: '/about',
+	      name: 'about',
+	      component: AboutViewComponent,
+	    }, 
 		
 		// Login
 		{
@@ -42,19 +54,20 @@ module.exports = new VueRouter({
       		beforeEnter: userClientForbidden
 		}, 
 
-	    // About
-	    {
-	      path: '/about',
-	      name: 'about',
-	      component: AboutViewComponent,
-	    }, 
-
 		// Settings
 		{
 			path: '/settings',
 			name: 'settings',
 			component: SettingsViewComponent,
 	  		beforeEnter: userClientRequired
-		}
+		},
+
+		// Settings
+		{
+			path: '/notifications',
+			name: 'notifications',
+			component: NotificationsViewComponent,
+	  		beforeEnter: userClientRequired
+		},
 	]
-})
+});

@@ -13,7 +13,6 @@ module.exports = new Vuex.Store({
   // Getters
   getters: {
     userName: state => {
-      console.log('Someone is asking for the userName', state.userClient.userName);
       return state.userClient.userName;
     },
     userToken: state => {
@@ -40,8 +39,6 @@ module.exports = new Vuex.Store({
             context.commit('unsetUserClient');
             reject();
           }
-
-          console.log('verifytoken recieves this resposne', response);
           
           let userClient = response.userClient;
 
@@ -81,21 +78,41 @@ module.exports = new Vuex.Store({
     loadUsers: (context, payload) => {
       ApiInstance.postUserLog();
       return ApiInstance.loadUsers(payload.token);
+    },
+
+    // Get list of notifications
+    getNotifications: (context, payload) => {
+      ApiInstance.postUserLog();
+      var userName = context.getters.userName; // should be userId
+      var userToken = context.getters.userToken;
+      return ApiInstance.getNotifications(userName, userToken);
+    },
+
+    // Post notifications
+    postNotification: (context, payload) => {
+      ApiInstance.postUserLog();
+      var userName = context.getters.userName; // should be userId
+      var userToken = context.getters.userToken;
+      return ApiInstance.postNotification(userName, userToken, payload.notificationMessage);
+    },
+
+    deleteNotification: (context, payload) => {
+      ApiInstance.postUserLog();
+      var userName = context.getters.userName;
+      var userToken = context.getters.userToken;
+      return ApiInstance.deleteNotification(userName, userToken);
     }
   },
-
+  // end of actions
   // Mutations - sync calls to change the state
   mutations: {
 
     // Set up new userClient
     setUserClient: function(state, userClient) {
-      console.log(userClient);
-      
       localStorage.userName = userClient.userName;
       localStorage.userToken = userClient.userToken;
       state.userClient = {userToken: userClient.userToken, userName: userClient.userName};
       console.log('Succesfully logged in as ', userClient.userName);
-      console.log(state.userClient.userName);
       
       
     },

@@ -1,5 +1,5 @@
 var gulp = require('gulp-help')(require('gulp'));
-var runSequence = require('gulp-run-sequence')
+var runSequence = require('gulp-run-sequence');
 var config = require('./gulp_tasks/gulp.config.js');
 
 // Concat js
@@ -23,7 +23,7 @@ require('./gulp_tasks/gulp.clear')(gulp);
 
 // Build dist
 gulp.task('build', "Build solution", function(){
-	runSequence('clear', 'copy_index', 'libs.css.concat', 'sass', 'libs.js.concat', 'browserify')
+	runSequence('clear', 'copy_index', 'copy_assets','libs.css.concat', 'sass', 'libs.js.concat', 'browserify');
 });
 
 gulp.task('toljadneki', ['watch']);

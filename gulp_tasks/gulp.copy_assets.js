@@ -7,6 +7,6 @@ module.exports = function(gulp) {
 	  	.src([
 	  		config.src.copy_assets,
 	  		])
-	    .pipe(gulp.dest(config.dist.assets))
+	    .pipe(gulp.dest(config.dist.assets));
 	});
-}
+};

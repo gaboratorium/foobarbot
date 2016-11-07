@@ -18,7 +18,8 @@ module.exports = {
             globalPath.npm+"vuex/dist/vuex.js",
 
             /* Other libs */
-            globalPath.npm+"lodash/lodash.js"
+            globalPath.npm+"lodash/lodash.js",
+            globalPath.npm+"/moment/moment.js"
         ],
 
         // CSS Libraries
@@ -28,7 +29,7 @@ module.exports = {
         ]
     },
 
-    // Source assets
+    // Source
     src: {
         root: globalPath.src,
         copy_index: globalPath.src + 'index.html',

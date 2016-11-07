@@ -21,37 +21,17 @@ var globalPath = {
 
 var defaultPort = 3000;
 
+app.use('/js', express.static(__dirname + globalPath.client.dist + "js/"));
+app.use('/css', express.static(__dirname + globalPath.client.dist + "css/"));
+app.use('/assets', express.static(__dirname + globalPath.client.dist + "assets/"));
+
 // Prepare to deliver for client, save to RAM
 var indexHtml = fs.readFileSync(__dirname + globalPath.client.dist + "index.html", "utf8");
-var libsJs = fs.readFileSync(__dirname + globalPath.client.dist + "js/libs.js", "utf8");
-var appJs = fs.readFileSync(__dirname + globalPath.client.dist + "js/app.js", "utf8");
-var appCss = fs.readFileSync(__dirname + globalPath.client.dist + "css/app.css", "utf8");
-var libsCss = fs.readFileSync(__dirname + globalPath.client.dist + "css/libs.css", "utf8");
 
 // Serving index
 app.get('/', function (req, res) {
   res.send(indexHtml);
 });
-
-// Serving vendor and app css and js
-app.get('/js/libs.js', function (req, res) {
-  res.send(libsJs);
-});
-app.get('/js/app.js', function (req, res) {
-  res.send(appJs);
-});
-
-app.get('/css/app.css', function (req, res) {
-	res.writeHead(200, {'Content-Type': 'text/css'});
-    res.write(appCss);
-    res.end();
-});
-app.get('/css/libs.css', function (req, res) {
-	res.writeHead(200, {'Content-Type': 'text/css'});
-    res.write(libsCss);
-    res.end();
-});
-
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
@@ -108,7 +88,7 @@ apiRoutes.post('/token/create', function(req, res){
 		// Create user object
 		var user = {
 			"userName": "admin"
-		}
+		};
 
 		// Create token
 		var token = jwt.sign(user, app.get('superSecret'), {
@@ -118,14 +98,14 @@ apiRoutes.post('/token/create', function(req, res){
 		var myUserClient = {
 			userName: req.body.name,
 			userToken: token
-		}
+		};
 
 		// Send back token
-		res.json({success: true, message: "Good request", userClient: myUserClient})
+		res.json({success: true, message: "Good request", userClient: myUserClient});
 
 	// Unsuccesful login - error msg
 	} else {
-		res.status(400).json({success: false, message: "Bad request, user name or password was not received or was invalid"})
+		res.status(400).json({success: false, message: "Bad request, user name or password was not received or was invalid"});
 	}
 });
 
@@ -136,70 +116,68 @@ apiRoutes.post('/token/verify', function(req, res){
 	if (token){
 		jwt.verify(token, app.get('superSecret'), function(err, decoded){
 			if (err) {
-				return res.json({success: false, message: 'Failed to authenticate token...'})
+				return res.json({success: false, message: 'Failed to authenticate token...'});
 			} else {
 				var decodedToken = jwt.verify(token, app.get('superSecret'));
-				console.log(decodedToken.userName) // bar 
-				req.decode = req
+				console.log(decodedToken.userName); // bar 
+				req.decode = req;
 
 				var myUserClient = {
 					userName: decodedToken.userName,
 					userToken: token
-				}
+				};
 
-				return res.json({success: true, message: 'Token is valid', userClient: myUserClient})
+				return res.json({success: true, message: 'Token is valid', userClient: myUserClient});
 			}
-		})
+		});
 	}
 });
 
 // route middleware to verify a token
 apiRoutes.use(function(req, res, next){
-
-	console.log('haho');
 	
 	// check header or url parameters or post parameters for token
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
-	console.log('server recieves this options', req.body);
-	
 
 	if (token){
 		jwt.verify(token, app.get('superSecret'), function(err, decoded){
 
 			// Failed to authenticate token
 			if (err){
-				return res.json({success: false, message: 'Failed to authenticate token...'})
+				return res.json({success: false, message: 'Failed to authenticate token...'});
 
 			// Succesfull authentication
 			} else {
 				req.decoded = decoded;
+				console.log('Middleware token verification was succesful');
 				next();
 			}
-		})
+		});
 	} else {
-		return res.status(403).send({success: false, message: "No token provided."})
+		console.log('Middleware token verification failed. No token was provided');
+		return res.status(403).send({success: false, message: "No token provided."});
 	}
-})
+});
 
-apiRoutes.get('/setup', function(req, res) {
+// apiRoutes.get('/setup', function(req, res) {
 
 	
 
-  // create a sample user
-  var nick = new User({ 
-    name: 'Nick Cerminara', 
-    password: 'password',
-    admin: true 
-  });
+//   // create a sample user
+//   var nick = new User({ 
+//     name: 'Nick Cerminara', 
+//     password: 'password',
+//     admin: true 
+//   });
 
-  // save the sample user
-  nick.save(function(err) {
-    if (err) throw err;
+//   // save the sample user
+//   nick.save(function(err) {
+//     if (err) throw err;
 
-    console.log('User saved successfully');
-    res.json({ success: true });
-  });
-});
+//     console.log('User saved successfully');
+//     res.json({ success: true });
+//   });
+// });
 
 
 // route to show a random message (GET http://localhost:3000/api/)
@@ -210,18 +188,57 @@ apiRoutes.get('/', function(req, res) {
 // route to return all users (GET http://localhost:8080/api/users)
 apiRoutes.get('/users', function(req, res) {
   User.find({}, function(err, users) {
+	console.log(users);
+	
     res.json(users);
   });
 });
 
+var schema = new Schema({
+	userId: String, 
+    message: String, 
+    date: Number 
+});
 
+var Notification = mongoose.model('Notification', schema);
 
-apiRoutes.get('/gabor', function(req, res){
-	var testObj = { 'name': 'Gabor', 'age': 24 };
-	res.setHeader("Content-Type", "application/json");
-	testObjAsString = JSON.stringify(testObj);
-	res.send(testObjAsString);
-})
+// route to return all notifications from admin (GET http://localhost:8080/api/users/admin/notifications)
+apiRoutes.get('/users/admin/notifications', function(req, res) {
+	Notification.find({}, function(err, notifications) {
+		res.json(notifications);
+	});
+});
+// route to create a new notifications
+apiRoutes.post('/users/admin/notifications', function(req, res) {
+
+	var userId = "admin";
+	var message = req.body.message;
+	var date = new Date().getTime();
+	
+	
+	console.log(req.body.password);
+
+	var myNotification = new Notification({
+		userId: userId, 
+    	message: message, 
+    	date: date 
+	});
+
+	myNotification.save((err) => {
+		if (err) throw err;
+
+		console.log('Notification saved successfully');
+    	res.json({ success: true });
+	});
+});
+
+apiRoutes.delete('/users/admin/notification', function(req, res) {
+	Notification.remove({}, (err, notification) => {
+		if (err) res.send(err);
+		console.log('Deleting notifications...');
+		res.json({message: "Succesfully deleted"});
+	});
+});
 
 
 ////////////////////////////////////////////////////
