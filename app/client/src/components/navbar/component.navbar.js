@@ -7,39 +7,44 @@ var html = fs.readFileSync(__dirname + '/component.navbar.html', 'utf8')
 module.exports =  {
 	name: "NavbarComponent",
 	template: html,
-	watch: {
-		$route: function(){
-			if (localStorage.userName !== undefined && localStorage.userToken !== undefined) {
-				console.log('User is logged in');
-				this.isUserLoggedIn = true;
-
-			} else {
-				console.log('User is logged out');
-				this.isUserLoggedIn = false;
-			}
-
-			this.user.name = this.$store.getters.userName;
-		}
-	},
 	data: function(){
 		return {
 			user: {
-				name: ""
+				name: undefined
 			},
 			isUserLoggedIn: false
 
 		}
 	},
 	created: function(){
-		if (localStorage.userName !== undefined && localStorage.userToken !== undefined) {
+		var isUserLoggedIn = this.$store.getters["mainstore/isUserLoggedIn"];
+		console.log('navbar created, recieves this isUserLoggedin from store', isUserLoggedIn);
+		
+		
+		if (isUserLoggedIn) {
+			this.user.name = this.$store.getters["mainstore/userName"];
 			this.isUserLoggedIn = true;
 		}
-		this.user.name = this.$store.getters.userName;
+	},
+	watch: {
+		$route: function(){
+			var isUserLoggedIn = this.$store.getters["mainstore/isUserLoggedIn"];
+			var myUserId = this.$store.getters["mainstore/userId"];
+			
+			if (isUserLoggedIn) {				
+				this.user.name = this.$store.getters["mainstore/userName"];
+				this.isUserLoggedIn = true;
+			} else {
+				this.user.name = undefined;
+				this.isUserLoggedIn = false;
+			}
+		}
 	},
 	methods: {
 		logout: function(){
 			this.$store.commit('unsetUserClient');
-			this.$router.replace('asd');
+			// Double redirection for forcing router state change
+			this.$router.replace('dummy-replacement-so-we-force-router-change');
 			this.$router.replace('about');
 		}
 	}

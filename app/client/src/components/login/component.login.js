@@ -22,6 +22,8 @@ module.exports = {
 					userEmail: this.loginform__email,
 					userPassword: this.loginform__password
 				}).then((response) => {
+					// Double redirection for forcing router state change
+					this.$router.replace('dummy-replacement-so-we-force-router-change');
 					this.$router.push('settings');
 				}, (fail) => {
 					console.log('Oops, something went wrong!');		

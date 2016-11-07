@@ -3,7 +3,7 @@
 <div class="menu-group menu-group--navbar">
 	<div class="menu-group-left">
 		<ul class="menu-bar">
-			<li><a href="#">Project Lines</a></li>
+			<li><a href="#">Foobarbot Developer Preview</a></li>
 			<li>
 				<span class="inline-label" style='margin: 0.25rem'>
 					<input type="search" placeholder="Search for anything..." style="height: 100%">
@@ -15,8 +15,8 @@
 	<div class="menu-group-right">
 		<!-- Right menu for user -->
 		<ul class="menu-bar" v-if='isUserLoggedIn'>
-			<li><a href="">
-				<span>Hello <span class='o-text--strong'>{{ user.name }}</span></span></a></li>
+			<li><router-link to="">
+				<span>Hello <span class='o-text--strong'>{{ user.name }}</span></span></router-link></li>
 			<li><router-link to="about">About</router-link></li>
 			<li><router-link to="settings">Settings</router-link></li>
 			<li><router-link to="notifications">Notifications</router-link></li>
@@ -36,6 +36,6 @@
 	</div>
 </div>
 <div class="title-bar" v-if="!isUserLoggedIn">
-	<div class="title center">Project Lines is place to share code. <router-link to="/login">Please log in or sign up.</router-link></div>
+	<div class="title center">Foobarbot is place to find and share code. <router-link to="/login">Please log in or sign up.</router-link></div>
 </div>
 </div>
