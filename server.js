@@ -193,6 +193,35 @@ apiRoutes.get('/user', function(req, res) {
 	});
 });
 
+var schema = new Schema({
+	snippetCode: String,
+	userId: String,
+	tag1: String,
+	tag2: String,
+	tag3: String,
+	readme: String
+});
+
+var Snippet = mongoose.model('snippet', schema);
+
+// Get snippets from user Id
+apiRoutes.get('/snippets', function(req, res) {
+	
+	// IF userId is provided, otherwise return everything
+	var myUserId = req.query.userId;
+
+	
+	var mySnippet = new Snippet(req.body.snippet);
+
+	Snippet.find({userId: myUserId}, function(err, snippets){
+		if (snippets) {
+			return res.json({success: true, message: "You know some shit", snippets: snippets});
+		} else {
+			return res.status(404).send({success: false, message: "Snippets were not found with this userId"})
+		}
+	});
+});
+
 // route middleware to verify a token
 apiRoutes.use(function(req, res, next){
 
@@ -307,19 +336,19 @@ apiRoutes.post('/notifications', function(req, res) {
 	});
 });
 
-var schema = new Schema({
-	snippetCode: String,
-	tag1: String,
-	tag2: String,
-	tag3: String
-});
-
-var Snippet = mongoose.model('snippet', schema);
-
 apiRoutes.post('/snippets', function(req, res) {
 	console.log("YOU ARE HITTING THE SNIPPETS ENDPOINT recieved snippet:", req.body.snippet);
+
+	var token = req.body.token;
+	var decoded = jwt.decode(token, {complete: true, json: true});
+
+	console.log("decoded.payload", decoded.payload)
+
+	var tempSnippet = req.body.snippet;
+	tempSnippet.userId = decoded.payload.userId;
 	
-	var mySnippet = new Snippet(req.body.snippet);
+	
+	var mySnippet = new Snippet(tempSnippet);
 
 	mySnippet.save((err) => {
 		if (err) throw err;

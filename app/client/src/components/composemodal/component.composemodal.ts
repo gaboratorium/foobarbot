@@ -16,6 +16,7 @@ export const ComposeModalComponent = {
 			composeform__tag1: "",
 			composeform__tag2: "",
 			composeform__tag3: "",
+			composeform__readme: "",
 			errorMsg: ""
         }
     },
@@ -30,6 +31,7 @@ export const ComposeModalComponent = {
                 tag1: this.composeform__tag1,
                 tag2: this.composeform__tag2,
                 tag3: this.composeform__tag3,
+                readme: this.composeform__readme,
             }
 
             // Dispatch postSnippet action
