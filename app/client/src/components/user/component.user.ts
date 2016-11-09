@@ -30,7 +30,7 @@ export const UserViewComponent = {
 		}
 
 		this.loadUser(requestedId);
-		this.loadSnippets(requestedId);
+		this.getSnippets(requestedId);
 	},
 
 	// Methods
@@ -59,8 +59,10 @@ export const UserViewComponent = {
 			}).then((response: any) => {
 				this.snippets = response;
 				this.snippetDataStatus = "loaded";
+				console.log(response.snippets);
 			}, (fail: any) => {
 				this.snippetDataStatus = "failed";
+				console.log(fail);
 			})
 		}
   	}
