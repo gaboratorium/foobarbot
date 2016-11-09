@@ -1,15 +1,21 @@
 import { ApiInstance } from './../instances/instance.api';
 
-// Notification store
+// Snippet store
 export const SnippetStore = {
     actions: {
-        // Get list of notifications
+        // Get list of snippets, all or by user
         getSnippets: (context: any, payload: any) => {
             var userId = payload.userId;
             // var userToken = context.getters["mainstore/userToken"]; // should be userId
             // var userEmail = context.getters["mainstore/userEmail"]; // should be userId
             // ApiInstance.postUserLog();
             return ApiInstance.getSnippets(userId);
+        },
+
+        // Get a snippet
+        getSnippet: (context: any, payload: any) => {
+            var snippetId = payload.snippetId;
+            return ApiInstance.getSnippet(snippetId);
         },
 
         // Post notifications

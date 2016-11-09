@@ -5,6 +5,7 @@ import { SignupViewComponent } from  './../components/signup/component.signup';
 import { UserViewComponent } from  './../components/user/component.user';
 import { SettingsViewComponent } from './../components/settings/component.settings';
 import { NotificationsViewComponent } from './../components/notifications/component.notifications';
+import { SnippetViewComponent } from './../components/snippet/component.snippet';
 import { NavbarComponent } from './../components/navbar/component.navbar';
 
 declare var localStorage: any;
@@ -54,6 +55,13 @@ export const RouterInstance = new VueRouter({
       		beforeEnter: userClientForbidden
 		},
 
+		// Snippet 
+		{
+			path: '/snippet/:id',
+			name: 'snippet',
+			component: SnippetViewComponent
+		},
+
 		// Signup
 		{
 			path: '/signup',
@@ -77,7 +85,7 @@ export const RouterInstance = new VueRouter({
 	  		beforeEnter: userClientRequired
 		},
 
-		// Settings
+		// Notifications
 		{
 			path: '/notifications',
 			name: 'notifications',

@@ -197,7 +197,8 @@ export const ApiInstance: IApiInstance= new Vue({
 			return myPromise;
 		},
 
-		getSnippets: (myUserId?: number) => {
+		// Get all snippets or all by user
+		getSnippets: (myUserId?: string, mySnippetId?: string) => {
 			var options = {};	
 			if (myUserId){
 				options = {
@@ -217,7 +218,28 @@ export const ApiInstance: IApiInstance= new Vue({
 			});
 
 			return myPromise;
+		},
 
+		// Get snippet by Id
+		getSnippet: (mySnippetId: string) => {
+		
+			var options = {
+				params: {
+					snippetId: mySnippetId
+				}
+			};
+		
+			
+			var myPromise = new Promise((resolve, reject) => {
+				// Make HTTP request
+				Vue.http.get('/api/snippets', options).then((response: any) => {
+					resolve(response.body.snippets);
+				}, (fail: any) => {
+					reject(fail);
+				})
+			});
+
+			return myPromise;
 		}
 	}
 }) as IApiInstance;

@@ -37,9 +37,11 @@
 					<h2>Snippets</h2>
 					<ul>
 						<li v-for="snippet in snippets">
+							<p>Here is the id: <router-link :to="'/snippet/' + snippet.snippetId">{{ snippet.snippetId }}</router-link></p>
 							<p>{{ snippet.snippetCode }}</p>
 							<p> {{ snippet.tag1 }}, {{ snippet.tag2 }}, {{ snippet.tag3 }},</p>
 							<p>{{ snippet.readme }}</p>
+							<p>Author: <router-link :to="'/user/' + snippet.userId">{{ snippet.userId }}</router-link></p>
 						</li>
 					</ul>
 				</div>

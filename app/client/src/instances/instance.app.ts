@@ -8,6 +8,7 @@ import { LoginViewComponent } from  './../components/login/component.login';
 import { SignupViewComponent } from  './../components/signup/component.signup';
 import { SettingsViewComponent } from './../components/settings/component.settings';
 import { NotificationsViewComponent } from './../components/notifications/component.notifications';
+import { SnippetViewComponent } from './../components/snippet/component.snippet';
 
 // Other components
 import { NavbarComponent } from './../components/navbar/component.navbar';
@@ -33,6 +34,7 @@ export const AppInstance = new Vue({
   	'signup-view-component': SignupViewComponent,
     'settings-view-component': SettingsViewComponent,
     'notifications-view-component': NotificationsViewComponent,
+    'snippet-view-component': SnippetViewComponent,
   	'navbar': NavbarComponent,
   	'appfooter': AppfooterComponent
   }

@@ -25,7 +25,14 @@
 	<div class="grid-block">
 		<div class="grid-content">
 			<div class="card card-section">
-				<p>{{ snippets }}</p>
+				<ul>
+					<li v-for="snippet in snippets">
+						<p>Here is the id: <router-link :to="'/snippet/' + snippet.snippetId">{{ snippet.snippetId }}</router-link></p>
+						<p>{{ snippet.snippetCode }}</p>
+						<p> {{ snippet.tag1 }}, {{ snippet.tag2 }}, {{ snippet.tag3 }},</p>
+						<p>{{ snippet.readme }}</p>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>
