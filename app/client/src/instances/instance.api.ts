@@ -207,7 +207,7 @@ export const ApiInstance: IApiInstance= new Vue({
 			var myPromise = new Promise((resolve, reject) => {
 				// Make HTTP request
 				Vue.http.get('/api/snippets', options).then((response: any) => {
-					resolve(response.body);
+					resolve(response.body.snippets);
 				}, (fail: any) => {
 					reject(fail);
 				})
