@@ -198,7 +198,7 @@ export const ApiInstance: IApiInstance= new Vue({
 		},
 
 		getSnippets: (myUserId?: number) => {
-			var options = {};
+			var options = {};	
 			if (myUserId){
 				options = {
 						params: {

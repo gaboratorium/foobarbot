@@ -10,9 +10,15 @@ export const AboutViewComponent = {
 	data: function(){
 		return {
 			users: Array,
+			snippets: Array,
 			errorMsg: String
 		}
 	},
+
+	created: function(){
+		this.getSnippets();
+	},
+
 	methods: {
 		loadUsers: function(){
 			var myToken = this.$store.getters.userToken;
@@ -32,6 +38,19 @@ export const AboutViewComponent = {
 	  	resetUsers: function(){
 	  		this.users = [];
 			this.errorMsg = "";
-	  	}
+	  	},
+
+		getSnippets: function(){
+			this.$store.dispatch({
+				  type: 'getSnippets',
+			  }).then((response: any) => {
+				  console.log("about component get snippets recieves:", response);
+				  
+				  this.snippets = response;
+			  }, (fail: any) => {
+				  // Fail
+				  console.log("about component get snippets fails:", fail);
+			  });
+		}
 	}
 };
