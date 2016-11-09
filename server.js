@@ -232,7 +232,7 @@ apiRoutes.use(function(req, res, next){
 
 	
 	// check header or url parameters or post parameters for token
-	var token = req.body.token || req.query.token || req.headers['x-access-token'];
+	var token = req.body.token || req.query.token || req.headers['x-access-token'] || req.body.userToken;
 
 	if (token){
 		jwt.verify(token, app.get('superSecret'), function(err, decoded){
@@ -316,6 +316,46 @@ apiRoutes.get('/notifications', function(req, res) {
 		res.status(409).send({success:false, message: 'no'})
 	});
 });
+
+var schema = new Schema({
+	userId: String, 
+    snippetId: String, 
+    date: Number
+});
+
+var Star = mongoose.model('Star', schema);
+
+
+apiRoutes.post('/stars', function(req, res) {
+	// Define properties
+	var userToken = req.body.userToken;
+	var snippetId = req.body.snippetId;
+	var decoded = jwt.decode(userToken, {complete: true, json: true});
+	var userId = decoded.payload.userId;
+
+	// Create object to save
+	var myStar = new Star({
+		userId: userId,
+		snippetId: snippetId,
+		date: new Date().getTime()
+	});
+
+	// Check if star exists
+	Star.findOne({ userId: userId, snippetId: snippetId }, function(err, star) {
+		if (star) {
+			return res.status(409).send({message: "This user has already starred this snippet"});
+		}
+
+		// If star does not exist, save it
+		myStar.save(function(err){
+			if (err) throw err;
+			
+			return res.send({success: true});
+		});
+	});
+});
+
+
 // route to create a new notifications
 apiRoutes.post('/notifications', function(req, res) {
 
@@ -379,5 +419,4 @@ app.listen(process.env.PORT || defaultPort, function (data) {
   console.log(`Example app listening on port ` + defaultPort);
 });
 
-//run the database.js file
-// var database = require('./app/server/src/database.js');
+

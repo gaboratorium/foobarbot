@@ -17,7 +17,7 @@
 		<a href="" class="button" v-on:click.prevent="resetUsers">Reset users</a>
 		
 		<!--Users-->
-		<div class="grid-block">
+		<div class="grid-block" v-if="isUserLoggedIn">
 			<div class="grid-content">
 				<div class="card card-section">
 					<h2>Users</h2>
@@ -42,6 +42,7 @@
 							<p> {{ snippet.tag1 }}, {{ snippet.tag2 }}, {{ snippet.tag3 }},</p>
 							<p>{{ snippet.readme }}</p>
 							<p>Author: <router-link :to="'/user/' + snippet.userId">{{ snippet.userId }}</router-link></p>
+							<p v-on:click="starSnippet(snippet.snippetId)">Star it</p>
 						</li>
 					</ul>
 				</div>
