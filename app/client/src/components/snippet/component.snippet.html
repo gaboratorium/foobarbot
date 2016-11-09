@@ -1,0 +1,24 @@
+<!--Snippet-->
+<div>
+	<div class="grid-block">
+		<div class="grid-content">
+			<div class="card card-section">
+				<h1> Requesting this snippet: {{ $route.params.id }} </h1>
+
+				<!--Loading data -->
+				<i class="fa fa-cog fa-spin fa-2x fa-fw" v-if="snippetDataStatus=='loading'"></i>
+
+				<!--Loaded data -->
+				<div v-if="snippetDataStatus=='loaded'">
+					<p>Snippet loaded:</p>
+					<p> {{ snippet }} </p>
+				</div>
+
+				<!--Failed data-->
+				<div v-if="snippetDataStatus=='failed'">
+					<p>Something went wrong, sorry. Try to refresh.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

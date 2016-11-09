@@ -17,7 +17,7 @@
 					<h2>Users</h2>
 					<p>No users have been loaded.</p>
 					<ul>
-						<li v-for="user in users">{{ user }}</li>
+						<li v-for="user in users">{{ user.userName }} - <router-link :to="'/user/' + user.userId">Profile</router-link></li>
 					</ul>
 				</div>
 			</div>

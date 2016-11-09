@@ -1,0 +1,39 @@
+<!--User-->
+<div>
+	<div class="grid-block">
+		<div class="grid-content">
+			<div class="card card-section">
+				<h1> Requesting this user: {{ $route.params.id }} </h1>
+
+				<!--Loading data -->
+				<i class="fa fa-cog fa-spin fa-2x fa-fw" v-if="dataStatus=='loading'"></i>
+
+				<!--Loaded data -->
+				<div v-if="dataStatus=='loaded'">
+					<p> {{ user }} </p>
+				</div>
+
+				<!--Failed data-->
+				<div v-if="dataStatus=='failed'">
+					<p>Something went wrong, sorry. Try to refresh.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Snippets-->
+	<div class="grid-block">
+		<div class="grid-content">
+			<div class="card card-section">
+				<ul>
+					<li v-for="snippet in snippets">
+						<p>Here is the id: <router-link :to="'/snippet/' + snippet.snippetId">{{ snippet.snippetId }}</router-link></p>
+						<p>{{ snippet.snippetCode }}</p>
+						<p> {{ snippet.tag1 }}, {{ snippet.tag2 }}, {{ snippet.tag3 }},</p>
+						<p>{{ snippet.readme }}</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

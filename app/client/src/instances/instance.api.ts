@@ -7,6 +7,7 @@ interface IApiInstance {
 	postUserLog?: any,
 	signupUser?: any
 	loadUsers?: any,
+	getUser?: any,
 
 	// Token methods
 	verifyToken?: any,
@@ -16,6 +17,10 @@ interface IApiInstance {
 	getNotifications?: any,
 	postNotification?: any,
 	deleteNotification?: any,
+
+	// Snippte methods
+	postSnippet?: any,
+	getSnippets?: any
 }
 
 export const ApiInstance: IApiInstance= new Vue({
@@ -65,6 +70,27 @@ export const ApiInstance: IApiInstance= new Vue({
 					reject(fail);
 				})
 			})
+			return myPromise;
+		},
+
+		getUser: (myUserId: any) => {
+			var myPromise = new Promise((resolve, reject) => {
+
+				// Send requested user ID as parameter
+				var options = {
+					params: {
+						userId: myUserId
+					}
+				};
+
+				// Make HTTP request
+				Vue.http.get('/api/user', options).then((response: any) => {
+					resolve(response.body);
+				}, (fail: any) => {
+					reject(fail);
+				})
+			})
+
 			return myPromise;
 		},
 		
@@ -149,6 +175,68 @@ export const ApiInstance: IApiInstance= new Vue({
 				}, (fail) => {
 					reject(fail);
 				});
+			});
+
+			return myPromise;
+		},
+
+		postSnippet: (myToken: any, mySnippet: any) => {
+			var body = {
+				snippet: mySnippet,
+				token: myToken
+			}
+
+			var myPromise = new Promise((resolve, reject) => {
+				Vue.http.post('/api/snippets/', body).then((response: any) => {
+					resolve(response.body);
+				}, (fail) => {
+					reject(fail);
+				});
+			});
+
+			return myPromise;
+		},
+
+		// Get all snippets or all by user
+		getSnippets: (myUserId?: string, mySnippetId?: string) => {
+			var options = {};	
+			if (myUserId){
+				options = {
+						params: {
+							userId: myUserId
+						}
+					};
+			}
+			
+			var myPromise = new Promise((resolve, reject) => {
+				// Make HTTP request
+				Vue.http.get('/api/snippets', options).then((response: any) => {
+					resolve(response.body.snippets);
+				}, (fail: any) => {
+					reject(fail);
+				})
+			});
+
+			return myPromise;
+		},
+
+		// Get snippet by Id
+		getSnippet: (mySnippetId: string) => {
+		
+			var options = {
+				params: {
+					snippetId: mySnippetId
+				}
+			};
+		
+			
+			var myPromise = new Promise((resolve, reject) => {
+				// Make HTTP request
+				Vue.http.get('/api/snippets', options).then((response: any) => {
+					resolve(response.body.snippets);
+				}, (fail: any) => {
+					reject(fail);
+				})
 			});
 
 			return myPromise;

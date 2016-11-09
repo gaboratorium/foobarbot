@@ -1,0 +1,16 @@
+.c-button {
+    background-color: #3F51B5;
+    text-transform: uppercase;
+    font-size: .9rem;
+    color: #fff;
+    padding: .5rem;
+    font-weight: 500;
+    border: none;
+    box-shadow: none;
+}
+
+.c-button--transparent {
+    background-color: transparent;
+    font-weight: bold;
+    color: #3F51B5;
+}

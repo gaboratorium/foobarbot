@@ -176,6 +176,57 @@ apiRoutes.post('/users', function(req, res) {
 	});
 });
 
+
+apiRoutes.get('/user', function(req, res) {
+	var myUserId = req.query.userId;
+
+	console.log('Endpoint recieved this userID', myUserId);
+	
+
+	User.findOne({ userId: myUserId}, function(err, user){
+		if (user) {
+			// if user profile is public
+			return res.json({success: true, message: "Good request", user: user});
+		} else {
+			return res.status(404).send({success: false, message: "No user was found with this Id"});
+		}
+	});
+});
+
+var schema = new Schema({
+	snippetId: String,
+	snippetCode: String,
+	userId: String,
+	tag1: String,
+	tag2: String,
+	tag3: String,
+	readme: String
+});
+
+var Snippet = mongoose.model('snippet', schema);
+
+// Get snippets from user Id
+apiRoutes.get('/snippets', function(req, res) {
+	
+	// IF userId or snippetId is provided
+	var options = {};
+	if (req.query.userId) {
+		options = { userId: req.query.userId };
+	} else if (req.query.snippetId) {
+		options = { snippetId: req.query.snippetId };
+	}
+
+	var mySnippet = new Snippet(req.body.snippet);
+
+	Snippet.find(options, function(err, snippets){
+		if (snippets) {
+			return res.json({success: true, message: "You know some shit", snippets: snippets});
+		} else {
+			return res.status(404).send({success: false, message: "Snippets were not found with this userId"})
+		}
+	});
+});
+
 // route middleware to verify a token
 apiRoutes.use(function(req, res, next){
 
@@ -287,6 +338,24 @@ apiRoutes.post('/notifications', function(req, res) {
 
 
     	res.json({ success: true });
+	});
+});
+
+apiRoutes.post('/snippets', function(req, res) {
+	console.log("YOU ARE HITTING THE SNIPPETS ENDPOINT recieved snippet:", req.body.snippet);
+
+	var token = req.body.token;
+	var decoded = jwt.decode(token, {complete: true, json: true});
+	var tempSnippet = req.body.snippet;
+	tempSnippet.userId = decoded.payload.userId;
+	tempSnippet.snippetId = String(new Date().getTime())+String(Math.floor(Math.random()*1000))
+	
+	var mySnippet = new Snippet(tempSnippet);
+
+	mySnippet.save((err) => {
+		if (err) throw err;
+
+		res.json({success: true});
 	});
 });
 

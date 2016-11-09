@@ -1,41 +1,48 @@
 <!-- Navigation -->
 <div>
-<div class="menu-group menu-group--navbar">
-	<div class="menu-group-left">
-		<ul class="menu-bar">
-			<li><a href="#">Foobarbot Developer Preview</a></li>
-			<li>
-				<span class="inline-label" style='margin: 0.25rem'>
-					<input type="search" placeholder="Search for anything..." style="height: 100%">
-					<a href="#" class="button">Go</a>
-				</span>
-			</li>
-		</ul>
+	<div class="menu-group menu-group--navbar">
+		<div class="menu-group-left">
+			<ul class="menu-bar">
+				<li><a href="#">Foobarbot Developer Preview</a></li>
+				<li>
+					<span class="inline-label" style='margin: 0.25rem'>
+						<input type="search" placeholder="Search for anything..." style="height: 100%">
+						<a href="#" class="button">Go</a>
+					</span>
+				</li>
+			</ul>
+		</div>
+		<div class="menu-group-right">
+			<!-- Right menu for user -->
+			<ul class="menu-bar" v-if='isUserLoggedIn'>
+				<li><router-link to="">
+					<span>Hello <span class='o-text--strong'>{{ user.name }}</span></span></router-link></li>
+				<li><router-link to="/about">About</router-link></li>
+				<li><router-link to="/settings">Settings</router-link></li>
+				<li><router-link to="/notifications">Notifications</router-link></li>
+				<li><router-link to="/user/me">My profile</router-link></li>
+				<li><button id="show-modal" @click="showModal = true" class="c-button">Compose snippet</button></li>
+				<li><a href="#" @click.stop="logout()">Logout</a></li>
+			</ul>
+			<!-- Right menu for visitor -->
+			<ul class="menu-bar" v-if='!isUserLoggedIn'>
+				<li><router-link to="/about">About</router-link></li>
+				<li><router-link to="/login">Log in</router-link></li>
+				<li><router-link to="signup">Sign up</router-link></li>
+			<!-- 	<li>
+					<span class="inline-label" style='margin: 0;'>
+						<a href="#" class='button'>Sign up</a>
+					</span>
+				</li> -->
+			</ul>
+		</div>
 	</div>
-	<div class="menu-group-right">
-		<!-- Right menu for user -->
-		<ul class="menu-bar" v-if='isUserLoggedIn'>
-			<li><router-link to="">
-				<span>Hello <span class='o-text--strong'>{{ user.name }}</span></span></router-link></li>
-			<li><router-link to="about">About</router-link></li>
-			<li><router-link to="settings">Settings</router-link></li>
-			<li><router-link to="notifications">Notifications</router-link></li>
-			<li><a href="#" @click.stop="logout()">Logout</a></li>
-		</ul>
-		<!-- Right menu for visitor -->
-		<ul class="menu-bar" v-if='!isUserLoggedIn'>
-			<li><router-link to="/about">About</router-link></li>
-			<li><router-link to="/login">Log in</router-link></li>
-			<li><router-link to="signup">Sign up</router-link></li>
-		<!-- 	<li>
-				<span class="inline-label" style='margin: 0;'>
-					<a href="#" class='button'>Sign up</a>
-				</span>
-			</li> -->
-		</ul>
+	<div class="title-bar" v-if="!isUserLoggedIn">
+		<div class="title center">Foobarbot is place to find and share code. <router-link to="/login">Please log in or sign up.</router-link></div>
 	</div>
+
+	<!--Compose Modal -->
+	<modal v-if="showModal" @close="showModal = false"></modal>
 </div>
-<div class="title-bar" v-if="!isUserLoggedIn">
-	<div class="title center">Foobarbot is place to find and share code. <router-link to="/login">Please log in or sign up.</router-link></div>
-</div>
-</div>
+
+

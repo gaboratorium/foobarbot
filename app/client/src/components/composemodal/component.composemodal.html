@@ -1,0 +1,55 @@
+<transition name="modal">
+    <div class="modal-mask">
+            <div class="modal-wrapper">
+                <div class="modal-container">
+                    <h1>Create new snippet</h1>
+                    <form v-on:submit.prevent="postSnippet">
+                        <label for="composeform__snippet">Snippet</label>
+                        <textarea id="composeform__snippet" v-model="composeform__snippet">
+                        </textarea>
+
+                        <!-- tag 1-->
+                        <label for="composeform__tag1">Tag 1</label>
+                        <input type="text" id="composeform__tag1" v-model="composeform__tag1">
+
+                        <!-- tag 2-->
+                        <label for="composeform__tag2" >Tag 2</label>
+                        <input type="text" id="composeform__tag2" v-model="composeform__tag2">
+
+                        <!--tag 3-->
+                        <label for="composeform__tag3">Tag 3</label>
+                        <input type="text" id="composeform__tag3" v-model="composeform__tag3">
+
+                        <label for="composeform__readme">Readme</label>
+                        <textarea id="composeform__readme" v-model="composeform__readme">
+                        </textarea>
+                        
+                        <!--Submit and cancel -->
+                        <input type="submit" class="c-button c-button" value="Submit">
+                        <a href="" v-on:click.prevent="closeModal" class="c-button c-button--transparent">Cancel</p>
+                    </form>
+
+                    <!--<div class="modal-header">
+                    <slot name="header">
+                        default header
+                    </slot>
+                    </div>
+
+                    <div class="modal-body">
+                    <slot name="body">
+                        default body
+                    </slot>
+                    </div>
+
+                    <div class="modal-footer">
+                    <slot name="footer">
+                        default footer
+                        <button class="modal-default-button" @click="$emit('close')">
+                        OK
+                        </button>
+                    </slot>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+</transition>
