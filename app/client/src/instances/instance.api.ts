@@ -197,12 +197,15 @@ export const ApiInstance: IApiInstance= new Vue({
 			return myPromise;
 		},
 
-		getSnippets: (myUserId: number) => {
-			var options = {
-					params: {
-						userId: myUserId
-					}
-				};
+		getSnippets: (myUserId?: number) => {
+			var options = {};
+			if (myUserId){
+				options = {
+						params: {
+							userId: myUserId
+						}
+					};
+			}
 			
 			var myPromise = new Promise((resolve, reject) => {
 				// Make HTTP request
