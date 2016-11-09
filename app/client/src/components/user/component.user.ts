@@ -10,7 +10,9 @@ export const UserViewComponent = {
 	data: function(){
 		return {
 			dataStatus: String,
-			user: Object
+			user: Object,
+			snippets: Object,
+			snippetDataStatus: String
 		};
 	},
 
@@ -28,6 +30,7 @@ export const UserViewComponent = {
 		}
 
 		this.loadUser(requestedId);
+		this.loadSnippets(requestedId);
 	},
 
 	// Methods
@@ -46,6 +49,19 @@ export const UserViewComponent = {
 					this.$router.push({name: "about"});
 
 				})
-	  	}
+	  	},
+
+		loadSnippets: function(userId: number){
+			console.log("loadSnippets fired")
+			this.$store.dispatch({
+				type: "getSnippets",
+				userId: userId,
+			}).then((response: any) => {
+				this.snippets = response;
+				this.snippetDataStatus = "loaded";
+			}, (fail: any) => {
+				this.snippetDataStatus = "failed";
+			})
+		}
   	}
 };
