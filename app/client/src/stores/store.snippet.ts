@@ -5,10 +5,11 @@ export const SnippetStore = {
     actions: {
         // Get list of notifications
         getSnippets: (context: any, payload: any) => {
+            var userId = payload.userId;
             // var userToken = context.getters["mainstore/userToken"]; // should be userId
             // var userEmail = context.getters["mainstore/userEmail"]; // should be userId
             // ApiInstance.postUserLog();
-            // return ApiInstance.getNotifications(userToken, userEmail);
+            return ApiInstance.getSnippets(userId);
         },
 
         // Post notifications

@@ -19,7 +19,8 @@ interface IApiInstance {
 	deleteNotification?: any,
 
 	// Snippte methods
-	postSnippet?: any
+	postSnippet?: any,
+	getSnippets?: any
 }
 
 export const ApiInstance: IApiInstance= new Vue({
@@ -194,6 +195,26 @@ export const ApiInstance: IApiInstance= new Vue({
 			});
 
 			return myPromise;
+		},
+
+		getSnippets: (myUserId: number) => {
+			var options = {
+					params: {
+						userId: myUserId
+					}
+				};
+			
+			var myPromise = new Promise((resolve, reject) => {
+				// Make HTTP request
+				Vue.http.get('/api/snippets', options).then((response: any) => {
+					resolve(response.body);
+				}, (fail: any) => {
+					reject(fail);
+				})
+			});
+
+			return myPromise;
+
 		}
 	}
 }) as IApiInstance;

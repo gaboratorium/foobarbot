@@ -51,7 +51,7 @@ export const UserViewComponent = {
 				})
 	  	},
 
-		loadSnippets: function(userId: number){
+		getSnippets: function(userId: number){
 			console.log("loadSnippets fired")
 			this.$store.dispatch({
 				type: "getSnippets",
