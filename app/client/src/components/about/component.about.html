@@ -36,7 +36,11 @@
 				<div class="card card-section">
 					<h2>Snippets</h2>
 					<ul>
-						<li v-for="snippet in snippets">{{ snippet }}</li>
+						<li v-for="snippet in snippets">
+							<p>{{ snippet.snippetCode }}</p>
+							<p> {{ snippet.tag1 }}, {{ snippet.tag2 }}, {{ snippet.tag3 }},</p>
+							<p>{{ snippet.readme }}</p>
+						</li>
 					</ul>
 				</div>
 			</div>
