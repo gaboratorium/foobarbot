@@ -194,6 +194,7 @@ apiRoutes.get('/user', function(req, res) {
 });
 
 var schema = new Schema({
+	snippetId: String,
 	snippetCode: String,
 	userId: String,
 	tag1: String,
@@ -207,13 +208,17 @@ var Snippet = mongoose.model('snippet', schema);
 // Get snippets from user Id
 apiRoutes.get('/snippets', function(req, res) {
 	
-	// IF userId is provided, otherwise return everything
-	var myUserId = req.query.userId;
+	// IF userId or snippetId is provided
+	var options = {};
+	if (req.query.userId) {
+		options = { userId: req.query.userId };
+	} else if (req.query.snippetId) {
+		options = { snippetId: req.query.snippetId };
+	}
 
-	
 	var mySnippet = new Snippet(req.body.snippet);
 
-	Snippet.find({userId: myUserId}, function(err, snippets){
+	Snippet.find(options, function(err, snippets){
 		if (snippets) {
 			return res.json({success: true, message: "You know some shit", snippets: snippets});
 		} else {
@@ -341,12 +346,9 @@ apiRoutes.post('/snippets', function(req, res) {
 
 	var token = req.body.token;
 	var decoded = jwt.decode(token, {complete: true, json: true});
-
-	console.log("decoded.payload", decoded.payload)
-
 	var tempSnippet = req.body.snippet;
 	tempSnippet.userId = decoded.payload.userId;
-	
+	tempSnippet.snippetId = String(new Date().getTime())+String(Math.floor(Math.random()*1000))
 	
 	var mySnippet = new Snippet(tempSnippet);
 
