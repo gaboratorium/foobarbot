@@ -1,47 +1,44 @@
 <div class='grid-block align-center'>
-	<div class="grid-block medium-6">
+	<div class="grid-block grid-page-content">
 		<div class="grid-content">
-			
-			<!-- Login tab -->
-			<div class="card card-section">
-				<h2>Signup</h2>
-                <div v-if="!isRegistrationSuccesful">
-                    <p>Registration is currently closed.</p>
-                    <!--<p>Here you can register</p>-->
-                    <!--<form action="" id="signupform" v-on:submit.prevent="signupUser">-->
-                        <!--Display name (user name-->
-                        <!--<label for="signupform__username">Select your display name. You can change this later.</label>-->
-                        <!--<input type="text" placeholder="Type your user name..." v-model="signupform__username" required="required">-->
 
-                        <!--Email-->
-                        <!--<label for="signupform__email">Type your e-mail</label>-->
-                        <!--<input type="email" placeholder="Type your email..." v-model="signupform__email" id="signupform__email" required="required">-->
+            <h2>Signup</h2>
+            <div v-if="!isRegistrationSuccesful">
+                <p>Registration is currently closed.</p>
+                <!--<p>Here you can register</p>-->
+                <!--<form action="" id="signupform" v-on:submit.prevent="signupUser">-->
+                    <!--Display name (user name-->
+                    <!--<label for="signupform__username">Select your display name. You can change this later.</label>-->
+                    <!--<input type="text" placeholder="Type your user name..." v-model="signupform__username" required="required">-->
 
-                        <!--Password-->
-                        <!--<label for="signupform__password">Type your password</label>-->
-                        <!--<input type="password" placeholder="Type your password..." v-model="signupform__password" id="signupform__password" required="required">-->
+                    <!--Email-->
+                    <!--<label for="signupform__email">Type your e-mail</label>-->
+                    <!--<input type="email" placeholder="Type your email..." v-model="signupform__email" id="signupform__email" required="required">-->
 
-                        <!--Password again-->
-                        <!--<label for="signupform__password2">Type your password again</label>-->
-                        <!--<input type="password" placeholder="Type your password again..." v-model="signupform__password2" id="signupform__password2" required="required">-->
+                    <!--Password-->
+                    <!--<label for="signupform__password">Type your password</label>-->
+                    <!--<input type="password" placeholder="Type your password..." v-model="signupform__password" id="signupform__password" required="required">-->
 
-                        <!--Terms and conditions-->
-                        <!--<p>-->
-                            <!--<input type="checkbox" required="required">-->
-                            <!--I accept that all my data will be public during the Developer Preview, may be removed and I may have to accept the terms of agreement in order to continue using Foobarbot once the Developer Preview state ends.-->
-                        <!--</p>-->
+                    <!--Password again-->
+                    <!--<label for="signupform__password2">Type your password again</label>-->
+                    <!--<input type="password" placeholder="Type your password again..." v-model="signupform__password2" id="signupform__password2" required="required">-->
 
-                        <!--Submit-->
-                        <!--<input type="submit" value="Signup" class="button">-->
-                    <!--</form>-->
-                    <p>Already a member? <router-link to="login">Log in now!</router-link></p>
-                    <!--<a href="#" @click.stop="switchTab('signup')">...or sign up</a>-->
-                    <p>{{ errorMsg }}</p>
-                </div>
-                <div v-if="isRegistrationSuccesful">
-                    <p>Registration was succesful. <router-link to="login">Now you can login.</router-link></p>
-                </div>
-			</div>
+                    <!--Terms and conditions-->
+                    <!--<p>-->
+                        <!--<input type="checkbox" required="required">-->
+                        <!--I accept that all my data will be public during the Developer Preview, may be removed and I may have to accept the terms of agreement in order to continue using Foobarbot once the Developer Preview state ends.-->
+                    <!--</p>-->
+
+                    <!--Submit-->
+                    <!--<input type="submit" value="Signup" class="button">-->
+                <!--</form>-->
+                <p>Already a member? <router-link to="login">Log in now!</router-link></p>
+                <!--<a href="#" @click.stop="switchTab('signup')">...or sign up</a>-->
+                <p>{{ errorMsg }}</p>
+            </div>
+            <div v-if="isRegistrationSuccesful">
+                <p>Registration was succesful. <router-link to="login">Now you can login.</router-link></p>
+            </div>
 		</div>
 	</div>
 </div>

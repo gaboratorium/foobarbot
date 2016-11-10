@@ -3,6 +3,7 @@
 
 // Settings
 @import 'settings.colors';
+@import 'settings.menu-group';
 
 // Base HTML tags
 @import 'base.typography';
@@ -15,6 +16,7 @@
 
 // UI components
 @import 'components.menu-group';
+@import 'components.info-bar';
 @import 'components.component-fade';
 @import 'components.footer';
 @import 'components.button';

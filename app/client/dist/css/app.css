@@ -1,5 +1,5 @@
 body {
-  font-family: 'Noto Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
   background-color: #fafafa; }
 
 h1 {
@@ -16,6 +16,9 @@ pre {
 
 .grid-content {
   padding: 1rem; }
+
+.grid-page-content {
+  max-width: 950px; }
 
 .o-text--strong {
   font-weight: bold; }
@@ -84,10 +87,35 @@ pre {
 
 .menu-group--navbar {
   background-color: #eceff1;
-  border-bottom: 1px solid #cfd8dc; }
+  border-bottom: 1px solid #cfd8dc;
+  justify-content: center;
+  height: 55px; }
+
+.menu-group--navbar__menu-item {
+  color: #78909c !important; }
+
+.menu-group__menu-bar {
+  width: 950px;
+  flex-flow: row nowrap; }
+
+.menu-group__logo {
+  flex-flow: row nowrap !important; }
+
+.menu-group__logo-text {
+  color: #78909c; }
+
+.menu-group__logo-text--strong {
+  font-weight: 900;
+  margin-right: .5rem; }
 
 .menu-bar {
   background: none; }
+
+.c-info-bar {
+  background-color: #fafafa;
+  border-bottom: 1px solid #cfd8dc;
+  color: #455a64;
+  height: 55px; }
 
 .component-fade-enter-active, .component-fade-leave-active {
   transition: opacity .1s ease; }

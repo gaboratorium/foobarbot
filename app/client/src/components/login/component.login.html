@@ -1,19 +1,18 @@
 <div class='grid-block align-center'>
-	<div class="grid-block medium-6">
+	<div class="grid-block grid-page-content">
 		<div class="grid-content">
 			
-			<!-- Login tab -->
-			<div class="card card-section">
-				<h2>Login</h2>
-				<p>Here you can log in</p>
-				<label for="loginform__email">E-mail</label>
-				<input type="text" placeholder="Type your email..." v-model="loginform__email" id="loginform__email">
-				<label for="loginform__password">Password</label>
-				<input type="password" placeholder="Type your password..." v-model="loginform__password" id="loginform__email">
-				<a href="#" class="button" v-on:click.prevent="loginUser">Login </a>
-				<!--<a href="#" @click.stop="switchTab('signup')">...or sign up</a>-->
-				<p>{{ errorMsg }}</p>
-			</div>			
+			
+			<h2>Login</h2>
+			<p>Here you can log in</p>
+			<label for="loginform__email">E-mail</label>
+			<input type="text" placeholder="Type your email..." v-model="loginform__email" id="loginform__email">
+			<label for="loginform__password">Password</label>
+			<input type="password" placeholder="Type your password..." v-model="loginform__password" id="loginform__email">
+			<a href="#" class="button" v-on:click.prevent="loginUser">Login </a>
+			<!--<a href="#" @click.stop="switchTab('signup')">...or sign up</a>-->
+			<p>{{ errorMsg }}</p>
+			
 		</div>
 	</div>
 </div>

@@ -1,52 +1,54 @@
-<div class="grid-block">
-	<div class="grid-content">
-		<h1>Welcome to Foobarbot Developer Preview</h1>
-		<p>Project Lines is a single page application written in NodeJs and VueJs.</p>
-		<p>Roadmap:</p>
-		<ul>
-			<li>Save and organize your code snippets and templates</li>
-			<li>Browse between templates created by other developers</li>
-			<li>Create collections, tutorials</li>
-			<li>Read tutorials created by the community</li>
-			<li>Save snippets instantly with the Chrome extension</li>
-			<li>Insert snippets instantly with Atom/Sublime packages</li>
-		</ul>
-		<h2>Here is an API call:</h2>
-		<p>You should only be able to fetch data when you are logged in:</p>
-		<a href="" class="button" v-on:click.prevent="loadUsers">Load users</a>
-		<a href="" class="button" v-on:click.prevent="resetUsers">Reset users</a>
-		
-		<!--Users-->
-		<div class="grid-block" v-if="isUserLoggedIn">
-			<div class="grid-content">
-				<div class="card card-section">
-					<h2>Users</h2>
-					<p>No users have been loaded.</p>
-					<p> {{ errorMsg }} </p>
-					<ul>
-						<li v-for="user in users">{{ user.userName }} - <router-link :to="'/user/' + user.userId">Profile</router-link></li>
-					</ul>
+<div class="grid-block align-center">
+	<div class="grid-block grid-page-content">
+		<div class="grid-content">
+			<h1>Welcome to Foobarbot Developer Preview</h1>
+			<p>Project Lines is a single page application written in NodeJs and VueJs.</p>
+			<p>Roadmap:</p>
+			<ul>
+				<li>Save and organize your code snippets and templates</li>
+				<li>Browse between templates created by other developers</li>
+				<li>Create collections, tutorials</li>
+				<li>Read tutorials created by the community</li>
+				<li>Save snippets instantly with the Chrome extension</li>
+				<li>Insert snippets instantly with Atom/Sublime packages</li>
+			</ul>
+			<h2>Here is an API call:</h2>
+			<p>You should only be able to fetch data when you are logged in:</p>
+			<a href="" class="button" v-on:click.prevent="loadUsers">Load users</a>
+			<a href="" class="button" v-on:click.prevent="resetUsers">Reset users</a>
+			
+			<!--Users-->
+			<div class="grid-block" v-if="isUserLoggedIn">
+				<div class="grid-content">
+					<div class="card card-section">
+						<h2>Users</h2>
+						<p>No users have been loaded.</p>
+						<p> {{ errorMsg }} </p>
+						<ul>
+							<li v-for="user in users">{{ user.userName }} - <router-link :to="'/user/' + user.userId">Profile</router-link></li>
+						</ul>
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<!--Snippets-->
-		<div class="grid-block">
-			<div class="grid-content">
-				<div class="card card-section">
-					<h2>Snippets</h2>
-					<ul>
-						<li v-for="snippet in snippets">
-							<p>Here is the id: <router-link :to="'/snippet/' + snippet.snippetId">{{ snippet.snippetId }}</router-link></p>
-							<p>{{ snippet.snippetCode }}</p>
-							<p> {{ snippet.tag1 }}, {{ snippet.tag2 }}, {{ snippet.tag3 }},</p>
-							<p>{{ snippet.readme }}</p>
-							<p>Author: <router-link :to="'/user/' + snippet.userId">{{ snippet.userId }}</router-link></p>
-							<a href="#" v-on:click.prevent="starSnippet(snippet.snippetId)">Star it</a>
-						</li>
-					</ul>
+			<!--Snippets-->
+			<div class="grid-block">
+				<div class="grid-content">
+					<div class="card card-section">
+						<h2>Snippets</h2>
+						<ul>
+							<li v-for="snippet in snippets">
+								<p>Here is the id: <router-link :to="'/snippet/' + snippet.snippetId">{{ snippet.snippetId }}</router-link></p>
+								<p>{{ snippet.snippetCode }}</p>
+								<p> {{ snippet.tag1 }}, {{ snippet.tag2 }}, {{ snippet.tag3 }},</p>
+								<p>{{ snippet.readme }}</p>
+								<p>Author: <router-link :to="'/user/' + snippet.userId">{{ snippet.userId }}</router-link></p>
+								<a href="#" v-on:click.prevent="starSnippet(snippet.snippetId)">Star it</a>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
-	 </div>
+	</div>
 </div>
