@@ -49,6 +49,42 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="grid-block">
+				<div class="grid-content">
+					<ul class="demo-list-three mdl-list">
+
+					<li class="mdl-list__item mdl-list__item--three-line" v-for="snippet in snippets">
+						
+						<span class="mdl-list__item-primary-content">
+							<i class="material-icons mdl-list__item-avatar">code</i>
+							<span>{{ snippet.snippetCode }}</span>
+								<span class="mdl-list__item-text-body">
+									<!--{{ snippet.readme }}-->
+								
+									<span class="mdl-chip">
+										<span class="mdl-chip__text">{{ snippet.tag1 }}</span>
+									</span>
+
+									<span class="mdl-chip">
+										<span class="mdl-chip__text">{{ snippet.tag2 }}</span>
+									</span>	
+
+									<span class="mdl-chip">
+										<span class="mdl-chip__text">{{ snippet.tag3 }}</span>
+									</span>	
+								</span>
+							</span>
+							<span class="mdl-list__item-secondary-content">
+							<a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a>
+						</span>
+					</li>
+					</ul>
+				</div>
+			</div>
+
+
+
 		</div>
 	</div>
 </div>
