@@ -19,7 +19,8 @@ module.exports = {
 
             /* Other libs */
             globalPath.npm+"lodash/lodash.js",
-            globalPath.npm+"moment/moment.js"
+            globalPath.npm+"moment/moment.js",
+            globalPath.npm+"material-design-lite/material.min.js"
         ],
 
         // Typescript definition types
@@ -30,6 +31,7 @@ module.exports = {
         // CSS Libraries
         css: [
             globalPath.npm+"foundation-apps/dist/css/foundation-apps.css",
+            globalPath.npm+"material-design-lite/material.min.css",
             // globalPath.npm+"font-awesome/css/font-awesome.css"
             
             // Material icons...
