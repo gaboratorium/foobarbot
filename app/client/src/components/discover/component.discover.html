@@ -1,0 +1,52 @@
+<div class="grid-block align-center">
+	<div class="grid-block grid-page-content">
+		<div class="grid-content">
+			
+            <h1><i class="material-icons">explore</i>Discover</h1>
+
+			<!--Snippets-->
+			<!--<div class="grid-block">
+				<div class="grid-content">
+					<div class="card card-section">
+						<h2>Snippets</h2>
+						<ul>
+							<li v-for="snippet in snippets">
+								<p>Here is the id: <router-link :to="'/snippet/' + snippet.snippetId">{{ snippet.snippetId }}</router-link></p>
+								<p>{{ snippet.snippetCode }}</p>
+								<p> {{ snippet.tag1 }}, {{ snippet.tag2 }}, {{ snippet.tag3 }},</p>
+								<p>{{ snippet.readme }}</p>
+								<p>Author: <router-link :to="'/user/' + snippet.userId">{{ snippet.userId }}</router-link></p>
+								<a href="#" v-on:click.prevent="starSnippet(snippet.snippetId)">Star it</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>-->
+
+			<div class="grid-block">
+				<div class="grid-content">
+					<ul class="demo-list-three mdl-list">
+
+					<li class="mdl-list__item mdl-list__item--three-line card card-section" v-for="snippet in snippets">
+						
+						<span class="mdl-list__item-primary-content">
+							<i class="material-icons mdl-list__item-avatar">code</i>
+							<span>{{ snippet.snippetCode }}</span>
+								<span class="mdl-list__item-text-body">
+									<!--{{ snippet.readme }}-->
+									{{ snippet.tag1 }}, {{ snippet.tag2 }}, {{ snippet.tag3 }}
+								</span>
+							</span>
+							<span class="mdl-list__item-secondary-content">
+							<a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a>
+						</span>
+					</li>
+					</ul>
+				</div>
+			</div>
+
+
+
+		</div>
+	</div>
+</div>

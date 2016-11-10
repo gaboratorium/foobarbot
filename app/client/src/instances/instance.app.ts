@@ -9,6 +9,7 @@ import { SignupViewComponent } from  './../components/signup/component.signup';
 import { SettingsViewComponent } from './../components/settings/component.settings';
 import { NotificationsViewComponent } from './../components/notifications/component.notifications';
 import { SnippetViewComponent } from './../components/snippet/component.snippet';
+import { DiscoverViewComponent } from './../components/discover/component.discover';
 
 // Other components
 import { NavbarComponent } from './../components/navbar/component.navbar';
@@ -35,6 +36,7 @@ export const AppInstance = new Vue({
     'settings-view-component': SettingsViewComponent,
     'notifications-view-component': NotificationsViewComponent,
     'snippet-view-component': SnippetViewComponent,
+    'discover-view-component': DiscoverViewComponent,
   	'navbar': NavbarComponent,
   	'appfooter': AppfooterComponent
   }

@@ -1,6 +1,6 @@
 var fs = require('fs');
 var html = fs.readFileSync(__dirname + '/component.snippet.html', 'utf8');
-import { ISnippet } from "./../../interfaces/ISnippet"
+import { ISnippet } from "./../../interfaces/ISnippet";
 
 // Export global component
 export const SnippetViewComponent = {
