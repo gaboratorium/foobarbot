@@ -42,7 +42,7 @@
 							<p> {{ snippet.tag1 }}, {{ snippet.tag2 }}, {{ snippet.tag3 }},</p>
 							<p>{{ snippet.readme }}</p>
 							<p>Author: <router-link :to="'/user/' + snippet.userId">{{ snippet.userId }}</router-link></p>
-							<p v-on:click="starSnippet(snippet.snippetId)">Star it</p>
+							<a href="#" v-on:click.prevent="starSnippet(snippet.snippetId)">Star it</a>
 						</li>
 					</ul>
 				</div>
