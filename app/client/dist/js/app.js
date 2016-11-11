@@ -116,8 +116,11 @@ exports.ComposeModalComponent = {
 },{}],4:[function(require,module,exports){
 "use strict";
 
-var html = "<div class=\"grid-block align-center\">\r\n\t<div class=\"grid-block grid-page-content\">\r\n\t\t<div class=\"grid-content\">\r\n\t\t\t\r\n            <h1>Discover</h1>\r\n\r\n\t\t\t<!--Snippets-->\r\n\t\t\t<!--<div class=\"grid-block\">\r\n\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t<div class=\"card card-section\">\r\n\t\t\t\t\t\t<h2>Snippets</h2>\r\n\t\t\t\t\t\t<ul>\r\n\t\t\t\t\t\t\t<li v-for=\"snippet in snippets\">\r\n\t\t\t\t\t\t\t\t<p>Here is the id: <router-link :to=\"'/snippet/' + snippet.snippetId\">{{ snippet.snippetId }}</router-link></p>\r\n\t\t\t\t\t\t\t\t<p>{{ snippet.snippetCode }}</p>\r\n\t\t\t\t\t\t\t\t<p> {{ snippet.tag1 }}, {{ snippet.tag2 }}, {{ snippet.tag3 }},</p>\r\n\t\t\t\t\t\t\t\t<p>{{ snippet.readme }}</p>\r\n\t\t\t\t\t\t\t\t<p>Author: <router-link :to=\"'/user/' + snippet.userId\">{{ snippet.userId }}</router-link></p>\r\n\t\t\t\t\t\t\t\t<a href=\"#\" v-on:click.prevent=\"starSnippet(snippet.snippetId)\">Star it</a>\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>-->\r\n\r\n\t\t\t<div class=\"grid-block\">\r\n\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t<!--List of snippets-->\r\n\t\t\t\t\t<ul class=\"c-snippets\">\r\n\r\n\t\t\t\t\t\t<li class=\"c-snippets__snippet\" v-for=\"snippet in snippets\">\r\n\t\t\t\t\t\t\t\t<!--Snippet code -->\r\n\t\t\t\t\t\t\t\t<pre>\r\n\t\t\t\t\t\t\t\t\t<code class=\"php\">\r\n\t\t\t\t\t\t\t\t\t\t{{ snippet.snippetCode }}\r\n\t\t\t\t\t\t\t\t\t</code>\r\n\t\t\t\t\t\t\t\t</pre>\r\n\r\n\t\t\t\t\t\t\t\t<!--Tags -->\r\n\t\t\t\t\t\t\t\t<ul>\r\n\t\t\t\t\t\t\t\t\t<li>{{ snippet.tag1 }}</li>\r\n\t\t\t\t\t\t\t\t\t<li>{{ snippet.tag2 }}</li>\r\n\t\t\t\t\t\t\t\t\t<li>{{ snippet.tag3 }}</li>\r\n\t\t\t\t\t\t\t\t</ul>\t\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<span>by {{ snippet.userId }}</span>\r\n\r\n\t\t\t\t\t\t</li>\r\n\r\n\t\t\t\t\t\t<li class=\"c-snippets__snippet\">\r\n\t\t\t\t\t\t\t<pre>\r\n\t\t\t\t\t\t\t\t<code class=\"php\">\r\n\t\t\t\t\t\t\t\t\t&lt;?php \r\n\t\t\t\t\t\t\t\t\t\techo \"I like trains\";\r\n\t\t\t\t\t\t\t\t\t?&gt;\r\n\t\t\t\t\t\t\t\t</code>\r\n\t\t\t\t\t\t\t</pre>\r\n\t\t\t\t\t\t\t<!--Tags -->\r\n\t\t\t\t\t\t\t<ul>\r\n\t\t\t\t\t\t\t\t<li>PHP</li>\r\n\t\t\t\t\t\t\t\t<li>Hello World</li>\r\n\t\t\t\t\t\t\t\t<li>Test</li>\r\n\t\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t\t\t<span>by Gabor</span>\r\n\t\t\t\t\t\t</li>\r\n\t\t\t\t\t</ul>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
+var html = "<div class=\"grid-block align-center\">\r\n\t<div class=\"grid-block grid-page-content\">\r\n\t\t<div class=\"grid-content\">\r\n\t\t\t\r\n            <h1>Discover</h1>\r\n\r\n\t\t\t<!--Snippets-->\r\n\t\t\t<!--<div class=\"grid-block\">\r\n\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t<div class=\"card card-section\">\r\n\t\t\t\t\t\t<h2>Snippets</h2>\r\n\t\t\t\t\t\t<ul>\r\n\t\t\t\t\t\t\t<li v-for=\"snippet in snippets\">\r\n\t\t\t\t\t\t\t\t<p>Here is the id: <router-link :to=\"'/snippet/' + snippet.snippetId\">{{ snippet.snippetId }}</router-link></p>\r\n\t\t\t\t\t\t\t\t<p>{{ snippet.snippetCode }}</p>\r\n\t\t\t\t\t\t\t\t<p> {{ snippet.tag1 }}, {{ snippet.tag2 }}, {{ snippet.tag3 }},</p>\r\n\t\t\t\t\t\t\t\t<p>{{ snippet.readme }}</p>\r\n\t\t\t\t\t\t\t\t<p>Author: <router-link :to=\"'/user/' + snippet.userId\">{{ snippet.userId }}</router-link></p>\r\n\t\t\t\t\t\t\t\t<a href=\"#\" v-on:click.prevent=\"starSnippet(snippet.snippetId)\">Star it</a>\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>-->\r\n\r\n\t\t\t<div class=\"grid-block\">\r\n\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t<!--List of snippets-->\r\n\t\t\t\t\t<ul class=\"c-snippets\">\r\n\r\n\t\t\t\t\t\t<li class=\"c-snippets__snippet\" v-for=\"snippet in snippets\">\r\n\t\t\t\t\t\t\t\t<!--Snippet code -->\r\n\t\t\t\t\t\t\t\t<pre>\r\n\t\t\t\t\t\t\t\t\t<code class=\"php\">\r\n{{ snippet.snippetCode }}\r\n\t\t\t\t\t\t\t\t\t</code>\r\n\t\t\t\t\t\t\t\t</pre>\r\n\r\n\t\t\t\t\t\t\t\t<!--Tags -->\r\n\t\t\t\t\t\t\t\t<ul>\r\n\t\t\t\t\t\t\t\t\t<li>{{ snippet.tag1 }}</li>\r\n\t\t\t\t\t\t\t\t\t<li>{{ snippet.tag2 }}</li>\r\n\t\t\t\t\t\t\t\t\t<li>{{ snippet.tag3 }}</li>\r\n\t\t\t\t\t\t\t\t</ul>\t\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t<span>by {{ snippet.userId }}</span>\r\n\r\n\t\t\t\t\t\t</li>\r\n\r\n\t\t\t\t\t\t<li class=\"c-snippets__snippet\">\r\n\t\t\t\t\t\t\t<pre>\r\n\t\t\t\t\t\t\t\t<code class=\"php\">\r\n&lt;?php \r\n\techo \"I like trains\";\r\n?&gt;\r\n\t\t\t\t\t\t\t\t</code>\r\n\t\t\t\t\t\t\t</pre>\r\n\t\t\t\t\t\t\t<!--Tags -->\r\n\t\t\t\t\t\t\t<ul>\r\n\t\t\t\t\t\t\t\t<li>PHP</li>\r\n\t\t\t\t\t\t\t\t<li>Hello World</li>\r\n\t\t\t\t\t\t\t\t<li>Test</li>\r\n\t\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t\t\t<span>by Gabor</span>\r\n\t\t\t\t\t\t</li>\r\n\t\t\t\t\t</ul>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
 var hljs = require("highlight.js");
+hljs.configure({
+    tabReplace: '  ',
+});
 exports.DiscoverViewComponent = {
     name: "DiscoverComponent",
     template: html,
@@ -142,17 +145,11 @@ exports.DiscoverViewComponent = {
                 _this.snippets = response;
                 for (var i = 0; i < _this.snippets.length; i++) {
                     var snippet = _this.snippets[i];
-                    snippet.snippetCode = snippet.snippetCode.replace("<", "&lt;");
-                    snippet.snippetCode = snippet.snippetCode.replace(">", "&gt;");
                     _this.snippets[i] = snippet;
+                    console.log(snippet.snippetCode);
                 }
                 setTimeout(function () {
-                    var aCodes = document.getElementsByTagName('code');
-                    console.log("I have these elements with php class", aCodes);
-                    for (var index = 0; index < aCodes.length; index++) {
-                        console.log("aCodes length", aCodes.length);
-                        hljs.highlightBlock(aCodes[index]);
-                    }
+                    hljs.initHighlighting();
                 }, 0);
             }, function (fail) {
                 console.log("about component get snippets fails:", fail);

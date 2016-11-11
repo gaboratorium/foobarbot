@@ -21,6 +21,7 @@ interface IApiInstance {
 	// Snippet methods
 	postSnippet?: any,
 	getSnippets?: any,
+	getSnippet?: any,
 
 	// Star methods
 	postStar?: any

@@ -2,7 +2,15 @@
 // Template
 var fs = require('fs');
 var html = fs.readFileSync(__dirname + '/component.discover.html', 'utf8');
+
+
 var hljs = require("highlight.js");
+
+hljs.configure({
+  tabReplace: '  ', // 4 spaces
+//   classPrefix: ''     // don't append class prefix
+                      // … other options aren't changed
+})
 
 // Export global component
 export const DiscoverViewComponent = {
@@ -32,22 +40,27 @@ export const DiscoverViewComponent = {
 
 				  // Escaping characters
 				  for (var i = 0; i < this.snippets.length; i++) {
-					  var snippet = this.snippets[i];
-					 snippet.snippetCode = snippet.snippetCode.replace("<", "&lt;");
-					 snippet.snippetCode = snippet.snippetCode.replace(">", "&gt;");
+						var snippet = this.snippets[i];
 					 this.snippets[i] = snippet;
+					 console.log(snippet.snippetCode);
+					 
 				  }
 				  
 
 				  setTimeout(function(){
-					var aCodes = document.getElementsByTagName('code');
-					console.log("I have these elements with php class", aCodes);
+					hljs.initHighlighting();
+					// var aCodes = document.getElementsByTagName('code');
+					// console.log("I have these elements with php class", aCodes);
 					
 					
-					for (var index = 0; index < aCodes.length; index++) {
-						console.log("aCodes length", aCodes.length);
-						hljs.highlightBlock(aCodes[index]);
-					}
+					// for (var index = 0; index < aCodes.length; index++) {
+					// 	console.log("aCodes length", aCodes.length);
+					// 	hljs.highlightBlock(aCodes[index]);
+					// 	hljs.fixMarkup(aCodes[index]);
+					// 	// hljs.fixMarkup(aCodes[index].innerHTML);
+					// 	// hljs.fixMarkup(aCodes[index].innerText);
+					// 	// hljs.fixMarkup(aCodes[index].textContent);
+					// }
 				  }, 0);
 
 
