@@ -21,6 +21,7 @@ module.exports = {
             globalPath.npm+"lodash/lodash.js",
             globalPath.npm+"moment/moment.js",
             globalPath.npm+"material-design-lite/material.min.js"
+            // globalPath.npm+"highlight.js/lib/highlight.js"
         ],
 
         // Typescript definition types

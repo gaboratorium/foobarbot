@@ -2,6 +2,7 @@
 // Template
 var fs = require('fs');
 var html = fs.readFileSync(__dirname + '/component.discover.html', 'utf8');
+var hljs = require("highlight.js");
 
 // Export global component
 export const DiscoverViewComponent = {
@@ -27,8 +28,9 @@ export const DiscoverViewComponent = {
 				  type: 'getSnippets',
 			  }).then((response: any) => {
 				  console.log("about component get snippets recieves:", response);
-				  
 				  this.snippets = response;
+				  hljs.initHighlighting();
+				  console.log(hljs.listLanguages());
 			  }, (fail: any) => {
 				  // Fail
 				  console.log("about component get snippets fails:", fail);

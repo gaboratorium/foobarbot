@@ -25,28 +25,30 @@
 
 			<div class="grid-block">
 				<div class="grid-content">
-					<ul class="demo-list-three mdl-list">
+					<!--List of snippets-->
+					<ul class="c-snippets">
 
-					<li class="mdl-list__item mdl-list__item--three-line card card-section" v-for="snippet in snippets">
-						
-						<span class="mdl-list__item-primary-content">
-							<i class="material-icons mdl-list__item-avatar">code</i>
-							<span>{{ snippet.snippetCode }}</span>
-								<span class="mdl-list__item-text-body">
-									<!--{{ snippet.readme }}-->
-									{{ snippet.tag1 }}, {{ snippet.tag2 }}, {{ snippet.tag3 }}
-								</span>
-							</span>
-							<span class="mdl-list__item-secondary-content">
-							<a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a>
-						</span>
-					</li>
+						<li class="c-snippets__snippet" v-for="snippet in snippets">
+								<!--Snippet code -->
+								<pre>
+									<code class="php">
+										{{ snippet.snippetCode }}
+									</code>
+								</pre>
+
+								<!--Tags -->
+								<ul>
+									<li>{{ snippet.tag1 }}</li>
+									<li>{{ snippet.tag2 }}</li>
+									<li>{{ snippet.tag3 }}</li>
+								</ul>		
+					
+								<span>by {{ snippet.userId }}</span>
+
+						</li>
 					</ul>
 				</div>
 			</div>
-
-
-
 		</div>
 	</div>
 </div>
