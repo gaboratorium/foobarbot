@@ -154,3 +154,7 @@ pre {
   background-color: transparent;
   font-weight: bold;
   color: #3F51B5; }
+
+.hljs {
+  border-radius: 4px;
+  padding: .5rem 1.5rem; }
