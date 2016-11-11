@@ -33,6 +33,7 @@ module.exports = {
         css: [
             globalPath.npm+"foundation-apps/dist/css/foundation-apps.css",
             globalPath.npm+"material-design-lite/material.min.css",
+            globalPath.npm+"highlight.js/styles/atom-one-dark.css"
             // globalPath.npm+"font-awesome/css/font-awesome.css"
             
             // Material icons...

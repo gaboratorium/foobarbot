@@ -30,23 +30,26 @@ export const DiscoverViewComponent = {
 				  console.log("about component get snippets recieves:", response);
 				  this.snippets = response;
 
-				  hljs.getLanguage("php");
-				  hljs.getLanguage("perl");
-
-				  console.log(hljs.getLanguage("php"));
-				  console.log(hljs.getLanguage("perl"));
-				  
-
-			
-				  var aCodes = document.getElementsByTagName('code');
-				  console.log("I have these elements with php class", aCodes);
-				  
-				  
-				  for (var index = 0; index < aCodes.length; index++) {
-					  hljs.highlightBlock(aCodes[index]);
-					  console.log(hljs.highlightBlock(aCodes[index]));
-					  
+				  // Escaping characters
+				  for (var i = 0; i < this.snippets.length; i++) {
+					  var snippet = this.snippets[i];
+					 snippet.snippetCode = snippet.snippetCode.replace("<", "&lt;");
+					 snippet.snippetCode = snippet.snippetCode.replace(">", "&gt;");
+					 this.snippets[i] = snippet;
 				  }
+				  
+
+				  setTimeout(function(){
+					var aCodes = document.getElementsByTagName('code');
+					console.log("I have these elements with php class", aCodes);
+					
+					
+					for (var index = 0; index < aCodes.length; index++) {
+						console.log("aCodes length", aCodes.length);
+						hljs.highlightBlock(aCodes[index]);
+					}
+				  }, 0);
+
 
 			  }, (fail: any) => {
 				  // Fail
