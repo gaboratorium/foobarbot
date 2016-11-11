@@ -3,7 +3,7 @@
 	<div class="menu-group menu-group--navbar">
 		<div class="menu-group menu-group__menu-bar">
 			<div class="menu-group-left">
-				<ul class="menu-bar">
+				<ul class="menu-bar icon-left">
 					<li>
 						<a href="#" class="menu-group__logo">
 							<span class="menu-group__logo-text menu-group__logo-text--strong">Foobarbot</span> 
@@ -20,7 +20,7 @@
 			</div>
 			<div class="menu-group-right">
 				<!-- Right menu for user -->
-				<ul class="menu-bar" v-if='isUserLoggedIn'>
+				<ul class="menu-bar icon-left" v-if='isUserLoggedIn'>
 					<li><router-link to="">
 						<span>Hello <span class='o-text--strong'>{{ user.name }}</span></span></router-link></li>
 					<li><router-link to="/about">About</router-link></li>
@@ -31,10 +31,11 @@
 					<li><a href="#" @click.stop="logout()">Logout</a></li>
 				</ul>
 				<!--Right menu for visitor -->
-				<ul class="menu-bar" v-if='!isUserLoggedIn'>
-					<li><router-link to="/discover" class="menu-group--navbar__menu-item">Discover</router-link></li>
-					<li><router-link to="/login" class="menu-group--navbar__menu-item">Log in</router-link></li>
-					<li><router-link to="signup" class="mdl-button mdl-js-button menu-group--navbar__menu-item">Sign up</router-link></li>
+				<ul class="menu-bar icon-left" v-if='!isUserLoggedIn'>
+					<li><router-link to="/discover" class="menu-group--navbar__menu-item"><i class="fa fa-compass fa-fw" aria-hidden="true"></i>Discover</router-link></li>
+					<li><router-link to="/about" class="menu-group--navbar__menu-item"><i class="fa fa-info fa-fw" aria-hidden="true"></i>About</router-link></li>
+					<li><router-link to="/login" class="menu-group--navbar__menu-item"><i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>Log in</router-link></li>
+					<li><router-link to="signup" class="menu-group--navbar__menu-item"><i class="fa fa-plus fa-fw" aria-hidden="true"></i>Sign up</router-link></li>
 				</ul>
 			</div>
 		</div>
