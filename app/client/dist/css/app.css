@@ -12,7 +12,9 @@ p {
 
 pre {
   background-color: #fafafa;
-  padding: 1rem; }
+  padding: 1rem;
+  border: none;
+  background: #fff; }
 
 .grid-content {
   padding: 1rem; }
