@@ -3,8 +3,6 @@
 var fs = require('fs');
 var html = fs.readFileSync(__dirname + '/component.discover.html', 'utf8');
 var marked = require('marked');
-
-
 var hljs = require("highlight.js");
 
 hljs.configure({

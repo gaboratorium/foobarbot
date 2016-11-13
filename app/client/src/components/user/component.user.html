@@ -1,9 +1,12 @@
 <!--User-->
 <div>
-	<div class="c-hero-cover grid-block align-center" v-if="dataStatus=='loaded'">
-		<div class="c-hero-cover__profile-logo grid-content">
+
+	<!-- Hero cover -->
+	<div class="c-hero-cover grid-block align-center">
+
+		<!--Loaded user info-->
+		<div class="c-hero-cover__profile-logo grid-content" v-if="userDataStatus=='loaded'">
 			<div class="c-hero-cover__profile-logo-image"></div>
-			<h1 class="c-hero-cover__profile-logo-text">Gabor Pinter</h1>
 			<h1 class="c-hero-cover__profile-logo-text">{{ user.userName }}</h1>
 			<h2 class="c-hero-cover__profile-logo-sub-text">Copenhagen, Denmark</h2>
 			<span>
@@ -11,42 +14,70 @@
 				<i class="fa fa-github c-hero-cover__profile-logo-social fa-fw" aria-hidden="true"></i>
 			</span>
 		</div>
-	</div>
 
-
-	<div class="grid-block">
-		<div class="grid-content">
-			<div class="card card-section">
-				<h1> Requesting this user: {{ $route.params.id }} </h1>
-
-				<!--Loading data -->
-				<i class="fa fa-cog fa-spin fa-2x fa-fw" v-if="dataStatus=='loading'"></i>
-
-				<!--Loaded data -->
-				<div v-if="dataStatus=='loaded'">
-					<p> {{ user }} </p>
-				</div>
-
-				<!--Failed data-->
-				<div v-if="dataStatus=='failed'">
-					<p>Something went wrong, sorry. Try to refresh.</p>
-				</div>
-			</div>
+		<!--Loading user info-->
+		<div class="c-hero-cover__profile-logo grid-content" v-if="userDataStatus=='loading'">
+			<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
 		</div>
 	</div>
 
-	<!--Snippets-->
-	<div class="grid-block">
-		<div class="grid-content">
-			<div class="card card-section">
-				<ul>
-					<li v-for="snippet in snippets">
-						<p>Here is the id: <router-link :to="'/snippet/' + snippet.snippetId">{{ snippet.snippetId }}</router-link></p>
-						<p>{{ snippet.snippetCode }}</p>
-						<p> {{ snippet.tag1 }}, {{ snippet.tag2 }}, {{ snippet.tag3 }},</p>
-						<p>{{ snippet.readme }}</p>
-					</li>
-				</ul>
+	<!-- Page content -->
+	<div class="grid-block align-center">
+		<div class="grid-block grid-page-content">
+			<div class="grid-content">
+
+				<!--Loaded snippets -->
+				<div class="grid-block" v-show="snippetDataStatus=='loaded'">
+					<div class="grid-content">
+						<!--List of snippets-->
+						<ul class="c-snippets">
+
+							<li class="c-snippet" v-for="snippet in snippets">
+								<!--Snippet code -->
+								<pre><code class="php c-snippet__code">{{ snippet.snippetCode }}</code></pre>
+
+								<div class="c-snippet__readme">
+
+									<!--Readme meta-->
+									<div class="c-snippet__readme-meta">
+										<div class="c-snippet__readme-meta-title">
+											<span><router-link :to="'/snippet/' + snippet.snippetId">#{{snippet.snippetId}}</router-link> in </span>
+											<span class="mdl-chip">
+												<span class="mdl-chip__text">
+													{{snippet.tag1}}
+												</span>
+											</span>
+											<span class="mdl-chip">
+												<span class="mdl-chip__text">
+													{{snippet.tag2}}
+												</span>
+											</span>
+											<span class="mdl-chip">
+												<span class="mdl-chip__text">
+													{{snippet.tag3}}
+												</span>
+											</span>
+										</div>
+										<span>by <router-link :to="'/user/' + snippet.userId">#{{ snippet.userId }}</router-link></span>
+										<!--<a href="#" v-on:click.prevent="starSnippet(snippet.snippetId)">Star it</a>-->
+									</div>
+
+									<!--Readme text in markdown-->
+									<div v-html="snippet.readme" class="c-snippet__readme-text"></div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<!--Loading snippets-->
+				<div class="grid-block" v-if="snippetDataStatus=='loading'">
+					<div class="grid-content">
+						<div class="grid-block align-center">
+							<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

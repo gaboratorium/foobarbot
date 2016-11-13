@@ -504,20 +504,22 @@ exports.SnippetViewComponent = {
 },{}],11:[function(require,module,exports){
 "use strict";
 
-var html = "<!--User-->\r\n<div>\r\n\t<div class=\"c-hero-cover grid-block align-center\" v-if=\"dataStatus=='loaded'\">\r\n\t\t<div class=\"c-hero-cover__profile-logo grid-content\">\r\n\t\t\t<div class=\"c-hero-cover__profile-logo-image\"></div>\r\n\t\t\t<h1 class=\"c-hero-cover__profile-logo-text\">Gabor Pinter</h1>\r\n\t\t\t<h1 class=\"c-hero-cover__profile-logo-text\">{{ user.userName }}</h1>\r\n\t\t\t<h2 class=\"c-hero-cover__profile-logo-sub-text\">Copenhagen, Denmark</h2>\r\n\t\t\t<span>\r\n\t\t\t\t<i class=\"fa fa-twitter c-hero-cover__profile-logo-social fa-fw\" aria-hidden=\"true\"></i>\r\n\t\t\t\t<i class=\"fa fa-github c-hero-cover__profile-logo-social fa-fw\" aria-hidden=\"true\"></i>\r\n\t\t\t</span>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\r\n\t<div class=\"grid-block\">\r\n\t\t<div class=\"grid-content\">\r\n\t\t\t<div class=\"card card-section\">\r\n\t\t\t\t<h1> Requesting this user: {{ $route.params.id }} </h1>\r\n\r\n\t\t\t\t<!--Loading data -->\r\n\t\t\t\t<i class=\"fa fa-cog fa-spin fa-2x fa-fw\" v-if=\"dataStatus=='loading'\"></i>\r\n\r\n\t\t\t\t<!--Loaded data -->\r\n\t\t\t\t<div v-if=\"dataStatus=='loaded'\">\r\n\t\t\t\t\t<p> {{ user }} </p>\r\n\t\t\t\t</div>\r\n\r\n\t\t\t\t<!--Failed data-->\r\n\t\t\t\t<div v-if=\"dataStatus=='failed'\">\r\n\t\t\t\t\t<p>Something went wrong, sorry. Try to refresh.</p>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<!--Snippets-->\r\n\t<div class=\"grid-block\">\r\n\t\t<div class=\"grid-content\">\r\n\t\t\t<div class=\"card card-section\">\r\n\t\t\t\t<ul>\r\n\t\t\t\t\t<li v-for=\"snippet in snippets\">\r\n\t\t\t\t\t\t<p>Here is the id: <router-link :to=\"'/snippet/' + snippet.snippetId\">{{ snippet.snippetId }}</router-link></p>\r\n\t\t\t\t\t\t<p>{{ snippet.snippetCode }}</p>\r\n\t\t\t\t\t\t<p> {{ snippet.tag1 }}, {{ snippet.tag2 }}, {{ snippet.tag3 }},</p>\r\n\t\t\t\t\t\t<p>{{ snippet.readme }}</p>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
+var html = "<!--User-->\r\n<div>\r\n\r\n\t<!-- Hero cover -->\r\n\t<div class=\"c-hero-cover grid-block align-center\">\r\n\r\n\t\t<!--Loaded user info-->\r\n\t\t<div class=\"c-hero-cover__profile-logo grid-content\" v-if=\"userDataStatus=='loaded'\">\r\n\t\t\t<div class=\"c-hero-cover__profile-logo-image\"></div>\r\n\t\t\t<h1 class=\"c-hero-cover__profile-logo-text\">{{ user.userName }}</h1>\r\n\t\t\t<h2 class=\"c-hero-cover__profile-logo-sub-text\">Copenhagen, Denmark</h2>\r\n\t\t\t<span>\r\n\t\t\t\t<i class=\"fa fa-twitter c-hero-cover__profile-logo-social fa-fw\" aria-hidden=\"true\"></i>\r\n\t\t\t\t<i class=\"fa fa-github c-hero-cover__profile-logo-social fa-fw\" aria-hidden=\"true\"></i>\r\n\t\t\t</span>\r\n\t\t</div>\r\n\r\n\t\t<!--Loading user info-->\r\n\t\t<div class=\"c-hero-cover__profile-logo grid-content\" v-if=\"userDataStatus=='loading'\">\r\n\t\t\t<div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<!-- Page content -->\r\n\t<div class=\"grid-block align-center\">\r\n\t\t<div class=\"grid-block grid-page-content\">\r\n\t\t\t<div class=\"grid-content\">\r\n\r\n\t\t\t\t<!--Loaded snippets -->\r\n\t\t\t\t<div class=\"grid-block\" v-show=\"snippetDataStatus=='loaded'\">\r\n\t\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t\t<!--List of snippets-->\r\n\t\t\t\t\t\t<ul class=\"c-snippets\">\r\n\r\n\t\t\t\t\t\t\t<li class=\"c-snippet\" v-for=\"snippet in snippets\">\r\n\t\t\t\t\t\t\t\t<!--Snippet code -->\r\n\t\t\t\t\t\t\t\t<pre><code class=\"php c-snippet__code\">{{ snippet.snippetCode }}</code></pre>\r\n\r\n\t\t\t\t\t\t\t\t<div class=\"c-snippet__readme\">\r\n\r\n\t\t\t\t\t\t\t\t\t<!--Readme meta-->\r\n\t\t\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta\">\r\n\t\t\t\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta-title\">\r\n\t\t\t\t\t\t\t\t\t\t\t<span><router-link :to=\"'/snippet/' + snippet.snippetId\">#{{snippet.snippetId}}</router-link> in </span>\r\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t{{snippet.tag1}}\r\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t{{snippet.tag2}}\r\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t{{snippet.tag3}}\r\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t\t\t<span>by <router-link :to=\"'/user/' + snippet.userId\">#{{ snippet.userId }}</router-link></span>\r\n\t\t\t\t\t\t\t\t\t\t<!--<a href=\"#\" v-on:click.prevent=\"starSnippet(snippet.snippetId)\">Star it</a>-->\r\n\t\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t\t<!--Readme text in markdown-->\r\n\t\t\t\t\t\t\t\t\t<div v-html=\"snippet.readme\" class=\"c-snippet__readme-text\"></div>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\r\n\t\t\t\t<!--Loading snippets-->\r\n\t\t\t\t<div class=\"grid-block\" v-if=\"snippetDataStatus=='loading'\">\r\n\t\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t\t<div class=\"grid-block align-center\">\r\n\t\t\t\t\t\t\t<div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>\r\n";
+var hljs = require("highlight.js");
 exports.UserViewComponent = {
     name: "UserComponent",
     template: html,
     data: function () {
         return {
-            dataStatus: String,
+            userDataStatus: String,
             user: Object,
             snippets: Object,
             snippetDataStatus: String
         };
     },
     created: function () {
-        this.dataStatus = "loading";
+        this.userDataStatus = "loading";
+        this.snippetDataStatus = "loading";
         var requestedId = this.$route.params.id;
         console.log("requested id", requestedId);
         console.log("is user logged in", this.$store.getters["mainstore/isUserLoggedIn"]);
@@ -534,22 +536,28 @@ exports.UserViewComponent = {
                 type: "getUser",
                 userId: userId,
             }).then(function (response) {
-                _this.user = response;
-                _this.dataStatus = "loaded";
+                _this.user = response.user;
+                _this.userDataStatus = "loaded";
+                console.log("loaded this user:", _this.user.userName);
             }, function (fail) {
-                _this.dataStatus = "failed";
+                _this.userDataStatus = "failed";
                 _this.$router.push({ name: "about" });
             });
         },
         getSnippets: function (userId) {
             var _this = this;
             console.log("loadSnippets fired");
+            var UserComponent = this;
             this.$store.dispatch({
                 type: "getSnippets",
                 userId: userId,
             }).then(function (response) {
                 _this.snippets = response;
-                _this.snippetDataStatus = "loaded";
+                setTimeout(function () {
+                    console.log("Highlighting code...");
+                    hljs.initHighlighting();
+                    UserComponent.snippetDataStatus = "loaded";
+                }, 200);
                 console.log(response.snippets);
             }, function (fail) {
                 _this.snippetDataStatus = "failed";
@@ -559,7 +567,7 @@ exports.UserViewComponent = {
     }
 };
 
-},{}],12:[function(require,module,exports){
+},{"highlight.js":246}],12:[function(require,module,exports){
 "use strict";
 exports.ApiInstance = new Vue({
     name: "Api",
