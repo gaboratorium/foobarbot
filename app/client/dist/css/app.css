@@ -191,7 +191,8 @@ pre {
   margin-top: -1px; }
 
 .c-snippet__readme-text {
-  padding: 2rem; }
+  padding: 2rem;
+  background-color: #fff; }
 
 .c-snippet__readme-meta {
   display: flex;
