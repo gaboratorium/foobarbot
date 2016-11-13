@@ -224,12 +224,19 @@ pre {
   min-height: 300px;
   border-bottom: 1px solid #ddd; }
 
+.c-hero-cover--pull {
+  margin-bottom: -6rem; }
+
 .c-hero-cover__profile-logo {
   max-width: 300px;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  text-align: center; }
+
+.c-hero-cover__profile-logo--pulled {
+  margin-top: -4rem; }
 
 .c-hero-cover__profile-logo-image {
   width: 125px;
@@ -242,6 +249,10 @@ pre {
   margin: 0;
   margin-bottom: .5rem; }
 
+.c-hero-cover__profile-logo-text--large {
+  font-size: 2rem;
+  margin-bottom: 1rem; }
+
 .c-hero-cover__profile-logo-sub-text {
   margin: 0;
   text-transform: uppercase;
@@ -251,6 +262,33 @@ pre {
   line-height: 1rem;
   margin-bottom: .5rem; }
 
+.c-hero-cover__profile-logo-sub-text--large {
+  font-size: 1.2rem; }
+
 .c-hero-cover__profile-logo-social {
   color: #607d8b;
   font-size: 2rem !important; }
+
+.c-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 1.5rem; }
+
+.c-card > *:first-child {
+  margin-top: 0rem; }
+
+.c-card > *:last-child {
+  margin-bottom: 0rem; }
+
+.c-card h1,
+.c-card h2,
+.c-card h3,
+.c-card h4 {
+  font-weight: bold;
+  margin-top: 0rem; }
+
+.c-card h1 {
+  font-size: 1.5rem; }
+
+.c-card h2 {
+  font-size: 1.25rem; }

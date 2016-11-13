@@ -3,13 +3,23 @@
     border-bottom: 1px solid $border-color;
 }
 
+.c-hero-cover--pull {
+    margin-bottom: -6rem;
+}
+
 .c-hero-cover__profile-logo {
     max-width: 300px;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
+
+.c-hero-cover__profile-logo--pulled {
+    margin-top: -4rem;
+}
+
 
 .c-hero-cover__profile-logo-image {
     width: 125px;
@@ -24,6 +34,11 @@
     margin-bottom: .5rem;
 }
 
+.c-hero-cover__profile-logo-text--large {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
 .c-hero-cover__profile-logo-sub-text {
     margin: 0;
     text-transform: uppercase;
@@ -32,6 +47,10 @@
     font-weight: bold;
     line-height: 1rem;
     margin-bottom: .5rem;
+}
+
+.c-hero-cover__profile-logo-sub-text--large {
+    font-size: 1.2rem;
 }
 
 .c-hero-cover__profile-logo-social {
