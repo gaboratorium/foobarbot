@@ -461,13 +461,22 @@ exports.SignupViewComponent = {
 },{"password-hash":416}],10:[function(require,module,exports){
 "use strict";
 
-var html = "<!--Snippet-->\r\n<div>\r\n\t<div class=\"grid-block\">\r\n\t\t<div class=\"grid-content\">\r\n\t\t\t<div class=\"card card-section\">\r\n\t\t\t\t<h1> Requesting this snippet: {{ $route.params.id }} </h1>\r\n\r\n\t\t\t\t<!--Loading data -->\r\n\t\t\t\t<i class=\"fa fa-cog fa-spin fa-2x fa-fw\" v-if=\"snippetDataStatus=='loading'\"></i>\r\n\r\n\t\t\t\t<!--Loaded data -->\r\n\t\t\t\t<div v-if=\"snippetDataStatus=='loaded'\">\r\n\t\t\t\t\t<p>Snippet loaded:</p>\r\n\t\t\t\t\t<p> {{ snippet }} </p>\r\n\t\t\t\t</div>\r\n\r\n\t\t\t\t<!--Failed data-->\r\n\t\t\t\t<div v-if=\"snippetDataStatus=='failed'\">\r\n\t\t\t\t\t<p>Something went wrong, sorry. Try to refresh.</p>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
+var html = "<!--Snippet-->\r\n<div class=\"grid-block align-center\">\r\n\t<div class=\"grid-block grid-page-content\">\r\n\t\t<div class=\"grid-content\">\r\n\t\t\t\r\n\t\t\t<!--Spinner-->\r\n\t\t\t<div class=\"grid-block\" v-if=\"snippetDataStatus=='loading'\">\r\n\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t<div class=\"grid-block align-center\">\r\n\t\t\t\t\t\t<div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<!--Snippet-->\r\n\t\t\t<div class=\"c-snippet\"  v-show=\"snippetDataStatus == 'loaded'\">\r\n\t\t\t\t<!--Snippet code -->\r\n\t\t\t\t<pre><code class=\"php c-snippet__code\">{{ snippet.snippetCode }}</code></pre>\r\n\r\n\t\t\t\t<div class=\"c-snippet__readme\">\r\n\r\n\t\t\t\t\t<!--Readme meta-->\r\n\t\t\t\t\t<div class=\"c-snippet__readme-meta\">\r\n\t\t\t\t\t\t<div class=\"c-snippet__readme-meta-title\">\r\n\t\t\t\t\t\t\t<span><router-link :to=\"'/snippet/' + snippet.snippetId\">#{{snippet.snippetId}}</router-link> in </span>\r\n\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t{{snippet.tag1}}\r\n\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t{{snippet.tag2}}\r\n\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t{{snippet.tag3}}\r\n\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<span>by <router-link :to=\"'/user/' + snippet.userId\">#{{ snippet.userId }}</router-link></span>\r\n\t\t\t\t\t\t<!--<a href=\"#\" v-on:click.prevent=\"starSnippet(snippet.snippetId)\">Star it</a>-->\r\n\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t<!--Readme text in markdown-->\r\n\t\t\t\t\t<div v-html=\"snippet.readme\" class=\"c-snippet__readme-text\"></div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"c-card\">\r\n\t\t\t\t<h1>Related</h1>\r\n\t\t\t\t<p>There are no related snippets.</p>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"c-card\">\r\n\t\t\t\t<h1>Comments</h1>\r\n\t\t\t\t<p>There are no comments</p>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
+var hljs = require("highlight.js");
+var marked = require('marked');
 exports.SnippetViewComponent = {
     name: "SnippetComponent",
     template: html,
     data: function () {
         return {
-            snippet: undefined,
+            snippet: {
+                snippetCode: "",
+                tag1: "",
+                tag2: "",
+                tag3: "",
+                readme: "",
+                userId: ""
+            },
             snippetDataStatus: "loading"
         };
     },
@@ -479,14 +488,18 @@ exports.SnippetViewComponent = {
     methods: {
         getSnippet: function (snippetId) {
             var _this = this;
+            var SnippetComponent = this;
             console.log("snippet component get snippet recieves snippet id", snippetId);
             this.$store.dispatch({
                 type: "getSnippet",
                 snippetId: snippetId,
             }).then(function (response) {
-                _this.snippet = response;
+                console.log("snippet component recieves response obj", response[0]);
+                response[0].readme = marked(response[0].readme);
+                SnippetComponent.snippet = response[0];
+                hljs.initHighlighting.called = false;
+                hljs.initHighlighting();
                 _this.snippetDataStatus = "loaded";
-                console.log("snippet component get snippet recieves this repsonse:", response);
                 if (response.length == 0) {
                     _this.$router.push({ name: "about" });
                 }
@@ -498,7 +511,7 @@ exports.SnippetViewComponent = {
     }
 };
 
-},{}],11:[function(require,module,exports){
+},{"highlight.js":246,"marked":415}],11:[function(require,module,exports){
 "use strict";
 
 var html = "<!--User-->\r\n<div>\r\n\r\n\t<!-- Hero cover -->\r\n\t<div class=\"c-hero-cover grid-block align-center\">\r\n\r\n\t\t<!--Loaded user info-->\r\n\t\t<div class=\"c-hero-cover__profile-logo grid-content\" v-if=\"userDataStatus=='loaded'\">\r\n\t\t\t<div class=\"c-hero-cover__profile-logo-image\"></div>\r\n\t\t\t<h1 class=\"c-hero-cover__profile-logo-text\">{{ user.userName }}</h1>\r\n\t\t\t<h2 class=\"c-hero-cover__profile-logo-sub-text\">Copenhagen, Denmark</h2>\r\n\t\t\t<span>\r\n\t\t\t\t<i class=\"fa fa-twitter c-hero-cover__profile-logo-social fa-fw\" aria-hidden=\"true\"></i>\r\n\t\t\t\t<i class=\"fa fa-github c-hero-cover__profile-logo-social fa-fw\" aria-hidden=\"true\"></i>\r\n\t\t\t</span>\r\n\t\t</div>\r\n\r\n\t\t<!--Loading user info-->\r\n\t\t<div class=\"c-hero-cover__profile-logo grid-content\" v-if=\"userDataStatus=='loading'\">\r\n\t\t\t<div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<!-- Page content -->\r\n\t<div class=\"grid-block align-center\">\r\n\t\t<div class=\"grid-block grid-page-content\">\r\n\t\t\t<div class=\"grid-content\">\r\n\r\n\t\t\t\t<!--Loaded snippets -->\r\n\t\t\t\t<div class=\"grid-block\" v-show=\"snippetDataStatus=='loaded'\">\r\n\t\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t\t<!--List of snippets-->\r\n\t\t\t\t\t\t<ul class=\"c-snippets\">\r\n\r\n\t\t\t\t\t\t\t<li class=\"c-snippet\" v-for=\"snippet in snippets\">\r\n\t\t\t\t\t\t\t\t<!--Snippet code -->\r\n\t\t\t\t\t\t\t\t<pre><code class=\"php c-snippet__code\">{{ snippet.snippetCode }}</code></pre>\r\n\r\n\t\t\t\t\t\t\t\t<div class=\"c-snippet__readme\">\r\n\r\n\t\t\t\t\t\t\t\t\t<!--Readme meta-->\r\n\t\t\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta\">\r\n\t\t\t\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta-title\">\r\n\t\t\t\t\t\t\t\t\t\t\t<span><router-link :to=\"'/snippet/' + snippet.snippetId\">#{{snippet.snippetId}}</router-link> in </span>\r\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t{{snippet.tag1}}\r\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t{{snippet.tag2}}\r\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t{{snippet.tag3}}\r\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t\t\t<span>by <router-link :to=\"'/user/' + snippet.userId\">#{{ snippet.userId }}</router-link></span>\r\n\t\t\t\t\t\t\t\t\t\t<!--<a href=\"#\" v-on:click.prevent=\"starSnippet(snippet.snippetId)\">Star it</a>-->\r\n\t\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t\t<!--Readme text in markdown-->\r\n\t\t\t\t\t\t\t\t\t<div v-html=\"snippet.readme\" class=\"c-snippet__readme-text\"></div>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\r\n\t\t\t\t<!--Loading snippets-->\r\n\t\t\t\t<div class=\"grid-block\" v-if=\"snippetDataStatus=='loading'\">\r\n\t\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t\t<div class=\"grid-block align-center\">\r\n\t\t\t\t\t\t\t<div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>\r\n";

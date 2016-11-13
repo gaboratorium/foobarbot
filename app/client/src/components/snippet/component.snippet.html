@@ -1,23 +1,60 @@
 <!--Snippet-->
-<div>
-	<div class="grid-block">
+<div class="grid-block align-center">
+	<div class="grid-block grid-page-content">
 		<div class="grid-content">
-			<div class="card card-section">
-				<h1> Requesting this snippet: {{ $route.params.id }} </h1>
-
-				<!--Loading data -->
-				<i class="fa fa-cog fa-spin fa-2x fa-fw" v-if="snippetDataStatus=='loading'"></i>
-
-				<!--Loaded data -->
-				<div v-if="snippetDataStatus=='loaded'">
-					<p>Snippet loaded:</p>
-					<p> {{ snippet }} </p>
+			
+			<!--Spinner-->
+			<div class="grid-block" v-if="snippetDataStatus=='loading'">
+				<div class="grid-content">
+					<div class="grid-block align-center">
+						<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
+					</div>
 				</div>
+			</div>
+			
+			<!--Snippet-->
+			<div class="c-snippet"  v-show="snippetDataStatus == 'loaded'">
+				<!--Snippet code -->
+				<pre><code class="php c-snippet__code">{{ snippet.snippetCode }}</code></pre>
 
-				<!--Failed data-->
-				<div v-if="snippetDataStatus=='failed'">
-					<p>Something went wrong, sorry. Try to refresh.</p>
+				<div class="c-snippet__readme">
+
+					<!--Readme meta-->
+					<div class="c-snippet__readme-meta">
+						<div class="c-snippet__readme-meta-title">
+							<span><router-link :to="'/snippet/' + snippet.snippetId">#{{snippet.snippetId}}</router-link> in </span>
+							<span class="mdl-chip">
+								<span class="mdl-chip__text">
+									{{snippet.tag1}}
+								</span>
+							</span>
+							<span class="mdl-chip">
+								<span class="mdl-chip__text">
+									{{snippet.tag2}}
+								</span>
+							</span>
+							<span class="mdl-chip">
+								<span class="mdl-chip__text">
+									{{snippet.tag3}}
+								</span>
+							</span>
+						</div>
+						<span>by <router-link :to="'/user/' + snippet.userId">#{{ snippet.userId }}</router-link></span>
+						<!--<a href="#" v-on:click.prevent="starSnippet(snippet.snippetId)">Star it</a>-->
+					</div>
+
+					<!--Readme text in markdown-->
+					<div v-html="snippet.readme" class="c-snippet__readme-text"></div>
 				</div>
+			</div>
+
+			<div class="c-card">
+				<h1>Related</h1>
+				<p>There are no related snippets.</p>
+			</div>
+			<div class="c-card">
+				<h1>Comments</h1>
+				<p>There are no comments</p>
 			</div>
 		</div>
 	</div>

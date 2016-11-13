@@ -273,7 +273,8 @@ pre {
 .c-card {
   background-color: #fff;
   border: 1px solid #ddd;
-  padding: 1.5rem; }
+  padding: 1.5rem;
+  margin-bottom: 2rem; }
 
 .c-card > *:first-child {
   margin-top: 0rem; }
@@ -286,7 +287,8 @@ pre {
 .c-card h3,
 .c-card h4 {
   font-weight: bold;
-  margin-top: 0rem; }
+  margin-top: 0rem;
+  margin-bottom: 1rem; }
 
 .c-card h1 {
   font-size: 1.5rem; }
