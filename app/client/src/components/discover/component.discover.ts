@@ -30,6 +30,7 @@ export const DiscoverViewComponent = {
 			console.log("Entering discover route, these are the users", DiscoverComponent.users);
 			DiscoverComponent.snippetDataStatus = "loading";
 			DiscoverComponent.getSnippets();
+			// hljs.initHighlighting();
 		})
 	},
 

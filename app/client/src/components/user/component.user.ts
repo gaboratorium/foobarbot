@@ -1,6 +1,7 @@
 var fs = require('fs');
 var html = fs.readFileSync(__dirname + '/component.user.html', 'utf8');
 var hljs = require("highlight.js");
+var marked = require('marked');
 
 // Export global component
 export const UserViewComponent = {
@@ -62,7 +63,16 @@ export const UserViewComponent = {
 				type: "getSnippets",
 				userId: userId,
 			}).then((response: any) => {
+
+				// Converting text to markdown
+				for (var i = 0; i < response.length; i++) {
+					response[i].readme = marked(response[i].readme);
+				}
+
 				this.snippets = response;
+
+
+
 				setTimeout(function(){
 					console.log("Highlighting code...");
 					
