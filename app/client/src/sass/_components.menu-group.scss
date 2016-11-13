@@ -18,6 +18,10 @@
 	/*flex-flow: row nowrap !important; // Foundation hack*/
 }
 
+.menu-group__logo:hover .menu-group__logo-text {
+	color: #3F51B5 !important;
+}
+
 .menu-group__logo-text {
 	color: #78909c;
 }

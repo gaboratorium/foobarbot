@@ -1,0 +1,40 @@
+.c-hero-cover {
+    min-height: 300px;
+    border-bottom: 1px solid $border-color;
+}
+
+.c-hero-cover__profile-logo {
+    max-width: 300px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.c-hero-cover__profile-logo-image {
+    width: 125px;
+    height: 125px;
+    background: url("http://www.myiconfinder.com/uploads/iconsets/256-256-25d19272bc58056226f77270b80e3cf7.png");
+    background-size: cover;
+    margin-bottom: 1rem;
+}
+
+.c-hero-cover__profile-logo-text {
+    margin: 0;
+    margin-bottom: .5rem;
+}
+
+.c-hero-cover__profile-logo-sub-text {
+    margin: 0;
+    text-transform: uppercase;
+    color: #607d8b;
+    font-size: 1rem;
+    font-weight: bold;
+    line-height: 1rem;
+    margin-bottom: .5rem;
+}
+
+.c-hero-cover__profile-logo-social {
+    color: #607d8b;
+    font-size: 2rem !important;
+}

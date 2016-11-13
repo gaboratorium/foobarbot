@@ -1,5 +1,19 @@
 <!--User-->
 <div>
+	<div class="c-hero-cover grid-block align-center" v-if="dataStatus=='loaded'">
+		<div class="c-hero-cover__profile-logo grid-content">
+			<div class="c-hero-cover__profile-logo-image"></div>
+			<h1 class="c-hero-cover__profile-logo-text">Gabor Pinter</h1>
+			<h1 class="c-hero-cover__profile-logo-text">{{ user.userName }}</h1>
+			<h2 class="c-hero-cover__profile-logo-sub-text">Copenhagen, Denmark</h2>
+			<span>
+				<i class="fa fa-twitter c-hero-cover__profile-logo-social fa-fw" aria-hidden="true"></i>
+				<i class="fa fa-github c-hero-cover__profile-logo-social fa-fw" aria-hidden="true"></i>
+			</span>
+		</div>
+	</div>
+
+
 	<div class="grid-block">
 		<div class="grid-content">
 			<div class="card card-section">
