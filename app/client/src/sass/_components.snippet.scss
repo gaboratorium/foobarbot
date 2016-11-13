@@ -25,6 +25,16 @@
     background-color: #eceff1;
     padding: 1rem;
     border-bottom: 1px solid #ddd;
+    align-items: center;
+}
+
+.c-snippet__readme-meta-title {
+    display: flex;
+    align-items: center;
+}
+
+.c-snippet__readme-meta-title > span {
+    margin-right: .5rem;
 }
 
 .c-snippet__readme-text > *:first-child { margin-top: 0rem; }

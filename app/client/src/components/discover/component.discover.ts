@@ -27,9 +27,17 @@ export const DiscoverViewComponent = {
 		}
 	},
 
+	beforeRouteEnter (to: any, from: any, next: any) {
+		next( (DiscoverComponent: any) => {
+			console.log("Entering discover route, these are the users", DiscoverComponent.users);
+			DiscoverComponent.snippetDataStatus = "loading";
+			DiscoverComponent.getSnippets();
+		})
+	},
+
 	created: function(){
-		this.snippetDataStatus = "loading";
-		this.getSnippets();		
+		// this.snippetDataStatus = "loading";
+		// this.getSnippets();		
 	},
 
 	computed: {
@@ -41,10 +49,13 @@ export const DiscoverViewComponent = {
 	methods: {
 
 		getSnippets: function(){
+			console.log("get snippets is called");
+			
 			var DiscoverComponent = this;
 			this.$store.dispatch({
 				  type: 'getSnippets',
 			  }).then((response: any) => {
+				  console.log("getsnippets request succesful");
 
 				  // Converting text to markdown
 				  for (var i = 0; i < response.length; i++) {
@@ -54,12 +65,16 @@ export const DiscoverViewComponent = {
 				  // Initialize Highlightjs
 				  this.snippets = response;
 				  setTimeout(function(){
+					console.log("Highlighting code...");
+					
 					hljs.initHighlighting();
 					DiscoverComponent.snippetDataStatus = "loaded";
 				  }, 200);
 
 
 			  }, (fail: any) => {
+				  console.log("getsnippets request failed");
+				  
 				  // Fail
 				  console.log("about component get snippets fails:", fail);
 			  });
