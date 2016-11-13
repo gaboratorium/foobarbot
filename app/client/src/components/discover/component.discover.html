@@ -2,28 +2,16 @@
 	<div class="grid-block grid-page-content">
 		<div class="grid-content">
 			
-            <h1>Discover</h1>
-
-			<!--Snippets-->
-			<!--<div class="grid-block">
+			<div class="grid-block" v-if="snippetDataStatus=='loading'">
 				<div class="grid-content">
-					<div class="card card-section">
-						<h2>Snippets</h2>
-						<ul>
-							<li v-for="snippet in snippets">
-								<p>Here is the id: <router-link :to="'/snippet/' + snippet.snippetId">{{ snippet.snippetId }}</router-link></p>
-								<p>{{ snippet.snippetCode }}</p>
-								<p> {{ snippet.tag1 }}, {{ snippet.tag2 }}, {{ snippet.tag3 }},</p>
-								<p>{{ snippet.readme }}</p>
-								<p>Author: <router-link :to="'/user/' + snippet.userId">{{ snippet.userId }}</router-link></p>
-								<a href="#" v-on:click.prevent="starSnippet(snippet.snippetId)">Star it</a>
-							</li>
-						</ul>
+					<div class="grid-block align-center">
+						<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
 					</div>
 				</div>
-			</div>-->
+			</div>
 
-			<div class="grid-block">
+
+			<div class="grid-block" v-show="snippetDataStatus=='loaded'">
 				<div class="grid-content">
 					<!--List of snippets-->
 					<ul class="c-snippets">
@@ -38,8 +26,8 @@
 								<div class="c-snippet__readme-meta">
 									<span><router-link :to="'/snippet/' + snippet.snippetId">#{{snippet.snippetId}}</router-link> in {{snippet.tag1}}, {{snippet.tag2}}, {{snippet.tag3}}</span>
 									<span>by <router-link :to="'/user/' + snippet.userId">#{{ snippet.userId }}</router-link></span>
+									<!--<a href="#" v-on:click.prevent="starSnippet(snippet.snippetId)">Star it</a>-->
 								</div>
-								
 
 								<!--Readme text in markdown-->
 								<div v-html="snippet.readme" class="c-snippet__readme-text"></div>

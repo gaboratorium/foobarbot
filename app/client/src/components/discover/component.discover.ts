@@ -22,11 +22,13 @@ export const DiscoverViewComponent = {
 			users: Array,
 			snippets: Array,
 			errorMsg: String,
-			isUserLoggedIn: Boolean
+			isUserLoggedIn: Boolean,
+			snippetDataStatus: String
 		}
 	},
 
 	created: function(){
+		this.snippetDataStatus = "loading";
 		this.getSnippets();		
 	},
 
@@ -39,6 +41,7 @@ export const DiscoverViewComponent = {
 	methods: {
 
 		getSnippets: function(){
+			var DiscoverComponent = this;
 			this.$store.dispatch({
 				  type: 'getSnippets',
 			  }).then((response: any) => {
@@ -52,7 +55,8 @@ export const DiscoverViewComponent = {
 				  this.snippets = response;
 				  setTimeout(function(){
 					hljs.initHighlighting();
-				  }, 0);
+					DiscoverComponent.snippetDataStatus = "loaded";
+				  }, 200);
 
 
 			  }, (fail: any) => {

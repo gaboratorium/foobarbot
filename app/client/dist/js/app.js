@@ -116,7 +116,7 @@ exports.ComposeModalComponent = {
 },{}],4:[function(require,module,exports){
 "use strict";
 
-var html = "<div class=\"grid-block align-center\">\r\n\t<div class=\"grid-block grid-page-content\">\r\n\t\t<div class=\"grid-content\">\r\n\t\t\t\r\n            <h1>Discover</h1>\r\n\r\n\t\t\t<!--Snippets-->\r\n\t\t\t<!--<div class=\"grid-block\">\r\n\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t<div class=\"card card-section\">\r\n\t\t\t\t\t\t<h2>Snippets</h2>\r\n\t\t\t\t\t\t<ul>\r\n\t\t\t\t\t\t\t<li v-for=\"snippet in snippets\">\r\n\t\t\t\t\t\t\t\t<p>Here is the id: <router-link :to=\"'/snippet/' + snippet.snippetId\">{{ snippet.snippetId }}</router-link></p>\r\n\t\t\t\t\t\t\t\t<p>{{ snippet.snippetCode }}</p>\r\n\t\t\t\t\t\t\t\t<p> {{ snippet.tag1 }}, {{ snippet.tag2 }}, {{ snippet.tag3 }},</p>\r\n\t\t\t\t\t\t\t\t<p>{{ snippet.readme }}</p>\r\n\t\t\t\t\t\t\t\t<p>Author: <router-link :to=\"'/user/' + snippet.userId\">{{ snippet.userId }}</router-link></p>\r\n\t\t\t\t\t\t\t\t<a href=\"#\" v-on:click.prevent=\"starSnippet(snippet.snippetId)\">Star it</a>\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>-->\r\n\r\n\t\t\t<div class=\"grid-block\">\r\n\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t<!--List of snippets-->\r\n\t\t\t\t\t<ul class=\"c-snippets\">\r\n\r\n\t\t\t\t\t\t<li class=\"c-snippet\" v-for=\"snippet in snippets\">\r\n\t\t\t\t\t\t\t<!--Snippet code -->\r\n\t\t\t\t\t\t\t<pre><code class=\"php c-snippet__code\">{{ snippet.snippetCode }}</code></pre>\r\n\r\n\t\t\t\t\t\t\t<div class=\"c-snippet__readme\">\r\n\r\n\t\t\t\t\t\t\t\t<!--Readme meta-->\r\n\t\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta\">\r\n\t\t\t\t\t\t\t\t\t<span><router-link :to=\"'/snippet/' + snippet.snippetId\">#{{snippet.snippetId}}</router-link> in {{snippet.tag1}}, {{snippet.tag2}}, {{snippet.tag3}}</span>\r\n\t\t\t\t\t\t\t\t\t<span>by <router-link :to=\"'/user/' + snippet.userId\">#{{ snippet.userId }}</router-link></span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t\r\n\r\n\t\t\t\t\t\t\t\t<!--Readme text in markdown-->\r\n\t\t\t\t\t\t\t\t<div v-html=\"snippet.readme\" class=\"c-snippet__readme-text\"></div>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</li>\r\n\t\t\t\t\t</ul>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
+var html = "<div class=\"grid-block align-center\">\r\n\t<div class=\"grid-block grid-page-content\">\r\n\t\t<div class=\"grid-content\">\r\n\t\t\t\r\n\t\t\t<div class=\"grid-block\" v-if=\"snippetDataStatus=='loading'\">\r\n\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t<div class=\"grid-block align-center\">\r\n\t\t\t\t\t\t<div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<div class=\"grid-block\" v-show=\"snippetDataStatus=='loaded'\">\r\n\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t<!--List of snippets-->\r\n\t\t\t\t\t<ul class=\"c-snippets\">\r\n\r\n\t\t\t\t\t\t<li class=\"c-snippet\" v-for=\"snippet in snippets\">\r\n\t\t\t\t\t\t\t<!--Snippet code -->\r\n\t\t\t\t\t\t\t<pre><code class=\"php c-snippet__code\">{{ snippet.snippetCode }}</code></pre>\r\n\r\n\t\t\t\t\t\t\t<div class=\"c-snippet__readme\">\r\n\r\n\t\t\t\t\t\t\t\t<!--Readme meta-->\r\n\t\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta\">\r\n\t\t\t\t\t\t\t\t\t<span><router-link :to=\"'/snippet/' + snippet.snippetId\">#{{snippet.snippetId}}</router-link> in {{snippet.tag1}}, {{snippet.tag2}}, {{snippet.tag3}}</span>\r\n\t\t\t\t\t\t\t\t\t<span>by <router-link :to=\"'/user/' + snippet.userId\">#{{ snippet.userId }}</router-link></span>\r\n\t\t\t\t\t\t\t\t\t<!--<a href=\"#\" v-on:click.prevent=\"starSnippet(snippet.snippetId)\">Star it</a>-->\r\n\t\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t\t<!--Readme text in markdown-->\r\n\t\t\t\t\t\t\t\t<div v-html=\"snippet.readme\" class=\"c-snippet__readme-text\"></div>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</li>\r\n\t\t\t\t\t</ul>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
 var marked = require('marked');
 var hljs = require("highlight.js");
 hljs.configure({
@@ -130,10 +130,12 @@ exports.DiscoverViewComponent = {
             users: Array,
             snippets: Array,
             errorMsg: String,
-            isUserLoggedIn: Boolean
+            isUserLoggedIn: Boolean,
+            snippetDataStatus: String
         };
     },
     created: function () {
+        this.snippetDataStatus = "loading";
         this.getSnippets();
     },
     computed: {
@@ -144,6 +146,7 @@ exports.DiscoverViewComponent = {
     methods: {
         getSnippets: function () {
             var _this = this;
+            var DiscoverComponent = this;
             this.$store.dispatch({
                 type: 'getSnippets',
             }).then(function (response) {
@@ -153,7 +156,8 @@ exports.DiscoverViewComponent = {
                 _this.snippets = response;
                 setTimeout(function () {
                     hljs.initHighlighting();
-                }, 0);
+                    DiscoverComponent.snippetDataStatus = "loaded";
+                }, 200);
             }, function (fail) {
                 console.log("about component get snippets fails:", fail);
             });
