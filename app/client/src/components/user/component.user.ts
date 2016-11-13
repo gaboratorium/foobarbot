@@ -71,11 +71,9 @@ export const UserViewComponent = {
 
 				this.snippets = response;
 
-
-
 				setTimeout(function(){
 					console.log("Highlighting code...");
-					
+					hljs.initHighlighting.called=false;
 					hljs.initHighlighting();
 					UserComponent.snippetDataStatus = "loaded";
 

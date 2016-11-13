@@ -39,12 +39,6 @@ export const DiscoverViewComponent = {
 		// this.getSnippets();		
 	},
 
-	computed: {
-		compiledMarkdown: function (text: string) {
-			return text;
-		}
-	},
-
 	methods: {
 
 		getSnippets: function(){
@@ -65,8 +59,9 @@ export const DiscoverViewComponent = {
 				  this.snippets = response;
 				  setTimeout(function(){
 					console.log("Highlighting code...");
-					
+					hljs.initHighlighting.called = false;
 					hljs.initHighlighting();
+					console.log(hljs.listLanguages());
 					DiscoverComponent.snippetDataStatus = "loaded";
 				  }, 200);
 
