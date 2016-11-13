@@ -2,6 +2,7 @@
 // Template
 var fs = require('fs');
 var html = fs.readFileSync(__dirname + '/component.discover.html', 'utf8');
+var marked = require('marked');
 
 
 var hljs = require("highlight.js");
@@ -29,38 +30,28 @@ export const DiscoverViewComponent = {
 		this.getSnippets();		
 	},
 
+	computed: {
+		compiledMarkdown: function (text: string) {
+			return text;
+		}
+	},
+
 	methods: {
 
 		getSnippets: function(){
 			this.$store.dispatch({
 				  type: 'getSnippets',
 			  }).then((response: any) => {
-				  console.log("about component get snippets recieves:", response);
-				  this.snippets = response;
 
-				  // Escaping characters
-				  for (var i = 0; i < this.snippets.length; i++) {
-						var snippet = this.snippets[i];
-					 this.snippets[i] = snippet;
-					 console.log(snippet.snippetCode);
-					 
+				  // Converting text to markdown
+				  for (var i = 0; i < response.length; i++) {
+					 response[i].readme = marked(response[i].readme);
 				  }
-				  
 
+				  // Initialize Highlightjs
+				  this.snippets = response;
 				  setTimeout(function(){
 					hljs.initHighlighting();
-					// var aCodes = document.getElementsByTagName('code');
-					// console.log("I have these elements with php class", aCodes);
-					
-					
-					// for (var index = 0; index < aCodes.length; index++) {
-					// 	console.log("aCodes length", aCodes.length);
-					// 	hljs.highlightBlock(aCodes[index]);
-					// 	hljs.fixMarkup(aCodes[index]);
-					// 	// hljs.fixMarkup(aCodes[index].innerHTML);
-					// 	// hljs.fixMarkup(aCodes[index].innerText);
-					// 	// hljs.fixMarkup(aCodes[index].textContent);
-					// }
 				  }, 0);
 
 

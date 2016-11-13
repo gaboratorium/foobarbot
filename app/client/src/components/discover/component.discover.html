@@ -28,40 +28,22 @@
 					<!--List of snippets-->
 					<ul class="c-snippets">
 
-						<li class="c-snippets__snippet" v-for="snippet in snippets">
-								<!--Snippet code -->
-								<pre>
-									<code class="php">
-{{ snippet.snippetCode }}
-									</code>
-								</pre>
+						<li class="c-snippet" v-for="snippet in snippets">
+							<!--Snippet code -->
+							<pre><code class="php c-snippet__code">{{ snippet.snippetCode }}</code></pre>
 
-								<!--Tags -->
-								<ul>
-									<li>{{ snippet.tag1 }}</li>
-									<li>{{ snippet.tag2 }}</li>
-									<li>{{ snippet.tag3 }}</li>
-								</ul>		
-					
-								<span>by {{ snippet.userId }}</span>
+							<div class="c-snippet__readme">
 
-						</li>
+								<!--Readme meta-->
+								<div class="c-snippet__readme-meta">
+									<span><router-link :to="'/snippet/' + snippet.snippetId">#{{snippet.snippetId}}</router-link> in {{snippet.tag1}}, {{snippet.tag2}}, {{snippet.tag3}}</span>
+									<span>by <router-link :to="'/user/' + snippet.userId">#{{ snippet.userId }}</router-link></span>
+								</div>
+								
 
-						<li class="c-snippets__snippet">
-							<pre>
-								<code class="php">
-&lt;?php 
-	echo "I like trains";
-?&gt;
-								</code>
-							</pre>
-							<!--Tags -->
-							<ul>
-								<li>PHP</li>
-								<li>Hello World</li>
-								<li>Test</li>
-							</ul>
-							<span>by Gabor</span>
+								<!--Readme text in markdown-->
+								<div v-html="snippet.readme" class="c-snippet__readme-text"></div>
+							</div>
 						</li>
 					</ul>
 				</div>
