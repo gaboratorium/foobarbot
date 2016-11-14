@@ -21,13 +21,28 @@
 			<div class="menu-group-right">
 				<!-- Right menu for user -->
 				<ul class="menu-bar icon-left" v-if='isUserLoggedIn'>
-					<li><router-link to="">
-						<span>Hello <span class='o-text--strong'>{{ user.name }}</span></span></router-link></li>
-					<li><router-link to="/about">About</router-link></li>
-					<li><router-link to="/settings">Settings</router-link></li>
-					<li><router-link to="/notifications">Notifications</router-link></li>
-					<li><router-link to="/user/me">My profile</router-link></li>
-					<li><button id="show-modal" @click="showModal = true" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Compose snippet</button></li>
+
+					<li><router-link to="/settings" class="menu-group--navbar__menu-item">Settings</router-link></li>
+					<li><router-link to="/notifications" class="menu-group--navbar__menu-item">Notifications</router-link></li>
+					
+					<!-- Dropdown -->
+					<li class="c-dropdown">
+						<router-link to="/user/me" class="menu-group--navbar__menu-item">
+							{{ user.name }} 
+							<i class="fa fa-fw fa-caret-down" aria-hidden="true"></i>
+						</router-link>
+						<section class="block-list c-dropdown__content">
+							<ul>
+								<li></li>
+								<li class="c-dropdown__content-menu-item with-chevron">Profile</li>
+								<li class="c-dropdown__content-menu-item with-chevron">Settings</li>
+								<li class="c-dropdown__content-menu-item with-chevron">Logout</li>
+							</ul>
+						</section>
+					</li>
+					
+					
+					<li class="menu-group--navbar__button-list-item"><button id="show-modal" @click="showModal = true" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat">Compose</button></li>
 					<li><a href="#" @click.stop="logout()">Logout</a></li>
 				</ul>
 				<!--Right menu for visitor -->

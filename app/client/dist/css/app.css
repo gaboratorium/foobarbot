@@ -320,3 +320,29 @@ pre {
 
 .c-card h2 {
   font-size: 1.25rem; }
+
+.c-dropdown {
+  position: relative;
+  display: inline-block; }
+
+.c-dropdown__content {
+  display: block;
+  visibility: hidden;
+  z-index: 10;
+  position: fixed;
+  top: 54px;
+  background: #eceff1;
+  transition-property: visibility;
+  transition: visibility 0s;
+  transition-delay: 2s; }
+
+.c-dropdown:hover .c-dropdown__content, .c-dropdown__content:hover {
+  display: block;
+  visibility: visible;
+  transition-property: visibility;
+  transition: visibility 0s;
+  /*transition-delay: 2s;*/ }
+
+.c-dropdown__content-menu-item {
+  padding: 1rem 2rem;
+  text-align: left; }
