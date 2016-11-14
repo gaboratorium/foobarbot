@@ -6,7 +6,7 @@
 				<h1>Login to Foobarbot</h1>
 				<form action="" v-on:submit.prevent="loginUser">
 					<label for="loginform__email">E-mail</label>
-					<input type="text" placeholder="Type your email..." v-model="loginform__email" id="loginform__email">
+					<input type="text" placeholder="Type your email..." v-model="loginform__email" id="loginform__email" autofocus="autofocus">
 					<label for="loginform__password">Password</label>
 					<input type="password" placeholder="Type your password..." v-model="loginform__password" id="loginform__email">
 					<p class="o-text--error">{{ errorMsg }}</p>
