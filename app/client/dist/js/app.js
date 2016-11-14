@@ -298,6 +298,7 @@ exports.NavbarComponent = {
         },
         search: function () {
             console.log(this.searchText);
+            this.$router.push('/about');
             this.$router.push('/discover/' + this.textToSearch);
         }
     }
