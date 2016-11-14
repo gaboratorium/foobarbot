@@ -52,8 +52,9 @@
 						</section>
 					</li>
 					
-					
+					<!--Compose snippet button-->
 					<li class="menu-group--navbar__button-list-item"><button id="show-modal" @click="showModal = true" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat">Compose</button></li>
+
 				</ul>
 				<!--Right menu for visitor -->
 				<ul class="menu-bar icon-left" v-if='!isUserLoggedIn'>
@@ -74,6 +75,12 @@
 
 	<!--Compose Modal -->
 	<modal v-if="showModal" @close="showModal = false"></modal>
+
+	<!-- Toast snackbar -->
+	<div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
+		<div class="mdl-snackbar__text"></div>
+		<button class="mdl-snackbar__action" type="button"></button>
+    </div>
 </div>
 
 
