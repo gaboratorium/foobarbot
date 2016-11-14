@@ -11,49 +11,47 @@
 			</div>
 
 
-			<div class="grid-block" v-show="snippetDataStatus=='loaded'">
-				<div class="grid-content">
+			<div v-show="snippetDataStatus=='loaded'">
 					
-					<h1 v-if="isSearch">Search results for "{{ searchText }}"</h1>
-					<!--List of snippets-->
-					<ul class="c-snippets">
+				<h1 v-if="isSearch">Search results for "{{ searchText }}"</h1>
+				<!--List of snippets-->
+				<ul class="c-snippets">
 
-						<li class="c-snippet" v-for="snippet in snippets">
-							<!--Snippet code -->
-							<pre><code class="php c-snippet__code">{{ snippet.snippetCode }}</code></pre>
+					<li class="c-snippet" v-for="snippet in snippets">
+						<!--Snippet code -->
+						<pre><code class="php c-snippet__code">{{ snippet.snippetCode }}</code></pre>
 
-							<div class="c-snippet__readme">
+						<div class="c-snippet__readme">
 
-								<!--Readme meta-->
-								<div class="c-snippet__readme-meta">
-									<div class="c-snippet__readme-meta-title">
-										<span><router-link :to="'/snippet/' + snippet.snippetId">#{{snippet.snippetId}}</router-link> in </span>
-										<span class="mdl-chip">
-											<span class="mdl-chip__text">
-												{{snippet.tag1}}
-											</span>
+							<!--Readme meta-->
+							<div class="c-snippet__readme-meta">
+								<div class="c-snippet__readme-meta-title">
+									<span><router-link :to="'/snippet/' + snippet.snippetId">#{{snippet.snippetId}}</router-link> in </span>
+									<span class="mdl-chip">
+										<span class="mdl-chip__text">
+											{{snippet.tag1}}
 										</span>
-										<span class="mdl-chip">
-											<span class="mdl-chip__text">
-												{{snippet.tag2}}
-											</span>
+									</span>
+									<span class="mdl-chip">
+										<span class="mdl-chip__text">
+											{{snippet.tag2}}
 										</span>
-										<span class="mdl-chip">
-											<span class="mdl-chip__text">
-												{{snippet.tag3}}
-											</span>
+									</span>
+									<span class="mdl-chip">
+										<span class="mdl-chip__text">
+											{{snippet.tag3}}
 										</span>
-									</div>
-									<span>by <router-link :to="'/user/' + snippet.userId">#{{ snippet.userId }}</router-link></span>
-									<!--<a href="#" v-on:click.prevent="starSnippet(snippet.snippetId)">Star it</a>-->
+									</span>
 								</div>
-
-								<!--Readme text in markdown-->
-								<div v-html="snippet.readme" class="c-snippet__readme-text"></div>
+								<span>by <router-link :to="'/user/' + snippet.userId">#{{ snippet.userId }}</router-link></span>
+								<!--<a href="#" v-on:click.prevent="starSnippet(snippet.snippetId)">Star it</a>-->
 							</div>
-						</li>
-					</ul>
-				</div>
+
+							<!--Readme text in markdown-->
+							<div v-html="snippet.readme" class="c-snippet__readme-text"></div>
+						</div>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>

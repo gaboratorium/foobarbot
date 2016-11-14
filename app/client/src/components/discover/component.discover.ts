@@ -32,21 +32,22 @@ export const DiscoverViewComponent = {
 			console.log("Entering discover route, these are the users", DiscoverComponent.users);
 			DiscoverComponent.snippetDataStatus = "loading";
 			DiscoverComponent.getSnippets();
-			// hljs.initHighlighting();
+
+			DiscoverComponent.isSearch = false;
+			if (DiscoverComponent.$route.params.searchtext) {
+				console.log("You have provided a searchtext");
+				DiscoverComponent.searchText = DiscoverComponent.$route.params.searchtext;
+				DiscoverComponent.isSearch = true;
+				console.log("disco searchtext: ", DiscoverComponent.searchText);
+				
+			}
 		})
 	},
 
 	created: function(){
 		// this.snippetDataStatus = "loading";
 		// this.getSnippets();
-		this.isSearch = false;
-		if (this.$route.params.searchtext) {
-			console.log("You have provided a searchtext");
-			this.searchText = this.$route.params.searchtext;
-			this.isSearch = true;
-		} else {
-			console.log("You havent provided a searchtext");
-		}
+		
 	},
 
 	methods: {

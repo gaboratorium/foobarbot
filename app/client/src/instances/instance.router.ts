@@ -46,6 +46,7 @@ export const RouterInstance = new VueRouter({
 	      path: '/discover',
 	      name: 'discover',
 	      component: DiscoverViewComponent,
+		  canReuse: false
 	    }, 
 
 		// Search
@@ -53,6 +54,7 @@ export const RouterInstance = new VueRouter({
 	      path: '/discover/:searchtext',
 	      name: 'search',
 	      component: DiscoverViewComponent,
+		  canReuse: false
 	    }, 
 
 		// About
