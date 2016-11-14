@@ -370,5 +370,5 @@ pre {
   border-bottom: none; }
 
 .mdl-snackbar__text {
-  color: #4DB6AC;
-  font-weight: bold; }
+  /*color: $secondary-color;*/
+  /*font-weight: bold;*/ }
