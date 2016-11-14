@@ -368,3 +368,7 @@ pre {
 
 .block-list li:last-child {
   border-bottom: none; }
+
+.mdl-snackbar__text {
+  color: #4DB6AC;
+  font-weight: bold; }
