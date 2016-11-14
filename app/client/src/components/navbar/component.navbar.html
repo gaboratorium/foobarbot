@@ -33,10 +33,21 @@
 						</router-link>
 						<section class="block-list c-dropdown__content">
 							<ul>
-								<li></li>
-								<li class="c-dropdown__content-menu-item with-chevron">Profile</li>
-								<li class="c-dropdown__content-menu-item with-chevron">Settings</li>
-								<li class="c-dropdown__content-menu-item with-chevron">Logout</li>
+								<li class="c-dropdown__content-menu-item">
+									<router-link to="/user/me" class="menu-group--navbar__menu-item">
+										<i class="fa fa-fw fa-user c-dropdown__content-menu-item-icon" aria-hidden="true"></i>Profile</li>
+									</router-link>
+
+								<li class="c-dropdown__content-menu-item">
+									<router-link to="/settings" class="menu-group--navbar__menu-item">
+										<i class="fa fa-fw fa-cog c-dropdown__content-menu-item-icon" aria-hidden="true"></i>Settings
+									</router-link>
+								</li>
+								<li class="c-dropdown__content-menu-item">
+									<a href="#" @click.stop="logout()">
+										<i class="fa fa-fw fa-sign-out c-dropdown__content-menu-item-icon" aria-hidden="true"></i>Logout
+									</a>
+								</li>
 							</ul>
 						</section>
 					</li>
