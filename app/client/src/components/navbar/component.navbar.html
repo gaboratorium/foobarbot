@@ -22,7 +22,7 @@
 				<!-- Right menu for user -->
 				<ul class="menu-bar icon-left" v-if='isUserLoggedIn'>
 
-					<li><router-link to="/settings" class="menu-group--navbar__menu-item">Settings</router-link></li>
+					<li><router-link to="/Discover" class="menu-group--navbar__menu-item">Discover</router-link></li>
 					<li><router-link to="/notifications" class="menu-group--navbar__menu-item">Notifications</router-link></li>
 					
 					<!-- Dropdown -->
@@ -44,7 +44,7 @@
 									</router-link>
 								</li>
 								<li class="c-dropdown__content-menu-item">
-									<a href="#" @click.stop="logout()">
+									<a href="#" @click.stop="logout()" class="menu-group--navbar__menu-item">
 										<i class="fa fa-fw fa-sign-out c-dropdown__content-menu-item-icon" aria-hidden="true"></i>Logout
 									</a>
 								</li>
@@ -54,7 +54,6 @@
 					
 					
 					<li class="menu-group--navbar__button-list-item"><button id="show-modal" @click="showModal = true" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat">Compose</button></li>
-					<li><a href="#" @click.stop="logout()">Logout</a></li>
 				</ul>
 				<!--Right menu for visitor -->
 				<ul class="menu-bar icon-left" v-if='!isUserLoggedIn'>

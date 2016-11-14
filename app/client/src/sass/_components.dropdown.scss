@@ -8,7 +8,7 @@
     visibility: hidden;
     z-index: 10;
     position: fixed;
-    top: 54px;
+    top: 55px;
     background: $navbar-background-color;
     transition: visibility 0s;
     transition-delay: 100ms;
@@ -23,18 +23,26 @@
     display: block;
     visibility: visible;
     transition-delay: 0s;
+    padding: 0;
 }
 
 .c-dropdown__content-menu-item {
-    padding: .75rem 1.5rem;
     text-align: left;
     color: $menu-font-color;
 }
 
-.c-dropdown__content-menu-item:hover {
+
+.block-list li > a {
+    padding: 1rem 2rem;
+    padding-left: .75rem;
+    color: $menu-font-color;
+}
+
+
+.block-list li > a:hover, .block-list li > a:hover .c-dropdown__content-menu-item {
     cursor: pointer;
     background-color: $menu-font-color;
-    color: $navbar-background-color;
+    color: $navbar-background-color !important;
 }
 
 .c-dropdown__content-menu-item-icon {

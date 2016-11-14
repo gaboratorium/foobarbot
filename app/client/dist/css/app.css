@@ -330,7 +330,7 @@ pre {
   visibility: hidden;
   z-index: 10;
   position: fixed;
-  top: 54px;
+  top: 55px;
   background: #eceff1;
   transition: visibility 0s;
   transition-delay: 100ms;
@@ -343,17 +343,22 @@ pre {
 .c-dropdown:hover .c-dropdown__content, .c-dropdown__content:hover {
   display: block;
   visibility: visible;
-  transition-delay: 0s; }
+  transition-delay: 0s;
+  padding: 0; }
 
 .c-dropdown__content-menu-item {
-  padding: .75rem 1.5rem;
   text-align: left;
   color: #78909c; }
 
-.c-dropdown__content-menu-item:hover {
+.block-list li > a {
+  padding: 1rem 2rem;
+  padding-left: .75rem;
+  color: #78909c; }
+
+.block-list li > a:hover, .block-list li > a:hover .c-dropdown__content-menu-item {
   cursor: pointer;
   background-color: #78909c;
-  color: #eceff1; }
+  color: #eceff1 !important; }
 
 .c-dropdown__content-menu-item-icon {
   margin-right: .5rem; }
