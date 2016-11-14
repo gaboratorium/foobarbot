@@ -11,10 +11,12 @@
 						</a>
 					</li>
 					<li>
-						<span class="inline-label" style='margin: 0.25rem'>
-							<input type="search" placeholder="Search for anything..." style="height: 100%">
-							<a href="#" class="button c-button--search">Go</a>
-						</span>
+						<form action="" v-on:submit.prevent="search">
+							<span class="inline-label" style='margin: 0.25rem'>
+								<input type="search" v-model="textToSearch" placeholder="Search for anything..." style="height: 100%">
+								<input type="submit" class="button c-button--search" value="Go">
+							</span>
+						</form>
 					</li>
 				</ul>
 			</div>

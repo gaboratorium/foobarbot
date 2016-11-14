@@ -14,7 +14,7 @@
 			<div class="grid-block" v-show="snippetDataStatus=='loaded'">
 				<div class="grid-content">
 					
-					
+					<h1 v-if="isSearch">Search results for "{{ searchText }}"</h1>
 					<!--List of snippets-->
 					<ul class="c-snippets">
 

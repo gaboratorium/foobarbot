@@ -21,11 +21,13 @@ export const NavbarComponent =  {
 				name: String
 			},
 			isUserLoggedIn: false,
-			showModal: false
+			showModal: false,
+			textToSearch: String
 
 		}
 	},
 	created: function(){
+		this.textToSearch = "";
 		var isUserLoggedIn = localStorage.userName !== undefined && localStorage.userToken !== undefined;
 		console.log('navbar created', isUserLoggedIn);
 		
@@ -65,6 +67,11 @@ export const NavbarComponent =  {
 			var snackbarContainer = document.querySelector('#demo-toast-example');
 			var data = {message: message};
 			snackbarContainer.MaterialSnackbar.showSnackbar(data);
+		},
+
+		search: function() {
+			console.log(this.searchText);
+			
 		}
 	}
 };

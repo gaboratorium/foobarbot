@@ -21,7 +21,9 @@ export const DiscoverViewComponent = {
 			snippets: Array,
 			errorMsg: String,
 			isUserLoggedIn: Boolean,
-			snippetDataStatus: String
+			snippetDataStatus: String,
+			searchText: String,
+			isSearch: Boolean
 		}
 	},
 
@@ -36,12 +38,14 @@ export const DiscoverViewComponent = {
 
 	created: function(){
 		// this.snippetDataStatus = "loading";
-		// this.getSnippets();		
+		// this.getSnippets();
+		this.isSearch = false;
 		if (this.$route.params.searchtext) {
 			console.log("You have provided a searchtext");
+			this.searchText = this.$route.params.searchtext;
+			this.isSearch = true;
 		} else {
 			console.log("You havent provided a searchtext");
-
 		}
 	},
 
