@@ -7,6 +7,7 @@ import { SettingsViewComponent } from './../components/settings/component.settin
 import { NotificationsViewComponent } from './../components/notifications/component.notifications';
 import { SnippetViewComponent } from './../components/snippet/component.snippet';
 import { DiscoverViewComponent } from './../components/discover/component.discover';
+import { SearchViewComponent } from './../components/search/component.search';
 import { NavbarComponent } from './../components/navbar/component.navbar';
 
 declare var localStorage: any;
@@ -51,9 +52,9 @@ export const RouterInstance = new VueRouter({
 
 		// Search
 	    {
-	      path: '/discover/:searchtext',
+	      path: '/search/:searchtext',
 	      name: 'search',
-	      component: DiscoverViewComponent,
+	      component: SearchViewComponent,
 		  canReuse: false
 	    }, 
 

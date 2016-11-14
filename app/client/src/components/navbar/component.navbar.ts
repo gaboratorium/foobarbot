@@ -72,7 +72,7 @@ export const NavbarComponent =  {
 		search: function() {
 			console.log(this.searchText);
 			this.$router.push('/about');
-			this.$router.push('/discover/' + this.textToSearch);
+			this.$router.push('/search/' + this.textToSearch);
 		}
 	}
 };

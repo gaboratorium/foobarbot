@@ -12,6 +12,8 @@
 
 
 			<div v-show="snippetDataStatus=='loaded'">
+					
+				<h1 v-if="isSearch">Search results for "{{ searchText }}"</h1>
 				<!--List of snippets-->
 				<ul class="c-snippets">
 

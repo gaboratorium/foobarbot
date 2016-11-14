@@ -10,6 +10,7 @@ import { SettingsViewComponent } from './../components/settings/component.settin
 import { NotificationsViewComponent } from './../components/notifications/component.notifications';
 import { SnippetViewComponent } from './../components/snippet/component.snippet';
 import { DiscoverViewComponent } from './../components/discover/component.discover';
+import { SearchViewComponent } from './../components/search/component.search';
 
 // Other components
 import { NavbarComponent } from './../components/navbar/component.navbar';
@@ -37,6 +38,7 @@ export const AppInstance = new Vue({
     'notifications-view-component': NotificationsViewComponent,
     'snippet-view-component': SnippetViewComponent,
     'discover-view-component': DiscoverViewComponent,
+    'search-view-component': SearchViewComponent,
   	'navbar': NavbarComponent,
   	'appfooter': AppfooterComponent
   }

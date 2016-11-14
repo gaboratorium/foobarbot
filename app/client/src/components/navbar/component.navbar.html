@@ -14,7 +14,9 @@
 						<form action="" v-on:submit.prevent="search">
 							<span class="inline-label" style='margin: 0.25rem'>
 								<input type="search" v-model="textToSearch" placeholder="Search for anything..." style="height: 100%">
-								<input type="submit" class="button c-button--search" value="Search">
+								<button type="submit" class="button c-button--search">
+									<i class="fa fa-search" aria-hidden="true"></i>
+								</button>
 							</span>
 						</form>
 					</li>
@@ -24,7 +26,7 @@
 				<!-- Right menu for user -->
 				<ul class="menu-bar icon-left" v-if='isUserLoggedIn'>
 
-					<li><router-link to="/Discover" class="menu-group--navbar__menu-item">Discover</router-link></li>
+					<li><router-link to="{name: 'discover'}" class="menu-group--navbar__menu-item">Discover</router-link></li>
 					<li><router-link to="/notifications" class="menu-group--navbar__menu-item">Notifications</router-link></li>
 					
 					<!-- Dropdown -->
