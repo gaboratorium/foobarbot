@@ -22,14 +22,24 @@ pre {
 .grid-content {
   padding: 1rem; }
 
+.grid-content--narrow {
+  max-width: 500px; }
+
 .grid-page-content {
-  max-width: 950px; }
+  max-width: 950px;
+  margin-top: 1rem; }
 
 .o-text--strong {
   font-weight: bold; }
 
 .o-text--block {
   display: block; }
+
+.o-text--error {
+  color: #f44336;
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 1rem; }
 
 .modal-mask {
   position: fixed;
@@ -161,16 +171,23 @@ pre {
   font-weight: bold;
   color: #3F51B5; }
 
-.button {
-  background: #3F51B5;
-  border-radius: 4px !important; }
-
 .c-button--search {
   background: #3F51B5;
   border-top-right-radius: 4px !important;
   border-bottom-right-radius: 4px !important;
   border-top-left-radius: 0px !important;
   border-bottom-left-radius: 0px !important; }
+
+.c-button--fullwidth {
+  width: 100%; }
+
+.c-button--flat {
+  box-shadow: none; }
+
+/*Foundation*/
+.button {
+  background: #3F51B5;
+  border-radius: 4px !important; }
 
 pre {
   padding: 0;

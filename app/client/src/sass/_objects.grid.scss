@@ -2,6 +2,11 @@
 	padding: 1rem;
 }
 
+.grid-content--narrow {
+	max-width: 500px;
+}
+
 .grid-page-content {
 	max-width: $page-content-width;
+	margin-top: 1rem;
 }
