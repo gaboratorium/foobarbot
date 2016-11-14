@@ -48,6 +48,13 @@ export const RouterInstance = new VueRouter({
 	      component: DiscoverViewComponent,
 	    }, 
 
+		// Search
+	    {
+	      path: '/discover/:searchtext',
+	      name: 'search',
+	      component: DiscoverViewComponent,
+	    }, 
+
 		// About
 	    {
 	      path: '/about',

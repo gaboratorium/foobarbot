@@ -37,6 +37,12 @@ export const DiscoverViewComponent = {
 	created: function(){
 		// this.snippetDataStatus = "loading";
 		// this.getSnippets();		
+		if (this.$route.params.searchtext) {
+			console.log("You have provided a searchtext");
+		} else {
+			console.log("You havent provided a searchtext");
+
+		}
 	},
 
 	methods: {
