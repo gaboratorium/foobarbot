@@ -1,0 +1,12 @@
+.mdl-chip:hover {
+    background-color: $primary-color;
+    cursor: pointer;
+}
+
+.mdl-chip:hover .mdl-chip__text {
+    color: #fff;
+}
+
+.mdl-chip a {
+    color: inherit;
+}

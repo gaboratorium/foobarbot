@@ -380,3 +380,13 @@ pre {
 .mdl-snackbar__text {
   /*color: $secondary-color;*/
   /*font-weight: bold;*/ }
+
+.mdl-chip:hover {
+  background-color: #3F51B5;
+  cursor: pointer; }
+
+.mdl-chip:hover .mdl-chip__text {
+  color: #fff; }
+
+.mdl-chip a {
+  color: inherit; }

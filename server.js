@@ -220,6 +220,20 @@ apiRoutes.get('/snippets', function(req, res) {
 
 	Snippet.find(options, function(err, snippets){
 		if (snippets) {
+
+			// Find user for each snippet
+			for (var i = 0; i < snippets.length; i++) {
+				var snippet = snippets[i];
+				User.find({userId: snippets[i].userId}, function(err, user){
+					console.log('I found a user');
+					
+				});
+
+				snippets[i] = snippet;
+				console.log('snippet', snippet);
+				console.log('snippets[i]', snippets[i]);
+				
+			}
 			return res.json({success: true, message: "You know some shit", snippets: snippets});
 		} else {
 			return res.status(404).send({success: false, message: "Snippets were not found with this userId"})
