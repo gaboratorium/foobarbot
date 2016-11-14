@@ -9,6 +9,11 @@
 	color: #78909c !important; // Foundation hack
 }
 
+.menu-group--navbar__button-list-item {
+	display: flex;
+	align-items: center !important;
+}
+
 .menu-group__menu-bar {
 	width: $page-content-width;
 	flex-flow: row nowrap;

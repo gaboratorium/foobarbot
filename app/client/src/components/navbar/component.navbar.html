@@ -35,7 +35,7 @@
 					<li><router-link to="/discover" class="menu-group--navbar__menu-item">Discover</router-link></li>
 					<li><router-link to="/about" class="menu-group--navbar__menu-item">About</router-link></li>
 					<li><router-link to="/login" class="menu-group--navbar__menu-item">Log in</router-link></li>
-					<li><router-link to="signup" class="menu-group--navbar__menu-item">Sign up</router-link></li>
+					<li class="menu-group--navbar__button-list-item"><router-link to="signup" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat">Sign up</router-link></li>
 				</ul>
 			</div>
 		</div>
@@ -44,7 +44,7 @@
 
 
 	<div class="title-bar c-info-bar" v-if="!isUserLoggedIn">
-		<div class="center">Foobarbot is where people find and share code. <router-link to="/login">Join the community!</router-link></div>
+		<div class="center">Foobarbot is where people find and share code. <router-link to="/signup">Join the community!</router-link></div>
 	</div>
 
 	<!--Compose Modal -->

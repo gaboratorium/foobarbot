@@ -114,6 +114,10 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="date"]:focus
 .menu-group--navbar__menu-item {
   color: #78909c !important; }
 
+.menu-group--navbar__button-list-item {
+  display: flex;
+  align-items: center !important; }
+
 .menu-group__menu-bar {
   width: 950px;
   flex-flow: row nowrap; }
@@ -191,8 +195,7 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="date"]:focus
 
 /*Foundation*/
 .button {
-  background: #3F51B5;
-  border-radius: 4px !important; }
+  background: #3F51B5; }
 
 pre {
   padding: 0;
