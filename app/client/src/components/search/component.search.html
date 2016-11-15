@@ -13,7 +13,8 @@
 
 			<div v-show="snippetDataStatus=='loaded'">
 					
-				<h1 v-if="isSearch">Search results for "{{ searchText }}"</h1>
+				<h1 v-if="isSearch">Search results for "<span class="o-text--strong">{{ searchText }}</span>"</h1>
+				<p class="o-text--info"><span class="o-text--strong"><i class="fa fa-fw fa-info-circle" aria-hidden="true"></i>Heads up!</span> This feature is not yet completely implemented, so what we have is a random list of snippets.</p>
 				<!--List of snippets-->
 				<ul class="c-snippets">
 

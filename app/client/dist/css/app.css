@@ -51,6 +51,13 @@ input[type="search"]:focus {
   margin-top: 1rem;
   margin-bottom: 1rem; }
 
+.o-text--info {
+  color: #00796B;
+  background-color: #E0F2F1;
+  border: 1px solid #B2DFDB;
+  border-radius: 4px;
+  padding: 1rem; }
+
 .modal-mask {
   position: fixed;
   z-index: 9998;
