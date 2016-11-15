@@ -26,7 +26,7 @@ export const AppInstance = new Vue({
   store: MainStore,
 
   created: function() {
-    console.log("AppInstance has been created");
+    // Do some stuff?
   },
 
   // Components

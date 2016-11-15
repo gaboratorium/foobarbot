@@ -29,16 +29,13 @@ export const DiscoverViewComponent = {
 
 	beforeRouteEnter (to: any, from: any, next: any) {
 		next( (DiscoverComponent: any) => {
-			console.log("Entering discover route, these are the users", DiscoverComponent.users);
 			DiscoverComponent.snippetDataStatus = "loading";
 			DiscoverComponent.getSnippets();
 
 			DiscoverComponent.isSearch = false;
 			if (DiscoverComponent.$route.params.searchtext) {
-				console.log("You have provided a searchtext");
 				DiscoverComponent.searchText = DiscoverComponent.$route.params.searchtext;
 				DiscoverComponent.isSearch = true;
-				console.log("disco searchtext: ", DiscoverComponent.searchText);
 				
 			}
 		})
@@ -53,13 +50,11 @@ export const DiscoverViewComponent = {
 	methods: {
 
 		getSnippets: function(){
-			console.log("get snippets is called");
 			
 			var DiscoverComponent = this;
 			this.$store.dispatch({
 				  type: 'getSnippets',
 			  }).then((response: any) => {
-				  console.log("getsnippets request succesful");
 
 				  // Converting text to markdown
 				  for (var i = 0; i < response.length; i++) {
@@ -69,37 +64,29 @@ export const DiscoverViewComponent = {
 				  // Initialize Highlightjs
 				  this.snippets = response;
 				  setTimeout(function(){
-					console.log("Highlighting code...");
 					hljs.initHighlighting.called = false;
 					hljs.initHighlighting();
-					console.log(hljs.listLanguages());
 					DiscoverComponent.snippetDataStatus = "loaded";
 				  }, 200);
 
 
 			  }, (fail: any) => {
-				  console.log("getsnippets request failed");
 				  
 				  // Fail
-				  console.log("about component get snippets fails:", fail);
 			  });
 		},
 
 		starSnippet: function(snippetId: string){
-			console.log("You are trying to star this snippet:", snippetId);
 			if (this.$store.getters["mainstore/isUserLoggedIn"]) {
 				this.$store.dispatch({
 					type: 'postStar',
 					snippetId: snippetId
 				}).then((response: any) => {
-					console.log("You have succesfully starred the snippet", response);
 				}, (fail: any) =>{
-					console.log("about component postStar fails", fail);
 					
 				});
 			}
 			else {
-				console.log("No login, no star.");
 			}
 			
 		}

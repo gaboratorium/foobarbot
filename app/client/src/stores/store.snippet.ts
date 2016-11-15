@@ -9,7 +9,12 @@ export const SnippetStore = {
             // var userToken = context.getters["mainstore/userToken"]; // should be userId
             // var userEmail = context.getters["mainstore/userEmail"]; // should be userId
             // ApiInstance.postUserLog();
-            return ApiInstance.getSnippets(userId);
+            if (payload.snippetsMaxNumber && payload.searchText){
+                
+                return ApiInstance.getSnippets(userId, payload.snippetsMaxNumber, payload.searchText);
+            } else {
+                return ApiInstance.getSnippets(userId);
+            }
         },
 
         // Get a snippet

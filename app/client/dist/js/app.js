@@ -138,15 +138,12 @@ exports.DiscoverViewComponent = {
     },
     beforeRouteEnter: function (to, from, next) {
         next(function (DiscoverComponent) {
-            console.log("Entering discover route, these are the users", DiscoverComponent.users);
             DiscoverComponent.snippetDataStatus = "loading";
             DiscoverComponent.getSnippets();
             DiscoverComponent.isSearch = false;
             if (DiscoverComponent.$route.params.searchtext) {
-                console.log("You have provided a searchtext");
                 DiscoverComponent.searchText = DiscoverComponent.$route.params.searchtext;
                 DiscoverComponent.isSearch = true;
-                console.log("disco searchtext: ", DiscoverComponent.searchText);
             }
         });
     },
@@ -155,42 +152,32 @@ exports.DiscoverViewComponent = {
     methods: {
         getSnippets: function () {
             var _this = this;
-            console.log("get snippets is called");
             var DiscoverComponent = this;
             this.$store.dispatch({
                 type: 'getSnippets',
             }).then(function (response) {
-                console.log("getsnippets request succesful");
                 for (var i = 0; i < response.length; i++) {
                     response[i].readme = marked(response[i].readme);
                 }
                 _this.snippets = response;
                 setTimeout(function () {
-                    console.log("Highlighting code...");
                     hljs.initHighlighting.called = false;
                     hljs.initHighlighting();
-                    console.log(hljs.listLanguages());
                     DiscoverComponent.snippetDataStatus = "loaded";
                 }, 200);
             }, function (fail) {
-                console.log("getsnippets request failed");
-                console.log("about component get snippets fails:", fail);
             });
         },
         starSnippet: function (snippetId) {
-            console.log("You are trying to star this snippet:", snippetId);
             if (this.$store.getters["mainstore/isUserLoggedIn"]) {
                 this.$store.dispatch({
                     type: 'postStar',
                     snippetId: snippetId
                 }).then(function (response) {
-                    console.log("You have succesfully starred the snippet", response);
                 }, function (fail) {
-                    console.log("about component postStar fails", fail);
                 });
             }
             else {
-                console.log("No login, no star.");
             }
         }
     }
@@ -239,7 +226,7 @@ exports.LoginViewComponent = {
 },{"password-hash":417}],6:[function(require,module,exports){
 "use strict";
 
-var html = "<!-- Navigation -->\r\n<div>\r\n\t<div class=\"menu-group menu-group--navbar\">\r\n\t\t<div class=\"menu-group menu-group__menu-bar\">\r\n\t\t\t<div class=\"menu-group-left\">\r\n\t\t\t\t<ul class=\"menu-bar icon-left\">\r\n\t\t\t\t\t<li>\r\n\t\t\t\t\t\t<a href=\"#\" class=\"menu-group__logo\">\r\n\t\t\t\t\t\t\t<span class=\"menu-group__logo-text menu-group__logo-text--strong\">Foobarbot</span> \r\n\t\t\t\t\t\t\t<span class=\"menu-group__logo-text\">Developer Preview </span>\r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t\t<li>\r\n\t\t\t\t\t\t<form action=\"\" v-on:submit.prevent=\"search\">\r\n\t\t\t\t\t\t\t<span class=\"inline-label\" style='margin: 0.25rem'>\r\n\t\t\t\t\t\t\t\t<input type=\"search\" v-model=\"textToSearch\" placeholder=\"Search for anything...\" style=\"height: 100%\">\r\n\t\t\t\t\t\t\t\t<button type=\"submit\" class=\"button c-button--search\">\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-search\" aria-hidden=\"true\"></i>\r\n\t\t\t\t\t\t\t\t</button>\r\n\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t</form>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"menu-group-right\">\r\n\t\t\t\t<!-- Right menu for user -->\r\n\t\t\t\t<ul class=\"menu-bar icon-left\" v-if='isUserLoggedIn'>\r\n\r\n\t\t\t\t\t<li><router-link to=\"{name: 'discover'}\" class=\"menu-group--navbar__menu-item\">Discover</router-link></li>\r\n\t\t\t\t\t<li><router-link to=\"/notifications\" class=\"menu-group--navbar__menu-item\">Notifications</router-link></li>\r\n\t\t\t\t\t\r\n\t\t\t\t\t<!-- Dropdown -->\r\n\t\t\t\t\t<li class=\"c-dropdown\">\r\n\t\t\t\t\t\t<router-link to=\"/user/me\" class=\"menu-group--navbar__menu-item\">\r\n\t\t\t\t\t\t\t{{ user.name }} \r\n\t\t\t\t\t\t\t<i class=\"fa fa-fw fa-caret-down\" aria-hidden=\"true\"></i>\r\n\t\t\t\t\t\t</router-link>\r\n\t\t\t\t\t\t<section class=\"block-list c-dropdown__content\">\r\n\t\t\t\t\t\t\t<ul>\r\n\t\t\t\t\t\t\t\t<li class=\"c-dropdown__content-menu-item\">\r\n\t\t\t\t\t\t\t\t\t<router-link to=\"/user/me\" class=\"menu-group--navbar__menu-item\">\r\n\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-fw fa-user c-dropdown__content-menu-item-icon\" aria-hidden=\"true\"></i>Profile</li>\r\n\t\t\t\t\t\t\t\t\t</router-link>\r\n\r\n\t\t\t\t\t\t\t\t<li class=\"c-dropdown__content-menu-item\">\r\n\t\t\t\t\t\t\t\t\t<router-link to=\"/settings\" class=\"menu-group--navbar__menu-item\">\r\n\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-fw fa-cog c-dropdown__content-menu-item-icon\" aria-hidden=\"true\"></i>Settings\r\n\t\t\t\t\t\t\t\t\t</router-link>\r\n\t\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t\t<li class=\"c-dropdown__content-menu-item\">\r\n\t\t\t\t\t\t\t\t\t<a href=\"#\" @click.stop=\"logout()\" class=\"menu-group--navbar__menu-item\">\r\n\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-fw fa-sign-out c-dropdown__content-menu-item-icon\" aria-hidden=\"true\"></i>Logout\r\n\t\t\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t\t</section>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t\t\r\n\t\t\t\t\t<!--Compose snippet button-->\r\n\t\t\t\t\t<li class=\"menu-group--navbar__button-list-item\"><button id=\"show-modal\" @click=\"showModal = true\" class=\"mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat\">Compose</button></li>\r\n\r\n\t\t\t\t</ul>\r\n\t\t\t\t<!--Right menu for visitor -->\r\n\t\t\t\t<ul class=\"menu-bar icon-left\" v-if='!isUserLoggedIn'>\r\n\t\t\t\t\t<li><router-link to=\"/discover\" class=\"menu-group--navbar__menu-item\">Discover</router-link></li>\r\n\t\t\t\t\t<li><router-link to=\"/about\" class=\"menu-group--navbar__menu-item\">About</router-link></li>\r\n\t\t\t\t\t<li><router-link to=\"/login\" class=\"menu-group--navbar__menu-item\">Log in</router-link></li>\r\n\t\t\t\t\t<li class=\"menu-group--navbar__button-list-item\"><router-link to=\"signup\" class=\"mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat\">Sign up</router-link></li>\r\n\t\t\t\t</ul>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\r\n\r\n\t<div class=\"title-bar c-info-bar\" v-if=\"!isUserLoggedIn\">\r\n\t\t<div class=\"center\">Foobarbot is where people find and share code. <router-link to=\"/signup\">Join the community!</router-link></div>\r\n\t</div>\r\n\r\n\t<!--Compose Modal -->\r\n\t<modal v-if=\"showModal\" @close=\"showModal = false\"></modal>\r\n\r\n\t<!-- Toast snackbar -->\r\n\t<div id=\"demo-toast-example\" class=\"mdl-js-snackbar mdl-snackbar\">\r\n\t\t<div class=\"mdl-snackbar__text\"></div>\r\n\t\t<button class=\"mdl-snackbar__action\" type=\"button\"></button>\r\n    </div>\r\n</div>\r\n\r\n\r\n";
+var html = "<!-- Navigation -->\r\n<div>\r\n\t<div class=\"menu-group menu-group--navbar\">\r\n\t\t<div class=\"menu-group menu-group__menu-bar\">\r\n\t\t\t<div class=\"menu-group-left\">\r\n\t\t\t\t<ul class=\"menu-bar icon-left\">\r\n\t\t\t\t\t<li>\r\n\t\t\t\t\t\t<a href=\"#\" class=\"menu-group__logo\">\r\n\t\t\t\t\t\t\t<span class=\"menu-group__logo-text menu-group__logo-text--strong\">Foobarbot</span> \r\n\t\t\t\t\t\t\t<span class=\"menu-group__logo-text\">Developer Preview </span>\r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t\t<li>\r\n\t\t\t\t\t\t<form action=\"\" v-on:submit.prevent=\"search\">\r\n\t\t\t\t\t\t\t<span class=\"inline-label\" style='margin: 0.25rem'>\r\n\t\t\t\t\t\t\t\t<input type=\"search\" v-model=\"textToSearch\" placeholder=\"Search for anything...\" style=\"height: 100%\">\r\n\t\t\t\t\t\t\t\t<button type=\"submit\" class=\"button c-button--search\">\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-search\" aria-hidden=\"true\"></i>\r\n\t\t\t\t\t\t\t\t</button>\r\n\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t</form>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"menu-group-right\">\r\n\t\t\t\t<!-- Right menu for user -->\r\n\t\t\t\t<ul class=\"menu-bar icon-left\" v-if='isUserLoggedIn'>\r\n\r\n\t\t\t\t\t<li><router-link to=\"/discover\" class=\"menu-group--navbar__menu-item\">Discover</router-link></li>\r\n\t\t\t\t\t<li><router-link to=\"/notifications\" class=\"menu-group--navbar__menu-item\">Notifications</router-link></li>\r\n\t\t\t\t\t\r\n\t\t\t\t\t<!-- Dropdown -->\r\n\t\t\t\t\t<li class=\"c-dropdown\">\r\n\t\t\t\t\t\t<router-link to=\"/user/me\" class=\"menu-group--navbar__menu-item\">\r\n\t\t\t\t\t\t\t{{ user.name }} \r\n\t\t\t\t\t\t\t<i class=\"fa fa-fw fa-caret-down\" aria-hidden=\"true\"></i>\r\n\t\t\t\t\t\t</router-link>\r\n\t\t\t\t\t\t<section class=\"block-list c-dropdown__content\">\r\n\t\t\t\t\t\t\t<ul>\r\n\t\t\t\t\t\t\t\t<li class=\"c-dropdown__content-menu-item\">\r\n\t\t\t\t\t\t\t\t\t<router-link to=\"/user/me\" class=\"menu-group--navbar__menu-item\">\r\n\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-fw fa-user c-dropdown__content-menu-item-icon\" aria-hidden=\"true\"></i>Profile</li>\r\n\t\t\t\t\t\t\t\t\t</router-link>\r\n\r\n\t\t\t\t\t\t\t\t<li class=\"c-dropdown__content-menu-item\">\r\n\t\t\t\t\t\t\t\t\t<router-link to=\"/settings\" class=\"menu-group--navbar__menu-item\">\r\n\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-fw fa-cog c-dropdown__content-menu-item-icon\" aria-hidden=\"true\"></i>Settings\r\n\t\t\t\t\t\t\t\t\t</router-link>\r\n\t\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t\t<li class=\"c-dropdown__content-menu-item\">\r\n\t\t\t\t\t\t\t\t\t<a href=\"#\" @click.stop=\"logout()\" class=\"menu-group--navbar__menu-item\">\r\n\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-fw fa-sign-out c-dropdown__content-menu-item-icon\" aria-hidden=\"true\"></i>Logout\r\n\t\t\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t\t</section>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t\t\r\n\t\t\t\t\t<!--Compose snippet button-->\r\n\t\t\t\t\t<li class=\"menu-group--navbar__button-list-item\"><button id=\"show-modal\" @click=\"showModal = true\" class=\"mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat\">Compose</button></li>\r\n\r\n\t\t\t\t</ul>\r\n\t\t\t\t<!--Right menu for visitor -->\r\n\t\t\t\t<ul class=\"menu-bar icon-left\" v-if='!isUserLoggedIn'>\r\n\t\t\t\t\t<li><router-link to=\"/discover\" class=\"menu-group--navbar__menu-item\">Discover</router-link></li>\r\n\t\t\t\t\t<li><router-link to=\"/about\" class=\"menu-group--navbar__menu-item\">About</router-link></li>\r\n\t\t\t\t\t<li><router-link to=\"/login\" class=\"menu-group--navbar__menu-item\">Log in</router-link></li>\r\n\t\t\t\t\t<li class=\"menu-group--navbar__button-list-item\"><router-link to=\"signup\" class=\"mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat\">Sign up</router-link></li>\r\n\t\t\t\t</ul>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\r\n\r\n\t<div class=\"title-bar c-info-bar\" v-if=\"!isUserLoggedIn\">\r\n\t\t<div class=\"center\">Foobarbot is where people find and share code. <router-link to=\"/signup\">Join the community!</router-link></div>\r\n\t</div>\r\n\r\n\t<!--Compose Modal -->\r\n\t<modal v-if=\"showModal\" @close=\"showModal = false\"></modal>\r\n\r\n\t<!-- Toast snackbar -->\r\n\t<div id=\"demo-toast-example\" class=\"mdl-js-snackbar mdl-snackbar\">\r\n\t\t<div class=\"mdl-snackbar__text\"></div>\r\n\t\t<button class=\"mdl-snackbar__action\" type=\"button\"></button>\r\n    </div>\r\n</div>\r\n\r\n\r\n";
 var component_composemodal_1 = require('./../composemodal/component.composemodal');
 exports.NavbarComponent = {
     name: "NavbarComponent",
@@ -260,7 +247,6 @@ exports.NavbarComponent = {
     created: function () {
         this.textToSearch = "";
         var isUserLoggedIn = localStorage.userName !== undefined && localStorage.userToken !== undefined;
-        console.log('navbar created', isUserLoggedIn);
         if (isUserLoggedIn) {
             this.user.name = localStorage.userName;
             this.isUserLoggedIn = true;
@@ -291,14 +277,12 @@ exports.NavbarComponent = {
             this.showToast("You have succesfully logged out.");
         },
         showToast: function (message) {
-            console.log("show toast");
             var snackbarContainer = document.querySelector('#demo-toast-example');
             var data = { message: message };
             snackbarContainer.MaterialSnackbar.showSnackbar(data);
         },
         search: function () {
-            console.log(this.searchText);
-            this.$router.push('/about');
+            this.$router.push('/discover');
             this.$router.push('/search/' + this.textToSearch);
         }
     }
@@ -441,15 +425,13 @@ exports.SearchViewComponent = {
     },
     beforeRouteEnter: function (to, from, next) {
         next(function (DiscoverComponent) {
-            console.log("Entering discover route, these are the users", DiscoverComponent.users);
             DiscoverComponent.snippetDataStatus = "loading";
-            DiscoverComponent.getSnippets();
             DiscoverComponent.isSearch = false;
             if (DiscoverComponent.$route.params.searchtext) {
-                console.log("You have provided a searchtext");
+                console.log("Search text was provided in Search Component so I will ask for snippets...");
                 DiscoverComponent.searchText = DiscoverComponent.$route.params.searchtext;
                 DiscoverComponent.isSearch = true;
-                console.log("disco searchtext: ", DiscoverComponent.searchText);
+                DiscoverComponent.getSnippets();
             }
             else {
                 DiscoverComponent.router.push("/discover");
@@ -461,42 +443,35 @@ exports.SearchViewComponent = {
     methods: {
         getSnippets: function () {
             var _this = this;
-            console.log("get snippets is called");
             var DiscoverComponent = this;
             this.$store.dispatch({
                 type: 'getSnippets',
+                searchText: DiscoverComponent.searchText,
+                snippetsMaxNumber: 3
             }).then(function (response) {
-                console.log("getsnippets request succesful");
+                console.log("Search component recieves this response:", response);
                 for (var i = 0; i < response.length; i++) {
                     response[i].readme = marked(response[i].readme);
                 }
                 _this.snippets = response;
                 setTimeout(function () {
-                    console.log("Highlighting code...");
                     hljs.initHighlighting.called = false;
                     hljs.initHighlighting();
-                    console.log(hljs.listLanguages());
                     DiscoverComponent.snippetDataStatus = "loaded";
                 }, 200);
             }, function (fail) {
-                console.log("getsnippets request failed");
-                console.log("about component get snippets fails:", fail);
             });
         },
         starSnippet: function (snippetId) {
-            console.log("You are trying to star this snippet:", snippetId);
             if (this.$store.getters["mainstore/isUserLoggedIn"]) {
                 this.$store.dispatch({
                     type: 'postStar',
                     snippetId: snippetId
                 }).then(function (response) {
-                    console.log("You have succesfully starred the snippet", response);
                 }, function (fail) {
-                    console.log("about component postStar fails", fail);
                 });
             }
             else {
-                console.log("No login, no star.");
             }
         }
     }
@@ -767,13 +742,10 @@ exports.ApiInstance = new Vue({
                     'x-access-token': myUserToken
                 }
             };
-            console.log('api get notifications http req options', options);
             var myPromise = new Promise(function (resolve, reject) {
                 Vue.http.get('/api/notifications', options).then(function (response) {
-                    console.log('api getnotifications receives:', response);
                     resolve(response.body);
                 }, function (fail) {
-                    console.log('api getnotifications fails', fail);
                     reject(fail);
                 });
             });
@@ -785,7 +757,6 @@ exports.ApiInstance = new Vue({
                 token: myToken,
                 notificationMessage: myMessage
             };
-            console.log('api instance creates this body:', body);
             var myPromise = new Promise(function (resolve, reject) {
                 Vue.http.post('/api/notifications', body).then(function (response) {
                     resolve(response.body);
@@ -842,14 +813,20 @@ exports.ApiInstance = new Vue({
             });
             return myPromise;
         },
-        getSnippets: function (myUserId, mySnippetId) {
-            var options = {};
+        getSnippets: function (myUserId, mySnippetsMaxNumber, mySearchText) {
+            var options = { params: {} };
             if (myUserId) {
                 options = {
                     params: {
-                        userId: myUserId
+                        userId: myUserId,
                     }
                 };
+            }
+            if (mySnippetsMaxNumber) {
+                options.params.snippetsMaxNumber = mySnippetsMaxNumber;
+            }
+            if (mySearchText) {
+                options.params.searchText = mySearchText;
             }
             var myPromise = new Promise(function (resolve, reject) {
                 Vue.http.get('/api/snippets', options).then(function (response) {
@@ -880,7 +857,6 @@ exports.ApiInstance = new Vue({
                 snippetId: snippetId,
                 userToken: userToken
             };
-            console.log("Api will send this body", body);
             var myPromise = new Promise(function (resolve, reject) {
                 Vue.http.post('/api/stars', body).then(function (response) {
                     resolve(response.body.stars);
@@ -913,7 +889,6 @@ exports.AppInstance = new Vue({
     router: instance_router_1.RouterInstance,
     store: store_main_1.MainStore,
     created: function () {
-        console.log("AppInstance has been created");
     },
     components: {
         'about-view-component': component_about_1.AboutViewComponent,
@@ -1150,7 +1125,12 @@ exports.SnippetStore = {
     actions: {
         getSnippets: function (context, payload) {
             var userId = payload.userId;
-            return instance_api_1.ApiInstance.getSnippets(userId);
+            if (payload.snippetsMaxNumber && payload.searchText) {
+                return instance_api_1.ApiInstance.getSnippets(userId, payload.snippetsMaxNumber, payload.searchText);
+            }
+            else {
+                return instance_api_1.ApiInstance.getSnippets(userId);
+            }
         },
         getSnippet: function (context, payload) {
             var snippetId = payload.snippetId;

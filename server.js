@@ -4,6 +4,7 @@
 var express = require('express');
 var fs = require('fs');
 var passwordHash = require('password-hash');
+var _ = require('lodash');
 
 // Init express app
 var app = express();
@@ -210,6 +211,9 @@ apiRoutes.get('/snippets', function(req, res) {
 	
 	// IF userId or snippetId is provided
 	var snippetsMaxNumber = req.query.snippetsMaxNumber ? req.query.snippetsMaxNumber : 10;
+	var searchText = req.query.searchText ? req.query.searchText : null;
+
+
 	var options = {};
 	if (req.query.userId) {
 		options = { userId: req.query.userId };
@@ -222,19 +226,12 @@ apiRoutes.get('/snippets', function(req, res) {
 	Snippet.find(options, function(err, snippets){
 		if (snippets) {
 
-			// Find user for each snippet
-			// for (var i = 0; i < snippets.length; i++) {
-			// 	var snippet = snippets[i];
-			// 	User.find({userId: snippets[i].userId}, function(err, user){
-			// 		console.log('I found a user');
-					
-			// 	});
-
-			// 	snippets[i] = snippet;
-			// 	console.log('snippet', snippet);
-			// 	console.log('snippets[i]', snippets[i]);
+			if (searchText !== null) {
+				console.log('Search text was provided so I shuffle the snippets');
 				
-			// }
+				snippets = _.shuffle(snippets);
+			}
+
 			var snippetsToPass = [];
 			for (var i = 0; i < snippetsMaxNumber && i < snippets.length; i++) {
 				snippetsToPass.push(snippets[i]);

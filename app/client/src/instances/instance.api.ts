@@ -31,7 +31,6 @@ export const ApiInstance: IApiInstance= new Vue({
 	name: "Api",
 	methods: {
 		postUserLog: () => {
-			// console.log("Logging user activity...");
 		},
 
 		// Verify token
@@ -110,14 +109,11 @@ export const ApiInstance: IApiInstance= new Vue({
 				}
 			};
 
-			console.log('api get notifications http req options', options);
 			
 			var myPromise = new Promise((resolve, reject) => {
 				Vue.http.get('/api/notifications', options).then((response: any) => {
-					console.log('api getnotifications receives:', response);
 					resolve(response.body);
 				}, (fail) => {
-					console.log('api getnotifications fails', fail);
 					
 					reject(fail);
 				});
@@ -133,7 +129,6 @@ export const ApiInstance: IApiInstance= new Vue({
 				notificationMessage: myMessage
 			};
 
-			console.log('api instance creates this body:', body);
 			
 
 			var myPromise = new Promise((resolve, reject) => {
@@ -202,15 +197,25 @@ export const ApiInstance: IApiInstance= new Vue({
 		},
 
 		// Get all snippets or all by user
-		getSnippets: (myUserId?: string, mySnippetId?: string) => {
-			var options = {};	
+		getSnippets: (myUserId?: string, mySnippetsMaxNumber?: number, mySearchText?: string) => {
+			var options = { params: {}};	
 			if (myUserId){
 				options = {
 						params: {
-							userId: myUserId
+							userId: myUserId,
 						}
 					};
 			}
+
+			if (mySnippetsMaxNumber){
+				options.params.snippetsMaxNumber = mySnippetsMaxNumber;
+			}
+
+			if (mySearchText) {
+				options.params.searchText = mySearchText;
+			}
+
+			
 			
 			var myPromise = new Promise((resolve, reject) => {
 				// Make HTTP request
@@ -252,7 +257,6 @@ export const ApiInstance: IApiInstance= new Vue({
 				userToken: userToken
 			}
 
-			console.log("Api will send this body", body);
 			
 
 			var myPromise = new Promise((resolve, reject) => {
