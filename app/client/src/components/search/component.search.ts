@@ -30,7 +30,7 @@ export const SearchViewComponent = {
 	beforeRouteEnter (to: any, from: any, next: any) {
 		next( (DiscoverComponent: any) => {
 			DiscoverComponent.snippetDataStatus = "loading";
-
+			DiscoverComponent.snippets = [];
 			DiscoverComponent.isSearch = false;
 			if (DiscoverComponent.$route.params.searchtext) {
 				console.log("Search text was provided in Search Component so I will ask for snippets...");

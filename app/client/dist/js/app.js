@@ -426,6 +426,7 @@ exports.SearchViewComponent = {
     beforeRouteEnter: function (to, from, next) {
         next(function (DiscoverComponent) {
             DiscoverComponent.snippetDataStatus = "loading";
+            DiscoverComponent.snippets = [];
             DiscoverComponent.isSearch = false;
             if (DiscoverComponent.$route.params.searchtext) {
                 console.log("Search text was provided in Search Component so I will ask for snippets...");
