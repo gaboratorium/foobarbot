@@ -23,19 +23,37 @@ export const SnippetStore = {
                 ApiInstance.getSnippetsFromGithub().then((response: any) =>{
 
                     response = _.shuffle(response);
+                    console.log("Github gists:", response);
 
                     // Transform GitHub Gists to snippets
                     var maxNumber = 10;
                     var snippetsFromGithub: Array<any> = [];
                     for (var i = 0; i < maxNumber; i++) {
+
+                        var keys = Object.keys(response[i].files);
+                        var snippetCode = response[i].files[keys[0]].raw_url;
+
+                        Vue.http.get(snippetCode).then((response: any) => {
+                            console.log(response.body);
+                        }, (fail: any) => {
+                            console.log(fail);
+                        });
+
+
+                        var readme = response[i].description == "" ? "No readme was provided" : response[i].description;
+                        var userId = response[i].owner ? response[i].owner.login : "Unknown";
+                        var userUrl = response[i].owner ? response[i].owner.html_url : "";
+                        
                         var snippet = {
                             snippetId: response[i].id,
-                            snippetCode: response[i].html_url,
-                            userId: "unknown",
+                            snippetCode: snippetCode,
+                            snippetUrl: response[i].html_url,
+                            userId: userId,
+                            userUrl: userUrl,
                             tag1: "github",
                             tag2: "searchresult",
                             tag3: "batman",
-                            readme: response[i].description
+                            readme: readme
                         }
 
                         snippetsFromGithub.push(snippet);
