@@ -29,15 +29,15 @@ export const SnippetStore = {
                     var snippetsFromGithub: Array<any> = [];
                     for (var i = 0; i < maxNumber; i++) {
                         var snippet = {
-                            snippetId: string,
-                            snippetCode: string,
-                            userId: string,
-                            tag1: string,
-                            tag2: string,
-                            tag3: string,
-                            readme: string
+                            snippetId: response[i].id,
+                            snippetCode: response[i].html_url,
+                            userId: "unknown",
+                            tag1: "github",
+                            tag2: "searchresult",
+                            tag3: "batman",
+                            readme: response[i].description
                         }
-                        
+
                         snippetsFromGithub.push(snippet);
                     }
 

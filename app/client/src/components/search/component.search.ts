@@ -19,9 +19,11 @@ export const SearchViewComponent = {
 		return {
 			users: Array,
 			snippets: Array,
+			snippetsFromGithub: Array,
 			errorMsg: String,
 			isUserLoggedIn: Boolean,
 			snippetDataStatus: String,
+			snippetDataFromGithubStatus: String,
 			searchText: String,
 			isSearch: Boolean
 		}
@@ -30,6 +32,7 @@ export const SearchViewComponent = {
 	beforeRouteEnter (to: any, from: any, next: any) {
 		next( (DiscoverComponent: any) => {
 			DiscoverComponent.snippetDataStatus = "loading";
+			DiscoverComponent.snippetDataFromGithubStatus = "loading";
 			DiscoverComponent.snippets = [];
 			DiscoverComponent.isSearch = false;
 			if (DiscoverComponent.$route.params.searchtext) {
@@ -90,6 +93,12 @@ export const SearchViewComponent = {
 				snippetsMaxNumber: 5
 			}).then((response: any) => {
 				console.log("Github's response: ", response);
+				this.snippetsFromGithub = response;
+				setTimeout(function(){
+					hljs.initHighlighting.called = false;
+					hljs.initHighlighting();
+					DiscoverComponent.snippetDataFromGithubStatus = "loaded";
+				  }, 200);
 				
 			}, (fail: any) =>{
 				console.log("Github request failed", fail);
