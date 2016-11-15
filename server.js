@@ -209,6 +209,7 @@ var Snippet = mongoose.model('snippet', schema);
 apiRoutes.get('/snippets', function(req, res) {
 	
 	// IF userId or snippetId is provided
+	var snippetsMaxNumber = req.query.snippetsMaxNumber ? req.query.snippetsMaxNumber : 10;
 	var options = {};
 	if (req.query.userId) {
 		options = { userId: req.query.userId };
@@ -222,19 +223,24 @@ apiRoutes.get('/snippets', function(req, res) {
 		if (snippets) {
 
 			// Find user for each snippet
-			for (var i = 0; i < snippets.length; i++) {
-				var snippet = snippets[i];
-				User.find({userId: snippets[i].userId}, function(err, user){
-					console.log('I found a user');
+			// for (var i = 0; i < snippets.length; i++) {
+			// 	var snippet = snippets[i];
+			// 	User.find({userId: snippets[i].userId}, function(err, user){
+			// 		console.log('I found a user');
 					
-				});
+			// 	});
 
-				snippets[i] = snippet;
-				console.log('snippet', snippet);
-				console.log('snippets[i]', snippets[i]);
+			// 	snippets[i] = snippet;
+			// 	console.log('snippet', snippet);
+			// 	console.log('snippets[i]', snippets[i]);
 				
+			// }
+			var snippetsToPass = [];
+			for (var i = 0; i < snippetsMaxNumber && i < snippets.length; i++) {
+				snippetsToPass.push(snippets[i]);
 			}
-			return res.json({success: true, message: "You know some shit", snippets: snippets});
+
+			return res.json({success: true, message: "You know some shit", snippets: snippetsToPass});
 		} else {
 			return res.status(404).send({success: false, message: "Snippets were not found with this userId"})
 		}
