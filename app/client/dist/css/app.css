@@ -214,7 +214,8 @@ pre {
   background-color: transparent; }
 
 .c-snippets {
-  margin: 0; }
+  margin: 0;
+  list-style-type: none; }
 
 .c-snippet {
   margin-bottom: 2rem; }
@@ -262,11 +263,26 @@ pre {
   margin-bottom: 1rem; }
 
 .c-hero-cover {
-  min-height: 300px;
+  min-height: 280px;
   border-bottom: 1px solid #ddd; }
+
+.c-hero-cover--with-navigation {
+  border-bottom: none; }
 
 .c-hero-cover--pull {
   margin-bottom: -6rem; }
+
+.c-hero-cover__navigation {
+  border-bottom: 1px solid #ddd; }
+
+.c-hero-cover__navigation-item {
+  /*text-transform: uppercase;*/
+  color: #263238;
+  margin-right: 1.5rem;
+  margin-bottom: 1rem; }
+
+.c-hero-cover__navigation-item-badge {
+  margin-right: .5rem; }
 
 .c-hero-cover__profile-logo {
   max-width: 300px;

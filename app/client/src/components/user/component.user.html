@@ -2,7 +2,7 @@
 <div>
 
 	<!-- Hero cover -->
-	<div class="c-hero-cover grid-block align-center">
+	<div class="c-hero-cover c-hero-cover--with-navigation grid-block align-center">
 
 		<!--Loaded user info-->
 		<div class="c-hero-cover__profile-logo grid-content" v-if="userDataStatus=='loaded'">
@@ -20,6 +20,24 @@
 			<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
 		</div>
 	</div>
+
+	<!-- Navigation -->
+	<div class="grid-block align-center c-hero-cover__navigation">
+		<div class="grid-block grid-page-content align-justify">
+			<!--Left navigation -->
+			<div class="grid-block">
+				<span class="c-hero-cover__navigation-item"><span class="secondary badge c-hero-cover__navigation-item-badge">2</span><span>Snippets</span></span>
+				<span class="c-hero-cover__navigation-item"><span class="secondary badge c-hero-cover__navigation-item-badge">4</span><span>Stars</span></span>
+				<span class="c-hero-cover__navigation-item"><span class="secondary badge c-hero-cover__navigation-item-badge">0</span><span>Comments</span></span>
+			</div>
+			
+			<!--Right navigation -->
+			<div>
+			</div>
+		</div>
+	</div>
+
+
 
 	<!-- Page content -->
 	<div class="grid-block align-center">
