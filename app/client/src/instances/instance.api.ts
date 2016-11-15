@@ -21,6 +21,7 @@ interface IApiInstance {
 	// Snippet methods
 	postSnippet?: any,
 	getSnippets?: any,
+	getSnippetsFromGithub?: any,
 	getSnippet?: any,
 
 	// Star methods
@@ -226,6 +227,17 @@ export const ApiInstance: IApiInstance= new Vue({
 				})
 			});
 
+			return myPromise;
+		},
+
+		getSnippetsFromGithub: () => {
+			var myPromise = new Promise((resolve, reject) => {
+				Vue.http.get("https://api.github.com/gists/public").then((response: any) => {
+					resolve(response.body);
+				}, (fail: any) => {
+					reject(fail);
+				})
+			})
 			return myPromise;
 		},
 

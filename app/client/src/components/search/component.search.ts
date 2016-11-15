@@ -37,6 +37,7 @@ export const SearchViewComponent = {
 				DiscoverComponent.searchText = DiscoverComponent.$route.params.searchtext;
 				DiscoverComponent.isSearch = true;
 				DiscoverComponent.getSnippets();
+				DiscoverComponent.getSnippetsFromGithub();
 			} else {
                 DiscoverComponent.router.push("/discover");
             }
@@ -79,6 +80,22 @@ export const SearchViewComponent = {
 				  
 				  // Fail
 			  });
+		},
+
+		getSnippetsFromGithub: function() {
+			console.log("Getting snippets from Github...");
+			var DiscoverComponent = this;
+			this.$store.dispatch({
+				type: 'getSnippetsFromGithub',
+				snippetsMaxNumber: 5
+			}).then((response: any) => {
+				console.log("Github's response: ", response);
+				
+			}, (fail: any) =>{
+				console.log("Github request failed", fail);
+				
+			})
+			
 		},
 
 		starSnippet: function(snippetId: string){

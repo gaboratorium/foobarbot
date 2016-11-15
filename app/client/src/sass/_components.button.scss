@@ -1,5 +1,5 @@
 .c-button {
-    background-color: #3F51B5;
+    background-color: $primary-color;
     text-transform: uppercase;
     font-size: .9rem;
     color: #fff;
@@ -12,11 +12,11 @@
 .c-button--transparent {
     background-color: transparent;
     font-weight: bold;
-    color: #3F51B5;
+    color: $primary-color;
 }
 
 .c-button--search {
-    background: #3F51B5;
+    background: $primary-color;
     border-top-right-radius: 4px !important;
     border-bottom-right-radius: 4px !important;
     border-top-left-radius: 0px !important;
@@ -33,5 +33,11 @@
 
 /*Foundation*/
 .button {
-    background: #3F51B5;
+    background: $primary-color;
 }
+
+/* MDL button*/
+.mdl-button--raised.mdl-button--colored, .mdl-button--raised.mdl-button--colored:hover {
+    background-color: $primary-color;
+}
+

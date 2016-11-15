@@ -403,7 +403,7 @@ exports.NotificationsViewComponent = {
 },{}],8:[function(require,module,exports){
 "use strict";
 
-var html = "<div class=\"grid-block align-center\">\r\n\t<div class=\"grid-block grid-page-content\">\r\n\t\t<div class=\"grid-content\">\r\n\t\t\t\r\n\t\t\t<div class=\"grid-block\" v-if=\"snippetDataStatus=='loading'\">\r\n\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t<div class=\"grid-block align-center\">\r\n\t\t\t\t\t\t<div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<div v-show=\"snippetDataStatus=='loaded'\">\r\n\t\t\t\t\t\r\n\t\t\t\t<h1 v-if=\"isSearch\">Search results for \"<span class=\"o-text--strong\">{{ searchText }}</span>\"</h1>\r\n\t\t\t\t<p class=\"o-text--info\"><span class=\"o-text--strong\"><i class=\"fa fa-fw fa-info-circle\" aria-hidden=\"true\"></i>Heads up!</span> This feature is not yet completely implemented, so what we have is a random list of snippets.</p>\r\n\t\t\t\t<!--List of snippets-->\r\n\t\t\t\t<ul class=\"c-snippets\">\r\n\r\n\t\t\t\t\t<li class=\"c-snippet\" v-for=\"snippet in snippets\">\r\n\t\t\t\t\t\t<!--Snippet code -->\r\n\t\t\t\t\t\t<pre><code class=\"php c-snippet__code\">{{ snippet.snippetCode }}</code></pre>\r\n\r\n\t\t\t\t\t\t<div class=\"c-snippet__readme\">\r\n\r\n\t\t\t\t\t\t\t<!--Readme meta-->\r\n\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta\">\r\n\t\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta-title\">\r\n\t\t\t\t\t\t\t\t\t<span><router-link :to=\"'/snippet/' + snippet.snippetId\">#{{snippet.snippetId}}</router-link> in </span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t{{snippet.tag1}}\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t{{snippet.tag2}}\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t{{snippet.tag3}}\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<span>by <router-link :to=\"'/user/' + snippet.userId\">#{{ snippet.userId }}</router-link></span>\r\n\t\t\t\t\t\t\t\t<!--<a href=\"#\" v-on:click.prevent=\"starSnippet(snippet.snippetId)\">Star it</a>-->\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t<!--Readme text in markdown-->\r\n\t\t\t\t\t\t\t<div v-html=\"snippet.readme\" class=\"c-snippet__readme-text\"></div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
+var html = "<div class=\"grid-block align-center\">\r\n\t<div class=\"grid-block grid-page-content\">\r\n\t\t<div class=\"grid-content\">\r\n\t\t\t\r\n\t\t\t<div class=\"grid-block\" v-if=\"snippetDataStatus=='loading'\">\r\n\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t<div class=\"grid-block align-center\">\r\n\t\t\t\t\t\t<div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<div v-show=\"snippetDataStatus=='loaded'\">\r\n\t\t\t\t\t\r\n\t\t\t\t<h1 v-if=\"isSearch\">Search results for \"<span class=\"o-text--strong\">{{ searchText }}</span>\"</h1>\r\n\t\t\t\t<p class=\"o-text--info\"><span class=\"o-text--strong\"><i class=\"fa fa-fw fa-info-circle\" aria-hidden=\"true\"></i>Heads up!</span> This feature is not yet completely implemented, so what we have is a random list of snippets.</p>\r\n\t\t\t\t<!--List of snippets-->\r\n\t\t\t\t<ul class=\"c-snippets\">\r\n\r\n\t\t\t\t\t<li class=\"c-snippet\" v-for=\"snippet in snippets\">\r\n\t\t\t\t\t\t<!--Snippet code -->\r\n\t\t\t\t\t\t<pre><code class=\"php c-snippet__code\">{{ snippet.snippetCode }}</code></pre>\r\n\r\n\t\t\t\t\t\t<div class=\"c-snippet__readme\">\r\n\r\n\t\t\t\t\t\t\t<!--Readme meta-->\r\n\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta\">\r\n\t\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta-title\">\r\n\t\t\t\t\t\t\t\t\t<span><router-link :to=\"'/snippet/' + snippet.snippetId\">#{{snippet.snippetId}}</router-link> in </span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t{{snippet.tag1}}\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t{{snippet.tag2}}\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t{{snippet.tag3}}\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<span>by <router-link :to=\"'/user/' + snippet.userId\">#{{ snippet.userId }}</router-link></span>\r\n\t\t\t\t\t\t\t\t<!--<a href=\"#\" v-on:click.prevent=\"starSnippet(snippet.snippetId)\">Star it</a>-->\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t<!--Readme text in markdown-->\r\n\t\t\t\t\t\t\t<div v-html=\"snippet.readme\" class=\"c-snippet__readme-text\"></div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\r\n\t\t\t\t<h1>GitHub search results for \"<span class=\"o-text--strong\">{{ searchText }}</span>\"</h1>\r\n\t\t\t\t<p class=\"o-text--info\"><span class=\"o-text--strong\"><i class=\"fa fa-fw fa-info-circle\" aria-hidden=\"true\"></i>Heads up!</span> GitHub API limits the number of requests coming from a given unauthenticated source, which means you may experience disconnection in case of high traffic.</p>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
 var marked = require('marked');
 var hljs = require("highlight.js");
 hljs.configure({
@@ -433,6 +433,7 @@ exports.SearchViewComponent = {
                 DiscoverComponent.searchText = DiscoverComponent.$route.params.searchtext;
                 DiscoverComponent.isSearch = true;
                 DiscoverComponent.getSnippets();
+                DiscoverComponent.getSnippetsFromGithub();
             }
             else {
                 DiscoverComponent.router.push("/discover");
@@ -461,6 +462,18 @@ exports.SearchViewComponent = {
                     DiscoverComponent.snippetDataStatus = "loaded";
                 }, 200);
             }, function (fail) {
+            });
+        },
+        getSnippetsFromGithub: function () {
+            console.log("Getting snippets from Github...");
+            var DiscoverComponent = this;
+            this.$store.dispatch({
+                type: 'getSnippetsFromGithub',
+                snippetsMaxNumber: 5
+            }).then(function (response) {
+                console.log("Github's response: ", response);
+            }, function (fail) {
+                console.log("Github request failed", fail);
             });
         },
         starSnippet: function (snippetId) {
@@ -895,6 +908,16 @@ exports.ApiInstance = new Vue({
             });
             return myPromise;
         },
+        getSnippetsFromGithub: function () {
+            var myPromise = new Promise(function (resolve, reject) {
+                Vue.http.get("https://api.github.com/gists/public").then(function (response) {
+                    resolve(response.body);
+                }, function (fail) {
+                    reject(fail);
+                });
+            });
+            return myPromise;
+        },
         getSnippet: function (mySnippetId) {
             var options = {
                 params: {
@@ -1207,6 +1230,9 @@ exports.SnippetStore = {
             else {
                 return instance_api_1.ApiInstance.getSnippets(userId);
             }
+        },
+        getSnippetsFromGithub: function (context, payload) {
+            return instance_api_1.ApiInstance.getSnippetsFromGithub();
         },
         getSnippet: function (context, payload) {
             var snippetId = payload.snippetId;

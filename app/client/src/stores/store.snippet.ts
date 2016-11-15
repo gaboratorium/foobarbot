@@ -17,6 +17,10 @@ export const SnippetStore = {
             }
         },
 
+        getSnippetsFromGithub: (context: any, payload: any) => {
+            return ApiInstance.getSnippetsFromGithub();
+        },
+
         // Get a snippet
         getSnippet: (context: any, payload: any) => {
             var snippetId = payload.snippetId;
