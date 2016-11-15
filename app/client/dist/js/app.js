@@ -1232,7 +1232,16 @@ exports.SnippetStore = {
             }
         },
         getSnippetsFromGithub: function (context, payload) {
-            return instance_api_1.ApiInstance.getSnippetsFromGithub();
+            var myPromise = new Promise(function (resolve, reject) {
+                instance_api_1.ApiInstance.getSnippetsFromGithub().then(function (response) {
+                    console.log("Snippet store recieves response from getsnippetsfromgithub", response);
+                    resolve(response);
+                }, function (fail) {
+                    console.log("Snippet store fails from getsnippetsfromgithub", fail);
+                    reject(fail);
+                });
+            });
+            return myPromise;
         },
         getSnippet: function (context, payload) {
             var snippetId = payload.snippetId;
