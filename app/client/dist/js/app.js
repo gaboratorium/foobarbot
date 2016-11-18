@@ -859,7 +859,7 @@ exports.UserStarsComponent = {
 },{"highlight.js":250,"marked":420}],15:[function(require,module,exports){
 "use strict";
 
-var html = "<!--User-->\r\n<div>\r\n\r\n\t<!-- Hero cover -->\r\n\t<div class=\"c-hero-cover c-hero-cover--with-navigation grid-block align-center\">\r\n\r\n\t\t<!--Loaded user info-->\r\n\t\t<div class=\"c-hero-cover__profile-logo grid-content\" v-if=\"userDataStatus=='loaded'\">\r\n\t\t\t<div class=\"c-hero-cover__profile-logo-image\" v-bind:class=\"{ 'c-hero-cover__profile-logo-image--foobarbot' : user.userId == 1479481497854175 }\"></div>\r\n\t\t\t<h1 class=\"c-hero-cover__profile-logo-text\">{{ user.userName }}</h1>\r\n\t\t\t<h2 class=\"c-hero-cover__profile-logo-sub-text\">Copenhagen, Denmark</h2>\r\n\t\t\t<span>\r\n\t\t\t\t<i class=\"fa fa-twitter c-hero-cover__profile-logo-social fa-fw\" aria-hidden=\"true\"></i>\r\n\t\t\t\t<i class=\"fa fa-github c-hero-cover__profile-logo-social fa-fw\" aria-hidden=\"true\"></i>\r\n\t\t\t</span>\r\n\t\t</div>\r\n\r\n\t\t<!--Loading user info-->\r\n\t\t<div class=\"c-hero-cover__profile-logo grid-content\" v-if=\"userDataStatus=='loading'\">\r\n\t\t\t<div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<!-- Navigation -->\r\n\t<div class=\"grid-block align-center c-hero-cover__navigation\">\r\n\t\t<div class=\"grid-block grid-page-content align-justify\">\r\n\t\t\t<!--Left navigation -->\r\n\t\t\t<div class=\"grid-block align-center\">\r\n\t\t\t\t<!--Snippets-->\r\n\t\t\t\t<span class=\"c-hero-cover__navigation-item\">\r\n\t\t\t\t\t<router-link to=\"snippets\">\r\n\t\t\t\t\t\t<span class=\"secondary badge c-hero-cover__navigation-item-badge\">2</span><span>Snippets</span>\r\n\t\t\t\t\t</router-link>\r\n\t\t\t\t</span>\r\n\t\t\t\t<span class=\"c-hero-cover__navigation-item\">\r\n\t\t\t\t\t<router-link to=\"stars\">\r\n\t\t\t\t\t\t<span class=\"secondary badge c-hero-cover__navigation-item-badge\">4</span><span>Stars</span>\r\n\t\t\t\t\t</router-link>\r\n\t\t\t\t</span>\r\n\t\t\t\t<span class=\"c-hero-cover__navigation-item\">\r\n\t\t\t\t\t<router-link to=\"comments\">\r\n\t\t\t\t\t\t<span class=\"secondary badge c-hero-cover__navigation-item-badge\">0</span><span>Comments</span>\r\n\t\t\t\t\t</router-link>\r\n\t\t\t\t</span>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<!--Right navigation -->\r\n\t\t\t<div>\r\n\t\t\t\t<!--<i class=\"fa fa-envelope c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar('Copying code to clipboard')\"></i>-->\r\n\t\t\t\t<!--<i class=\"fa fa-eye c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar('Copying code to clipboard')\"></i>-->\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<!-- Page content -->\r\n\t<router-view></router-view>\r\n\r\n</div>\r\n";
+var html = "<!--User-->\r\n<div>\r\n\r\n\t<!-- Hero cover -->\r\n\t<div class=\"c-hero-cover c-hero-cover--with-navigation grid-block align-center\">\r\n\r\n\t\t<!--Loaded user info-->\r\n\t\t<div class=\"c-hero-cover__profile-logo grid-content\" v-if=\"userDataStatus=='loaded'\">\r\n\t\t\t<div class=\"c-hero-cover__profile-logo-image\" v-bind:class=\"{ 'c-hero-cover__profile-logo-image--foobarbot' : user.userId == 1479481497854175 }\"></div>\r\n\t\t\t<h1 class=\"c-hero-cover__profile-logo-text\">{{ user.userName }}</h1>\r\n\t\t\t<h2 class=\"c-hero-cover__profile-logo-sub-text\">Copenhagen, Denmark</h2>\r\n\t\t\t<span>\r\n\t\t\t\t<i class=\"fa fa-twitter c-hero-cover__profile-logo-social fa-fw\" aria-hidden=\"true\"></i>\r\n\t\t\t\t<i class=\"fa fa-github c-hero-cover__profile-logo-social fa-fw\" aria-hidden=\"true\"></i>\r\n\t\t\t</span>\r\n\t\t</div>\r\n\r\n\t\t<!--Loading user info-->\r\n\t\t<div class=\"c-hero-cover__profile-logo grid-content\" v-if=\"userDataStatus=='loading'\">\r\n\t\t\t<div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<!-- Navigation -->\r\n\t<div class=\"grid-block align-center c-hero-cover__navigation\">\r\n\t\t<div class=\"grid-block grid-page-content align-justify\">\r\n\t\t\t<!--Left navigation -->\r\n\t\t\t<div class=\"grid-block align-center\">\r\n\t\t\t\t<!--Snippets-->\r\n\t\t\t\t<span class=\"c-hero-cover__navigation-item\">\r\n\t\t\t\t\t<router-link to=\"snippets\">\r\n\t\t\t\t\t\t<span class=\"secondary badge c-hero-cover__navigation-item-badge\">{{ snippets.length }}</span><span>Snippets</span>\r\n\t\t\t\t\t</router-link>\r\n\t\t\t\t</span>\r\n\t\t\t\t<span class=\"c-hero-cover__navigation-item\">\r\n\t\t\t\t\t<router-link to=\"stars\">\r\n\t\t\t\t\t\t<span class=\"secondary badge c-hero-cover__navigation-item-badge\">{{ starredSnippets.length }}</span><span>Stars</span>\r\n\t\t\t\t\t</router-link>\r\n\t\t\t\t</span>\r\n\t\t\t\t<span class=\"c-hero-cover__navigation-item\">\r\n\t\t\t\t\t<router-link to=\"comments\">\r\n\t\t\t\t\t\t<span class=\"secondary badge c-hero-cover__navigation-item-badge\">0</span><span>Comments</span>\r\n\t\t\t\t\t</router-link>\r\n\t\t\t\t</span>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<!--Right navigation -->\r\n\t\t\t<div>\r\n\t\t\t\t<!--<i class=\"fa fa-envelope c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar('Copying code to clipboard')\"></i>-->\r\n\t\t\t\t<!--<i class=\"fa fa-eye c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar('Copying code to clipboard')\"></i>-->\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<!-- Page content -->\r\n\t<router-view></router-view>\r\n\r\n</div>\r\n";
 exports.UserViewComponent = {
     name: "UserComponent",
     template: html,
@@ -867,6 +867,8 @@ exports.UserViewComponent = {
         return {
             userDataStatus: String,
             user: Object,
+            snippets: Array,
+            starredSnippets: Array
         };
     },
     created: function () {
@@ -876,6 +878,8 @@ exports.UserViewComponent = {
             requestedId = this.$store.getters["mainstore/userId"];
         }
         this.loadUser(requestedId);
+        this.getSnippets(requestedId);
+        this.getStarredSnippets(requestedId);
     },
     methods: {
         loadUser: function (userId) {
@@ -890,6 +894,34 @@ exports.UserViewComponent = {
             }, function (fail) {
                 _this.userDataStatus = "failed";
                 _this.$router.push({ name: "about" });
+            });
+        },
+        getSnippets: function (userId) {
+            var _this = this;
+            console.log("loadSnippets fired");
+            var UserComponent = this;
+            this.$store.dispatch({
+                type: "getSnippets",
+                userId: userId,
+            }).then(function (response) {
+                _this.snippets = response;
+            }, function (fail) {
+                _this.snippetDataStatus = "failed";
+                console.log(fail);
+            });
+        },
+        getStarredSnippets: function (userId) {
+            var _this = this;
+            console.log("loadSnippets fired");
+            var UserComponent = this;
+            this.$store.dispatch({
+                type: "getStarredSnippets",
+                userId: userId,
+            }).then(function (response) {
+                _this.starredSnippets = response;
+            }, function (fail) {
+                _this.snippetDataStatus = "failed";
+                console.log(fail);
             });
         }
     }

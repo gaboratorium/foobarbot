@@ -11,6 +11,8 @@ export const UserViewComponent = {
 		return {
 			userDataStatus: String,
 			user: Object,
+			snippets: Array,
+			starredSnippets: Array
 		};
 	},
 
@@ -24,6 +26,8 @@ export const UserViewComponent = {
 		}
 
 		this.loadUser(requestedId);
+		this.getSnippets(requestedId);
+		this.getStarredSnippets(requestedId);
 	},
 
 	// Methods
@@ -44,6 +48,36 @@ export const UserViewComponent = {
 					this.$router.push({name: "about"});
 
 				})
-	  	}
+	  	},
+
+		getSnippets: function(userId: number){
+			console.log("loadSnippets fired")
+			var UserComponent = this;
+			this.$store.dispatch({
+				type: "getSnippets",
+				userId: userId,
+			}).then((response: any) => {
+
+				this.snippets = response;
+
+			}, (fail: any) => {
+				this.snippetDataStatus = "failed";
+				console.log(fail);
+			})
+		},
+
+		getStarredSnippets: function(userId: number){
+			console.log("loadSnippets fired")
+			var UserComponent = this;
+			this.$store.dispatch({
+				type: "getStarredSnippets",
+				userId: userId,
+			}).then((response: any) => {
+				this.starredSnippets = response;
+			}, (fail: any) => {
+				this.snippetDataStatus = "failed";
+				console.log(fail);
+			})
+		}
   	}
 };
