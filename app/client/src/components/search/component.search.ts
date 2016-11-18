@@ -111,33 +111,56 @@ export const SearchViewComponent = {
 		},
 
 		starSnippet: function(snippetId: string){
+			var SearchComponent = this;
 			if (this.$store.getters["mainstore/isUserLoggedIn"]) {
 				this.$store.dispatch({
 					type: 'postStar',
 					snippetId: snippetId
 				}).then((response: any) => {
+					console.log("Starring item", response);
+					SearchComponent.showSnackBar("Snippet succesfully starred.");
 				}, (fail: any) =>{
-					
+					SearchComponent.showSnackbarDanger("You have already starred this item.");
 				});
 			}
 			else {
+				SearchComponent.showSnackbarDanger("You have to be logged in to star snippets.");
 			}
 			
 		},
 
-		showInDevelopmentSnackbar: function(feature: string){
-			setTimeout(() => {
-				console.log("show toast");
-				var snackbarContainer = document.querySelector('#feature-in-development');
-				
-				// Reinitialize as MDL elem
-				componentHandler.upgradeElement(snackbarContainer);
-
-				var message = "This feature is still in development: " + feature;
-				var data = {message: message};
-				snackbarContainer.MaterialSnackbar.showSnackbar(data);
-			}, 100);
+		starSnippetFromExternalApi: function(snippetId: string){
+			var SearchComponent = this;
+			if (this.$store.getters["mainstore/isUserLoggedIn"]) {
+				SearchComponent.showSnackBar("Snippet succesfully starred.");
+				SearchComponent.showSnackbarDanger("Sorry something went wrong :(");
+			}
+			else {
+				SearchComponent.showSnackbarDanger("You have to be logged in to star snippets.");
+			}
 			
+		},
+
+		showSnackbarDanger: function(message: string){
+			var snackbarContainer = document.querySelector('#snackbar--danger');
+			componentHandler.upgradeElement(snackbarContainer);
+			var data = {message: message};
+			snackbarContainer.MaterialSnackbar.showSnackbar(data);
+		},
+
+		showSnackbar: function(message: string){
+			var snackbarContainer = document.querySelector('#snackbar--danger');
+			componentHandler.upgradeElement(snackbarContainer);
+			var data = {message: message};
+			snackbarContainer.MaterialSnackbar.showSnackbar(data);
+		},
+
+		showInDevelopmentSnackbar: function(feature: string){
+			var snackbarContainer = document.querySelector('#snackbar--danger');
+			componentHandler.upgradeElement(snackbarContainer);
+			var message = "This feature is still in development: " + feature;
+			var data = {message: message};
+			snackbarContainer.MaterialSnackbar.showSnackbar(data);			
 		}
 	}
 };

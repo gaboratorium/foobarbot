@@ -116,7 +116,7 @@ exports.ComposeModalComponent = {
 },{}],4:[function(require,module,exports){
 "use strict";
 
-var html = "<div class=\"grid-block align-center\">\r\n\t<div class=\"grid-block grid-page-content\">\r\n\t\t<div class=\"grid-content\">\r\n\r\n\t\t\t<!-- Toast snackbar -->\r\n\t\t\t<div id=\"feature-in-development\" class=\"mdl-js-snackbar mdl-snackbar\">\r\n\t\t\t\t<div class=\"mdl-snackbar__text\"></div>\r\n\t\t\t\t<button class=\"mdl-snackbar__action\" type=\"button\"></button>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t\r\n\t\t\t<div class=\"grid-block\" v-if=\"snippetDataStatus=='loading'\">\r\n\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t<div class=\"grid-block align-center\">\r\n\t\t\t\t\t\t<div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<div v-show=\"snippetDataStatus=='loaded'\">\r\n\t\t\t\t<!--List of snippets-->\r\n\t\t\t\t<ul class=\"c-snippets\">\r\n\r\n\t\t\t\t\t<li class=\"c-snippet\" v-for=\"snippet in snippets\">\r\n\t\t\t\t\t\t<!--Snippet code -->\r\n\t\t\t\t\t\t<pre><code class=\"php c-snippet__code\">{{ snippet.snippetCode }}</code></pre>\r\n\r\n\t\t\t\t\t\t<div class=\"c-snippet__readme\">\r\n\r\n\t\t\t\t\t\t\t<!--Readme meta-->\r\n\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta\">\r\n\t\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta-title\">\r\n\t\t\t\t\t\t\t\t\t<span><router-link :to=\"'/snippet/' + snippet.snippetId\">#{{snippet.snippetId}}</router-link> in </span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t<router-link :to=\"'/search/' + snippet.tag1\">{{snippet.tag1}}</router-link>\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t<router-link :to=\"'/search/' + snippet.tag2\">{{snippet.tag2}}</router-link>\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t<router-link :to=\"'/search/' + snippet.tag3\">{{snippet.tag3}}</router-link>\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t<span v-if=\"snippet.userUrl !== ''\">by <a v-bind:href=\"snippet.userUrl\" target=\"_blank\">#{{ snippet.userId }}</a></span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<div>\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-clipboard c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar('Copying code to clipboard')\"></i>\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-star c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"starSnippet(snippet.snippetId)\"></i>\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-expand c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar('Expanding snippet view')\"></i>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<!--<a href=\"#\" v-on:click.prevent=\"starSnippet(snippet.snippetId)\">Star it</a>-->\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t<!--Readme text in markdown-->\r\n\t\t\t\t\t\t\t<div v-html=\"snippet.readme\" class=\"c-snippet__readme-text\"></div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\t\t\t</div>\r\n\r\n\t\t\t<p class=\"o-text--info\" v-show=\"snippetDataStatus=='loaded'\"><span class=\"o-text--strong\"><i class=\"fa fa-fw fa-info-circle\" aria-hidden=\"true\"></i>Didn't find what you were looking for?</span> Try Foobarbot Search in the navigation bar!</p>\r\n\r\n\t\t</div>\r\n\t</div>\r\n</div>";
+var html = "<div class=\"grid-block align-center\">\r\n\t<div class=\"grid-block grid-page-content\">\r\n\t\t<div class=\"grid-content\">\r\n\r\n\t\t\t<!-- Toast snackbar -->\r\n\t\t\t<div id=\"snackbar--danger\" class=\"mdl-js-snackbar mdl-snackbar mdl-snackbar--danger\">\r\n\t\t\t\t<div class=\"mdl-snackbar__text\"></div>\r\n\t\t\t\t<button class=\"mdl-snackbar__action\" type=\"button\"></button>\r\n\t\t\t</div>\r\n\r\n\t\t\t<!-- Toast snackbar -->\r\n\t\t\t<div id=\"snackbar\" class=\"mdl-js-snackbar mdl-snackbar\">\r\n\t\t\t\t<div class=\"mdl-snackbar__text\"></div>\r\n\t\t\t\t<button class=\"mdl-snackbar__action\" type=\"button\"></button>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t\r\n\t\t\t<div class=\"grid-block\" v-if=\"snippetDataStatus=='loading'\">\r\n\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t<div class=\"grid-block align-center\">\r\n\t\t\t\t\t\t<div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<div v-show=\"snippetDataStatus=='loaded'\">\r\n\t\t\t\t<!--List of snippets-->\r\n\t\t\t\t<ul class=\"c-snippets\">\r\n\r\n\t\t\t\t\t<li class=\"c-snippet\" v-for=\"snippet in snippets\">\r\n\t\t\t\t\t\t<!--Snippet code -->\r\n\t\t\t\t\t\t<pre><code class=\"php c-snippet__code\">{{ snippet.snippetCode }}</code></pre>\r\n\r\n\t\t\t\t\t\t<div class=\"c-snippet__readme\">\r\n\r\n\t\t\t\t\t\t\t<!--Readme meta-->\r\n\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta\">\r\n\t\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta-title\">\r\n\t\t\t\t\t\t\t\t\t<span><router-link :to=\"'/snippet/' + snippet.snippetId\">#{{snippet.snippetId}}</router-link> in </span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t<router-link :to=\"'/search/' + snippet.tag1\">{{snippet.tag1}}</router-link>\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t<router-link :to=\"'/search/' + snippet.tag2\">{{snippet.tag2}}</router-link>\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t<router-link :to=\"'/search/' + snippet.tag3\">{{snippet.tag3}}</router-link>\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t<span v-if=\"snippet.userUrl !== ''\">by <a v-bind:href=\"snippet.userUrl\" target=\"_blank\">#{{ snippet.userId }}</a></span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<div>\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-clipboard c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar('Copying code to clipboard')\"></i>\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-star c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"starSnippet(snippet.snippetId)\"></i>\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-expand c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar('Expanding snippet view')\"></i>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<!--<a href=\"#\" v-on:click.prevent=\"starSnippet(snippet.snippetId)\">Star it</a>-->\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t<!--Readme text in markdown-->\r\n\t\t\t\t\t\t\t<div v-html=\"snippet.readme\" class=\"c-snippet__readme-text\"></div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\t\t\t</div>\r\n\r\n\t\t\t<p class=\"o-text--info\" v-show=\"snippetDataStatus=='loaded'\"><span class=\"o-text--strong\"><i class=\"fa fa-fw fa-info-circle\" aria-hidden=\"true\"></i>Didn't find what you were looking for?</span> Try Foobarbot Search in the navigation bar!</p>\r\n\r\n\t\t</div>\r\n\t</div>\r\n</div>";
 var marked = require('marked');
 var hljs = require("highlight.js");
 hljs.configure({
@@ -169,7 +169,7 @@ exports.DiscoverViewComponent = {
             });
         },
         starSnippet: function (snippetId) {
-            var _this = this;
+            var DiscoverComponent = this;
             console.log("Starring snippet...");
             if (this.$store.getters["mainstore/isUserLoggedIn"]) {
                 this.$store.dispatch({
@@ -177,32 +177,34 @@ exports.DiscoverViewComponent = {
                     snippetId: snippetId
                 }).then(function (response) {
                     console.log("Starring item", response);
-                    _this.showSnackBar("Snippet succesfully starred.");
+                    DiscoverComponent.showSnackBar("Snippet succesfully starred.");
                 }, function (fail) {
                     console.log("Starring item failed", fail);
+                    DiscoverComponent.showSnackbarDanger("You have already starred this item.");
                 });
             }
             else {
+                DiscoverComponent.showSnackbarDanger("You have to be logged in to star snippets.");
             }
         },
+        showSnackbarDanger: function (message) {
+            var snackbarContainer = document.querySelector('#snackbar--danger');
+            componentHandler.upgradeElement(snackbarContainer);
+            var data = { message: message };
+            snackbarContainer.MaterialSnackbar.showSnackbar(data);
+        },
         showSnackBar: function (message) {
-            var snackbarContainer = document.querySelector('#feature-in-development');
+            var snackbarContainer = document.querySelector('#snackbar');
             componentHandler.upgradeElement(snackbarContainer);
             var data = { message: message };
             snackbarContainer.MaterialSnackbar.showSnackbar(data);
         },
         showInDevelopmentSnackbar: function (feature) {
-            setTimeout(function () {
-                console.log("show toast");
-                var snackbarContainer = document.querySelector('#feature-in-development');
-                snackbarContainer.className += " mdl-snackbar--danger";
-                componentHandler.upgradeElement(snackbarContainer);
-                console.log("snackbarcontainer.MaterialSnackbar", snackbarContainer.MaterialSnackbar);
-                console.log("snackbarcontainer", snackbarContainer);
-                var message = "This feature is still in development: " + feature;
-                var data = { message: message };
-                snackbarContainer.MaterialSnackbar.showSnackbar(data);
-            }, 100);
+            var snackbarContainer = document.querySelector('#snackbar--danger');
+            componentHandler.upgradeElement(snackbarContainer);
+            var message = "This feature is still in development: " + feature;
+            var data = { message: message };
+            snackbarContainer.MaterialSnackbar.showSnackbar(data);
         }
     }
 };
@@ -427,7 +429,7 @@ exports.NotificationsViewComponent = {
 },{}],8:[function(require,module,exports){
 "use strict";
 
-var html = "<div class=\"grid-block align-center\">\r\n\t<div class=\"grid-block grid-page-content\">\r\n\t\t<div class=\"grid-content\">\r\n\r\n\t\t\t<!-- Toast snackbar -->\r\n\t\t\t<div id=\"feature-in-development\" class=\"mdl-js-snackbar mdl-snackbar\">\r\n\t\t\t\t<div class=\"mdl-snackbar__text\"></div>\r\n\t\t\t\t<button class=\"mdl-snackbar__action\" type=\"button\"></button>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<div class=\"grid-block\" v-if=\"snippetDataStatus=='loading'\">\r\n\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t<div class=\"grid-block align-center\">\r\n\t\t\t\t\t\t<div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<div v-show=\"snippetDataStatus=='loaded'\">\r\n\t\t\t\t\t\r\n\t\t\t\t<h1 v-if=\"isSearch\">Search results for \"<span class=\"o-text--strong\">{{ searchText }}</span>\"</h1>\r\n\t\t\t\t<p class=\"o-text--info\"><span class=\"o-text--strong\"><i class=\"fa fa-fw fa-info-circle\" aria-hidden=\"true\"></i>Heads up!</span> This feature is not yet completely implemented, so what we have is a random list of snippets.</p>\r\n\t\t\t\t<!--List of snippets-->\r\n\t\t\t\t<ul class=\"c-snippets\">\r\n\r\n\t\t\t\t\t<li class=\"c-snippet\" v-for=\"snippet in snippets\">\r\n\t\t\t\t\t\t<!--Snippet code -->\r\n\t\t\t\t\t\t<pre><code class=\"php c-snippet__code\">{{ snippet.snippetCode }}</code></pre>\r\n\r\n\t\t\t\t\t\t<div class=\"c-snippet__readme\">\r\n\r\n\t\t\t\t\t\t\t<!--Readme meta-->\r\n\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta\">\r\n\t\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta-title\">\r\n\t\t\t\t\t\t\t\t\t<span><router-link :to=\"'/snippet/' + snippet.snippetId\">#{{snippet.snippetId}}</router-link> in </span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t<router-link :to=\"'/search/' + snippet.tag1\">{{snippet.tag1}}</router-link>\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t<router-link :to=\"'/search/' + snippet.tag2\">{{snippet.tag2}}</router-link>\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t<router-link :to=\"'/search/' + snippet.tag3\">{{snippet.tag3}}</router-link>\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t<span v-if=\"snippet.userUrl !== ''\">by <a v-bind:href=\"snippet.userUrl\" target=\"_blank\">#{{ snippet.userId }}</a></span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<div>\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-clipboard c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar('Copying code to clipboard')\"></i>\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-star c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar()\"></i>\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-expand c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar('Expanding snippet view')\"></i>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<!--<a href=\"#\" v-on:click.prevent=\"starSnippet(snippet.snippetId)\">Star it</a>-->\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t<!--Readme text in markdown-->\r\n\t\t\t\t\t\t\t<div v-html=\"snippet.readme\" class=\"c-snippet__readme-text\"></div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div v-show=\"snippetDataFromGithubStatus == 'loaded'\" style=\"margin-top: 6rem\">\r\n\t\t\t\t<h1>GitHub search results for \"<span class=\"o-text--strong\">{{ searchText }}</span>\"</h1>\r\n\t\t\t\t<p class=\"o-text--info\"><span class=\"o-text--strong\"><i class=\"fa fa-fw fa-info-circle\" aria-hidden=\"true\"></i>Heads up!</span> GitHub API limits the number of requests coming from a given unauthenticated source, which means you may experience disconnection in case of high traffic.</p>\r\n\r\n\t\t\t\t<!--List of snippets-->\r\n\t\t\t\t<ul class=\"c-snippets\">\r\n\r\n\t\t\t\t\t<li class=\"c-snippet\" v-for=\"snippet in snippetsFromGithub\">\r\n\t\t\t\t\t\t<!--Snippet code -->\r\n\t\t\t\t\t\t<pre><code class=\"php c-snippet__code c-snippet__code--condensed\">{{ snippet.snippetCode }}</code></pre>\r\n\r\n\t\t\t\t\t\t<div class=\"c-snippet__readme\">\r\n\r\n\t\t\t\t\t\t\t<!--Readme meta-->\r\n\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta\">\r\n\t\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta-title\">\r\n\t\t\t\t\t\t\t\t\t<span><a v-bind:href=\"snippet.snippetUrl\" target=\"_blank\">GitHub Gist</a> in </span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t{{ searchText }}\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\tGitHub\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t<span v-if=\"snippet.userUrl !== ''\">by <a v-bind:href=\"snippet.userUrl\" target=\"_blank\">#{{ snippet.userId }}</a></span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<div>\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-clipboard c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar('Copying code to clipboard')\"></i>\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-star c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar()\"></i>\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-expand c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar('Expanding snippet view')\"></i>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<!--<a href=\"#\" v-on:click.prevent=\"starSnippet(snippet.snippetId)\">Star it</a>-->\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t<!--Readme text in markdown-->\r\n\t\t\t\t\t\t\t<div v-html=\"snippet.readme\" class=\"c-snippet__readme-text\"></div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
+var html = "<div class=\"grid-block align-center\">\r\n\t<div class=\"grid-block grid-page-content\">\r\n\t\t<div class=\"grid-content\">\r\n\r\n\t\t\t<!-- Toast snackbar -->\r\n\t\t\t<div id=\"snackbar--danger\" class=\"mdl-js-snackbar mdl-snackbar mdl-snackbar--danger\">\r\n\t\t\t\t<div class=\"mdl-snackbar__text\"></div>\r\n\t\t\t\t<button class=\"mdl-snackbar__action\" type=\"button\"></button>\r\n\t\t\t</div>\r\n\r\n\t\t\t<!-- Toast snackbar -->\r\n\t\t\t<div id=\"snackbar\" class=\"mdl-js-snackbar mdl-snackbar\">\r\n\t\t\t\t<div class=\"mdl-snackbar__text\"></div>\r\n\t\t\t\t<button class=\"mdl-snackbar__action\" type=\"button\"></button>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<div class=\"grid-block\" v-if=\"snippetDataStatus=='loading'\">\r\n\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t<div class=\"grid-block align-center\">\r\n\t\t\t\t\t\t<div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<div v-show=\"snippetDataStatus=='loaded'\">\r\n\t\t\t\t\t\r\n\t\t\t\t<h1 v-if=\"isSearch\">Search results for \"<span class=\"o-text--strong\">{{ searchText }}</span>\"</h1>\r\n\t\t\t\t<p class=\"o-text--info\"><span class=\"o-text--strong\"><i class=\"fa fa-fw fa-info-circle\" aria-hidden=\"true\"></i>Heads up!</span> This feature is not yet completely implemented, so what we have is a random list of snippets.</p>\r\n\t\t\t\t<!--List of snippets-->\r\n\t\t\t\t<ul class=\"c-snippets\">\r\n\r\n\t\t\t\t\t<li class=\"c-snippet\" v-for=\"snippet in snippets\">\r\n\t\t\t\t\t\t<!--Snippet code -->\r\n\t\t\t\t\t\t<pre><code class=\"php c-snippet__code\">{{ snippet.snippetCode }}</code></pre>\r\n\r\n\t\t\t\t\t\t<div class=\"c-snippet__readme\">\r\n\r\n\t\t\t\t\t\t\t<!--Readme meta-->\r\n\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta\">\r\n\t\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta-title\">\r\n\t\t\t\t\t\t\t\t\t<span><router-link :to=\"'/snippet/' + snippet.snippetId\">#{{snippet.snippetId}}</router-link> in </span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t<router-link :to=\"'/search/' + snippet.tag1\">{{snippet.tag1}}</router-link>\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t<router-link :to=\"'/search/' + snippet.tag2\">{{snippet.tag2}}</router-link>\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t<router-link :to=\"'/search/' + snippet.tag3\">{{snippet.tag3}}</router-link>\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t<span v-if=\"snippet.userUrl !== ''\">by <a v-bind:href=\"snippet.userUrl\" target=\"_blank\">#{{ snippet.userId }}</a></span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<div>\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-clipboard c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar('Copying code to clipboard')\"></i>\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-star c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"starSnippet(snippet.snippetId)\"></i>\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-expand c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar('Expanding snippet view')\"></i>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<!--<a href=\"#\" v-on:click.prevent=\"starSnippet(snippet.snippetId)\">Star it</a>-->\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t<!--Readme text in markdown-->\r\n\t\t\t\t\t\t\t<div v-html=\"snippet.readme\" class=\"c-snippet__readme-text\"></div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div v-show=\"snippetDataFromGithubStatus == 'loaded'\" style=\"margin-top: 6rem\">\r\n\t\t\t\t<h1>GitHub search results for \"<span class=\"o-text--strong\">{{ searchText }}</span>\"</h1>\r\n\t\t\t\t<p class=\"o-text--info\"><span class=\"o-text--strong\"><i class=\"fa fa-fw fa-info-circle\" aria-hidden=\"true\"></i>Heads up!</span> GitHub API limits the number of requests coming from a given unauthenticated source, which means you may experience disconnection in case of high traffic.</p>\r\n\r\n\t\t\t\t<!--List of snippets-->\r\n\t\t\t\t<ul class=\"c-snippets\">\r\n\r\n\t\t\t\t\t<li class=\"c-snippet\" v-for=\"snippet in snippetsFromGithub\">\r\n\t\t\t\t\t\t<!--Snippet code -->\r\n\t\t\t\t\t\t<pre><code class=\"php c-snippet__code c-snippet__code--condensed\">{{ snippet.snippetCode }}</code></pre>\r\n\r\n\t\t\t\t\t\t<div class=\"c-snippet__readme\">\r\n\r\n\t\t\t\t\t\t\t<!--Readme meta-->\r\n\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta\">\r\n\t\t\t\t\t\t\t\t<div class=\"c-snippet__readme-meta-title\">\r\n\t\t\t\t\t\t\t\t\t<span><a v-bind:href=\"snippet.snippetUrl\" target=\"_blank\">GitHub Gist</a> in </span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\t{{ searchText }}\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"mdl-chip__text\">\r\n\t\t\t\t\t\t\t\t\t\t\tGitHub\r\n\t\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t\t\t<span v-if=\"snippet.userUrl !== ''\">by <a v-bind:href=\"snippet.userUrl\" target=\"_blank\">#{{ snippet.userId }}</a></span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<div>\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-clipboard c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar('Copying code to clipboard')\"></i>\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-star c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"starSnippetFromExternalApi(snippet.snippetId)()\"></i>\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-expand c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar('Expanding snippet view')\"></i>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<!--<a href=\"#\" v-on:click.prevent=\"starSnippet(snippet.snippetId)\">Star it</a>-->\r\n\t\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t\t<!--Readme text in markdown-->\r\n\t\t\t\t\t\t\t<div v-html=\"snippet.readme\" class=\"c-snippet__readme-text\"></div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
 var marked = require('marked');
 var hljs = require("highlight.js");
 hljs.configure({
@@ -512,26 +514,50 @@ exports.SearchViewComponent = {
             });
         },
         starSnippet: function (snippetId) {
+            var SearchComponent = this;
             if (this.$store.getters["mainstore/isUserLoggedIn"]) {
                 this.$store.dispatch({
                     type: 'postStar',
                     snippetId: snippetId
                 }).then(function (response) {
+                    console.log("Starring item", response);
+                    SearchComponent.showSnackBar("Snippet succesfully starred.");
                 }, function (fail) {
+                    SearchComponent.showSnackbarDanger("You have already starred this item.");
                 });
             }
             else {
+                SearchComponent.showSnackbarDanger("You have to be logged in to star snippets.");
             }
         },
+        starSnippetFromExternalApi: function (snippetId) {
+            var SearchComponent = this;
+            if (this.$store.getters["mainstore/isUserLoggedIn"]) {
+                SearchComponent.showSnackBar("Snippet succesfully starred.");
+                SearchComponent.showSnackbarDanger("Sorry something went wrong :(");
+            }
+            else {
+                SearchComponent.showSnackbarDanger("You have to be logged in to star snippets.");
+            }
+        },
+        showSnackbarDanger: function (message) {
+            var snackbarContainer = document.querySelector('#snackbar--danger');
+            componentHandler.upgradeElement(snackbarContainer);
+            var data = { message: message };
+            snackbarContainer.MaterialSnackbar.showSnackbar(data);
+        },
+        showSnackbar: function (message) {
+            var snackbarContainer = document.querySelector('#snackbar--danger');
+            componentHandler.upgradeElement(snackbarContainer);
+            var data = { message: message };
+            snackbarContainer.MaterialSnackbar.showSnackbar(data);
+        },
         showInDevelopmentSnackbar: function (feature) {
-            setTimeout(function () {
-                console.log("show toast");
-                var snackbarContainer = document.querySelector('#feature-in-development');
-                componentHandler.upgradeElement(snackbarContainer);
-                var message = "This feature is still in development: " + feature;
-                var data = { message: message };
-                snackbarContainer.MaterialSnackbar.showSnackbar(data);
-            }, 100);
+            var snackbarContainer = document.querySelector('#snackbar--danger');
+            componentHandler.upgradeElement(snackbarContainer);
+            var message = "This feature is still in development: " + feature;
+            var data = { message: message };
+            snackbarContainer.MaterialSnackbar.showSnackbar(data);
         }
     }
 };
