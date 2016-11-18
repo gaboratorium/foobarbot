@@ -255,6 +255,9 @@ export const ApiInstance: IApiInstance= new Vue({
 		},
 
 		getStarredSnippets: (myUserId: string, mySnippetsMaxNumber?: number) => {
+
+			console.log("getStarredsnippets fired in api");
+			
 			var options = {
 				params: {
 					userId: myUserId
@@ -264,8 +267,12 @@ export const ApiInstance: IApiInstance= new Vue({
 			if (mySnippetsMaxNumber) options.params.snippetsMaxNumber = mySnippetsMaxNumber;
 
 			var myPromise = new Promise((resolve, reject) => {
+				console.log("sending request...");
+				
 				// Make HTTP request
 				Vue.http.get('/api/starredsnippets', options).then((response: any) => {
+					console.log("getstarredsnippets in api recieved this response", response);
+					
 					resolve(response.body.snippets);
 				}, (fail: any) => {
 					reject(fail);

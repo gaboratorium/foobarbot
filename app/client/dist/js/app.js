@@ -830,6 +830,7 @@ exports.UserStarsComponent = {
                 type: "getStarredSnippets",
                 userId: userId,
             }).then(function (response) {
+                console.log("loadsnippets got this response", response);
                 for (var i = 0; i < response.length; i++) {
                     response[i].readme = marked(response[i].readme);
                 }
@@ -1076,6 +1077,7 @@ exports.ApiInstance = new Vue({
             return myPromise;
         },
         getStarredSnippets: function (myUserId, mySnippetsMaxNumber) {
+            console.log("getStarredsnippets fired in api");
             var options = {
                 params: {
                     userId: myUserId
@@ -1084,7 +1086,9 @@ exports.ApiInstance = new Vue({
             if (mySnippetsMaxNumber)
                 options.params.snippetsMaxNumber = mySnippetsMaxNumber;
             var myPromise = new Promise(function (resolve, reject) {
+                console.log("sending request...");
                 Vue.http.get('/api/starredsnippets', options).then(function (response) {
+                    console.log("getstarredsnippets in api recieved this response", response);
                     resolve(response.body.snippets);
                 }, function (fail) {
                     reject(fail);
@@ -1417,6 +1421,7 @@ exports.SnippetStore = {
             }
         },
         getStarredSnippets: function (context, payload) {
+            console.log("getStarredSnippets in snippet store fired");
             var userId = payload.userId;
             if (payload.snippetsMaxNumber && payload.searchText) {
                 return instance_api_1.ApiInstance.getStarredSnippets(userId, payload.snippetsMaxNumber);

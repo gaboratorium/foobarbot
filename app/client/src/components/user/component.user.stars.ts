@@ -63,6 +63,8 @@ export const UserStarsComponent = {
 				type: "getStarredSnippets",
 				userId: userId,
 			}).then((response: any) => {
+				console.log("loadsnippets got this response", response);
+				
 
 				// Converting text to markdown
 				for (var i = 0; i < response.length; i++) {

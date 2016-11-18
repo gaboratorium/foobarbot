@@ -18,6 +18,9 @@ export const SnippetStore = {
         },
 
         getStarredSnippets: (context: any, payload: any) => {
+
+            console.log("getStarredSnippets in snippet store fired");
+            
             var userId = payload.userId;
             if (payload.snippetsMaxNumber && payload.searchText){
                 return ApiInstance.getStarredSnippets(userId, payload.snippetsMaxNumber);

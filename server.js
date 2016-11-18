@@ -263,10 +263,47 @@ apiRoutes.get('/snippets', function(req, res) {
 });
 
 apiRoutes.get('/starredsnippets', function(req, res) {
+
+	console.log('get starred snippets endpoint hit');
+	console.log('get starred snippets user id:', req.query.userId);
+	
+
 	var snippetsMaxNumber = req.query.snippetsMaxNumber ? req.query.snippetsMaxNumber : 10;
 	var myUserId = req.query.userId;
+	var snippets = [];
 
-	Star
+
+	var myPromises = [];
+	Star.find({userId: myUserId}, (err, stars) => {
+		console.log('Star find was ok and found these stars: ', stars);
+		
+		if (err) throw err;
+		for (var i = 0; i < stars.length; i++) {
+			
+			var myPromise = new Promise((resolve, reject) => {
+				Snippet.find({snippetId: stars[i].snippetId}, (err, snippets) => {
+					if (err) reject(err);
+					console.log('A promise has been resolved...');
+					resolve(snippets[0]);
+				});
+			});
+
+			myPromises.push(myPromise);
+
+		}
+
+		console.log('For loop ends. I have this myPromises.length', myPromises.length);
+
+		console.log('Finding stars ends. I have this myPromises.length', myPromises.length);
+
+		Promise.all(myPromises).then(resolvings => {
+			console.log('All promises resolved this is the result', resolvings);	
+			return res.json({succes: true, message: "You know some shit", snippets: resolvings});
+		}).catch(reason => {
+			console.log('error 500');
+			return res.status(500).send({success: false, message: "Something went wrong... I am so, so sorry..."});
+		});
+	});
 });
 
 // route middleware to verify a token
