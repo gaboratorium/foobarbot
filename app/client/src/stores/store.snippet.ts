@@ -22,22 +22,32 @@ export const SnippetStore = {
             var myPromise = new Promise((resolve, reject) => {
                 ApiInstance.getSnippetsFromGithub().then((response: any) =>{
 
+                    // Simulate search by shuffling results
                     response = _.shuffle(response);
-                    console.log("Github gists:", response);
 
-                    // Transform GitHub Gists to snippets
+                    // Array of snippets will be resolved if succeed
+                    // gistCodeLinks is a list of strings containing URLs for the codes
                     var maxNumber = 10;
                     var snippets: Array<any> = [];
+                    var gistCodeLinks: Array<Promise<any>> = [];
+                    var gistCodes: Array<string> = [];
+
+                    // Transform GitHub Gist to Foobarbot Snippet
+                    // Assign the corresponding properties + fetch code from URL
                     for (var i = 0; i < maxNumber; i++) {
+
+                        // Gists contain multiple files
+                        // We pick the first one for now
                         var gist = response[i];
-                        
                         var keys = Object.keys(gist.files);
                         var gistCodeLink = gist.files[keys[0]].raw_url;
 
+                        // Assigning corresponding values
                         var readme: any = gist.description ? gist.description: "*No readme was provided*";
                         var userId: any = gist.owner ? gist.owner.login : "Unknown";
                         var userUrl: any = gist.owner ? gist.owner.html_url : "";
                         
+                        // Create snippet object
                         var snippet: any = {
                             snippetId: gist.id,
                             snippetCode: gistCodeLink,
@@ -50,9 +60,43 @@ export const SnippetStore = {
                             readme: readme
                         };
 
+                        // Create a promise to get gistCode from gistCodeLink
+                        var getGistCode = new Promise((resolve, reject) => {
+                            Vue.http.get(gistCodeLink).then((response: any) => {
+                                console.log("Getting Gist code returns this response", response.body);
+                                gistCodes.push(response.body);
+                                resolve(response.body);
+                            }, (fail: any) => {
+                                console.log("Getting Gist code fails", fail);
+                                reject(fail);
+                            })
+                        });
+
                         snippets.push(snippet);
+                        gistCodeLinks.push(getGistCode);
                     }
-                    resolve(snippets);
+
+                    console.log("Snippets length", snippets.length);
+                    console.log("gistCodeLinks length", gistCodeLinks.length);
+                    
+
+                    // Get all gist codes from gistcode links, resolve when all finished
+                    // reject if one fials
+                    Promise.all(gistCodeLinks).then(() => {
+
+                        for (var i = 0; i < snippets.length; i++) {
+                            snippets[i].snippetCode = gistCodes[i];
+                        }
+
+                        // This resolve corresponds to the parent promise
+                        // not the current one
+                        resolve(snippets);
+                    }, (fail) => {
+                        // Same with this
+                        console.log("Getting one of the Gist Codes failed, therefore everything fails.", fail);
+                        reject(fail);
+                    })
+
                 }, (fail: any) => {
                     // Fail
                     console.log("Snippet store fails from getsnippetsfromgithub", fail);

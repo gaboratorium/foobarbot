@@ -1249,9 +1249,10 @@ exports.SnippetStore = {
             var myPromise = new Promise(function (resolve, reject) {
                 instance_api_1.ApiInstance.getSnippetsFromGithub().then(function (response) {
                     response = _.shuffle(response);
-                    console.log("Github gists:", response);
                     var maxNumber = 10;
                     var snippets = [];
+                    var gistCodeLinks = [];
+                    var gistCodes = [];
                     for (var i = 0; i < maxNumber; i++) {
                         var gist = response[i];
                         var keys = Object.keys(gist.files);
@@ -1270,9 +1271,30 @@ exports.SnippetStore = {
                             tag3: "batman",
                             readme: readme
                         };
+                        var getGistCode = new Promise(function (resolve, reject) {
+                            Vue.http.get(gistCodeLink).then(function (response) {
+                                console.log("Getting Gist code returns this response", response.body);
+                                gistCodes.push(response.body);
+                                resolve(response.body);
+                            }, function (fail) {
+                                console.log("Getting Gist code fails", fail);
+                                reject(fail);
+                            });
+                        });
                         snippets.push(snippet);
+                        gistCodeLinks.push(getGistCode);
                     }
-                    resolve(snippets);
+                    console.log("Snippets length", snippets.length);
+                    console.log("gistCodeLinks length", gistCodeLinks.length);
+                    Promise.all(gistCodeLinks).then(function () {
+                        for (var i = 0; i < snippets.length; i++) {
+                            snippets[i].snippetCode = gistCodes[i];
+                        }
+                        resolve(snippets);
+                    }, function (fail) {
+                        console.log("Getting one of the Gist Codes failed, therefore everything fails.", fail);
+                        reject(fail);
+                    });
                 }, function (fail) {
                     console.log("Snippet store fails from getsnippetsfromgithub", fail);
                     reject(fail);
