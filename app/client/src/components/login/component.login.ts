@@ -25,7 +25,7 @@ export const LoginViewComponent = {
 					// Double redirection for forcing router state change
 					this.showToast("You have succesfully logged in.");
 					this.$router.replace('dummy-replacement-so-we-force-router-change');
-					this.$router.push('settings');
+					this.$router.push('discover');
 				}, (fail: any) => {
 					console.log('Oops, something went wrong!');		
 					this.errorMsg = "Wrong credentials! Try again!";			

@@ -126,11 +126,17 @@ export const SearchViewComponent = {
 		},
 
 		showInDevelopmentSnackbar: function(){
-			console.log("show toast");
-			var snackbarContainer = document.querySelector('#feature-in-development');
-			var message = "This feature is still in development.";
-			var data = {message: message};
-			snackbarContainer.MaterialSnackbar.showSnackbar(data);
+			setTimeout(() => {
+				console.log("show toast");
+				var snackbarContainer = document.querySelector('#feature-in-development');
+				// Reinitialize as MDL elem
+				componentHandler.upgradeElement(snackbarContainer);
+
+				var message = "This feature is still in development.";
+				var data = {message: message};
+				snackbarContainer.MaterialSnackbar.showSnackbar(data);
+			}, 100);
+			
 		}
 	}
 };

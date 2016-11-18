@@ -1,6 +1,13 @@
 <div class="grid-block align-center">
 	<div class="grid-block grid-page-content">
 		<div class="grid-content">
+
+			<!-- Toast snackbar -->
+			<div id="feature-in-development" class="mdl-js-snackbar mdl-snackbar">
+				<div class="mdl-snackbar__text"></div>
+				<button class="mdl-snackbar__action" type="button"></button>
+			</div>
+			
 			
 			<div class="grid-block" v-if="snippetDataStatus=='loading'">
 				<div class="grid-content">
@@ -40,8 +47,13 @@
 											<router-link :to="'/search/' + snippet.tag3">{{snippet.tag3}}</router-link>
 										</span>
 									</span>
+									<span v-if="snippet.userUrl !== ''">by <a v-bind:href="snippet.userUrl" target="_blank">#{{ snippet.userId }}</a></span>
 								</div>
-								<span>by <router-link :to="'/user/' + snippet.userId">#{{ snippet.userId }}</router-link></span>
+								<div>
+									<i class="fa fa-clipboard c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar()"></i>
+									<i class="fa fa-star c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar()"></i>
+									<i class="fa fa-expand c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar()"></i>
+								</div>
 								<!--<a href="#" v-on:click.prevent="starSnippet(snippet.snippetId)">Star it</a>-->
 							</div>
 

@@ -5,6 +5,7 @@ var html = fs.readFileSync(__dirname + '/component.discover.html', 'utf8');
 var marked = require('marked');
 var hljs = require("highlight.js");
 
+
 hljs.configure({
   tabReplace: '  ', // 4 spaces
 //   classPrefix: ''     // don't append class prefix
@@ -88,6 +89,21 @@ export const DiscoverViewComponent = {
 			}
 			else {
 			}
+			
+		},
+
+		showInDevelopmentSnackbar: function(){
+			setTimeout(() => {
+				console.log("show toast");
+				var snackbarContainer = document.querySelector('#feature-in-development');
+				// Reinitialize as MDL elem
+				componentHandler.upgradeElement(snackbarContainer);
+				console.log("snackbarcontainer.MaterialSnackbar", snackbarContainer.MaterialSnackbar);
+				console.log("snackbarcontainer", snackbarContainer);
+				var message = "This feature is still in development.";
+				var data = {message: message};
+				snackbarContainer.MaterialSnackbar.showSnackbar(data);
+			}, 100);
 			
 		}
 	}
