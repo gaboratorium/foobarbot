@@ -781,16 +781,84 @@ exports.UserSnippetsComponent = {
 },{"highlight.js":250,"marked":420}],14:[function(require,module,exports){
 "use strict";
 
-var html = "<div class=\"grid-block align-center\">\r\n    <div class=\"grid-block grid-page-content\">\r\n        <div class=\"grid-content\">\r\n            <div class=\"c-card c-card__section\">\r\n                <p>There are no stars to show.</p>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n";
+var html = "<!-- Page content -->\r\n<div class=\"grid-block align-center\">\r\n    <div class=\"grid-block grid-page-content\">\r\n        <div class=\"grid-content\">\r\n\r\n            <!-- Toast snackbar danger -->\r\n\t\t\t<div id=\"snackbar--danger\" class=\"mdl-js-snackbar mdl-snackbar mdl-snackbar--danger\">\r\n\t\t\t\t<div class=\"mdl-snackbar__text\"></div>\r\n\t\t\t\t<button class=\"mdl-snackbar__action\" type=\"button\"></button>\r\n\t\t\t</div>\r\n\r\n            <!--Loaded snippets -->\r\n            <div class=\"grid-block\" v-show=\"snippetDataStatus=='loaded'\">\r\n                <div class=\"grid-content\">\r\n                    <!--List of snippets-->\r\n                    <ul class=\"c-snippets\">\r\n\r\n                        <li class=\"c-snippet\" v-for=\"snippet in snippets\">\r\n                            <!--Snippet code -->\r\n                            <pre><code class=\"php c-snippet__code\">{{ snippet.snippetCode }}</code></pre>\r\n\r\n                            <div class=\"c-snippet__readme\">\r\n\r\n                                <!--Readme meta-->\r\n                                <div class=\"c-snippet__readme-meta\">\r\n                                    <div class=\"c-snippet__readme-meta-title\">\r\n                                        <span><router-link :to=\"'/snippet/' + snippet.snippetId\">#{{snippet.snippetId}}</router-link> in </span>\r\n                                        <span class=\"mdl-chip\">\r\n                                            <span class=\"mdl-chip__text\">\r\n                                                <router-link :to=\"'/search/' + snippet.tag1\">{{snippet.tag1}}</router-link>\r\n                                            </span>\r\n                                        </span>\r\n                                        <span class=\"mdl-chip\">\r\n                                            <span class=\"mdl-chip__text\">\r\n                                                <router-link :to=\"'/search/' + snippet.tag2\">{{snippet.tag2}}</router-link>\r\n                                            </span>\r\n                                        </span>\r\n                                        <span class=\"mdl-chip\">\r\n                                            <span class=\"mdl-chip__text\">\r\n                                                <router-link :to=\"'/search/' + snippet.tag3\">{{snippet.tag3}}</router-link>\r\n                                            </span>\r\n                                        </span>\r\n                                        <span v-if=\"snippet.userUrl !== ''\">by <a v-bind:href=\"snippet.userUrl\" target=\"_blank\">#{{ snippet.userId }}</a></span>\r\n                                    </div>\r\n                                    <div>\r\n                                        <i class=\"fa fa-clipboard c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showSnackbarDanger('This feature is still in development: Copying code to clipboard.')\"></i>\r\n                                        <i class=\"fa fa-star c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showSnackbarDanger('You cannot star your own snippets.')\"></i>\r\n                                        <i class=\"fa fa-expand c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showSnackbarDanger('Life is a dream for the wise, a game for the fool, a comedy for the rich, a tragedy for the poor.')\"></i>\r\n                                    </div>\r\n                                    <!--<a href=\"#\" v-on:click.prevent=\"starSnippet(snippet.snippetId)\">Star it</a>-->\r\n                                </div>\r\n\r\n                                <!--Readme text in markdown-->\r\n                                <div v-html=\"snippet.readme\" class=\"c-snippet__readme-text\"></div>\r\n                            </div>\r\n                        </li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n\r\n            <!--Loading snippets-->\r\n            <div class=\"grid-block\" v-if=\"snippetDataStatus=='loading'\">\r\n                <div class=\"grid-content\">\r\n                    <div class=\"grid-block align-center\">\r\n                        <div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>";
+var hljs = require("highlight.js");
+var marked = require('marked');
 exports.UserStarsComponent = {
     name: "UserStarsComponent",
     template: html,
+    data: function () {
+        return {
+            userDataStatus: String,
+            user: Object,
+            snippets: Object,
+            snippetDataStatus: String
+        };
+    },
+    created: function () {
+        this.userDataStatus = "loading";
+        this.snippetDataStatus = "loading";
+        var requestedId = this.$route.params.id;
+        console.log("requested id", requestedId);
+        console.log("is user logged in", this.$store.getters["mainstore/isUserLoggedIn"]);
+        if (requestedId == "me" && this.$store.getters["mainstore/isUserLoggedIn"]) {
+            requestedId = this.$store.getters["mainstore/userId"];
+        }
+        this.loadUser(requestedId);
+        this.getSnippets(requestedId);
+    },
+    methods: {
+        loadUser: function (userId) {
+            var _this = this;
+            this.$store.dispatch({
+                type: "getUser",
+                userId: userId,
+            }).then(function (response) {
+                _this.user = response.user;
+                _this.userDataStatus = "loaded";
+                console.log("loaded this user:", _this.user.userName);
+            }, function (fail) {
+                _this.userDataStatus = "failed";
+                _this.$router.push({ name: "about" });
+            });
+        },
+        getSnippets: function (userId) {
+            var _this = this;
+            console.log("loadSnippets fired");
+            var UserComponent = this;
+            this.$store.dispatch({
+                type: "getStarredSnippets",
+                userId: userId,
+            }).then(function (response) {
+                for (var i = 0; i < response.length; i++) {
+                    response[i].readme = marked(response[i].readme);
+                }
+                _this.snippets = response;
+                setTimeout(function () {
+                    console.log("Highlighting code...");
+                    hljs.initHighlighting.called = false;
+                    hljs.initHighlighting();
+                    UserComponent.snippetDataStatus = "loaded";
+                }, 200);
+                console.log(response.snippets);
+            }, function (fail) {
+                _this.snippetDataStatus = "failed";
+                console.log(fail);
+            });
+        },
+        showSnackbarDanger: function (message) {
+            var snackbarContainer = document.querySelector('#snackbar--danger');
+            componentHandler.upgradeElement(snackbarContainer);
+            var data = { message: message };
+            snackbarContainer.MaterialSnackbar.showSnackbar(data);
+        },
+    }
 };
 
-},{}],15:[function(require,module,exports){
+},{"highlight.js":250,"marked":420}],15:[function(require,module,exports){
 "use strict";
 
-var html = "<!--User-->\r\n<div>\r\n\r\n\t<!-- Hero cover -->\r\n\t<div class=\"c-hero-cover c-hero-cover--with-navigation grid-block align-center\">\r\n\r\n\t\t<!--Loaded user info-->\r\n\t\t<div class=\"c-hero-cover__profile-logo grid-content\" v-if=\"userDataStatus=='loaded'\">\r\n\t\t\t<div class=\"c-hero-cover__profile-logo-image\"></div>\r\n\t\t\t<h1 class=\"c-hero-cover__profile-logo-text\">{{ user.userName }}</h1>\r\n\t\t\t<h2 class=\"c-hero-cover__profile-logo-sub-text\">Copenhagen, Denmark</h2>\r\n\t\t\t<span>\r\n\t\t\t\t<i class=\"fa fa-twitter c-hero-cover__profile-logo-social fa-fw\" aria-hidden=\"true\"></i>\r\n\t\t\t\t<i class=\"fa fa-github c-hero-cover__profile-logo-social fa-fw\" aria-hidden=\"true\"></i>\r\n\t\t\t</span>\r\n\t\t</div>\r\n\r\n\t\t<!--Loading user info-->\r\n\t\t<div class=\"c-hero-cover__profile-logo grid-content\" v-if=\"userDataStatus=='loading'\">\r\n\t\t\t<div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<!-- Navigation -->\r\n\t<div class=\"grid-block align-center c-hero-cover__navigation\">\r\n\t\t<div class=\"grid-block grid-page-content align-justify\">\r\n\t\t\t<!--Left navigation -->\r\n\t\t\t<div class=\"grid-block\">\r\n\t\t\t\t<!--Snippets-->\r\n\t\t\t\t<span class=\"c-hero-cover__navigation-item\">\r\n\t\t\t\t\t<router-link to=\"snippets\">\r\n\t\t\t\t\t\t<span class=\"secondary badge c-hero-cover__navigation-item-badge\">2</span><span>Snippets</span>\r\n\t\t\t\t\t</router-link>\r\n\t\t\t\t</span>\r\n\t\t\t\t<span class=\"c-hero-cover__navigation-item\">\r\n\t\t\t\t\t<router-link to=\"stars\">\r\n\t\t\t\t\t\t<span class=\"secondary badge c-hero-cover__navigation-item-badge\">4</span><span>Stars</span>\r\n\t\t\t\t\t</router-link>\r\n\t\t\t\t</span>\r\n\t\t\t\t<span class=\"c-hero-cover__navigation-item\">\r\n\t\t\t\t\t<router-link to=\"comments\">\r\n\t\t\t\t\t\t<span class=\"secondary badge c-hero-cover__navigation-item-badge\">0</span><span>Comments</span>\r\n\t\t\t\t\t</router-link>\r\n\t\t\t\t</span>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<!--Right navigation -->\r\n\t\t\t<div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<!-- Page content -->\r\n\t<router-view></router-view>\r\n\r\n</div>\r\n";
+var html = "<!--User-->\r\n<div>\r\n\r\n\t<!-- Hero cover -->\r\n\t<div class=\"c-hero-cover c-hero-cover--with-navigation grid-block align-center\">\r\n\r\n\t\t<!--Loaded user info-->\r\n\t\t<div class=\"c-hero-cover__profile-logo grid-content\" v-if=\"userDataStatus=='loaded'\">\r\n\t\t\t<div class=\"c-hero-cover__profile-logo-image\" v-bind:class=\"{ 'c-hero-cover__profile-logo-image--foobarbot' : user.userId == 1479481497854175 }\"></div>\r\n\t\t\t<h1 class=\"c-hero-cover__profile-logo-text\">{{ user.userName }}</h1>\r\n\t\t\t<h2 class=\"c-hero-cover__profile-logo-sub-text\">Copenhagen, Denmark</h2>\r\n\t\t\t<span>\r\n\t\t\t\t<i class=\"fa fa-twitter c-hero-cover__profile-logo-social fa-fw\" aria-hidden=\"true\"></i>\r\n\t\t\t\t<i class=\"fa fa-github c-hero-cover__profile-logo-social fa-fw\" aria-hidden=\"true\"></i>\r\n\t\t\t</span>\r\n\t\t</div>\r\n\r\n\t\t<!--Loading user info-->\r\n\t\t<div class=\"c-hero-cover__profile-logo grid-content\" v-if=\"userDataStatus=='loading'\">\r\n\t\t\t<div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<!-- Navigation -->\r\n\t<div class=\"grid-block align-center c-hero-cover__navigation\">\r\n\t\t<div class=\"grid-block grid-page-content align-justify\">\r\n\t\t\t<!--Left navigation -->\r\n\t\t\t<div class=\"grid-block align-center\">\r\n\t\t\t\t<!--Snippets-->\r\n\t\t\t\t<span class=\"c-hero-cover__navigation-item\">\r\n\t\t\t\t\t<router-link to=\"snippets\">\r\n\t\t\t\t\t\t<span class=\"secondary badge c-hero-cover__navigation-item-badge\">2</span><span>Snippets</span>\r\n\t\t\t\t\t</router-link>\r\n\t\t\t\t</span>\r\n\t\t\t\t<span class=\"c-hero-cover__navigation-item\">\r\n\t\t\t\t\t<router-link to=\"stars\">\r\n\t\t\t\t\t\t<span class=\"secondary badge c-hero-cover__navigation-item-badge\">4</span><span>Stars</span>\r\n\t\t\t\t\t</router-link>\r\n\t\t\t\t</span>\r\n\t\t\t\t<span class=\"c-hero-cover__navigation-item\">\r\n\t\t\t\t\t<router-link to=\"comments\">\r\n\t\t\t\t\t\t<span class=\"secondary badge c-hero-cover__navigation-item-badge\">0</span><span>Comments</span>\r\n\t\t\t\t\t</router-link>\r\n\t\t\t\t</span>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<!--Right navigation -->\r\n\t\t\t<div>\r\n\t\t\t\t<!--<i class=\"fa fa-envelope c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar('Copying code to clipboard')\"></i>-->\r\n\t\t\t\t<!--<i class=\"fa fa-eye c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar('Copying code to clipboard')\"></i>-->\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<!-- Page content -->\r\n\t<router-view></router-view>\r\n\r\n</div>\r\n";
 exports.UserViewComponent = {
     name: "UserComponent",
     template: html,
@@ -1000,6 +1068,23 @@ exports.ApiInstance = new Vue({
             }
             var myPromise = new Promise(function (resolve, reject) {
                 Vue.http.get('/api/snippets', options).then(function (response) {
+                    resolve(response.body.snippets);
+                }, function (fail) {
+                    reject(fail);
+                });
+            });
+            return myPromise;
+        },
+        getStarredSnippets: function (myUserId, mySnippetsMaxNumber) {
+            var options = {
+                params: {
+                    userId: myUserId
+                }
+            };
+            if (mySnippetsMaxNumber)
+                options.params.snippetsMaxNumber = mySnippetsMaxNumber;
+            var myPromise = new Promise(function (resolve, reject) {
+                Vue.http.get('/api/starredsnippets', options).then(function (response) {
                     resolve(response.body.snippets);
                 }, function (fail) {
                     reject(fail);
@@ -1324,11 +1409,20 @@ exports.SnippetStore = {
     actions: {
         getSnippets: function (context, payload) {
             var userId = payload.userId;
-            if (payload.snippetsMaxNumber && payload.searchText) {
-                return instance_api_1.ApiInstance.getSnippets(userId, payload.snippetsMaxNumber, payload.searchText);
+            if (payload.snippetsMaxNumber) {
+                return instance_api_1.ApiInstance.getSnippets(userId, payload.snippetsMaxNumber);
             }
             else {
                 return instance_api_1.ApiInstance.getSnippets(userId);
+            }
+        },
+        getStarredSnippets: function (context, payload) {
+            var userId = payload.userId;
+            if (payload.snippetsMaxNumber && payload.searchText) {
+                return instance_api_1.ApiInstance.getStarredSnippets(userId, payload.snippetsMaxNumber);
+            }
+            else {
+                return instance_api_1.ApiInstance.getStarredSnippets(userId);
             }
         },
         getSnippetsFromGithub: function (context, payload) {

@@ -6,7 +6,7 @@
 
 		<!--Loaded user info-->
 		<div class="c-hero-cover__profile-logo grid-content" v-if="userDataStatus=='loaded'">
-			<div class="c-hero-cover__profile-logo-image"></div>
+			<div class="c-hero-cover__profile-logo-image" v-bind:class="{ 'c-hero-cover__profile-logo-image--foobarbot' : user.userId == 1479481497854175 }"></div>
 			<h1 class="c-hero-cover__profile-logo-text">{{ user.userName }}</h1>
 			<h2 class="c-hero-cover__profile-logo-sub-text">Copenhagen, Denmark</h2>
 			<span>
@@ -25,7 +25,7 @@
 	<div class="grid-block align-center c-hero-cover__navigation">
 		<div class="grid-block grid-page-content align-justify">
 			<!--Left navigation -->
-			<div class="grid-block">
+			<div class="grid-block align-center">
 				<!--Snippets-->
 				<span class="c-hero-cover__navigation-item">
 					<router-link to="snippets">
@@ -46,6 +46,8 @@
 			
 			<!--Right navigation -->
 			<div>
+				<!--<i class="fa fa-envelope c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar('Copying code to clipboard')"></i>-->
+				<!--<i class="fa fa-eye c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar('Copying code to clipboard')"></i>-->
 			</div>
 		</div>
 	</div>
