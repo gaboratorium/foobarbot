@@ -1,3 +1,4 @@
+var _ = require('lodash');
 
 interface IApiInstance {
 	// These are implemented as methods not properties,
@@ -245,6 +246,7 @@ export const ApiInstance: IApiInstance= new Vue({
 			var myPromise = new Promise((resolve, reject) => {
 				// Make HTTP request
 				Vue.http.get('/api/snippets', options).then((response: any) => {
+					var snippets = _.reverse(response.body.snippets);
 					resolve(response.body.snippets);
 				}, (fail: any) => {
 					reject(fail);
@@ -272,8 +274,8 @@ export const ApiInstance: IApiInstance= new Vue({
 				// Make HTTP request
 				Vue.http.get('/api/starredsnippets', options).then((response: any) => {
 					console.log("getstarredsnippets in api recieved this response", response);
-					
-					resolve(response.body.snippets);
+					var snippets = _.reverse(response.body.snippets);
+					resolve(snippets);
 				}, (fail: any) => {
 					reject(fail);
 				})

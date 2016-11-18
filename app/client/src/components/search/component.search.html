@@ -55,7 +55,7 @@
 											<router-link :to="'/search/' + snippet.tag3">{{snippet.tag3}}</router-link>
 										</span>
 									</span>
-									<span v-if="snippet.userUrl !== ''">by <a v-bind:href="snippet.userUrl" target="_blank">#{{ snippet.userId }}</a></span>
+									<span v-if="snippet.userUrl !== ''">by <router-link :to="'/user/' + snippet.userId">#{{ snippet.userId }}</router-link></span>
 								</div>
 								<div>
 									<i class="fa fa-clipboard c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar('Copying code to clipboard')"></i>
