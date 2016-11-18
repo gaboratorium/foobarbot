@@ -427,6 +427,30 @@ apiRoutes.delete('/notifications', function(req, res) {
 	});
 });
 
+apiRoutes.delete('/user', function(req, res) {
+	var myToken = req.body.token;
+
+	var decoded = jwt.decode(myToken, {complete: true, json: true});
+	var myUserId = decoded.payload.userId;
+
+	User.remove({userId: myUserId}, (err, user) => {
+		if (err) res.send(err);
+
+		Notification.remove({userId: myUserId}, (err, notification) => {
+			if (err) res.send(err);
+
+			Snippet.remove({userId: myUserId}, (err, snippet) => {
+				if (err) res.send(err);
+
+				Star.remove({userId: myUserId}, (err, star) => {
+					res.json({message: "User succesfully deleted"});
+
+				})
+			})
+		})
+	});
+});
+
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////

@@ -125,14 +125,15 @@ export const SearchViewComponent = {
 			
 		},
 
-		showInDevelopmentSnackbar: function(){
+		showInDevelopmentSnackbar: function(feature: string){
 			setTimeout(() => {
 				console.log("show toast");
 				var snackbarContainer = document.querySelector('#feature-in-development');
+				
 				// Reinitialize as MDL elem
 				componentHandler.upgradeElement(snackbarContainer);
 
-				var message = "This feature is still in development.";
+				var message = "This feature is still in development: " + feature;
 				var data = {message: message};
 				snackbarContainer.MaterialSnackbar.showSnackbar(data);
 			}, 100);

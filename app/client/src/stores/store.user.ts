@@ -30,6 +30,11 @@ export const UserStore = {
             return ApiInstance.signupUser(payload.userName, payload.userEmail, payload.userPassword);
         },
 
+        deleteUser: (context: any, payload: any) => {
+            var myToken = context.getters["mainstore/userToken"];
+            return ApiInstance.deleteUser(myToken);
+        },
+
         // Get user
         getUser: (context: any, payload: any) => {
             // var myPromise = new Promise((resolve: any, reject: any) => {

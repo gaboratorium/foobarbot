@@ -78,12 +78,17 @@ export const DiscoverViewComponent = {
 		},
 
 		starSnippet: function(snippetId: string){
+			console.log("Starring snippet...");
 			if (this.$store.getters["mainstore/isUserLoggedIn"]) {
 				this.$store.dispatch({
 					type: 'postStar',
 					snippetId: snippetId
 				}).then((response: any) => {
+					console.log("Starring item", response);
+					this.showSnackBar("Snippet succesfully starred.");
+					
 				}, (fail: any) =>{
+					console.log("Starring item failed", fail);
 					
 				});
 			}
@@ -92,15 +97,23 @@ export const DiscoverViewComponent = {
 			
 		},
 
-		showInDevelopmentSnackbar: function(){
+		showSnackBar: function(message: string) {
+			var snackbarContainer = document.querySelector('#feature-in-development');
+			componentHandler.upgradeElement(snackbarContainer);
+			var data = {message: message};
+			snackbarContainer.MaterialSnackbar.showSnackbar(data);
+		},
+
+		showInDevelopmentSnackbar: function(feature: string){
 			setTimeout(() => {
 				console.log("show toast");
 				var snackbarContainer = document.querySelector('#feature-in-development');
+				snackbarContainer.className += " mdl-snackbar--danger";
 				// Reinitialize as MDL elem
 				componentHandler.upgradeElement(snackbarContainer);
 				console.log("snackbarcontainer.MaterialSnackbar", snackbarContainer.MaterialSnackbar);
 				console.log("snackbarcontainer", snackbarContainer);
-				var message = "This feature is still in development.";
+				var message = "This feature is still in development: " + feature;
 				var data = {message: message};
 				snackbarContainer.MaterialSnackbar.showSnackbar(data);
 			}, 100);

@@ -3,6 +3,10 @@
     background-color: $secondary-color;
 }
 
+.mdl-snackbar--danger {
+    background-color: $danger-color;
+}
+
 .mdl-snackbar__text {
     /*color: $secondary-color;*/
     /*font-weight: bold;*/

@@ -8,6 +8,7 @@ interface IApiInstance {
 	signupUser?: any
 	loadUsers?: any,
 	getUser?: any,
+	deleteUser?: any,
 
 	// Token methods
 	verifyToken?: any,
@@ -91,6 +92,28 @@ export const ApiInstance: IApiInstance= new Vue({
 				Vue.http.get('/api/user', options).then((response: any) => {
 					resolve(response.body);
 				}, (fail: any) => {
+					reject(fail);
+				})
+			})
+
+			return myPromise;
+		},
+
+		deleteUser: (myToken: any) => {
+
+			var body = {
+				token: myToken,
+			};
+			
+			var options = {
+				headers: { 'x-access-token': myToken },
+				body: body
+			};
+
+			var myPromise = new Promise((resolve, reject) => {
+				Vue.http.delete('/api/user', options).then((response: any) => {
+					resolve(response.body);
+				}, (fail) => {
 					reject(fail);
 				})
 			})

@@ -50,9 +50,9 @@
 									<span v-if="snippet.userUrl !== ''">by <a v-bind:href="snippet.userUrl" target="_blank">#{{ snippet.userId }}</a></span>
 								</div>
 								<div>
-									<i class="fa fa-clipboard c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar()"></i>
-									<i class="fa fa-star c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar()"></i>
-									<i class="fa fa-expand c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar()"></i>
+									<i class="fa fa-clipboard c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar('Copying code to clipboard')"></i>
+									<i class="fa fa-star c-nav-icon-button" aria-hidden="true" v-on:click="starSnippet(snippet.snippetId)"></i>
+									<i class="fa fa-expand c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar('Expanding snippet view')"></i>
 								</div>
 								<!--<a href="#" v-on:click.prevent="starSnippet(snippet.snippetId)">Star it</a>-->
 							</div>

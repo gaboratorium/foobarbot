@@ -433,6 +433,9 @@ pre {
 .mdl-snackbar {
   background-color: #00796B; }
 
+.mdl-snackbar--danger {
+  background-color: #F44336; }
+
 .mdl-snackbar__text {
   /*color: $secondary-color;*/
   /*font-weight: bold;*/ }
