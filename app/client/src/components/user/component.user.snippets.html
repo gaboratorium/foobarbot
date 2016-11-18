@@ -9,8 +9,12 @@
 				<button class="mdl-snackbar__action" type="button"></button>
 			</div>
 
+            <div class="c-card c-card__section" v-show="snippetDataStatus=='loaded' && snippets.length == 0">
+                <p>There are no snippets to show.</p>
+            </div>
+
             <!--Loaded snippets -->
-            <div class="grid-block" v-show="snippetDataStatus=='loaded'">
+            <div class="grid-block" v-show="snippetDataStatus=='loaded' && snippets.length > 0">
                 <div class="grid-content">
                     <!--List of snippets-->
                     <ul class="c-snippets">
