@@ -13,6 +13,15 @@
     padding: 1.5rem;
 }
 
+.c-snippet__code--condensed {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 10;
+    -webkit-box-orient: vertical;
+    padding-bottom: .5rem;
+}
+
 .c-snippet__readme {
     border: 1px solid $border-color;
     border-bottom-left-radius: 4px;

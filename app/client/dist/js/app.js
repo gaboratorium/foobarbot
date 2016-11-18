@@ -454,7 +454,6 @@ exports.SearchViewComponent = {
                 searchText: DiscoverComponent.searchText,
                 snippetsMaxNumber: 3
             }).then(function (response) {
-                console.log("Search component recieves this response:", response);
                 for (var i = 0; i < response.length; i++) {
                     response[i].readme = marked(response[i].readme);
                 }
@@ -475,7 +474,6 @@ exports.SearchViewComponent = {
                 type: 'getSnippetsFromGithub',
                 snippetsMaxNumber: 5
             }).then(function (response) {
-                console.log("Github's response: ", response);
                 for (var i = 0; i < response.length; i++) {
                     response[i].readme = marked(response[i].readme);
                 }
@@ -1251,7 +1249,7 @@ exports.SnippetStore = {
                     response = _.shuffle(response);
                     var maxNumber = 10;
                     var snippets = [];
-                    var gistCodeLinks = [];
+                    var getGistCodePromises = [];
                     var gistCodes = [];
                     for (var i = 0; i < maxNumber; i++) {
                         var gist = response[i];
@@ -1273,8 +1271,6 @@ exports.SnippetStore = {
                         };
                         var getGistCode = new Promise(function (resolve, reject) {
                             Vue.http.get(gistCodeLink).then(function (response) {
-                                console.log("Getting Gist code returns this response", response.body);
-                                gistCodes.push(response.body);
                                 resolve(response.body);
                             }, function (fail) {
                                 console.log("Getting Gist code fails", fail);
@@ -1282,11 +1278,11 @@ exports.SnippetStore = {
                             });
                         });
                         snippets.push(snippet);
-                        gistCodeLinks.push(getGistCode);
+                        getGistCodePromises.push(getGistCode);
                     }
                     console.log("Snippets length", snippets.length);
-                    console.log("gistCodeLinks length", gistCodeLinks.length);
-                    Promise.all(gistCodeLinks).then(function () {
+                    console.log("gistCodeLinks length", getGistCodePromises.length);
+                    Promise.all(getGistCodePromises).then(function (gistCodes) {
                         for (var i = 0; i < snippets.length; i++) {
                             snippets[i].snippetCode = gistCodes[i];
                         }

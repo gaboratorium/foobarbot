@@ -63,7 +63,6 @@ export const SearchViewComponent = {
 				  searchText: DiscoverComponent.searchText,
 				  snippetsMaxNumber: 3
 			  }).then((response: any) => {
-				  console.log("Search component recieves this response:", response);
 				  
 				  // Converting text to markdown
 				  for (var i = 0; i < response.length; i++) {
@@ -92,7 +91,6 @@ export const SearchViewComponent = {
 				type: 'getSnippetsFromGithub',
 				snippetsMaxNumber: 5
 			}).then((response: any) => {
-				console.log("Github's response: ", response);
 
 				for (var i = 0; i < response.length; i++) {
 					response[i].readme = marked(response[i].readme);

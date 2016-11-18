@@ -29,7 +29,7 @@ export const SnippetStore = {
                     // gistCodeLinks is a list of strings containing URLs for the codes
                     var maxNumber = 10;
                     var snippets: Array<any> = [];
-                    var gistCodeLinks: Array<Promise<any>> = [];
+                    var getGistCodePromises: Array<Promise<any>> = [];
                     var gistCodes: Array<string> = [];
 
                     // Transform GitHub Gist to Foobarbot Snippet
@@ -63,8 +63,6 @@ export const SnippetStore = {
                         // Create a promise to get gistCode from gistCodeLink
                         var getGistCode = new Promise((resolve, reject) => {
                             Vue.http.get(gistCodeLink).then((response: any) => {
-                                console.log("Getting Gist code returns this response", response.body);
-                                gistCodes.push(response.body);
                                 resolve(response.body);
                             }, (fail: any) => {
                                 console.log("Getting Gist code fails", fail);
@@ -73,18 +71,19 @@ export const SnippetStore = {
                         });
 
                         snippets.push(snippet);
-                        gistCodeLinks.push(getGistCode);
+                        getGistCodePromises.push(getGistCode);
                     }
 
                     console.log("Snippets length", snippets.length);
-                    console.log("gistCodeLinks length", gistCodeLinks.length);
+                    console.log("gistCodeLinks length", getGistCodePromises.length);
                     
 
                     // Get all gist codes from gistcode links, resolve when all finished
                     // reject if one fials
-                    Promise.all(gistCodeLinks).then(() => {
-
+                    Promise.all(getGistCodePromises).then((gistCodes) => {
+                        
                         for (var i = 0; i < snippets.length; i++) {
+
                             snippets[i].snippetCode = gistCodes[i];
                         }
 
