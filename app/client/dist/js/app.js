@@ -476,6 +476,9 @@ exports.SearchViewComponent = {
                 snippetsMaxNumber: 5
             }).then(function (response) {
                 console.log("Github's response: ", response);
+                for (var i = 0; i < response.length; i++) {
+                    response[i].readme = marked(response[i].readme);
+                }
                 _this.snippetsFromGithub = response;
                 setTimeout(function () {
                     hljs.initHighlighting.called = false;
@@ -1248,22 +1251,18 @@ exports.SnippetStore = {
                     response = _.shuffle(response);
                     console.log("Github gists:", response);
                     var maxNumber = 10;
-                    var snippetsFromGithub = [];
+                    var snippets = [];
                     for (var i = 0; i < maxNumber; i++) {
-                        var keys = Object.keys(response[i].files);
-                        var snippetCode = response[i].files[keys[0]].raw_url;
-                        Vue.http.get(snippetCode).then(function (response) {
-                            console.log(response.body);
-                        }, function (fail) {
-                            console.log(fail);
-                        });
-                        var readme = response[i].description == "" ? "No readme was provided" : response[i].description;
-                        var userId = response[i].owner ? response[i].owner.login : "Unknown";
-                        var userUrl = response[i].owner ? response[i].owner.html_url : "";
+                        var gist = response[i];
+                        var keys = Object.keys(gist.files);
+                        var gistCodeLink = gist.files[keys[0]].raw_url;
+                        var readme = gist.description ? gist.description : "*No readme was provided*";
+                        var userId = gist.owner ? gist.owner.login : "Unknown";
+                        var userUrl = gist.owner ? gist.owner.html_url : "";
                         var snippet = {
-                            snippetId: response[i].id,
-                            snippetCode: snippetCode,
-                            snippetUrl: response[i].html_url,
+                            snippetId: gist.id,
+                            snippetCode: gistCodeLink,
+                            snippetUrl: gist.html_url,
                             userId: userId,
                             userUrl: userUrl,
                             tag1: "github",
@@ -1271,9 +1270,9 @@ exports.SnippetStore = {
                             tag3: "batman",
                             readme: readme
                         };
-                        snippetsFromGithub.push(snippet);
+                        snippets.push(snippet);
                     }
-                    resolve(snippetsFromGithub);
+                    resolve(snippets);
                 }, function (fail) {
                     console.log("Snippet store fails from getsnippetsfromgithub", fail);
                     reject(fail);

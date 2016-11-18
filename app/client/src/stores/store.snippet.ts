@@ -27,40 +27,32 @@ export const SnippetStore = {
 
                     // Transform GitHub Gists to snippets
                     var maxNumber = 10;
-                    var snippetsFromGithub: Array<any> = [];
+                    var snippets: Array<any> = [];
                     for (var i = 0; i < maxNumber; i++) {
-
-                        var keys = Object.keys(response[i].files);
-                        var snippetCode = response[i].files[keys[0]].raw_url;
-
-                        Vue.http.get(snippetCode).then((response: any) => {
-                            console.log(response.body);
-                        }, (fail: any) => {
-                            console.log(fail);
-                        });
-
-
-                        var readme = response[i].description == "" ? "No readme was provided" : response[i].description;
-                        var userId = response[i].owner ? response[i].owner.login : "Unknown";
-                        var userUrl = response[i].owner ? response[i].owner.html_url : "";
+                        var gist = response[i];
                         
-                        var snippet = {
-                            snippetId: response[i].id,
-                            snippetCode: snippetCode,
-                            snippetUrl: response[i].html_url,
+                        var keys = Object.keys(gist.files);
+                        var gistCodeLink = gist.files[keys[0]].raw_url;
+
+                        var readme: any = gist.description ? gist.description: "*No readme was provided*";
+                        var userId: any = gist.owner ? gist.owner.login : "Unknown";
+                        var userUrl: any = gist.owner ? gist.owner.html_url : "";
+                        
+                        var snippet: any = {
+                            snippetId: gist.id,
+                            snippetCode: gistCodeLink,
+                            snippetUrl: gist.html_url,
                             userId: userId,
                             userUrl: userUrl,
                             tag1: "github",
                             tag2: "searchresult",
                             tag3: "batman",
                             readme: readme
-                        }
+                        };
 
-                        snippetsFromGithub.push(snippet);
+                        snippets.push(snippet);
                     }
-
-                
-                    resolve(snippetsFromGithub);
+                    resolve(snippets);
                 }, (fail: any) => {
                     // Fail
                     console.log("Snippet store fails from getsnippetsfromgithub", fail);

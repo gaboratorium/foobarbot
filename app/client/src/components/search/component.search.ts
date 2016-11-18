@@ -93,6 +93,11 @@ export const SearchViewComponent = {
 				snippetsMaxNumber: 5
 			}).then((response: any) => {
 				console.log("Github's response: ", response);
+
+				for (var i = 0; i < response.length; i++) {
+					response[i].readme = marked(response[i].readme);
+				}
+
 				this.snippetsFromGithub = response;
 				setTimeout(function(){
 					hljs.initHighlighting.called = false;
