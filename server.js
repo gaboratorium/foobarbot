@@ -30,6 +30,9 @@ app.use('/assets', express.static(__dirname + globalPath.client.dist + "assets/"
 // Prepare to deliver for client, save to RAM
 var indexHtml = fs.readFileSync(__dirname + globalPath.client.dist + "index.html", "utf8");
 
+
+
+
 // Serving index
 app.get('/', function (req, res) {
   res.send(indexHtml);
@@ -58,7 +61,9 @@ var Schema = mongoose.Schema;
 // Connect to db with mongoose
 mongoose.connect("mongodb://heroku_6lt22ghm:te2b1dta8i2glj7ss4lk71vjnm@ds037814.mlab.com:37814/heroku_6lt22ghm");
 
-// Create mongoose model
+/////////////////////////////////////
+// Models
+// User model
 var User = mongoose.model('User', new Schema({
 	userId: String,
     userName: String, 
@@ -66,6 +71,31 @@ var User = mongoose.model('User', new Schema({
     userPassword: String,
 	userRole: String,
 	registrationDate: Number
+}));
+
+// Star model
+var Star = mongoose.model('Star', new Schema({
+	userId: String, 
+    snippetId: String, 
+    date: Number
+}));
+
+// Snippet model
+var Snippet = mongoose.model('snippet', new Schema({
+	snippetId: String,
+	snippetCode: String,
+	userId: String,
+	tag1: String,
+	tag2: String,
+	tag3: String,
+	readme: String
+}));
+
+// Notification model
+var Notification = mongoose.model('Notification', new Schema({
+	userEmail: String, 
+    message: String, 
+    date: Number 
 }));
 
 
@@ -194,18 +224,6 @@ apiRoutes.get('/user', function(req, res) {
 	});
 });
 
-var schema = new Schema({
-	snippetId: String,
-	snippetCode: String,
-	userId: String,
-	tag1: String,
-	tag2: String,
-	tag3: String,
-	readme: String
-});
-
-var Snippet = mongoose.model('snippet', schema);
-
 // Get snippets from user Id
 apiRoutes.get('/snippets', function(req, res) {
 	
@@ -242,6 +260,13 @@ apiRoutes.get('/snippets', function(req, res) {
 			return res.status(404).send({success: false, message: "Snippets were not found with this userId"})
 		}
 	});
+});
+
+apiRoutes.get('/starredsnippets', function(req, res) {
+	var snippetsMaxNumber = req.query.snippetsMaxNumber ? req.query.snippetsMaxNumber : 10;
+	var myUserId = req.query.userId;
+
+	Star
 });
 
 // route middleware to verify a token
@@ -306,14 +331,6 @@ apiRoutes.get('/users', function(req, res) {
   });
 });
 
-var schema = new Schema({
-	userEmail: String, 
-    message: String, 
-    date: Number 
-});
-
-var Notification = mongoose.model('Notification', schema);
-
 // route to return all notifications from admin (GET http://localhost:8080/api/users/admin/notifications)
 apiRoutes.get('/notifications', function(req, res) {
 	console.log('getnotification recieves this query', req.query);
@@ -333,14 +350,6 @@ apiRoutes.get('/notifications', function(req, res) {
 		res.status(409).send({success:false, message: 'no'})
 	});
 });
-
-var schema = new Schema({
-	userId: String, 
-    snippetId: String, 
-    date: Number
-});
-
-var Star = mongoose.model('Star', schema);
 
 
 apiRoutes.post('/stars', function(req, res) {

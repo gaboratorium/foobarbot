@@ -10,11 +10,19 @@ export const SnippetStore = {
             // var userToken = context.getters["mainstore/userToken"]; // should be userId
             // var userEmail = context.getters["mainstore/userEmail"]; // should be userId
             // ApiInstance.postUserLog();
-            if (payload.snippetsMaxNumber && payload.searchText){
-                
-                return ApiInstance.getSnippets(userId, payload.snippetsMaxNumber, payload.searchText);
+            if (payload.snippetsMaxNumber){
+                return ApiInstance.getSnippets(userId, payload.snippetsMaxNumber);
             } else {
                 return ApiInstance.getSnippets(userId);
+            }
+        },
+
+        getStarredSnippets: (context: any, payload: any) => {
+            var userId = payload.userId;
+            if (payload.snippetsMaxNumber && payload.searchText){
+                return ApiInstance.getStarredSnippets(userId, payload.snippetsMaxNumber);
+            } else {
+                return ApiInstance.getStarredSnippets(userId);
             }
         },
 

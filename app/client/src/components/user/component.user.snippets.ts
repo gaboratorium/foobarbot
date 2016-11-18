@@ -83,6 +83,13 @@ export const UserSnippetsComponent = {
 				this.snippetDataStatus = "failed";
 				console.log(fail);
 			})
-		}
+		},
+
+		showSnackbarDanger: function(message: string){
+			var snackbarContainer = document.querySelector('#snackbar--danger');
+			componentHandler.upgradeElement(snackbarContainer);
+			var data = {message: message};
+			snackbarContainer.MaterialSnackbar.showSnackbar(data);
+		},
   	}
 };

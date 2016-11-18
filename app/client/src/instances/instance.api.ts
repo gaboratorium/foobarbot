@@ -22,6 +22,7 @@ interface IApiInstance {
 	// Snippet methods
 	postSnippet?: any,
 	getSnippets?: any,
+	getStarredSnippets?: any,
 	getSnippetsFromGithub?: any,
 	getSnippet?: any,
 
@@ -244,6 +245,27 @@ export const ApiInstance: IApiInstance= new Vue({
 			var myPromise = new Promise((resolve, reject) => {
 				// Make HTTP request
 				Vue.http.get('/api/snippets', options).then((response: any) => {
+					resolve(response.body.snippets);
+				}, (fail: any) => {
+					reject(fail);
+				})
+			});
+
+			return myPromise;
+		},
+
+		getStarredSnippets: (myUserId: string, mySnippetsMaxNumber?: number) => {
+			var options = {
+				params: {
+					userId: myUserId
+				}
+			}
+
+			if (mySnippetsMaxNumber) options.params.snippetsMaxNumber = mySnippetsMaxNumber;
+
+			var myPromise = new Promise((resolve, reject) => {
+				// Make HTTP request
+				Vue.http.get('/api/starredsnippets', options).then((response: any) => {
 					resolve(response.body.snippets);
 				}, (fail: any) => {
 					reject(fail);
