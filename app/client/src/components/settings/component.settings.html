@@ -2,23 +2,37 @@
 	<div class="grid-block grid-page-content align-center">
 		<div class="grid-content">
 			
-			<!--Card for controls-->
+			<!--Settings form-->
 			<div class="c-card">
-				<h2>Settings</h2>
-				<p>Here you can load the list of users</p>
-				<a href="" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat" v-on:click.prevent="loadUsers">Load users</a>
-				<a href="" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat" v-on:click.prevent="resetUsers">Reset users</a>
-			</div>
+				<div class="c-card__hero c-card__section">
+					<span class="flaticon-maintenance flaticon--logo"></span>
+					<h1 class="c-card__hero-title">User settings</h1>
+				</div>
+				<div class="c-card__section">
+					<h1>Update profile</h1>
+					<form action="" v-on:submit.prevent="updateUser">
+						<label for="settingsform__email">E-mail - at the moment you cannot change your e-mail address.</label>
+						<input type="text" v-model="user.userEmail" disabled="disabled" id="settingsform__email">
+						<label for="settingsform__username">Display name</label>
+						<input type="text" v-model="user.userName" id="settingsform__username">
+						<p class="o-text--error">{{ errorMsg }}</p>
+						<input type="submit" value="Update my profile" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat">
+					</form>
+					
+					<hr>
 
-			<!-- Card for result -->
-			<div class="c-card">
-				<h2>Users</h2>
-				<p>No users have been loaded.</p>
-				<ul>
-					<li v-for="user in users">{{ user.userName }} - <router-link :to="'/user/' + user.userId">Profile</router-link></li>
-				</ul>
+					<h1 class="o-text--danger">Danger zone</h1>
+					<p>Watch out! If you delete your account you will lose all your data. There is no way we will be able to retrieve them.</p>
+					<form action="" v-on:submit.prevent="deleteUser">
+						<div style="margin-bottom: 1rem">
+							<input type="checkbox" required="required">
+							I understood the consequences.
+						</div>
+						<input type="submit" class="mdl-button mdl-js-button mdl-button--raised c-button--flat c-button--danger" value="Delete my account">
+
+					</form>
+				</div>
 			</div>
-			
 		</div>
 	</div>
 </div>

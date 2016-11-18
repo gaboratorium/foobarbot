@@ -9,27 +9,20 @@ export const SettingsViewComponent =  {
 	template: html,
 	data: function(){
 		return {
-			users: Array
+			user: {
+				userEmail: "userEmail",
+				userName: "userName"
+			}
 		}
 	},
 	methods: {
-		loadUsers: function(){
-			var myToken = this.$store.getters.userToken;
-			
-	  		this.$store.dispatch({
-				  type: 'loadUsers',
-				  token: myToken
-			  }).then((response: any) => {
-				  console.log(response);
-				  
-				  this.users = response;
-			  }, (fail: any) => {
-				  // Fail
-			  });
+		updateUser: function(){
+			console.log("Updating user...");
 	  	},
 
-	  	resetUsers: function(){
-	  		this.users = [];
-	  	}
+		deleteUser: function(){
+			console.log("Deleting user...");
+			
+		}
 	}
 };

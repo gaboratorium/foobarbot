@@ -31,6 +31,11 @@
     box-shadow: none;
 }
 
+.c-button--danger {
+    background-color: $danger-color;
+    color: #fff;
+}
+
 /*Foundation*/
 .button {
     background: $primary-color;
