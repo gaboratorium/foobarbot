@@ -63,7 +63,8 @@ export const DiscoverViewComponent = {
 				  }
 
 				  // Initialize Highlightjs
-				  this.snippets = response;
+
+				  this.snippets = _.slice(response, 0, 5);
 				  setTimeout(function(){
 					hljs.initHighlighting.called = false;
 					hljs.initHighlighting();

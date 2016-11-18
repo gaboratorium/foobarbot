@@ -28,7 +28,7 @@
 				<!--List of snippets-->
 				<ul class="c-snippets">
 
-					<li class="c-snippet" v-for="snippet in snippets">
+					<li class="c-snippet" v-for="snippet in snippets ">
 						<!--Snippet code -->
 						<pre><code class="php c-snippet__code">{{ snippet.snippetCode }}</code></pre>
 
@@ -70,7 +70,10 @@
 				</ul>
 			</div>
 
-			<p class="o-text--info" v-show="snippetDataStatus=='loaded'"><span class="o-text--strong"><i class="fa fa-fw fa-info-circle" aria-hidden="true"></i>Didn't find what you were looking for?</span> Try Foobarbot Search and search for something e.g.: <router-link :to="'/search/javascript'">javascript</router-link>!</p>
+			<p class="o-text--info" v-show="snippetDataStatus=='loaded'"><span class="o-text--strong"><i class="fa fa-fw fa-info-circle" aria-hidden="true"></i>Didn't find what you were looking for?</span>
+			<span class="o-text--block">
+				Check out <router-link :to="'/user/1479481497854175'">Foobarbot's profile</router-link> or try Foobarbot Search and search for something e.g.: <router-link :to="'/search/javascript'">javascript</router-link>!</p>
+			</span>
 
 		</div>
 	</div>
