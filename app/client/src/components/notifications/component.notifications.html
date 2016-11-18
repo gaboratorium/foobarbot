@@ -1,53 +1,61 @@
 <div class='grid-block align-center'>
 	<div class="grid-block grid-page-content align-center">
 		<div class="grid-content">
-
-			<!--Push notification-->
-			<div class="grid-block">
-				<div class="grid-content">
-					<div class="c-card  c-card__section">
-						<h1>Push notification</h1>
-						<p>To simulate how desktop notifications work, here you can push yourself some.</p>
-						<label for="notifDelay">Set a timer in seconds</label>
-						<input type="text" id="notifDelay" v-model="formNotifDelay" placeholder="Set timer in seconds" autofocus="autofocus">
-						<label for="notifMessage">Enter your notification message</label>
-						<input type="text" id="notifMessage" v-model="formNotifMessage" placeholder='What would you like to see?'>
-						<a href="#" class='mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat' v-on:click.prevent="notifyMe()">Push notification</a>
-					</div>
+			<div class="c-card ">
+				<div class="c-card__hero c-card__section">
+					<span class="flaticon-remote-control-1 flaticon--logo"></span>
+					<h1 class="c-card__hero-title">Notifications</h1>
 				</div>
-			</div>
 
-			<!--Notifications-->
-			<div class="grid-block">
-				<div class="grid-content">
-					<div class="c-card  c-card__section">
-						<h1>Notifications</h1>
-						<p>Here you can see the list of your notifications.</p>
+				<div class="c-card__section">
+					<h1>Push new notification</h1>
+					<p>To simulate how desktop notifications work, here you can push yourself some.</p>
+					<label for="notifDelay">Set a timer in seconds</label>
+					<input type="text" id="notifDelay" v-model="formNotifDelay" placeholder="Set timer in seconds" autofocus="autofocus">
+					<label for="notifMessage">Enter your notification message</label>
+					<input type="text" id="notifMessage" v-model="formNotifMessage" placeholder='What would you like to see?'>
+					<a href="#" class='mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat' v-on:click.prevent="notifyMe()">Push notification</a>
+				
+					<hr>
+
+					<h1>Notifications</h1>
+					<p>Here you can see the list of your notifications.</p>
+
+					<!--Loading data -->
+					<i class="fa fa-cog fa-spin fa-2x fa-fw" v-if="dataStatus=='loading'"></i>
+
+					<!--Loaded data -->
+					<div v-if="dataStatus=='loaded'">
+						
 
 
+						<ul class="demo-list-three mdl-list" v-if="notifications.length > 0">
+							<li class="mdl-list__item mdl-list__item--three-line" v-for="notif in notifications">
+								<span class="mdl-list__item-primary-content">
+								<i class="material-icons mdl-list__item-avatar">notifications</i>
+								<span>{{ notif.message }}</span>
+								<span class="mdl-list__item-text-body">
+									From: {{ notif.userEmail }}. Posted at {{ notif.date }}
+								</span>
+								</span>
+							</li>
+						</ul>
 
-						<!--Loading data -->
-						<i class="fa fa-cog fa-spin fa-2x fa-fw" v-if="dataStatus=='loading'"></i>
+						<hr>
 
-						<!--Loaded data -->
-						<div v-if="dataStatus=='loaded'">
-							<a href="#" v-on:click.prevent="deleteNotifications($event)" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat">Delete all</a>
-							<ul v-if="notifications.length > 0">
-								<li v-for="notif in notifications"> 
-									<span class="o-text--block">From: {{notif.userEmail}}</span> 
-									<span class="o-text--block">Message: {{notif.message}}</span> 
-									<span class="o-text--block">Date: {{notif.date}}</span> 
-								</li>
-							</ul>
-							<p v-if="notifications.length == 0">Currently you have no notifications. Why not push one?</p>
+						<div v-if="notifications.length > 0">
+							<h1>Delete notifications</h1>
+							<p>Do or do not. There is no try.</p>
+							<a href="#" v-on:click.prevent="deleteNotifications($event)" class="mdl-button mdl-js-button mdl-button--raised c-button--danger c-button--flat">Delete all</a>
 						</div>
 
-						<!--Failed data-->
-						<div v-if="dataStatus=='failed'">
-							<p>Something went wrong, sorry. Try to refresh.</p>
-						</div>
+						<!--If you have nothing-->
+						<p v-if="notifications.length == 0">Currently you have no notifications. Why not push one?</p>
+					</div>
 
-
+					<!--Failed data-->
+					<div v-if="dataStatus=='failed'">
+						<p>Something went wrong, sorry. Try to refresh.</p>
 					</div>
 				</div>
 			</div>
