@@ -64,7 +64,7 @@
 
 					<li class="c-snippet" v-for="snippet in snippetsFromGithub">
 						<!--Snippet code -->
-						<pre><code class="php c-snippet__code">{{ snippet.snippetCode }}</code></pre>
+						<pre><code class="php c-snippet__code c-snippet__code--condensed">{{ snippet.snippetCode }}</code></pre>
 
 						<div class="c-snippet__readme">
 
@@ -82,8 +82,13 @@
 											GitHub
 										</span>
 									</span>
+									<span v-if="snippet.userUrl !== ''">by <a v-bind:href="snippet.userUrl" target="_blank">#{{ snippet.userId }}</a></span>
 								</div>
-								<span v-if="snippet.userUrl !== ''">by <a v-bind:href="snippet.userUrl" target="_blank">#{{ snippet.userId }}</a></span>
+								<div>
+									<i class="fa fa-clipboard c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar()"></i>
+									<i class="fa fa-star c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar()"></i>
+									<i class="fa fa-expand c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar()"></i>
+								</div>
 								<!--<a href="#" v-on:click.prevent="starSnippet(snippet.snippetId)">Star it</a>-->
 							</div>
 
@@ -98,4 +103,10 @@
 			
 		</div>
 	</div>
+
+	<!-- Toast snackbar -->
+	<div id="feature-in-development" class="mdl-js-snackbar mdl-snackbar">
+		<div class="mdl-snackbar__text"></div>
+		<button class="mdl-snackbar__action" type="button"></button>
+    </div>
 </div>

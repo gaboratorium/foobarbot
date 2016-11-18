@@ -123,6 +123,14 @@ export const SearchViewComponent = {
 			else {
 			}
 			
+		},
+
+		showInDevelopmentSnackbar: function(){
+			console.log("show toast");
+			var snackbarContainer = document.querySelector('#feature-in-development');
+			var message = "This feature is still in development.";
+			var data = {message: message};
+			snackbarContainer.MaterialSnackbar.showSnackbar(data);
 		}
 	}
 };

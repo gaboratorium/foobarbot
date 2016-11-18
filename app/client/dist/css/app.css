@@ -232,11 +232,11 @@ pre {
 
 .c-snippet__code--condensed {
   overflow: hidden;
+  overflow-y: scroll;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 10;
-  -webkit-box-orient: vertical;
-  padding-bottom: .5rem; }
+  -webkit-box-orient: vertical; }
 
 .c-snippet__readme {
   border: 1px solid #ddd;
@@ -413,6 +413,9 @@ pre {
 .block-list li:last-child {
   border-bottom: none; }
 
+.mdl-snackbar {
+  background-color: #00796B; }
+
 .mdl-snackbar__text {
   /*color: $secondary-color;*/
   /*font-weight: bold;*/ }
@@ -430,3 +433,15 @@ pre {
 
 .mdl-chip a {
   color: inherit; }
+
+.c-nav-icon-button {
+  color: #00796B;
+  background-color: #E0F2F1;
+  padding: .8rem;
+  margin-right: .5rem;
+  border-radius: 50%; }
+
+.c-nav-icon-button:hover {
+  color: #E0F2F1;
+  background-color: #00796B;
+  cursor: pointer; }

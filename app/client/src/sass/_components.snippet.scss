@@ -15,11 +15,11 @@
 
 .c-snippet__code--condensed {
     overflow: hidden;
+    overflow-y: scroll;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 10;
     -webkit-box-orient: vertical;
-    padding-bottom: .5rem;
 }
 
 .c-snippet__readme {
