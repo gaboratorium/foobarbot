@@ -483,7 +483,11 @@ pre {
 
 .c-compose-modal {
   min-width: 950px;
-  padding: 0rem; }
+  padding: 0rem;
+  box-shadow: none;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden; }
 
 .c-compose-modal__code {
   width: 100%;
@@ -518,12 +522,13 @@ pre {
 .c-compose-modal__readme, .c-compose-modal__readme:hover, .c-compose-modal__readme:focus, .c-compose-modal__readme:active {
   background-color: #fff;
   color: #263238;
-  min-height: 7rem;
+  height: 4.5rem;
   border: none;
-  padding: 1.5rem; }
+  padding: 1.5rem;
+  margin-bottom: 0rem; }
 
 .c-compose-modal__controls {
-  margin-top: .5rem;
+  margin-top: 1rem;
   position: absolute;
   width: 100vh; }
 
