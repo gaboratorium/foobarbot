@@ -129,11 +129,15 @@ export const SearchViewComponent = {
 			
 		},
 
-		starSnippetFromExternalApi: function(snippetId: string){
+		starSnippetFromExternalApi: function(snippet: any){
 			var SearchComponent = this;
 			if (this.$store.getters["mainstore/isUserLoggedIn"]) {
 				SearchComponent.showSnackBar("Snippet succesfully starred.");
 				SearchComponent.showSnackbarDanger("Sorry something went wrong :(");
+				this.$store.dispatch({
+					type: 'starSnippetFromExternalApi',
+					snippet: snippet
+				});
 			}
 			else {
 				SearchComponent.showSnackbarDanger("You have to be logged in to star snippets.");

@@ -79,13 +79,14 @@ export const DiscoverViewComponent = {
 			  });
 		},
 
-		starSnippet: function(snippetId: string){
+		starSnippet: function(snippetId: string, snippet: any){
 			var DiscoverComponent = this;
 			console.log("Starring snippet...");
 			if (this.$store.getters["mainstore/isUserLoggedIn"]) {
 				this.$store.dispatch({
 					type: 'postStar',
-					snippetId: snippetId
+					snippetId: snippetId,
+					snippet: snippet
 				}).then((response: any) => {
 					console.log("Starring item", response);
 					DiscoverComponent.showSnackBar("Snippet succesfully starred.");

@@ -128,7 +128,6 @@ export const SnippetStore = {
             var snippet = payload.snippet;
             ApiInstance.postUserLog();
             return ApiInstance.postSnippet(userToken, snippet);
-            
         },
 
         // Delete all notifications

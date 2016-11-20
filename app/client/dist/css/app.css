@@ -1,4 +1,11 @@
-/*$primary-color: #3F51B5;*/
+/*$primary-color: #2196F3;
+$secondary-color: #689F38;
+$secondary-color-background: #F1F8E9;
+$secondary-color-border: #DCEDC8;*/
+/*$primary-color: #2196F3;
+$secondary-color: #FBC02D;
+$secondary-color-background: #FFFDE7;
+$secondary-color-border: #FFF9C4;*/
 body {
   font-family: 'Roboto', sans-serif;
   background-color: #fafafa; }
@@ -451,7 +458,9 @@ pre {
 
 .mdl-chip {
   background-color: #E0F2F1;
-  color: #00796B; }
+  color: #00796B;
+  /*background-color: $secondary-color;
+    color: #fff;*/ }
 
 .mdl-chip:hover {
   background-color: #3F51B5;

@@ -22,6 +22,7 @@ interface IApiInstance {
 
 	// Snippet methods
 	postSnippet?: any,
+	postFoobarbotSnippet?: any,
 	getSnippets?: any,
 	getStarredSnippets?: any,
 	getSnippetsFromGithub?: any,
@@ -220,6 +221,10 @@ export const ApiInstance: IApiInstance= new Vue({
 			});
 
 			return myPromise;
+		},
+
+		postFoobarbotSnippet: () => {
+			console.log("posting foobarbot snippet");
 		},
 
 		// Get all snippets or all by user
