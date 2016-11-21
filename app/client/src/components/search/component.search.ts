@@ -36,7 +36,7 @@ export const SearchViewComponent = {
 			DiscoverComponent.snippets = [];
 			DiscoverComponent.isSearch = false;
 			if (DiscoverComponent.$route.params.searchtext) {
-				console.log("Search text was provided in Search Component so I will ask for snippets...");
+
 				DiscoverComponent.searchText = DiscoverComponent.$route.params.searchtext;
 				DiscoverComponent.isSearch = true;
 				DiscoverComponent.getSnippets();
@@ -85,7 +85,7 @@ export const SearchViewComponent = {
 		},
 
 		getSnippetsFromGithub: function() {
-			console.log("Getting snippets from Github...");
+			console.log("Getting snippets from Github... in Search Componen");
 			var DiscoverComponent = this;
 			this.$store.dispatch({
 				type: 'getSnippetsFromGithub',
@@ -117,7 +117,7 @@ export const SearchViewComponent = {
 					type: 'postStar',
 					snippetId: snippetId
 				}).then((response: any) => {
-					console.log("Starring item", response);
+
 					SearchComponent.showSnackBar("Snippet succesfully starred.");
 				}, (fail: any) =>{
 					SearchComponent.showSnackbarDanger("You have already starred this item.");

@@ -75,7 +75,7 @@ exports.AppfooterComponent = {
 },{}],3:[function(require,module,exports){
 "use strict";
 
-var html = "<transition name=\"modal\">\r\n    <div class=\"modal-mask\">\r\n            <div class=\"modal-wrapper\">\r\n                <div class=\"modal-container c-compose-modal\">\r\n                    <form v-on:submit.prevent=\"postSnippet\">\r\n                        <textarea id=\"composeform__snippet\" v-model=\"composeform__snippet\" class=\"c-compose-modal__code\" placeholder=\"Insert your code here...\" required=\"required\">\r\n                        </textarea>\r\n\r\n                        <div class=\"c-snippet__readme-meta\">\r\n                            <div>\r\n                                <input type=\"text\" id=\"composeform__tag1\" v-model=\"composeform__tag1\" class=\"c-compose-modal__tag\" placeholder=\"Insert a tag\" required=\"required\">\r\n                                <input type=\"text\" id=\"composeform__tag2\" v-model=\"composeform__tag2\" class=\"c-compose-modal__tag\" placeholder=\"Insert a tag\" required=\"required\">\r\n                                <input type=\"text\" id=\"composeform__tag3\" v-model=\"composeform__tag3\" class=\"c-compose-modal__tag\" placeholder=\"Insert a tag\" required=\"required\">\r\n                            </div>\r\n                            <div></div>\r\n                        </div>\r\n\r\n                        <textarea id=\"composeform__readme\" v-model=\"composeform__readme\" class=\"c-compose-modal__readme\" placeholder=\"Place your readme here, using Markdown...\">\r\n                        </textarea>\r\n                        \r\n                        <!--Submit and cancel -->\r\n                        <div class=\"c-compose-modal__controls\">\r\n                            <div class=\"grid-block align-center\">\r\n                                <div>\r\n                                     <button class=\"mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect c-compose-modal__button c-compose-modal__button--primary\">\r\n                                        <i class=\"material-icons\">create</i>\r\n                                    </button>\r\n\r\n                                    <!--<button class=\"mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect c-compose-modal__button\" v-on:click.prevent=\"closeModal\">\r\n                                        <i class=\"material-icons\">remove_red_eye</i>\r\n                                    </button>-->\r\n\r\n                                    <button class=\"mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect c-compose-modal__button\" v-on:click.prevent=\"closeModal\">\r\n                                        <i class=\"material-icons\">close</i>\r\n                                    </button>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n\r\n\r\n                        <!--<input type=\"submit\" class=\"mdl-button mdl-js-button mdl-button--raised mdl-button--colored\" value=\"Compose\">-->\r\n                        <!--<a href=\"\" v-on:click.prevent=\"closeModal\" class=\"c-button c-button--transparent\">Cancel</p>-->\r\n                    </form>\r\n\r\n                    <!--<div class=\"modal-header\">\r\n                    <slot name=\"header\">\r\n                        default header\r\n                    </slot>\r\n                    </div>\r\n\r\n                    <div class=\"modal-body\">\r\n                    <slot name=\"body\">\r\n                        default body\r\n                    </slot>\r\n                    </div>\r\n\r\n                    <div class=\"modal-footer\">\r\n                    <slot name=\"footer\">\r\n                        default footer\r\n                        <button class=\"modal-default-button\" @click=\"$emit('close')\">\r\n                        OK\r\n                        </button>\r\n                    </slot>\r\n                    </div>-->\r\n                </div>\r\n            </div>\r\n        </div>\r\n</transition>";
+var html = "<transition name=\"modal\">\r\n    <div class=\"modal-mask c-compose-modal__mask\">\r\n            <div class=\"modal-wrapper\">\r\n                <div class=\"modal-container c-compose-modal\">\r\n                    <form v-on:submit.prevent=\"postSnippet\">\r\n                        <textarea id=\"composeform__snippet\" v-model=\"composeform__snippet\" class=\"c-compose-modal__code\" placeholder=\"Insert your code here...\" required=\"required\">\r\n                        </textarea>\r\n\r\n                        <div class=\"c-snippet__readme-meta\">\r\n                            <div>\r\n                                <input type=\"text\" id=\"composeform__tag1\" v-model=\"composeform__tag1\" class=\"c-compose-modal__tag\" placeholder=\"Insert a tag\" required=\"required\">\r\n                                <input type=\"text\" id=\"composeform__tag2\" v-model=\"composeform__tag2\" class=\"c-compose-modal__tag\" placeholder=\"Insert a tag\" required=\"required\">\r\n                                <input type=\"text\" id=\"composeform__tag3\" v-model=\"composeform__tag3\" class=\"c-compose-modal__tag\" placeholder=\"Insert a tag\" required=\"required\">\r\n                            </div>\r\n                            <div></div>\r\n                        </div>\r\n\r\n                        <textarea id=\"composeform__readme\" v-model=\"composeform__readme\" class=\"c-compose-modal__readme\" placeholder=\"Place your readme here, using Markdown...\">\r\n                        </textarea>\r\n                        \r\n                        <!--Submit and cancel -->\r\n                        <div class=\"c-compose-modal__controls\">\r\n                            <div class=\"grid-block align-center\">\r\n                                <div>\r\n                                     <button class=\"mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect c-compose-modal__button c-compose-modal__button--primary\">\r\n                                        <i class=\"material-icons\">create</i>\r\n                                    </button>\r\n\r\n                                    <!--<button class=\"mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect c-compose-modal__button\" v-on:click.prevent=\"closeModal\">\r\n                                        <i class=\"material-icons\">remove_red_eye</i>\r\n                                    </button>-->\r\n\r\n                                    <button class=\"mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect c-compose-modal__button\" v-on:click.prevent=\"closeModal\">\r\n                                        <i class=\"material-icons\">close</i>\r\n                                    </button>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n\r\n\r\n                        <!--<input type=\"submit\" class=\"mdl-button mdl-js-button mdl-button--raised mdl-button--colored\" value=\"Compose\">-->\r\n                        <!--<a href=\"\" v-on:click.prevent=\"closeModal\" class=\"c-button c-button--transparent\">Cancel</p>-->\r\n                    </form>\r\n\r\n                    <!--<div class=\"modal-header\">\r\n                    <slot name=\"header\">\r\n                        default header\r\n                    </slot>\r\n                    </div>\r\n\r\n                    <div class=\"modal-body\">\r\n                    <slot name=\"body\">\r\n                        default body\r\n                    </slot>\r\n                    </div>\r\n\r\n                    <div class=\"modal-footer\">\r\n                    <slot name=\"footer\">\r\n                        default footer\r\n                        <button class=\"modal-default-button\" @click=\"$emit('close')\">\r\n                        OK\r\n                        </button>\r\n                    </slot>\r\n                    </div>-->\r\n                </div>\r\n            </div>\r\n        </div>\r\n</transition>";
 exports.ComposeModalComponent = {
     name: "modal",
     template: html,
@@ -460,7 +460,6 @@ exports.SearchViewComponent = {
             DiscoverComponent.snippets = [];
             DiscoverComponent.isSearch = false;
             if (DiscoverComponent.$route.params.searchtext) {
-                console.log("Search text was provided in Search Component so I will ask for snippets...");
                 DiscoverComponent.searchText = DiscoverComponent.$route.params.searchtext;
                 DiscoverComponent.isSearch = true;
                 DiscoverComponent.getSnippets();
@@ -496,7 +495,7 @@ exports.SearchViewComponent = {
         },
         getSnippetsFromGithub: function () {
             var _this = this;
-            console.log("Getting snippets from Github...");
+            console.log("Getting snippets from Github... in Search Componen");
             var DiscoverComponent = this;
             this.$store.dispatch({
                 type: 'getSnippetsFromGithub',
@@ -522,7 +521,6 @@ exports.SearchViewComponent = {
                     type: 'postStar',
                     snippetId: snippetId
                 }).then(function (response) {
-                    console.log("Starring item", response);
                     SearchComponent.showSnackBar("Snippet succesfully starred.");
                 }, function (fail) {
                     SearchComponent.showSnackbarDanger("You have already starred this item.");
@@ -1141,8 +1139,10 @@ exports.ApiInstance = new Vue({
             return myPromise;
         },
         getSnippetsFromGithub: function () {
+            console.log("getSnippetsFromGithub in Api fired");
             var myPromise = new Promise(function (resolve, reject) {
                 Vue.http.get("https://api.github.com/gists/public").then(function (response) {
+                    console.log("getSnippetsFromGithub in Api returned", response);
                     resolve(response.body);
                 }, function (fail) {
                     reject(fail);
@@ -1475,8 +1475,10 @@ exports.SnippetStore = {
             }
         },
         getSnippetsFromGithub: function (context, payload) {
+            console.log("getSnippetsFromGithub in snippet store fired");
             var myPromise = new Promise(function (resolve, reject) {
                 instance_api_1.ApiInstance.getSnippetsFromGithub().then(function (response) {
+                    console.log("getSnippetsFromGithub store returbed", response);
                     response = _.shuffle(response);
                     var maxNumber = 10;
                     var snippets = [];
@@ -1514,6 +1516,7 @@ exports.SnippetStore = {
                     console.log("Snippets length", snippets.length);
                     console.log("gistCodeLinks length", getGistCodePromises.length);
                     Promise.all(getGistCodePromises).then(function (gistCodes) {
+                        console.log("all promises resolved");
                         for (var i = 0; i < snippets.length; i++) {
                             snippets[i].snippetCode = gistCodes[i];
                         }

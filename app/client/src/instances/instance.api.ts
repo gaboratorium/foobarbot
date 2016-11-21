@@ -123,7 +123,8 @@ export const ApiInstance: IApiInstance= new Vue({
 
 			return myPromise;
 		},
-		
+
+
 		getNotifications: (myUserToken: any, myUserEmail: any) => {
 
 			var options = { 
@@ -290,8 +291,11 @@ export const ApiInstance: IApiInstance= new Vue({
 		},
 
 		getSnippetsFromGithub: () => {
+			console.log("getSnippetsFromGithub in Api fired");
+			
 			var myPromise = new Promise((resolve, reject) => {
 				Vue.http.get("https://api.github.com/gists/public").then((response: any) => {
+					console.log("getSnippetsFromGithub in Api returned", response);
 					resolve(response.body);
 				}, (fail: any) => {
 					reject(fail);

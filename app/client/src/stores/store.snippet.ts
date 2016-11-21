@@ -30,8 +30,11 @@ export const SnippetStore = {
         },
 
         getSnippetsFromGithub: (context: any, payload: any) => {
+            console.log("getSnippetsFromGithub in snippet store fired");
+            
             var myPromise = new Promise((resolve, reject) => {
                 ApiInstance.getSnippetsFromGithub().then((response: any) =>{
+                    console.log("getSnippetsFromGithub store returbed", response);
 
                     // Simulate search by shuffling results
                     response = _.shuffle(response);
@@ -85,6 +88,8 @@ export const SnippetStore = {
                         getGistCodePromises.push(getGistCode);
                     }
 
+
+
                     console.log("Snippets length", snippets.length);
                     console.log("gistCodeLinks length", getGistCodePromises.length);
                     
@@ -92,6 +97,7 @@ export const SnippetStore = {
                     // Get all gist codes from gistcode links, resolve when all finished
                     // reject if one fials
                     Promise.all(getGistCodePromises).then((gistCodes) => {
+                        console.log("all promises resolved");
                         
                         for (var i = 0; i < snippets.length; i++) {
 
