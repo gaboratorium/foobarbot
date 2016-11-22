@@ -65,7 +65,7 @@ mongoose.connect("mongodb://heroku_6lt22ghm:te2b1dta8i2glj7ss4lk71vjnm@ds037814.
 
 /////////////////////////////////////
 // Models
-// User model
+// User model 
 var User = mongoose.model('User', new Schema({
 	userId: String,
     userName: String, 
