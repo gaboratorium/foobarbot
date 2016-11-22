@@ -1,0 +1,19 @@
+.mdl-chip {
+    background-color: $secondary-color-background;
+    color: $secondary-color;
+    /*background-color: $secondary-color;
+    color: #fff;*/
+}
+
+.mdl-chip:hover {
+    background-color: $primary-color;
+    cursor: pointer;
+}
+
+.mdl-chip:hover .mdl-chip__text {
+    color: #fff;
+}
+
+.mdl-chip a {
+    color: inherit;
+}

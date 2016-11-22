@@ -1,13 +1,13 @@
 <div class='grid-block align-center'>
 	<div class="grid-block grid-page-content align-center">
 		<div class="grid-content grid-content--narrow">
-            <div class="c-card" v-if="!isRegistrationSuccesful">
+            <div class="c-card c-card__section" v-if="!isRegistrationSuccesful">
                 <h1>Signup for Developer Preview</h1>
                 <p>The Developer Preview is a very early stage of the application where enthusiastic and curious visitors can try out the prototype on the fly and participate in its evolution. Users can delete their accounts anytime.</p>
                 <form action="" id="signupform" v-on:submit.prevent="signupUser">
                     <!--Display name (user name-->
-                    <label for="signupform__username">Select your display name. You can change this later.</label>
-                    <input type="text" placeholder="Type your user name..." v-model="signupform__username" required="required">
+                    <label for="signupform__username">Select your display name. We like full names around here. You can change this later.</label>
+                    <input type="text" placeholder="Type your display name..." v-model="signupform__username" required="required">
 
                     <!--Email-->
                     <label for="signupform__email">Type your e-mail</label>
@@ -27,7 +27,7 @@
                     <!--Terms and conditions-->
                     <p>
                         <input type="checkbox" required="required">
-                        I accept that all my data will be public during the Developer Preview, may be removed and I may have to accept the terms of agreement in order to continue using Foobarbot once the Developer Preview state ends.
+                        I accept that all my data will be public during the Developer Preview, may be removed and I may have to accept the terms of use in order to continue using Foobarbot once the Developer Preview state ends.
                     </p>
 
                     <!--Submit-->
@@ -38,7 +38,7 @@
          
             </div>
 
-            <div v-if="isRegistrationSuccesful" class="c-card">
+            <div v-if="isRegistrationSuccesful" class="c-card c-card__section">
                 <p>Registration was succesful. <router-link to="login">Now you can login.</router-link></p>
             </div>
             

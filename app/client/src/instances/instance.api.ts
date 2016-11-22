@@ -1,3 +1,4 @@
+var _ = require('lodash');
 
 interface IApiInstance {
 	// These are implemented as methods not properties,
@@ -8,6 +9,7 @@ interface IApiInstance {
 	signupUser?: any
 	loadUsers?: any,
 	getUser?: any,
+	deleteUser?: any,
 
 	// Token methods
 	verifyToken?: any,
@@ -20,7 +22,10 @@ interface IApiInstance {
 
 	// Snippet methods
 	postSnippet?: any,
+	postFoobarbotSnippet?: any,
 	getSnippets?: any,
+	getStarredSnippets?: any,
+	getSnippetsFromGithub?: any,
 	getSnippet?: any,
 
 	// Star methods
@@ -31,7 +36,6 @@ export const ApiInstance: IApiInstance= new Vue({
 	name: "Api",
 	methods: {
 		postUserLog: () => {
-			// console.log("Logging user activity...");
 		},
 
 		// Verify token
@@ -97,7 +101,30 @@ export const ApiInstance: IApiInstance= new Vue({
 
 			return myPromise;
 		},
-		
+
+		deleteUser: (myToken: any) => {
+
+			var body = {
+				token: myToken,
+			};
+			
+			var options = {
+				headers: { 'x-access-token': myToken },
+				body: body
+			};
+
+			var myPromise = new Promise((resolve, reject) => {
+				Vue.http.delete('/api/user', options).then((response: any) => {
+					resolve(response.body);
+				}, (fail) => {
+					reject(fail);
+				})
+			})
+
+			return myPromise;
+		},
+
+
 		getNotifications: (myUserToken: any, myUserEmail: any) => {
 
 			var options = { 
@@ -110,14 +137,11 @@ export const ApiInstance: IApiInstance= new Vue({
 				}
 			};
 
-			console.log('api get notifications http req options', options);
 			
 			var myPromise = new Promise((resolve, reject) => {
 				Vue.http.get('/api/notifications', options).then((response: any) => {
-					console.log('api getnotifications receives:', response);
 					resolve(response.body);
 				}, (fail) => {
-					console.log('api getnotifications fails', fail);
 					
 					reject(fail);
 				});
@@ -133,7 +157,6 @@ export const ApiInstance: IApiInstance= new Vue({
 				notificationMessage: myMessage
 			};
 
-			console.log('api instance creates this body:', body);
 			
 
 			var myPromise = new Promise((resolve, reject) => {
@@ -201,26 +224,102 @@ export const ApiInstance: IApiInstance= new Vue({
 			return myPromise;
 		},
 
+		postFoobarbotSnippet: (snippet: any, myToken: any) => {
+
+			
+			var body = {
+				snippet: snippet,
+				token: myToken
+			}
+			console.log("api recieved and makes postFoobarbotSnippet request this body", body);
+
+			var myPromise = new Promise((resolve, reject) => {
+				Vue.http.post('/api/foobarbotsnippet/', body).then((response: any) => {
+					console.log(" postfoobarbotsnippet recieved package", response);
+					
+					resolve(response.body);
+				}, (fail) => {
+					reject(fail);
+				});
+			});
+
+			return myPromise;
+
+		},
+
 		// Get all snippets or all by user
-		getSnippets: (myUserId?: string, mySnippetId?: string) => {
-			var options = {};	
+		getSnippets: (myUserId?: string, mySnippetsMaxNumber?: number, mySearchText?: string) => {
+			var options = { params: {}};	
 			if (myUserId){
 				options = {
 						params: {
-							userId: myUserId
+							userId: myUserId,
 						}
 					};
 			}
+
+			if (mySnippetsMaxNumber){
+				options.params.snippetsMaxNumber = mySnippetsMaxNumber;
+			}
+
+			if (mySearchText) {
+				options.params.searchText = mySearchText;
+			}
+
+			
 			
 			var myPromise = new Promise((resolve, reject) => {
 				// Make HTTP request
 				Vue.http.get('/api/snippets', options).then((response: any) => {
+					var snippets = _.reverse(response.body.snippets);
 					resolve(response.body.snippets);
 				}, (fail: any) => {
 					reject(fail);
 				})
 			});
 
+			return myPromise;
+		},
+
+		getStarredSnippets: (myUserId: string, mySnippetsMaxNumber?: number) => {
+
+			console.log("getStarredsnippets fired in api");
+			
+			var options = {
+				params: {
+					userId: myUserId
+				}
+			}
+
+			if (mySnippetsMaxNumber) options.params.snippetsMaxNumber = mySnippetsMaxNumber;
+
+			var myPromise = new Promise((resolve, reject) => {
+				console.log("sending request...");
+				
+				// Make HTTP request
+				Vue.http.get('/api/starredsnippets', options).then((response: any) => {
+					console.log("getstarredsnippets in api recieved this response", response);
+					var snippets = _.reverse(response.body.snippets);
+					resolve(snippets);
+				}, (fail: any) => {
+					reject(fail);
+				})
+			});
+
+			return myPromise;
+		},
+
+		getSnippetsFromGithub: () => {
+			console.log("getSnippetsFromGithub in Api fired");
+			
+			var myPromise = new Promise((resolve, reject) => {
+				Vue.http.get("https://api.github.com/gists/public").then((response: any) => {
+					console.log("getSnippetsFromGithub in Api returned", response);
+					resolve(response.body);
+				}, (fail: any) => {
+					reject(fail);
+				})
+			})
 			return myPromise;
 		},
 
@@ -252,7 +351,6 @@ export const ApiInstance: IApiInstance= new Vue({
 				userToken: userToken
 			}
 
-			console.log("Api will send this body", body);
 			
 
 			var myPromise = new Promise((resolve, reject) => {

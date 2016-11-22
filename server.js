@@ -4,6 +4,7 @@
 var express = require('express');
 var fs = require('fs');
 var passwordHash = require('password-hash');
+var _ = require('lodash');
 
 // Init express app
 var app = express();
@@ -28,6 +29,11 @@ app.use('/assets', express.static(__dirname + globalPath.client.dist + "assets/"
 
 // Prepare to deliver for client, save to RAM
 var indexHtml = fs.readFileSync(__dirname + globalPath.client.dist + "index.html", "utf8");
+
+const FOOBARBOT_ID = "1479481497854175";
+
+
+
 
 // Serving index
 app.get('/', function (req, res) {
@@ -57,7 +63,9 @@ var Schema = mongoose.Schema;
 // Connect to db with mongoose
 mongoose.connect("mongodb://heroku_6lt22ghm:te2b1dta8i2glj7ss4lk71vjnm@ds037814.mlab.com:37814/heroku_6lt22ghm");
 
-// Create mongoose model
+/////////////////////////////////////
+// Models
+// User model
 var User = mongoose.model('User', new Schema({
 	userId: String,
     userName: String, 
@@ -65,6 +73,31 @@ var User = mongoose.model('User', new Schema({
     userPassword: String,
 	userRole: String,
 	registrationDate: Number
+}));
+
+// Star model
+var Star = mongoose.model('Star', new Schema({
+	userId: String, 
+    snippetId: String, 
+    date: Number
+}));
+
+// Snippet model
+var Snippet = mongoose.model('snippet', new Schema({
+	snippetId: String,
+	snippetCode: String,
+	userId: String,
+	tag1: String,
+	tag2: String,
+	tag3: String,
+	readme: String
+}));
+
+// Notification model
+var Notification = mongoose.model('Notification', new Schema({
+	userEmail: String, 
+    message: String, 
+    date: Number 
 }));
 
 
@@ -193,22 +226,14 @@ apiRoutes.get('/user', function(req, res) {
 	});
 });
 
-var schema = new Schema({
-	snippetId: String,
-	snippetCode: String,
-	userId: String,
-	tag1: String,
-	tag2: String,
-	tag3: String,
-	readme: String
-});
-
-var Snippet = mongoose.model('snippet', schema);
-
 // Get snippets from user Id
 apiRoutes.get('/snippets', function(req, res) {
 	
 	// IF userId or snippetId is provided
+	var snippetsMaxNumber = req.query.snippetsMaxNumber ? req.query.snippetsMaxNumber : 10;
+	var searchText = req.query.searchText ? req.query.searchText : null;
+
+
 	var options = {};
 	if (req.query.userId) {
 		options = { userId: req.query.userId };
@@ -218,12 +243,71 @@ apiRoutes.get('/snippets', function(req, res) {
 
 	var mySnippet = new Snippet(req.body.snippet);
 
+	console.log('getting snippets trying to find em in db');
+	
 	Snippet.find(options, function(err, snippets){
+		console.log('snippets found', snippets);
 		if (snippets) {
-			return res.json({success: true, message: "You know some shit", snippets: snippets});
+
+			if (searchText !== null) {
+				console.log('Search text was provided so I shuffle the snippets');
+				
+				snippets = _.shuffle(snippets);
+			}
+
+			var snippetsToPass = [];
+			for (var i = 0; i < snippetsMaxNumber && i < snippets.length; i++) {
+				snippetsToPass.push(snippets[i]);
+			}
+
+			return res.json({success: true, message: "You know some shit", snippets: snippetsToPass});
 		} else {
 			return res.status(404).send({success: false, message: "Snippets were not found with this userId"})
 		}
+	});
+});
+
+apiRoutes.get('/starredsnippets', function(req, res) {
+
+	console.log('get starred snippets endpoint hit');
+	console.log('get starred snippets user id:', req.query.userId);
+	
+
+	var snippetsMaxNumber = req.query.snippetsMaxNumber ? req.query.snippetsMaxNumber : 10;
+	var myUserId = req.query.userId;
+	var snippets = [];
+
+
+	var myPromises = [];
+	Star.find({userId: myUserId}, (err, stars) => {
+		console.log('Star find was ok and found these stars: ', stars);
+		
+		if (err) throw err;
+		for (var i = 0; i < stars.length; i++) {
+			
+			var myPromise = new Promise((resolve, reject) => {
+				Snippet.find({snippetId: stars[i].snippetId}, (err, snippets) => {
+					if (err) reject(err);
+					console.log('A promise has been resolved...');
+					resolve(snippets[0]);
+				});
+			});
+
+			myPromises.push(myPromise);
+
+		}
+
+		console.log('For loop ends. I have this myPromises.length', myPromises.length);
+
+		console.log('Finding stars ends. I have this myPromises.length', myPromises.length);
+
+		Promise.all(myPromises).then(resolvings => {
+			console.log('All promises resolved this is the result', resolvings);	
+			return res.json({succes: true, message: "You know some shit", snippets: resolvings});
+		}).catch(reason => {
+			console.log('error 500');
+			return res.status(500).send({success: false, message: "Something went wrong... I am so, so sorry..."});
+		});
 	});
 });
 
@@ -274,6 +358,31 @@ apiRoutes.use(function(req, res, next){
 //   });
 // });
 
+apiRoutes.post('/foobarbotsnippet', function(req, res) {
+	var mySnippet = req.body.snippet;
+	var myToken = req.body.token;
+
+	mySnippet.gistId = mySnippet.snippetId;
+
+	Snippet.find({gistId: mySnippet.gistId, userId: FOOBARBOT_ID}, function(err, snippets){
+		if (err) throw err;
+
+		if (snippets.length == 0) {
+			console.log('There is a snippet like this');
+			//TODO: post snippet as Foobarbot, star snippet as user
+
+			
+		} else {
+			console.log('There is no snippet like this');
+			// do stuff here
+			
+		}
+
+  		res.json({ message: 'Welcome to the coolest API on earth!' });
+	})
+	
+})
+
 
 // route to show a random message (GET http://localhost:3000/api/)
 apiRoutes.get('/', function(req, res) {
@@ -288,14 +397,6 @@ apiRoutes.get('/users', function(req, res) {
     res.json(users);
   });
 });
-
-var schema = new Schema({
-	userEmail: String, 
-    message: String, 
-    date: Number 
-});
-
-var Notification = mongoose.model('Notification', schema);
 
 // route to return all notifications from admin (GET http://localhost:8080/api/users/admin/notifications)
 apiRoutes.get('/notifications', function(req, res) {
@@ -316,14 +417,6 @@ apiRoutes.get('/notifications', function(req, res) {
 		res.status(409).send({success:false, message: 'no'})
 	});
 });
-
-var schema = new Schema({
-	userId: String, 
-    snippetId: String, 
-    date: Number
-});
-
-var Star = mongoose.model('Star', schema);
 
 
 apiRoutes.post('/stars', function(req, res) {
@@ -407,6 +500,30 @@ apiRoutes.delete('/notifications', function(req, res) {
 	Notification.remove({userEmail: myUserEmail}, (err, notification) => {
 		if (err) res.send(err);
 		res.json({message: "Succesfully deleted"});
+	});
+});
+
+apiRoutes.delete('/user', function(req, res) {
+	var myToken = req.body.token;
+
+	var decoded = jwt.decode(myToken, {complete: true, json: true});
+	var myUserId = decoded.payload.userId;
+
+	User.remove({userId: myUserId}, (err, user) => {
+		if (err) res.send(err);
+
+		Notification.remove({userId: myUserId}, (err, notification) => {
+			if (err) res.send(err);
+
+			Snippet.remove({userId: myUserId}, (err, snippet) => {
+				if (err) res.send(err);
+
+				Star.remove({userId: myUserId}, (err, star) => {
+					res.json({message: "User succesfully deleted"});
+
+				})
+			})
+		})
 	});
 });
 

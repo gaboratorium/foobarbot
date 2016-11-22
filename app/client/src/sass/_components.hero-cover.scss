@@ -1,10 +1,33 @@
 .c-hero-cover {
-    min-height: 300px;
+    min-height: 280px;
     border-bottom: 1px solid $border-color;
+}
+
+.c-hero-cover--with-navigation {
+    border-bottom: none;
 }
 
 .c-hero-cover--pull {
     margin-bottom: -6rem;
+}
+
+.c-hero-cover__navigation {
+    border-bottom: 1px solid $border-color;
+}
+
+.c-hero-cover__navigation-item {
+    /*text-transform: uppercase;*/
+    color: $font-color;
+    margin-right: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.c-hero-cover__navigation-item a {
+    color: $font-color;
+}
+
+.c-hero-cover__navigation-item-badge {
+    margin-right: .5rem;
 }
 
 .c-hero-cover__profile-logo {
@@ -24,9 +47,16 @@
 .c-hero-cover__profile-logo-image {
     width: 125px;
     height: 125px;
-    background: url("http://www.myiconfinder.com/uploads/iconsets/256-256-25d19272bc58056226f77270b80e3cf7.png");
+    background: url("https://conferencecloud-assets.s3.amazonaws.com/default_avatar.png");
     background-size: cover;
     margin-bottom: 1rem;
+    border-radius: 50%;
+}
+
+.c-hero-cover__profile-logo-image--foobarbot {
+    background: url("http://www.myiconfinder.com/uploads/iconsets/256-256-25d19272bc58056226f77270b80e3cf7.png");
+    border-radius: 0%;
+    background-size: cover;
 }
 
 .c-hero-cover__profile-logo-text {

@@ -9,27 +9,33 @@ export const SettingsViewComponent =  {
 	template: html,
 	data: function(){
 		return {
-			users: Array
+			user: {
+				userEmail: "userEmail",
+				userName: "userName",
+				errorMsg: ""
+			}
 		}
 	},
 	methods: {
-		loadUsers: function(){
-			var myToken = this.$store.getters.userToken;
-			
-	  		this.$store.dispatch({
-				  type: 'loadUsers',
-				  token: myToken
-			  }).then((response: any) => {
-				  console.log(response);
-				  
-				  this.users = response;
-			  }, (fail: any) => {
-				  // Fail
-			  });
+		updateUser: function(){
+			console.log("Updating user...");
 	  	},
 
-	  	resetUsers: function(){
-	  		this.users = [];
-	  	}
+		deleteUser: function(){
+			var SettingsViewComponent = this;
+			console.log("Deleting user...");
+			this.errorMsg = "Something went wrong...";
+			this.$store.dispatch({
+					type: 'deleteUser',
+				}).then((response: any) => {
+					// Log user out
+					SettingsViewComponent.$store.commit('unsetUserClient');
+					SettingsViewComponent.$router.replace('dummy-replacement-so-we-force-router-change');
+					SettingsViewComponent.$router.push('discover');
+
+				}, (fail: any) =>{
+					// Fail
+				});
+		}
 	}
 };

@@ -3,3 +3,7 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="date"]:focus
     color: $font-color;
     background-color: $navbar-background-color;
 }
+
+input[type="search"]:focus {
+    background-color: #fff;
+}

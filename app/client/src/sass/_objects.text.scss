@@ -7,8 +7,20 @@
 }
 
 .o-text--error {
-	color: #f44336;
+	color: $danger-color;
 	display: block;
 	margin-top: 1rem;
 	margin-bottom: 1rem;
+}
+
+.o-text--danger {
+	color: $danger-color;
+}
+
+.o-text--info {
+	color: $secondary-color;
+	background-color: $secondary-color-background;
+	border: 1px solid $secondary-color-border;
+	border-radius: 4px;
+	padding: 1rem;
 }

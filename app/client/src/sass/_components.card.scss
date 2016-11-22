@@ -1,8 +1,21 @@
 .c-card {
     background-color: #fff;
     border: 1px solid $border-color;
-    padding: 1.5rem;
     margin-bottom: 2rem;
+}
+
+.c-card__hero {
+    background-color: $navbar-background-color;
+    color: $primary-color;
+    text-align: center;
+}
+
+.c-card__hero-title {
+    color: $primary-color;
+}
+
+.c-card__section {
+    padding: 1.5rem;
 }
 
 .c-card > *:first-child {

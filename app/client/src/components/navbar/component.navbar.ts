@@ -21,13 +21,14 @@ export const NavbarComponent =  {
 				name: String
 			},
 			isUserLoggedIn: false,
-			showModal: false
+			showModal: false,
+			textToSearch: String
 
 		}
 	},
 	created: function(){
+		this.textToSearch = "";
 		var isUserLoggedIn = localStorage.userName !== undefined && localStorage.userToken !== undefined;
-		console.log('navbar created', isUserLoggedIn);
 		
 		
 		if (isUserLoggedIn) {
@@ -61,10 +62,14 @@ export const NavbarComponent =  {
 		},
 
 		showToast: function(message: string){
-			console.log("show toast");
 			var snackbarContainer = document.querySelector('#demo-toast-example');
 			var data = {message: message};
 			snackbarContainer.MaterialSnackbar.showSnackbar(data);
+		},
+
+		search: function() {
+			this.$router.push('/discover');
+			this.$router.push('/search/' + this.textToSearch);
 		}
 	}
 };

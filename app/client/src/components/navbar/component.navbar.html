@@ -11,10 +11,14 @@
 						</a>
 					</li>
 					<li>
-						<span class="inline-label" style='margin: 0.25rem'>
-							<input type="search" placeholder="Search for anything..." style="height: 100%">
-							<a href="#" class="button c-button--search">Go</a>
-						</span>
+						<form action="" v-on:submit.prevent="search">
+							<span class="inline-label" style='margin: 0.25rem'>
+								<input type="search" v-model="textToSearch" placeholder="Search for anything..." style="height: 100%">
+								<button type="submit" class="button c-button--search">
+									<i class="fa fa-search" aria-hidden="true"></i>
+								</button>
+							</span>
+						</form>
 					</li>
 				</ul>
 			</div>
@@ -22,7 +26,7 @@
 				<!-- Right menu for user -->
 				<ul class="menu-bar icon-left" v-if='isUserLoggedIn'>
 
-					<li><router-link to="/Discover" class="menu-group--navbar__menu-item">Discover</router-link></li>
+					<li><router-link to="/discover" class="menu-group--navbar__menu-item">Discover</router-link></li>
 					<li><router-link to="/notifications" class="menu-group--navbar__menu-item">Notifications</router-link></li>
 					
 					<!-- Dropdown -->
@@ -61,7 +65,7 @@
 					<li><router-link to="/discover" class="menu-group--navbar__menu-item">Discover</router-link></li>
 					<li><router-link to="/about" class="menu-group--navbar__menu-item">About</router-link></li>
 					<li><router-link to="/login" class="menu-group--navbar__menu-item">Log in</router-link></li>
-					<li class="menu-group--navbar__button-list-item"><router-link to="signup" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat">Sign up</router-link></li>
+					<li class="menu-group--navbar__button-list-item"><router-link to="/signup" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat">Sign up</router-link></li>
 				</ul>
 			</div>
 		</div>
@@ -70,7 +74,7 @@
 
 
 	<div class="title-bar c-info-bar" v-if="!isUserLoggedIn">
-		<div class="center">Foobarbot is where people find and share code. <router-link to="/signup">Join the community!</router-link></div>
+		<div class="center">Foobarbot is where people find and share code. <router-link to="/signup">Join the community</router-link> or <router-link to="/about">find out more.</router-link></div>
 	</div>
 
 	<!--Compose Modal -->

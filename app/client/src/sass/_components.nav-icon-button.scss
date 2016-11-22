@@ -1,0 +1,13 @@
+.c-nav-icon-button {
+    color: $secondary-color;
+    background-color: $secondary-color-background;
+    padding: .8rem;
+    margin-right: .5rem;
+    border-radius: 50%;
+}
+
+.c-nav-icon-button:hover {
+    color: $secondary-color-background;
+    background-color: $secondary-color;
+    cursor: pointer;
+}

@@ -1,5 +1,10 @@
 .mdl-snackbar {
     // stuff
+    background-color: $secondary-color;
+}
+
+.mdl-snackbar--danger {
+    background-color: $danger-color;
 }
 
 .mdl-snackbar__text {

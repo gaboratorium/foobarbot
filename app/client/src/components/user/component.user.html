@@ -2,11 +2,11 @@
 <div>
 
 	<!-- Hero cover -->
-	<div class="c-hero-cover grid-block align-center">
+	<div class="c-hero-cover c-hero-cover--with-navigation grid-block align-center">
 
 		<!--Loaded user info-->
 		<div class="c-hero-cover__profile-logo grid-content" v-if="userDataStatus=='loaded'">
-			<div class="c-hero-cover__profile-logo-image"></div>
+			<div class="c-hero-cover__profile-logo-image" v-bind:class="{ 'c-hero-cover__profile-logo-image--foobarbot' : user.userId == 1479481497854175 }"></div>
 			<h1 class="c-hero-cover__profile-logo-text">{{ user.userName }}</h1>
 			<h2 class="c-hero-cover__profile-logo-sub-text">Copenhagen, Denmark</h2>
 			<span>
@@ -21,64 +21,38 @@
 		</div>
 	</div>
 
-	<!-- Page content -->
-	<div class="grid-block align-center">
-		<div class="grid-block grid-page-content">
-			<div class="grid-content">
-
-				<!--Loaded snippets -->
-				<div class="grid-block" v-show="snippetDataStatus=='loaded'">
-					<div class="grid-content">
-						<!--List of snippets-->
-						<ul class="c-snippets">
-
-							<li class="c-snippet" v-for="snippet in snippets">
-								<!--Snippet code -->
-								<pre><code class="php c-snippet__code">{{ snippet.snippetCode }}</code></pre>
-
-								<div class="c-snippet__readme">
-
-									<!--Readme meta-->
-									<div class="c-snippet__readme-meta">
-										<div class="c-snippet__readme-meta-title">
-											<span><router-link :to="'/snippet/' + snippet.snippetId">#{{snippet.snippetId}}</router-link> in </span>
-											<span class="mdl-chip">
-												<span class="mdl-chip__text">
-													{{snippet.tag1}}
-												</span>
-											</span>
-											<span class="mdl-chip">
-												<span class="mdl-chip__text">
-													{{snippet.tag2}}
-												</span>
-											</span>
-											<span class="mdl-chip">
-												<span class="mdl-chip__text">
-													{{snippet.tag3}}
-												</span>
-											</span>
-										</div>
-										<span>by <router-link :to="'/user/' + snippet.userId">#{{ snippet.userId }}</router-link></span>
-										<!--<a href="#" v-on:click.prevent="starSnippet(snippet.snippetId)">Star it</a>-->
-									</div>
-
-									<!--Readme text in markdown-->
-									<div v-html="snippet.readme" class="c-snippet__readme-text"></div>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-
-				<!--Loading snippets-->
-				<div class="grid-block" v-if="snippetDataStatus=='loading'">
-					<div class="grid-content">
-						<div class="grid-block align-center">
-							<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
-						</div>
-					</div>
-				</div>
+	<!-- Navigation -->
+	<div class="grid-block align-center c-hero-cover__navigation">
+		<div class="grid-block grid-page-content align-justify">
+			<!--Left navigation -->
+			<div class="grid-block align-center">
+				<!--Snippets-->
+				<span class="c-hero-cover__navigation-item">
+					<router-link to="snippets">
+						<span class="secondary badge c-hero-cover__navigation-item-badge">{{ snippets.length }}</span><span>Snippets</span>
+					</router-link>
+				</span>
+				<span class="c-hero-cover__navigation-item">
+					<router-link to="stars">
+						<span class="secondary badge c-hero-cover__navigation-item-badge">{{ starredSnippets.length }}</span><span>Stars</span>
+					</router-link>
+				</span>
+				<span class="c-hero-cover__navigation-item">
+					<router-link to="comments">
+						<span class="secondary badge c-hero-cover__navigation-item-badge">0</span><span>Comments</span>
+					</router-link>
+				</span>
+			</div>
+			
+			<!--Right navigation -->
+			<div>
+				<!--<i class="fa fa-envelope c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar('Copying code to clipboard')"></i>-->
+				<!--<i class="fa fa-eye c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar('Copying code to clipboard')"></i>-->
 			</div>
 		</div>
 	</div>
+
+	<!-- Page content -->
+	<router-view></router-view>
+
 </div>

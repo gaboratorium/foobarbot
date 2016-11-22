@@ -1,32 +1,45 @@
 <transition name="modal">
-    <div class="modal-mask">
+    <div class="modal-mask c-compose-modal__mask">
             <div class="modal-wrapper">
-                <div class="modal-container">
-                    <h1>Create new snippet</h1>
+                <div class="modal-container c-compose-modal">
                     <form v-on:submit.prevent="postSnippet">
-                        <label for="composeform__snippet">Snippet</label>
-                        <textarea id="composeform__snippet" v-model="composeform__snippet">
+                        <textarea id="composeform__snippet" v-model="composeform__snippet" class="c-compose-modal__code" placeholder="Insert your code here..." required="required">
                         </textarea>
 
-                        <!-- tag 1-->
-                        <label for="composeform__tag1">Tag 1</label>
-                        <input type="text" id="composeform__tag1" v-model="composeform__tag1">
+                        <div class="c-snippet__readme-meta">
+                            <div>
+                                <input type="text" id="composeform__tag1" v-model="composeform__tag1" class="c-compose-modal__tag" placeholder="Insert a tag" required="required">
+                                <input type="text" id="composeform__tag2" v-model="composeform__tag2" class="c-compose-modal__tag" placeholder="Insert a tag" required="required">
+                                <input type="text" id="composeform__tag3" v-model="composeform__tag3" class="c-compose-modal__tag" placeholder="Insert a tag" required="required">
+                            </div>
+                            <div></div>
+                        </div>
 
-                        <!-- tag 2-->
-                        <label for="composeform__tag2" >Tag 2</label>
-                        <input type="text" id="composeform__tag2" v-model="composeform__tag2">
-
-                        <!--tag 3-->
-                        <label for="composeform__tag3">Tag 3</label>
-                        <input type="text" id="composeform__tag3" v-model="composeform__tag3">
-
-                        <label for="composeform__readme">Readme</label>
-                        <textarea id="composeform__readme" v-model="composeform__readme">
+                        <textarea id="composeform__readme" v-model="composeform__readme" class="c-compose-modal__readme" placeholder="Place your readme here, using Markdown...">
                         </textarea>
                         
                         <!--Submit and cancel -->
-                        <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="Submit">
-                        <a href="" v-on:click.prevent="closeModal" class="c-button c-button--transparent">Cancel</p>
+                        <div class="c-compose-modal__controls">
+                            <div class="grid-block align-center">
+                                <div>
+                                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect c-compose-modal__button c-compose-modal__button--primary">
+                                        <i class="material-icons">create</i>
+                                    </button>
+
+                                    <!--<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect c-compose-modal__button" v-on:click.prevent="closeModal">
+                                        <i class="material-icons">remove_red_eye</i>
+                                    </button>-->
+
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect c-compose-modal__button" v-on:click.prevent="closeModal">
+                                        <i class="material-icons">close</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!--<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="Compose">-->
+                        <!--<a href="" v-on:click.prevent="closeModal" class="c-button c-button--transparent">Cancel</p>-->
                     </form>
 
                     <!--<div class="modal-header">

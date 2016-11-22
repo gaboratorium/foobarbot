@@ -4,6 +4,8 @@ var fs = require('fs');
 var html = fs.readFileSync(__dirname + '/component.discover.html', 'utf8');
 var marked = require('marked');
 var hljs = require("highlight.js");
+var _ = require("lodash");
+
 
 hljs.configure({
   tabReplace: '  ', // 4 spaces
@@ -21,34 +23,40 @@ export const DiscoverViewComponent = {
 			snippets: Array,
 			errorMsg: String,
 			isUserLoggedIn: Boolean,
-			snippetDataStatus: String
+			snippetDataStatus: String,
+			searchText: String,
+			isSearch: Boolean
 		}
 	},
 
 	beforeRouteEnter (to: any, from: any, next: any) {
 		next( (DiscoverComponent: any) => {
-			console.log("Entering discover route, these are the users", DiscoverComponent.users);
 			DiscoverComponent.snippetDataStatus = "loading";
 			DiscoverComponent.getSnippets();
-			// hljs.initHighlighting();
+
+			DiscoverComponent.isSearch = false;
+			if (DiscoverComponent.$route.params.searchtext) {
+				DiscoverComponent.searchText = DiscoverComponent.$route.params.searchtext;
+				DiscoverComponent.isSearch = true;
+				
+			}
 		})
 	},
 
 	created: function(){
 		// this.snippetDataStatus = "loading";
-		// this.getSnippets();		
+		// this.getSnippets();
+		
 	},
 
 	methods: {
 
 		getSnippets: function(){
-			console.log("get snippets is called");
 			
 			var DiscoverComponent = this;
 			this.$store.dispatch({
 				  type: 'getSnippets',
 			  }).then((response: any) => {
-				  console.log("getsnippets request succesful");
 
 				  // Converting text to markdown
 				  for (var i = 0; i < response.length; i++) {
@@ -56,41 +64,64 @@ export const DiscoverViewComponent = {
 				  }
 
 				  // Initialize Highlightjs
-				  this.snippets = response;
+
+				  this.snippets = _.slice(response, 0, 5);
 				  setTimeout(function(){
-					console.log("Highlighting code...");
 					hljs.initHighlighting.called = false;
 					hljs.initHighlighting();
-					console.log(hljs.listLanguages());
 					DiscoverComponent.snippetDataStatus = "loaded";
 				  }, 200);
 
 
 			  }, (fail: any) => {
-				  console.log("getsnippets request failed");
 				  
 				  // Fail
-				  console.log("about component get snippets fails:", fail);
 			  });
 		},
 
-		starSnippet: function(snippetId: string){
-			console.log("You are trying to star this snippet:", snippetId);
+		starSnippet: function(snippetId: string, snippet: any){
+			var DiscoverComponent = this;
+			console.log("Starring snippet...");
 			if (this.$store.getters["mainstore/isUserLoggedIn"]) {
 				this.$store.dispatch({
 					type: 'postStar',
-					snippetId: snippetId
+					snippetId: snippetId,
+					snippet: snippet
 				}).then((response: any) => {
-					console.log("You have succesfully starred the snippet", response);
-				}, (fail: any) =>{
-					console.log("about component postStar fails", fail);
+					console.log("Starring item", response);
+					DiscoverComponent.showSnackBar("Snippet succesfully starred.");
 					
+				}, (fail: any) =>{
+					console.log("Starring item failed", fail);
+					DiscoverComponent.showSnackbarDanger("You have already starred this item.");
 				});
 			}
 			else {
-				console.log("No login, no star.");
+				DiscoverComponent.showSnackbarDanger("You have to be logged in to star snippets.");
 			}
 			
+		},
+
+		showSnackbarDanger: function(message: string){
+			var snackbarContainer = document.querySelector('#snackbar--danger');
+			componentHandler.upgradeElement(snackbarContainer);
+			var data = {message: message};
+			snackbarContainer.MaterialSnackbar.showSnackbar(data);
+		},
+
+		showSnackBar: function(message: string) {
+			var snackbarContainer = document.querySelector('#snackbar');
+			componentHandler.upgradeElement(snackbarContainer);
+			var data = {message: message};
+			snackbarContainer.MaterialSnackbar.showSnackbar(data);
+		},
+
+		showInDevelopmentSnackbar: function(feature: string){
+			var snackbarContainer = document.querySelector('#snackbar--danger');
+			componentHandler.upgradeElement(snackbarContainer);
+			var message = "This feature is still in development: " + feature;
+			var data = {message: message};
+			snackbarContainer.MaterialSnackbar.showSnackbar(data);
 		}
 	}
 };
