@@ -15,7 +15,10 @@ export const StarStore = {
 
         starSnippetFromExternalApi: (context: any, payload: any) => {
             // stuff
-            console.log("star snippet from external api in store star fired, recieved this snippet", payload.snippet);
+            console.log("star api sends request");
+            
+            var userToken = context.getters["mainstore/userToken"]; // should be userId
+            ApiInstance.postFoobarbotSnippet(payload.snippet, userToken);
             
         }
     }

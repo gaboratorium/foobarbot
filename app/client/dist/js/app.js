@@ -532,9 +532,9 @@ exports.SearchViewComponent = {
         },
         starSnippetFromExternalApi: function (snippet) {
             var SearchComponent = this;
+            console.log("starSnippetFromExternalApi isUserLoggedIn", this.$store.getters["mainstore/isUserLoggedIn"]);
             if (this.$store.getters["mainstore/isUserLoggedIn"]) {
-                SearchComponent.showSnackBar("Snippet succesfully starred.");
-                SearchComponent.showSnackbarDanger("Sorry something went wrong :(");
+                console.log("search component sends request");
                 this.$store.dispatch({
                     type: 'starSnippetFromExternalApi',
                     snippet: snippet
@@ -1089,8 +1089,21 @@ exports.ApiInstance = new Vue({
             });
             return myPromise;
         },
-        postFoobarbotSnippet: function () {
-            console.log("posting foobarbot snippet");
+        postFoobarbotSnippet: function (snippet, myToken) {
+            var body = {
+                snippet: snippet,
+                token: myToken
+            };
+            console.log("api recieved and makes postFoobarbotSnippet request this body", body);
+            var myPromise = new Promise(function (resolve, reject) {
+                Vue.http.post('/api/foobarbotsnippet/', body).then(function (response) {
+                    console.log(" postfoobarbotsnippet recieved package", response);
+                    resolve(response.body);
+                }, function (fail) {
+                    reject(fail);
+                });
+            });
+            return myPromise;
         },
         getSnippets: function (myUserId, mySnippetsMaxNumber, mySearchText) {
             var options = { params: {} };
@@ -1560,7 +1573,9 @@ exports.StarStore = {
             return instance_api_1.ApiInstance.postStar(userToken, snippetId);
         },
         starSnippetFromExternalApi: function (context, payload) {
-            console.log("star snippet from external api in store star fired, recieved this snippet", payload.snippet);
+            console.log("star api sends request");
+            var userToken = context.getters["mainstore/userToken"];
+            instance_api_1.ApiInstance.postFoobarbotSnippet(payload.snippet, userToken);
         }
     }
 };

@@ -224,8 +224,27 @@ export const ApiInstance: IApiInstance= new Vue({
 			return myPromise;
 		},
 
-		postFoobarbotSnippet: () => {
-			console.log("posting foobarbot snippet");
+		postFoobarbotSnippet: (snippet: any, myToken: any) => {
+
+			
+			var body = {
+				snippet: snippet,
+				token: myToken
+			}
+			console.log("api recieved and makes postFoobarbotSnippet request this body", body);
+
+			var myPromise = new Promise((resolve, reject) => {
+				Vue.http.post('/api/foobarbotsnippet/', body).then((response: any) => {
+					console.log(" postfoobarbotsnippet recieved package", response);
+					
+					resolve(response.body);
+				}, (fail) => {
+					reject(fail);
+				});
+			});
+
+			return myPromise;
+
 		},
 
 		// Get all snippets or all by user

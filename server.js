@@ -30,6 +30,8 @@ app.use('/assets', express.static(__dirname + globalPath.client.dist + "assets/"
 // Prepare to deliver for client, save to RAM
 var indexHtml = fs.readFileSync(__dirname + globalPath.client.dist + "index.html", "utf8");
 
+const FOOBARBOT_ID = "1479481497854175";
+
 
 
 
@@ -241,7 +243,10 @@ apiRoutes.get('/snippets', function(req, res) {
 
 	var mySnippet = new Snippet(req.body.snippet);
 
+	console.log('getting snippets trying to find em in db');
+	
 	Snippet.find(options, function(err, snippets){
+		console.log('snippets found', snippets);
 		if (snippets) {
 
 			if (searchText !== null) {
@@ -352,6 +357,31 @@ apiRoutes.use(function(req, res, next){
 //     res.json({ success: true });
 //   });
 // });
+
+apiRoutes.post('/foobarbotsnippet', function(req, res) {
+	var mySnippet = req.body.snippet;
+	var myToken = req.body.token;
+
+	mySnippet.gistId = mySnippet.snippetId;
+
+	Snippet.find({gistId: mySnippet.gistId, userId: FOOBARBOT_ID}, function(err, snippets){
+		if (err) throw err;
+
+		if (snippets.length == 0) {
+			console.log('There is a snippet like this');
+			//TODO: post snippet as Foobarbot, star snippet as user
+
+			
+		} else {
+			console.log('There is no snippet like this');
+			// do stuff here
+			
+		}
+
+  		res.json({ message: 'Welcome to the coolest API on earth!' });
+	})
+	
+})
 
 
 // route to show a random message (GET http://localhost:3000/api/)
