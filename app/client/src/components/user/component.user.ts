@@ -1,5 +1,7 @@
 var fs = require('fs');
 var html = fs.readFileSync(__dirname + '/component.user.html', 'utf8');
+var hljs = require("highlight.js");
+var marked = require('marked');
 
 // Export global component
 export const UserViewComponent = {
@@ -9,7 +11,7 @@ export const UserViewComponent = {
 	// Data
 	data: function(){
 		return {
-			dataStatus: String,
+			userDataStatus: String,
 			user: Object,
 			snippets: Object,
 			snippetDataStatus: String
@@ -18,7 +20,8 @@ export const UserViewComponent = {
 
 	// Created hook
 	created: function(){
-		this.dataStatus = "loading"
+		this.userDataStatus = "loading";
+		this.snippetDataStatus = "loading";
 		var requestedId: string = this.$route.params.id;
 
 		console.log("requested id", requestedId);
@@ -41,11 +44,13 @@ export const UserViewComponent = {
 					userId: userId,
 				}).then((response: any) => {
 					// Double redirection for forcing router state change
-					this.user = response;
-					this.dataStatus = "loaded";
+					this.user = response.user;
+					this.userDataStatus = "loaded";
+					console.log("loaded this user:", this.user.userName);
+					
 					
 				}, (fail: any) => {
-					this.dataStatus = "failed";
+					this.userDataStatus = "failed";
 					this.$router.push({name: "about"});
 
 				})
@@ -53,12 +58,26 @@ export const UserViewComponent = {
 
 		getSnippets: function(userId: number){
 			console.log("loadSnippets fired")
+			var UserComponent = this;
 			this.$store.dispatch({
 				type: "getSnippets",
 				userId: userId,
 			}).then((response: any) => {
+
+				// Converting text to markdown
+				for (var i = 0; i < response.length; i++) {
+					response[i].readme = marked(response[i].readme);
+				}
+
 				this.snippets = response;
-				this.snippetDataStatus = "loaded";
+
+				setTimeout(function(){
+					console.log("Highlighting code...");
+					hljs.initHighlighting.called=false;
+					hljs.initHighlighting();
+					UserComponent.snippetDataStatus = "loaded";
+
+				  }, 200);
 				console.log(response.snippets);
 			}, (fail: any) => {
 				this.snippetDataStatus = "failed";

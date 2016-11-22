@@ -57,6 +57,14 @@ export const NavbarComponent =  {
 			// Double redirection for forcing router state change
 			this.$router.replace('dummy-replacement-so-we-force-router-change');
 			this.$router.replace('about');
+			this.showToast("You have succesfully logged out.")
+		},
+
+		showToast: function(message: string){
+			console.log("show toast");
+			var snackbarContainer = document.querySelector('#demo-toast-example');
+			var data = {message: message};
+			snackbarContainer.MaterialSnackbar.showSnackbar(data);
 		}
 	}
 };

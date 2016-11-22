@@ -1,7 +1,41 @@
 .menu-group--navbar {
 	background-color: #eceff1;
 	border-bottom: 1px solid #cfd8dc;
+	justify-content: center;
+	height: $menu-bar-height;
 }
+
+.menu-group--navbar__menu-item {
+	color: #78909c !important; // Foundation hack
+}
+
+.menu-group--navbar__button-list-item {
+	display: flex;
+	align-items: center !important;
+}
+
+.menu-group__menu-bar {
+	width: $page-content-width;
+	flex-flow: row nowrap;
+}
+
+.menu-group__logo {
+	/*flex-flow: row nowrap !important; // Foundation hack*/
+}
+
+.menu-group__logo:hover .menu-group__logo-text {
+	color: #3F51B5 !important;
+}
+
+.menu-group__logo-text {
+	color: $menu-font-color;
+}
+
+.menu-group__logo-text--strong {
+	font-weight: 900;
+	margin-right: .5rem;
+}
+
 
 .menu-bar {
 	background: none;

@@ -18,9 +18,13 @@ interface IApiInstance {
 	postNotification?: any,
 	deleteNotification?: any,
 
-	// Snippte methods
+	// Snippet methods
 	postSnippet?: any,
-	getSnippets?: any
+	getSnippets?: any,
+	getSnippet?: any,
+
+	// Star methods
+	postStar?: any
 }
 
 export const ApiInstance: IApiInstance= new Vue({
@@ -234,6 +238,27 @@ export const ApiInstance: IApiInstance= new Vue({
 				// Make HTTP request
 				Vue.http.get('/api/snippets', options).then((response: any) => {
 					resolve(response.body.snippets);
+				}, (fail: any) => {
+					reject(fail);
+				})
+			});
+
+			return myPromise;
+		},
+
+		postStar: (userToken: string, snippetId: string) => {
+			var body = {
+				snippetId: snippetId,
+				userToken: userToken
+			}
+
+			console.log("Api will send this body", body);
+			
+
+			var myPromise = new Promise((resolve, reject) => {
+				// Make HTTP request
+				Vue.http.post('/api/stars', body).then((response: any) => {
+					resolve(response.body.stars);
 				}, (fail: any) => {
 					reject(fail);
 				})

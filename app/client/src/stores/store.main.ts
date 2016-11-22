@@ -7,6 +7,7 @@ import { TokenStore } from "./store.token";
 import { NotificationStore } from "./store.notification";
 import { UserStore } from "./store.user";
 import { SnippetStore } from "./store.snippet";
+import { StarStore } from "./store.star";
 
 // No DT typings
 // import * as Vuex from "vuex";
@@ -31,7 +32,8 @@ export const MainStore = new Vuex.Store({
     tokenModule: TokenStore,
     notificationModule: NotificationStore,
     userModule: UserStore,
-    snippetModule: SnippetStore
+    snippetModule: SnippetStore,
+    starModule: StarStore
   },
 
   // Getters

@@ -6,6 +6,7 @@ import { UserViewComponent } from  './../components/user/component.user';
 import { SettingsViewComponent } from './../components/settings/component.settings';
 import { NotificationsViewComponent } from './../components/notifications/component.notifications';
 import { SnippetViewComponent } from './../components/snippet/component.snippet';
+import { DiscoverViewComponent } from './../components/discover/component.discover';
 import { NavbarComponent } from './../components/navbar/component.navbar';
 
 declare var localStorage: any;
@@ -37,10 +38,17 @@ export const RouterInstance = new VueRouter({
 		// Home
 		{
 			path: '/',
-			redirect: '/about',
+			redirect: '/discover',
 		},
 
-		  // About
+		// Discover
+	    {
+	      path: '/discover',
+	      name: 'discover',
+	      component: DiscoverViewComponent,
+	    }, 
+
+		// About
 	    {
 	      path: '/about',
 	      name: 'about',

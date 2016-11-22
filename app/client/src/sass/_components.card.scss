@@ -1,0 +1,31 @@
+.c-card {
+    background-color: #fff;
+    border: 1px solid $border-color;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.c-card > *:first-child {
+    margin-top: 0rem;
+}
+
+.c-card > *:last-child {
+    margin-bottom: 0rem;
+}
+
+.c-card h1, 
+.c-card h2, 
+.c-card h3, 
+.c-card h4 {
+    font-weight: bold;
+    margin-top: 0rem;
+    margin-bottom: 1rem;
+} 
+
+.c-card h1 {
+    font-size: 1.5rem;
+}
+
+.c-card h2 {
+    font-size: 1.25rem;
+}

@@ -1,0 +1,48 @@
+.c-snippet {
+    margin-bottom: 2rem;
+}
+
+.c-snippet__code {
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    padding: 1.5rem;
+}
+
+.c-snippet__readme {
+    border: 1px solid $border-color;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    margin-top: -1px;
+}
+
+.c-snippet__readme-text {
+    padding: 2rem;
+    background-color: #fff;
+}
+
+.c-snippet__readme-meta {
+    display: flex;
+    justify-content: space-between;
+    background-color: #eceff1;
+    padding: 1rem;
+    border-bottom: 1px solid $border-color;
+    align-items: center;
+}
+
+.c-snippet__readme-meta-title {
+    display: flex;
+    align-items: center;
+}
+
+.c-snippet__readme-meta-title > span {
+    margin-right: .5rem;
+}
+
+.c-snippet__readme-text > *:first-child { margin-top: 0rem; }
+.c-snippet__readme-text > *:last-child { margin-bottom: 0rem; }
+.c-snippet__readme-text > h1,
+.c-snippet__readme-text > h2,
+.c-snippet__readme-text > h3,
+.c-snippet__readme-text > h4 {
+    margin-bottom: 1rem;
+}

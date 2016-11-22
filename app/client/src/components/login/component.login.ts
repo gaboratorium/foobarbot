@@ -23,12 +23,20 @@ export const LoginViewComponent = {
 					userPassword: this.loginform__password
 				}).then((response: any) => {
 					// Double redirection for forcing router state change
+					this.showToast("You have succesfully logged in.");
 					this.$router.replace('dummy-replacement-so-we-force-router-change');
 					this.$router.push('settings');
 				}, (fail: any) => {
 					console.log('Oops, something went wrong!');		
 					this.errorMsg = "Wrong credentials! Try again!";			
 				})
-	  	}
+	  	},
+
+		showToast: function(message: string){
+			console.log("show toast");
+			var snackbarContainer = document.querySelector('#demo-toast-example');
+			var data = {message: message};
+			snackbarContainer.MaterialSnackbar.showSnackbar(data);
+		}
 	}
 };

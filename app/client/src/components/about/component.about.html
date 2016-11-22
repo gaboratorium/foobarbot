@@ -1,51 +1,39 @@
-<div class="grid-block">
-	<div class="grid-content">
-		<h1>Welcome to Foobarbot Developer Preview</h1>
-		<p>Project Lines is a single page application written in NodeJs and VueJs.</p>
-		<p>Roadmap:</p>
-		<ul>
-			<li>Save and organize your code snippets and templates</li>
-			<li>Browse between templates created by other developers</li>
-			<li>Create collections, tutorials</li>
-			<li>Read tutorials created by the community</li>
-			<li>Save snippets instantly with the Chrome extension</li>
-			<li>Insert snippets instantly with Atom/Sublime packages</li>
-		</ul>
-		<h2>Here is an API call:</h2>
-		<p>You should only be able to fetch data when you are logged in:</p>
-		<a href="" class="button" v-on:click.prevent="loadUsers">Load users</a>
-		<a href="" class="button" v-on:click.prevent="resetUsers">Reset users</a>
-		
-		<!--Users-->
-		<div class="grid-block">
-			<div class="grid-content">
-				<div class="card card-section">
-					<h2>Users</h2>
-					<p>No users have been loaded.</p>
-					<p> {{ errorMsg }} </p>
-					<ul>
-						<li v-for="user in users">{{ user.userName }} - <router-link :to="'/user/' + user.userId">Profile</router-link></li>
-					</ul>
-				</div>
-			</div>
-		</div>
+<div>
 
-		<!--Snippets-->
-		<div class="grid-block">
-			<div class="grid-content">
-				<div class="card card-section">
-					<h2>Snippets</h2>
-					<ul>
-						<li v-for="snippet in snippets">
-							<p>Here is the id: <router-link :to="'/snippet/' + snippet.snippetId">{{ snippet.snippetId }}</router-link></p>
-							<p>{{ snippet.snippetCode }}</p>
-							<p> {{ snippet.tag1 }}, {{ snippet.tag2 }}, {{ snippet.tag3 }},</p>
-							<p>{{ snippet.readme }}</p>
-							<p>Author: <router-link :to="'/user/' + snippet.userId">{{ snippet.userId }}</router-link></p>
-						</li>
-					</ul>
-				</div>
+	<!-- Hero cover -->
+	<div class="c-hero-cover c-hero-cover--pull grid-block align-center">
+
+		<!--Loaded user info-->
+		<div class="c-hero-cover__profile-logo c-hero-cover__profile-logo--pulled grid-content">
+			<h1 class="c-hero-cover__profile-logo-text c-hero-cover__profile-logo-text--large">Welcome to Foobarbot Developer Preview</h1>
+			<h2 class="c-hero-cover__profile-logo-sub-text c-hero-cover__profile-logo-sub-text--large">Hows and whys about the app</h2>
+		</div>
+	</div>
+
+
+	<!-- Page content -->
+	<div class="grid-block align-center">
+		<div class="grid-block grid-page-content">
+			<div class="grid-content c-card">
+				<h1>One web app to rule them all</h1>
+				<p>Foobarbot is a single page application written in NodeJs and VueJs. The application is currently in developer preview state and is being tested by its developers.</p>
+				<h2>Product roadmap:</h2>
+				<ul>
+					<li>Save and organize your code snippets, collections and tutorials</li>
+					<li>Browse between templates and tutorials created by other developers</li>
+					<li>Read tutorials created by the community</li>
+					<li>Save snippets instantly with the Chrome extension</li>
+					<li>Insert snippets instantly with Atom/Sublime packages</li>
+				</ul>
+				<h1>The crew</h1>
+				<ul>
+					<li>Gábor Pintér: Product design & full stack development</li>
+					<li>Zoltán Fraknói: Back end development</li>
+				</ul>
+				<h1>Contact</h1>
+				<p>You can find us on <a href="http://wtwitter.com/foobarbotapp" target="_blank">Twitter</a>.</p>
 			</div>
 		</div>
-	 </div>
+	</div>
 </div>
+

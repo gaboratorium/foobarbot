@@ -14,3 +14,24 @@
     font-weight: bold;
     color: #3F51B5;
 }
+
+.c-button--search {
+    background: #3F51B5;
+    border-top-right-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+}
+
+.c-button--fullwidth {
+    width: 100%;
+}
+
+.c-button--flat {
+    box-shadow: none;
+}
+
+/*Foundation*/
+.button {
+    background: #3F51B5;
+}

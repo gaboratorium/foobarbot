@@ -1,26 +1,24 @@
-<div class="grid-block align-center">
-	<div class="grid-block vertical medium-6">
-		<div class="grid-block">
-			<div class="grid-content">
-				<div class="card card-section">
-					<h2>Settings</h2>
-					<p>Here you can load the list of users</p>
-					<a href="" class="button" v-on:click.prevent="loadUsers">Load users</a>
-					<a href="" class="button" v-on:click.prevent="resetUsers">Reset users</a>
-				</div>
+<div class='grid-block align-center'>
+	<div class="grid-block grid-page-content align-center">
+		<div class="grid-content">
+			
+			<!--Card for controls-->
+			<div class="c-card">
+				<h2>Settings</h2>
+				<p>Here you can load the list of users</p>
+				<a href="" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat" v-on:click.prevent="loadUsers">Load users</a>
+				<a href="" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat" v-on:click.prevent="resetUsers">Reset users</a>
 			</div>
-		</div>
 
-		<div class="grid-block">
-			<div class="grid-content">
-				<div class="card card-section">
-					<h2>Users</h2>
-					<p>No users have been loaded.</p>
-					<ul>
-						<li v-for="user in users">{{ user.userName }} - <router-link :to="'/user/' + user.userId">Profile</router-link></li>
-					</ul>
-				</div>
+			<!-- Card for result -->
+			<div class="c-card">
+				<h2>Users</h2>
+				<p>No users have been loaded.</p>
+				<ul>
+					<li v-for="user in users">{{ user.userName }} - <router-link :to="'/user/' + user.userId">Profile</router-link></li>
+				</ul>
 			</div>
+			
 		</div>
 	</div>
 </div>

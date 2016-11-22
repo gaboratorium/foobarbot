@@ -1,48 +1,86 @@
 <!-- Navigation -->
 <div>
 	<div class="menu-group menu-group--navbar">
-		<div class="menu-group-left">
-			<ul class="menu-bar">
-				<li><a href="#">Foobarbot Developer Preview</a></li>
-				<li>
-					<span class="inline-label" style='margin: 0.25rem'>
-						<input type="search" placeholder="Search for anything..." style="height: 100%">
-						<a href="#" class="button">Go</a>
-					</span>
-				</li>
-			</ul>
-		</div>
-		<div class="menu-group-right">
-			<!-- Right menu for user -->
-			<ul class="menu-bar" v-if='isUserLoggedIn'>
-				<li><router-link to="">
-					<span>Hello <span class='o-text--strong'>{{ user.name }}</span></span></router-link></li>
-				<li><router-link to="/about">About</router-link></li>
-				<li><router-link to="/settings">Settings</router-link></li>
-				<li><router-link to="/notifications">Notifications</router-link></li>
-				<li><router-link to="/user/me">My profile</router-link></li>
-				<li><button id="show-modal" @click="showModal = true" class="c-button">Compose snippet</button></li>
-				<li><a href="#" @click.stop="logout()">Logout</a></li>
-			</ul>
-			<!-- Right menu for visitor -->
-			<ul class="menu-bar" v-if='!isUserLoggedIn'>
-				<li><router-link to="/about">About</router-link></li>
-				<li><router-link to="/login">Log in</router-link></li>
-				<li><router-link to="signup">Sign up</router-link></li>
-			<!-- 	<li>
-					<span class="inline-label" style='margin: 0;'>
-						<a href="#" class='button'>Sign up</a>
-					</span>
-				</li> -->
-			</ul>
+		<div class="menu-group menu-group__menu-bar">
+			<div class="menu-group-left">
+				<ul class="menu-bar icon-left">
+					<li>
+						<a href="#" class="menu-group__logo">
+							<span class="menu-group__logo-text menu-group__logo-text--strong">Foobarbot</span> 
+							<span class="menu-group__logo-text">Developer Preview </span>
+						</a>
+					</li>
+					<li>
+						<span class="inline-label" style='margin: 0.25rem'>
+							<input type="search" placeholder="Search for anything..." style="height: 100%">
+							<a href="#" class="button c-button--search">Go</a>
+						</span>
+					</li>
+				</ul>
+			</div>
+			<div class="menu-group-right">
+				<!-- Right menu for user -->
+				<ul class="menu-bar icon-left" v-if='isUserLoggedIn'>
+
+					<li><router-link to="/Discover" class="menu-group--navbar__menu-item">Discover</router-link></li>
+					<li><router-link to="/notifications" class="menu-group--navbar__menu-item">Notifications</router-link></li>
+					
+					<!-- Dropdown -->
+					<li class="c-dropdown">
+						<router-link to="/user/me" class="menu-group--navbar__menu-item">
+							{{ user.name }} 
+							<i class="fa fa-fw fa-caret-down" aria-hidden="true"></i>
+						</router-link>
+						<section class="block-list c-dropdown__content">
+							<ul>
+								<li class="c-dropdown__content-menu-item">
+									<router-link to="/user/me" class="menu-group--navbar__menu-item">
+										<i class="fa fa-fw fa-user c-dropdown__content-menu-item-icon" aria-hidden="true"></i>Profile</li>
+									</router-link>
+
+								<li class="c-dropdown__content-menu-item">
+									<router-link to="/settings" class="menu-group--navbar__menu-item">
+										<i class="fa fa-fw fa-cog c-dropdown__content-menu-item-icon" aria-hidden="true"></i>Settings
+									</router-link>
+								</li>
+								<li class="c-dropdown__content-menu-item">
+									<a href="#" @click.stop="logout()" class="menu-group--navbar__menu-item">
+										<i class="fa fa-fw fa-sign-out c-dropdown__content-menu-item-icon" aria-hidden="true"></i>Logout
+									</a>
+								</li>
+							</ul>
+						</section>
+					</li>
+					
+					<!--Compose snippet button-->
+					<li class="menu-group--navbar__button-list-item"><button id="show-modal" @click="showModal = true" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat">Compose</button></li>
+
+				</ul>
+				<!--Right menu for visitor -->
+				<ul class="menu-bar icon-left" v-if='!isUserLoggedIn'>
+					<li><router-link to="/discover" class="menu-group--navbar__menu-item">Discover</router-link></li>
+					<li><router-link to="/about" class="menu-group--navbar__menu-item">About</router-link></li>
+					<li><router-link to="/login" class="menu-group--navbar__menu-item">Log in</router-link></li>
+					<li class="menu-group--navbar__button-list-item"><router-link to="signup" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat">Sign up</router-link></li>
+				</ul>
+			</div>
 		</div>
 	</div>
-	<div class="title-bar" v-if="!isUserLoggedIn">
-		<div class="title center">Foobarbot is place to find and share code. <router-link to="/login">Please log in or sign up.</router-link></div>
+
+
+
+	<div class="title-bar c-info-bar" v-if="!isUserLoggedIn">
+		<div class="center">Foobarbot is where people find and share code. <router-link to="/signup">Join the community!</router-link></div>
 	</div>
 
 	<!--Compose Modal -->
 	<modal v-if="showModal" @close="showModal = false"></modal>
+
+	<!-- Toast snackbar -->
+	<div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
+		<div class="mdl-snackbar__text"></div>
+		<button class="mdl-snackbar__action" type="button"></button>
+    </div>
 </div>
 
 
