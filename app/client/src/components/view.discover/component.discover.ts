@@ -1,5 +1,5 @@
 import { BusComponent } from './../bus/component.bus';
-import { SnippetComponent } from "./../snippet/component.snippet";
+import { SnippetListComponent } from "./../snippet-list/component.snippet-list";
 import * as fs from "fs";
 // import * as lodash from "lodash";
 
@@ -12,13 +12,14 @@ export const DiscoverViewComponent = {
 	name: "DiscoverComponent",
 	template: fs.readFileSync(__dirname + '/component.discover.html', 'utf8'),
 	components: {
-		"snippet": SnippetComponent
+		"snippet-list": SnippetListComponent
 	},
 
 	data: function(){
 		return {
 			snippets: Array,
 			snippetDataStatus: String,
+			exampleArray: [1,2,3,4,5]
 		}
 	},
 
@@ -35,12 +36,12 @@ export const DiscoverViewComponent = {
 			this.$store.dispatch({
 				  type: 'getSnippets',
 			}).then((response: any) => {
-				this.snippets = _.slice(response, 0, 5);
+				this.snippets = response;
 				setTimeout(function(){
 					hljs.initHighlighting.called = false;
 					hljs.initHighlighting();
 					DiscoverComponent.snippetDataStatus = "loaded";
-				}, 200);
+				}, 0);
 			}, (fail: any) => {
 				// Fail
 			});

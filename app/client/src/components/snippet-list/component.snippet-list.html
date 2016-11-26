@@ -1,0 +1,9 @@
+<div>
+    <h1>This is a snippet list component</h1>
+    <ul class="c-snippets">
+       <li class="c-snippet" v-for="(snippet, index) in currentPage">
+            <snippet v-bind:snippet="snippet"></snippet>
+        </li>
+    </ul>
+    <button v-on:click.prevent="loadMore()">Load more</button>
+</div>
