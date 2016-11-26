@@ -140,7 +140,14 @@ export const SearchViewComponent = {
 					type: 'starSnippetFromExternalApi',
 					snippet: snippet
 				}).then((response:any) => {
-					SearchComponent.showSnackbar("Snippet was succesfully starred!");
+					
+					SearchComponent.$store.dispatch({
+						type: 'postStar',
+						snippetId: response.snippetId
+					}).then((response: any) => {
+						SearchComponent.showSnackbar("Starring snippet was succesful!");
+					})
+					
 				}, (fail: any) => {
 					SearchComponent.showSnackbarDanger("Something went wrong!");
 				});

@@ -383,7 +383,7 @@ apiRoutes.post('/foobarbotsnippet', function(req, res) {
 			
 			mySnippetModel.save((err) => {
 				if (err) throw err;
-				res.json({success: true});
+				res.json({success: true, snippetId: mySnippet.snippetId});
 			});
 			
 		} else {
