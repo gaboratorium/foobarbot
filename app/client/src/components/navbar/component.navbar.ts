@@ -1,16 +1,11 @@
-// Settings component
-// Template
-var fs = require('fs');
-var html = fs.readFileSync(__dirname + '/component.navbar.html', 'utf8');
-
+import * as fs from "fs";
 import { ComposeModalComponent } from './../composemodal/component.composemodal';
 
 declare const localStorage: any;
 
-// Export global component
 export const NavbarComponent =  {
 	name: "NavbarComponent",
-	template: html,
+	template: fs.readFileSync(__dirname + '/component.navbar.html', 'utf8'),
 	components: {
 		"modal": ComposeModalComponent
 	},

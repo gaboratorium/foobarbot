@@ -1,12 +1,9 @@
-// Login Component
-// Template
-var fs = require('fs');
-var html = fs.readFileSync(__dirname + '/component.about.html', 'utf8');
+import * as fs from "fs";
 
-// Export global component
 export const AboutViewComponent = {
 	name: "AboutComponent",
-	template: html,
+	template: fs.readFileSync(__dirname + '/component.about.html', 'utf8'),
+	
 	data: function(){
 		return {
 			users: Array,

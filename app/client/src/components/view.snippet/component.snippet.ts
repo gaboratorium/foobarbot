@@ -1,13 +1,12 @@
-var fs = require('fs');
-var html = fs.readFileSync(__dirname + '/component.snippet.html', 'utf8');
-var hljs = require("highlight.js");
-var marked = require('marked');
+import * as fs from "fs";
 import { ISnippet } from "./../../interfaces/ISnippet";
 
-// Export global component
+var hljs = require("highlight.js");
+var marked = require('marked');
+
 export const SnippetViewComponent = {
 	name: "SnippetComponent",
-	template: html,
+	template: fs.readFileSync(__dirname + '/component.snippet.html', 'utf8'),
 
 	// Data
 	data: function(){

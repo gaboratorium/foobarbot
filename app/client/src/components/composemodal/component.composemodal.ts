@@ -1,13 +1,12 @@
-// Requirements
-var fs = require('fs');
-var html = fs.readFileSync(__dirname + '/component.composemodal.html', 'utf8');
+import { ISnippet } from "./../../interfaces/ISnippet"
+import * as fs from "fs";
 
 // Component
 export const ComposeModalComponent = {
 
     // Component properties
     name: "modal",
-    template: html,
+    template: fs.readFileSync(__dirname + '/component.composemodal.html', 'utf8'),
 
     // Component data
     data: function(){
@@ -26,12 +25,15 @@ export const ComposeModalComponent = {
         postSnippet: function(){
             
             // Create snippet object
-            var snippet = {
+            var snippet: ISnippet = {
+                snippetId: null,
+                userId: null,
                 snippetCode: this.composeform__snippet,
                 tag1: this.composeform__tag1,
                 tag2: this.composeform__tag2,
                 tag3: this.composeform__tag3,
                 readme: this.composeform__readme,
+                vendor: false
             }
 
             // Dispatch postSnippet action

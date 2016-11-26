@@ -1,7 +1,6 @@
-var fs = require('fs');
-var html = fs.readFileSync(__dirname + '/component.user.comments.html', 'utf8');
+import * as fs from "fs";
 
 export const UserCommentsComponent = {
     name: "UserCommentsComponent",
-	template: html,
+	template: fs.readFileSync(__dirname + '/component.user.comments.html', 'utf8'),
 }

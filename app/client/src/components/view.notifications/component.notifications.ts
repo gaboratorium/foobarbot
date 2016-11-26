@@ -1,15 +1,10 @@
-	// Settings component
-// Template
-var fs = require('fs');
-var html = fs.readFileSync(__dirname + '/component.notifications.html', 'utf8');
+import * as fs from "fs";
 
-// Chrome type definitions needed
 declare var Notification: any;
 
-// Export global component
 export const NotificationsViewComponent =  {
 	name: "NotificationsComponent",
-	template: html,
+	template: fs.readFileSync(__dirname + '/component.notifications.html', 'utf8'),
 	data: function(){
 		return {
 			formNotifMessage: '',

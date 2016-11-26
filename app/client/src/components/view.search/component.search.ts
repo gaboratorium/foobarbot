@@ -1,22 +1,18 @@
-// Search Component
-// Template
-var fs = require('fs');
-var html = fs.readFileSync(__dirname + '/component.search.html', 'utf8');
+import * as fs from "fs";
+import { SnippetComponent } from "./../snippet/component.snippet";
+import { BusComponent } from './../bus/component.bus';
+
 var marked = require('marked');
 var hljs = require("highlight.js");
 
-import { SnippetComponent } from "./../snippet/component.snippet";
-
 hljs.configure({
-  tabReplace: '  ', // 4 spaces
-//   classPrefix: ''     // don't append class prefix
-                      // … other options aren't changed
+  tabReplace: '  '
 })
 
 // Export global component
 export const SearchViewComponent = {
 	name: "SearchComponent",
-	template: html,
+	template: fs.readFileSync(__dirname + '/component.search.html', 'utf8'),
 	components: {
 		"snippet": SnippetComponent
 	},
@@ -115,25 +111,6 @@ export const SearchViewComponent = {
 			
 		},
 
-		starSnippet: function(snippetId: string){
-			var SearchComponent = this;
-			if (this.$store.getters["mainstore/isUserLoggedIn"]) {
-				this.$store.dispatch({
-					type: 'postStar',
-					snippetId: snippetId
-				}).then((response: any) => {
-
-					SearchComponent.showSnackBar("Snippet succesfully starred.");
-				}, (fail: any) =>{
-					SearchComponent.showSnackbarDanger("You have already starred this item.");
-				});
-			}
-			else {
-				SearchComponent.showSnackbarDanger("You have to be logged in to star snippets.");
-			}
-			
-		},
-
 		starSnippetFromExternalApi: function(snippet: any){
 			var SearchComponent = this;
 			console.log("starSnippetFromExternalApi isUserLoggedIn", this.$store.getters["mainstore/isUserLoggedIn"]);
@@ -160,28 +137,6 @@ export const SearchViewComponent = {
 			else {
 				SearchComponent.showSnackbarDanger("You have to be logged in to star snippets.");
 			}
-		},
-
-		showSnackbarDanger: function(message: string){
-			var snackbarContainer = document.querySelector('#snackbar--danger');
-			componentHandler.upgradeElement(snackbarContainer);
-			var data = {message: message};
-			snackbarContainer.MaterialSnackbar.showSnackbar(data);
-		},
-
-		showSnackbar: function(message: string){
-			var snackbarContainer = document.querySelector('#snackbar');
-			componentHandler.upgradeElement(snackbarContainer);
-			var data = {message: message};
-			snackbarContainer.MaterialSnackbar.showSnackbar(data);
-		},
-
-		showInDevelopmentSnackbar: function(feature: string){
-			var snackbarContainer = document.querySelector('#snackbar--danger');
-			componentHandler.upgradeElement(snackbarContainer);
-			var message = "This feature is still in development: " + feature;
-			var data = {message: message};
-			snackbarContainer.MaterialSnackbar.showSnackbar(data);			
 		}
 	}
 };

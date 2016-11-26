@@ -1,14 +1,11 @@
-var fs = require('fs');
-var html = fs.readFileSync(__dirname + '/component.user.snippets.html', 'utf8');
+import * as fs from "fs";
 var hljs = require("highlight.js");
 var marked = require('marked');
 
-// Export global component
 export const UserStarsComponent = {
     name: "UserStarsComponent",
-	template: html,
+	template: fs.readFileSync(__dirname + '/component.user.snippets.html', 'utf8'),
 
-    // Data
 	data: function(){
 		return {
 			userDataStatus: String,
@@ -18,7 +15,6 @@ export const UserStarsComponent = {
 		};
 	},
 
-    // Created hook
 	created: function(){
 		this.userDataStatus = "loading";
 		this.snippetDataStatus = "loading";
@@ -36,7 +32,6 @@ export const UserStarsComponent = {
 		this.getSnippets(requestedId);
 	},
 
-    	// Methods
 	methods: {
 		loadUser: function(userId: string){
 			this.$store.dispatch({

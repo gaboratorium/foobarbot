@@ -1,7 +1,6 @@
-var fs = require('fs');
-var html = fs.readFileSync(__dirname + '/component.appfooter.html', 'utf8');
+import * as fs from "fs";
 
 export const AppfooterComponent = {
     name: "AppfooterComponent",
-    template: html
+    template: fs.readFileSync(__dirname + '/component.appfooter.html', 'utf8')
 }

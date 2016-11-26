@@ -1,13 +1,11 @@
-// Login Component
-// Template
-var fs = require('fs');
-var passwordHash = require('password-hash');
-var html = fs.readFileSync(__dirname + '/component.login.html', 'utf8');
+import * as fs from "fs";
+// import * as passwordHash from "password-hash";
 
-// Export global component
+var passwordHash = require('password-hash');
+
 export const LoginViewComponent = {
 	name: "LoginComponent",
-	template: html,
+	template: fs.readFileSync(__dirname + '/component.login.html', 'utf8'),
 	data: function(){
 		return {
 			loginform__email: "",

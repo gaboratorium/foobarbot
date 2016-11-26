@@ -71,7 +71,8 @@ export const SnippetStore = {
                             tag1: "github",
                             tag2: "searchresult",
                             tag3: "batman",
-                            readme: readme
+                            readme: readme,
+                            vendor: true
                         };
 
                         // Create a promise to get gistCode from gistCodeLink

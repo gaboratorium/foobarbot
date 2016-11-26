@@ -1,13 +1,9 @@
-var fs = require('fs');
-var html = fs.readFileSync(__dirname + '/component.user.html', 'utf8');
+import * as fs from "fs";
 
-
-// Export global component
 export const UserViewComponent = {
 	name: "UserComponent",
-	template: html,
+	template: fs.readFileSync(__dirname + '/component.user.html', 'utf8'),
 
-	// Data
 	data: function(){
 		return {
 			userDataStatus: String,
@@ -17,7 +13,6 @@ export const UserViewComponent = {
 		};
 	},
 
-	// Created hook
 	created: function(){
 		this.userDataStatus = "loading";
 		var requestedId: string = this.$route.params.id;
@@ -31,7 +26,6 @@ export const UserViewComponent = {
 		this.getStarredSnippets(requestedId);
 	},
 
-	// Methods
 	methods: {
 		loadUser: function(userId: string){
 			this.$store.dispatch({
