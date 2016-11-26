@@ -55,9 +55,10 @@ exports.ComposeModalComponent = {
 "use strict";
 
 var component_composemodal_1 = require('./../composemodal/component.composemodal');
+var component_bus_1 = require('./../bus/component.bus');
 exports.NavbarComponent = {
     name: "NavbarComponent",
-    template: "<!-- Navigation -->\r\n<div>\r\n\t<div class=\"menu-group menu-group--navbar\">\r\n\t\t<div class=\"menu-group menu-group__menu-bar\">\r\n\t\t\t<div class=\"menu-group-left\">\r\n\t\t\t\t<ul class=\"menu-bar icon-left\">\r\n\t\t\t\t\t<li>\r\n\t\t\t\t\t\t<a href=\"#\" class=\"menu-group__logo\">\r\n\t\t\t\t\t\t\t<span class=\"menu-group__logo-text menu-group__logo-text--strong\">Foobarbot</span> \r\n\t\t\t\t\t\t\t<span class=\"menu-group__logo-text\">Developer Preview </span>\r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t\t<li>\r\n\t\t\t\t\t\t<form action=\"\" v-on:submit.prevent=\"search\">\r\n\t\t\t\t\t\t\t<span class=\"inline-label\" style='margin: 0.25rem'>\r\n\t\t\t\t\t\t\t\t<input type=\"search\" v-model=\"textToSearch\" placeholder=\"Search for anything...\" style=\"height: 100%\">\r\n\t\t\t\t\t\t\t\t<button type=\"submit\" class=\"button c-button--search\">\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-search\" aria-hidden=\"true\"></i>\r\n\t\t\t\t\t\t\t\t</button>\r\n\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t</form>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"menu-group-right\">\r\n\t\t\t\t<!-- Right menu for user -->\r\n\t\t\t\t<ul class=\"menu-bar icon-left\" v-if='isUserLoggedIn'>\r\n\r\n\t\t\t\t\t<li><router-link to=\"/discover\" class=\"menu-group--navbar__menu-item\">Discover</router-link></li>\r\n\t\t\t\t\t<li><router-link to=\"/notifications\" class=\"menu-group--navbar__menu-item\">Notifications</router-link></li>\r\n\t\t\t\t\t\r\n\t\t\t\t\t<!-- Dropdown -->\r\n\t\t\t\t\t<li class=\"c-dropdown\">\r\n\t\t\t\t\t\t<router-link to=\"/user/me\" class=\"menu-group--navbar__menu-item\">\r\n\t\t\t\t\t\t\t{{ user.name }} \r\n\t\t\t\t\t\t\t<i class=\"fa fa-fw fa-caret-down\" aria-hidden=\"true\"></i>\r\n\t\t\t\t\t\t</router-link>\r\n\t\t\t\t\t\t<section class=\"block-list c-dropdown__content\">\r\n\t\t\t\t\t\t\t<ul>\r\n\t\t\t\t\t\t\t\t<li class=\"c-dropdown__content-menu-item\">\r\n\t\t\t\t\t\t\t\t\t<router-link to=\"/user/me\" class=\"menu-group--navbar__menu-item\">\r\n\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-fw fa-user c-dropdown__content-menu-item-icon\" aria-hidden=\"true\"></i>Profile</li>\r\n\t\t\t\t\t\t\t\t\t</router-link>\r\n\r\n\t\t\t\t\t\t\t\t<li class=\"c-dropdown__content-menu-item\">\r\n\t\t\t\t\t\t\t\t\t<router-link to=\"/settings\" class=\"menu-group--navbar__menu-item\">\r\n\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-fw fa-cog c-dropdown__content-menu-item-icon\" aria-hidden=\"true\"></i>Settings\r\n\t\t\t\t\t\t\t\t\t</router-link>\r\n\t\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t\t<li class=\"c-dropdown__content-menu-item\">\r\n\t\t\t\t\t\t\t\t\t<a href=\"#\" @click.stop=\"logout()\" class=\"menu-group--navbar__menu-item\">\r\n\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-fw fa-sign-out c-dropdown__content-menu-item-icon\" aria-hidden=\"true\"></i>Logout\r\n\t\t\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t\t</section>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t\t\r\n\t\t\t\t\t<!--Compose snippet button-->\r\n\t\t\t\t\t<li class=\"menu-group--navbar__button-list-item\"><button id=\"show-modal\" @click=\"showModal = true\" class=\"mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat\">Compose</button></li>\r\n\r\n\t\t\t\t</ul>\r\n\t\t\t\t<!--Right menu for visitor -->\r\n\t\t\t\t<ul class=\"menu-bar icon-left\" v-if='!isUserLoggedIn'>\r\n\t\t\t\t\t<li><router-link to=\"/discover\" class=\"menu-group--navbar__menu-item\">Discover</router-link></li>\r\n\t\t\t\t\t<li><router-link to=\"/about\" class=\"menu-group--navbar__menu-item\">About</router-link></li>\r\n\t\t\t\t\t<li><router-link to=\"/login\" class=\"menu-group--navbar__menu-item\">Log in</router-link></li>\r\n\t\t\t\t\t<li class=\"menu-group--navbar__button-list-item\"><router-link to=\"/signup\" class=\"mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat\">Sign up</router-link></li>\r\n\t\t\t\t</ul>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\r\n\r\n\t<div class=\"title-bar c-info-bar\" v-if=\"!isUserLoggedIn\">\r\n\t\t<div class=\"center\">Foobarbot is where people find and share code. <router-link to=\"/signup\">Join the community</router-link> or <router-link to=\"/about\">find out more.</router-link></div>\r\n\t</div>\r\n\r\n\t<!--Compose Modal -->\r\n\t<modal v-if=\"showModal\" @close=\"showModal = false\"></modal>\r\n\r\n\t<!-- Toast snackbar -->\r\n\t<div id=\"demo-toast-example\" class=\"mdl-js-snackbar mdl-snackbar\">\r\n\t\t<div class=\"mdl-snackbar__text\"></div>\r\n\t\t<button class=\"mdl-snackbar__action\" type=\"button\"></button>\r\n    </div>\r\n</div>\r\n\r\n\r\n",
+    template: "<!-- Navigation -->\r\n<div>\r\n\t<div class=\"menu-group menu-group--navbar\">\r\n\t\t<div class=\"menu-group menu-group__menu-bar\">\r\n\t\t\t<div class=\"menu-group-left\">\r\n\t\t\t\t<ul class=\"menu-bar icon-left\">\r\n\t\t\t\t\t<li>\r\n\t\t\t\t\t\t<a href=\"#\" class=\"menu-group__logo\">\r\n\t\t\t\t\t\t\t<span class=\"menu-group__logo-text menu-group__logo-text--strong\">Foobarbot</span> \r\n\t\t\t\t\t\t\t<span class=\"menu-group__logo-text\">Developer Preview </span>\r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t\t<li>\r\n\t\t\t\t\t\t<form action=\"\" v-on:submit.prevent=\"search\">\r\n\t\t\t\t\t\t\t<span class=\"inline-label\" style='margin: 0.25rem'>\r\n\t\t\t\t\t\t\t\t<input type=\"search\" v-model=\"textToSearch\" placeholder=\"Search for anything...\" style=\"height: 100%\">\r\n\t\t\t\t\t\t\t\t<button type=\"submit\" class=\"button c-button--search\">\r\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-search\" aria-hidden=\"true\"></i>\r\n\t\t\t\t\t\t\t\t</button>\r\n\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t</form>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"menu-group-right\">\r\n\t\t\t\t<!-- Right menu for user -->\r\n\t\t\t\t<ul class=\"menu-bar icon-left\" v-if='isUserLoggedIn'>\r\n\r\n\t\t\t\t\t<li><router-link to=\"/discover\" class=\"menu-group--navbar__menu-item\">Discover</router-link></li>\r\n\t\t\t\t\t<li><router-link to=\"/notifications\" class=\"menu-group--navbar__menu-item\">Notifications</router-link></li>\r\n\t\t\t\t\t\r\n\t\t\t\t\t<!-- Dropdown -->\r\n\t\t\t\t\t<li class=\"c-dropdown\">\r\n\t\t\t\t\t\t<router-link to=\"/user/me\" class=\"menu-group--navbar__menu-item\">\r\n\t\t\t\t\t\t\t{{ user.name }} \r\n\t\t\t\t\t\t\t<i class=\"fa fa-fw fa-caret-down\" aria-hidden=\"true\"></i>\r\n\t\t\t\t\t\t</router-link>\r\n\t\t\t\t\t\t<section class=\"block-list c-dropdown__content\">\r\n\t\t\t\t\t\t\t<ul>\r\n\t\t\t\t\t\t\t\t<li class=\"c-dropdown__content-menu-item\">\r\n\t\t\t\t\t\t\t\t\t<router-link to=\"/user/me\" class=\"menu-group--navbar__menu-item\">\r\n\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-fw fa-user c-dropdown__content-menu-item-icon\" aria-hidden=\"true\"></i>Profile</li>\r\n\t\t\t\t\t\t\t\t\t</router-link>\r\n\r\n\t\t\t\t\t\t\t\t<li class=\"c-dropdown__content-menu-item\">\r\n\t\t\t\t\t\t\t\t\t<router-link to=\"/settings\" class=\"menu-group--navbar__menu-item\">\r\n\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-fw fa-cog c-dropdown__content-menu-item-icon\" aria-hidden=\"true\"></i>Settings\r\n\t\t\t\t\t\t\t\t\t</router-link>\r\n\t\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t\t<li class=\"c-dropdown__content-menu-item\">\r\n\t\t\t\t\t\t\t\t\t<a href=\"#\" @click.stop=\"logout()\" class=\"menu-group--navbar__menu-item\">\r\n\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-fw fa-sign-out c-dropdown__content-menu-item-icon\" aria-hidden=\"true\"></i>Logout\r\n\t\t\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t\t</section>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t\t\r\n\t\t\t\t\t<!--Compose snippet button-->\r\n\t\t\t\t\t<li class=\"menu-group--navbar__button-list-item\"><button id=\"show-modal\" @click=\"showModal = true\" class=\"mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat\">Compose</button></li>\r\n\r\n\t\t\t\t</ul>\r\n\t\t\t\t<!--Right menu for visitor -->\r\n\t\t\t\t<ul class=\"menu-bar icon-left\" v-if='!isUserLoggedIn'>\r\n\t\t\t\t\t<li><router-link to=\"/discover\" class=\"menu-group--navbar__menu-item\">Discover</router-link></li>\r\n\t\t\t\t\t<li><router-link to=\"/about\" class=\"menu-group--navbar__menu-item\">About</router-link></li>\r\n\t\t\t\t\t<li><router-link to=\"/login\" class=\"menu-group--navbar__menu-item\">Log in</router-link></li>\r\n\t\t\t\t\t<li class=\"menu-group--navbar__button-list-item\"><router-link to=\"/signup\" class=\"mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat\">Sign up</router-link></li>\r\n\t\t\t\t</ul>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\r\n\r\n\t<div class=\"title-bar c-info-bar\" v-if=\"!isUserLoggedIn\">\r\n\t\t<div class=\"center\">Foobarbot is where people find and share code. <router-link to=\"/signup\">Join the community</router-link> or <router-link to=\"/about\">find out more.</router-link></div>\r\n\t</div>\r\n\r\n\t<!--Compose Modal -->\r\n\t<modal v-if=\"showModal\" @close=\"showModal = false\"></modal>\r\n</div>\r\n\r\n\r\n",
     components: {
         "modal": component_composemodal_1.ComposeModalComponent
     },
@@ -101,12 +102,7 @@ exports.NavbarComponent = {
             this.$store.commit('unsetUserClient');
             this.$router.replace('dummy-replacement-so-we-force-router-change');
             this.$router.replace('about');
-            this.showToast("You have succesfully logged out.");
-        },
-        showToast: function (message) {
-            var snackbarContainer = document.querySelector('#demo-toast-example');
-            var data = { message: message };
-            snackbarContainer.MaterialSnackbar.showSnackbar(data);
+            component_bus_1.BusComponent.$emit("showSnackbar", "You have succesfully logged out.", "success");
         },
         search: function () {
             this.$router.push('/discover');
@@ -115,7 +111,7 @@ exports.NavbarComponent = {
     }
 };
 
-},{"./../composemodal/component.composemodal":3}],5:[function(require,module,exports){
+},{"./../bus/component.bus":2,"./../composemodal/component.composemodal":3}],5:[function(require,module,exports){
 "use strict";
 
 var component_bus_1 = require('./../bus/component.bus');
@@ -307,10 +303,11 @@ exports.DiscoverViewComponent = {
 },{"./../snippet/component.snippet":6,"highlight.js":253,"lodash":422,"marked":423}],9:[function(require,module,exports){
 "use strict";
 
+var component_bus_1 = require("./../bus/component.bus");
 var passwordHash = require('password-hash');
 exports.LoginViewComponent = {
     name: "LoginComponent",
-    template: "<div class='grid-block align-center'>\r\n\t<div class=\"grid-block grid-page-content align-center\">\r\n\t\t<div class=\"grid-content grid-content--narrow\">\r\n\t\t\t\r\n\t\t\t<div class=\"c-card c-card__section\">\r\n\t\t\t\t<h1>Login to Foobarbot</h1>\r\n\t\t\t\t<form action=\"\" v-on:submit.prevent=\"loginUser\">\r\n\t\t\t\t\t<label for=\"loginform__email\">E-mail</label>\r\n\t\t\t\t\t<input type=\"text\" placeholder=\"Type your email...\" v-model=\"loginform__email\" id=\"loginform__email\" autofocus=\"autofocus\">\r\n\t\t\t\t\t<label for=\"loginform__password\">Password</label>\r\n\t\t\t\t\t<input type=\"password\" placeholder=\"Type your password...\" v-model=\"loginform__password\" id=\"loginform__email\">\r\n\t\t\t\t\t<p class=\"o-text--error\">{{ errorMsg }}</p>\r\n\t\t\t\t\t<input type=\"submit\" value=\"Login\" class=\"mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat\">\r\n\t\t\t\t</form>\r\n\t\t\t\t<hr>\r\n\t\t\t\t<p>Not a member yet? <span class=\"o-text--block\"><router-link to=\"/signup\">Sign up now to get access to the Developer Preview!</router-link></span></p>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<!-- Toast snackbar -->\r\n\t<div id=\"demo-toast-example\" class=\"mdl-js-snackbar mdl-snackbar\">\r\n\t\t<div class=\"mdl-snackbar__text\"></div>\r\n\t\t<button class=\"mdl-snackbar__action\" type=\"button\"></button>\r\n    </div>\r\n</div>",
+    template: "<div class='grid-block align-center'>\r\n\t<div class=\"grid-block grid-page-content align-center\">\r\n\t\t<div class=\"grid-content grid-content--narrow\">\r\n\t\t\t\r\n\t\t\t<div class=\"c-card c-card__section\">\r\n\t\t\t\t<h1>Login to Foobarbot</h1>\r\n\t\t\t\t<form action=\"\" v-on:submit.prevent=\"loginUser\">\r\n\t\t\t\t\t<label for=\"loginform__email\">E-mail</label>\r\n\t\t\t\t\t<input type=\"text\" placeholder=\"Type your email...\" v-model=\"loginform__email\" id=\"loginform__email\" autofocus=\"autofocus\">\r\n\t\t\t\t\t<label for=\"loginform__password\">Password</label>\r\n\t\t\t\t\t<input type=\"password\" placeholder=\"Type your password...\" v-model=\"loginform__password\" id=\"loginform__email\">\r\n\t\t\t\t\t<p class=\"o-text--error\">{{ errorMsg }}</p>\r\n\t\t\t\t\t<input type=\"submit\" value=\"Login\" class=\"mdl-button mdl-js-button mdl-button--raised mdl-button--colored c-button--flat\">\r\n\t\t\t\t</form>\r\n\t\t\t\t<hr>\r\n\t\t\t\t<p>Not a member yet? <span class=\"o-text--block\"><router-link to=\"/signup\">Sign up now to get access to the Developer Preview!</router-link></span></p>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>",
     data: function () {
         return {
             loginform__email: "",
@@ -326,22 +323,17 @@ exports.LoginViewComponent = {
                 userEmail: this.loginform__email,
                 userPassword: this.loginform__password
             }).then(function (response) {
-                _this.showToast("You have succesfully logged in.");
+                component_bus_1.BusComponent.$emit("showSnackbar", "You have succesfully logged in.", "success");
                 _this.$router.replace('dummy-replacement-so-we-force-router-change');
                 _this.$router.push('discover');
             }, function (fail) {
                 _this.errorMsg = "Wrong credentials! Try again!";
             });
-        },
-        showToast: function (message) {
-            var snackbarContainer = document.querySelector('#demo-toast-example');
-            var data = { message: message };
-            snackbarContainer.MaterialSnackbar.showSnackbar(data);
         }
     }
 };
 
-},{"password-hash":424}],10:[function(require,module,exports){
+},{"./../bus/component.bus":2,"password-hash":424}],10:[function(require,module,exports){
 "use strict";
 
 exports.NotificationsViewComponent = {
@@ -746,13 +738,7 @@ exports.UserSnippetsComponent = {
             }, function (fail) {
                 _this.snippetDataStatus = "failed";
             });
-        },
-        showSnackbarDanger: function (message) {
-            var snackbarContainer = document.querySelector('#snackbar--danger');
-            componentHandler.upgradeElement(snackbarContainer);
-            var data = { message: message };
-            snackbarContainer.MaterialSnackbar.showSnackbar(data);
-        },
+        }
     }
 };
 
@@ -815,13 +801,7 @@ exports.UserStarsComponent = {
             }, function (fail) {
                 _this.snippetDataStatus = "failed";
             });
-        },
-        showSnackbarDanger: function (message) {
-            var snackbarContainer = document.querySelector('#snackbar--danger');
-            componentHandler.upgradeElement(snackbarContainer);
-            var data = { message: message };
-            snackbarContainer.MaterialSnackbar.showSnackbar(data);
-        },
+        }
     }
 };
 
@@ -1063,7 +1043,8 @@ exports.ApiInstance = new Vue({
             return myPromise;
         },
         getSnippets: function (myUserId, mySnippetsMaxNumber, mySearchText) {
-            var options = { params: {} };
+            var params;
+            var options = { params: params };
             if (myUserId) {
                 options = {
                     params: {
@@ -1088,10 +1069,10 @@ exports.ApiInstance = new Vue({
             return myPromise;
         },
         getStarredSnippets: function (myUserId, mySnippetsMaxNumber) {
+            var params;
+            params.userId = myUserId;
             var options = {
-                params: {
-                    userId: myUserId
-                }
+                params: params
             };
             if (mySnippetsMaxNumber)
                 options.params.snippetsMaxNumber = mySnippetsMaxNumber;

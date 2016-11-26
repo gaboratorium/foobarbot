@@ -247,7 +247,11 @@ export const ApiInstance: IApiInstance= new Vue({
 
 		// Get all snippets or all by user
 		getSnippets: (myUserId?: string, mySnippetsMaxNumber?: number, mySearchText?: string) => {
-			var options = { params: {}};	
+			
+			var params: any;
+
+			var options = { params: params};	
+
 			if (myUserId){
 				options = {
 						params: {
@@ -281,10 +285,11 @@ export const ApiInstance: IApiInstance= new Vue({
 
 		getStarredSnippets: (myUserId: string, mySnippetsMaxNumber?: number) => {
 			
+			var params: any;
+			params.userId = myUserId;
+
 			var options = {
-				params: {
-					userId: myUserId
-				}
+				params: params
 			}
 
 			if (mySnippetsMaxNumber) options.params.snippetsMaxNumber = mySnippetsMaxNumber;

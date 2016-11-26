@@ -1,5 +1,5 @@
 import * as fs from "fs";
-// import * as passwordHash from "password-hash";
+import { BusComponent } from "./../bus/component.bus";
 
 var passwordHash = require('password-hash');
 
@@ -20,19 +20,12 @@ export const LoginViewComponent = {
 					userEmail: this.loginform__email,
 					userPassword: this.loginform__password
 				}).then((response: any) => {
-					// Double redirection for forcing router state change
-					this.showToast("You have succesfully logged in.");
+					BusComponent.$emit("showSnackbar", "You have succesfully logged in.", "success");
 					this.$router.replace('dummy-replacement-so-we-force-router-change');
 					this.$router.push('discover');
 				}, (fail: any) => {
 					this.errorMsg = "Wrong credentials! Try again!";			
 				})
-	  	},
-
-		showToast: function(message: string){
-			var snackbarContainer = document.querySelector('#demo-toast-example');
-			var data = {message: message};
-			snackbarContainer.MaterialSnackbar.showSnackbar(data);
-		}
+	  	}
 	}
 };

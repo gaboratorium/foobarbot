@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import { ComposeModalComponent } from './../composemodal/component.composemodal';
+import { BusComponent } from './../bus/component.bus';
 
 declare const localStorage: any;
 
@@ -53,13 +54,7 @@ export const NavbarComponent =  {
 			// Double redirection for forcing router state change
 			this.$router.replace('dummy-replacement-so-we-force-router-change');
 			this.$router.replace('about');
-			this.showToast("You have succesfully logged out.")
-		},
-
-		showToast: function(message: string){
-			var snackbarContainer = document.querySelector('#demo-toast-example');
-			var data = {message: message};
-			snackbarContainer.MaterialSnackbar.showSnackbar(data);
+			BusComponent.$emit("showSnackbar", "You have succesfully logged out.", "success");
 		},
 
 		search: function() {
