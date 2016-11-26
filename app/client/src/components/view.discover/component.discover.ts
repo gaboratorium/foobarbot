@@ -98,28 +98,6 @@ export const DiscoverViewComponent = {
 				DiscoverComponent.showSnackbarDanger("You have to be logged in to star snippets.");
 			}
 			
-		},
-
-		showSnackbarDanger: function(message: string){
-			var snackbarContainer = document.querySelector('#snackbar--danger');
-			componentHandler.upgradeElement(snackbarContainer);
-			var data = {message: message};
-			snackbarContainer.MaterialSnackbar.showSnackbar(data);
-		},
-
-		showSnackBar: function(message: string) {
-			var snackbarContainer = document.querySelector('#snackbar');
-			componentHandler.upgradeElement(snackbarContainer);
-			var data = {message: message};
-			snackbarContainer.MaterialSnackbar.showSnackbar(data);
-		},
-
-		showInDevelopmentSnackbar: function(feature: string){
-			var snackbarContainer = document.querySelector('#snackbar--danger');
-			componentHandler.upgradeElement(snackbarContainer);
-			var message = "This feature is still in development: " + feature;
-			var data = {message: message};
-			snackbarContainer.MaterialSnackbar.showSnackbar(data);
 		}
 	}
 };

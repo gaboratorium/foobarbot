@@ -120,22 +120,39 @@ exports.NavbarComponent = {
 },{"./../composemodal/component.composemodal":3}],5:[function(require,module,exports){
 "use strict";
 
-var html = "<div id=\"snackbar\" class=\"mdl-js-snackbar mdl-snackbar\">\r\n    <div class=\"mdl-snackbar__text\"></div>\r\n    <button class=\"mdl-snackbar__action\" type=\"button\"></button>\r\n</div>";
+var html = "<div id=\"snackbar\" class=\"mdl-js-snackbar mdl-snackbar\" v-bind:class=\"classObject\">\r\n    <div class=\"mdl-snackbar__text\"></div>\r\n    <button class=\"mdl-snackbar__action\" type=\"button\"></button>\r\n</div>";
 var component_bus_1 = require('./../bus/component.bus');
 exports.SnackbarComponent = {
     name: "SnackbarComponent",
     template: html,
     created: function () {
         var SnackbarComponent = this;
-        component_bus_1.BusComponent.$on("showSnackbar", function (message) {
+        component_bus_1.BusComponent.$on("showSnackbar", function (message, type) {
+            if (type === void 0) { type = "default"; }
+            SnackbarComponent.type = "default";
+            SnackbarComponent.type = type == "danger" ? "danger" : SnackbarComponent.type;
+            SnackbarComponent.type = type == "success" ? "success" : SnackbarComponent.type;
             SnackbarComponent.showSnackbar(message);
         });
+    },
+    data: function () {
+        return {
+            type: "default"
+        };
+    },
+    computed: {
+        classObject: function () {
+            return {
+                "mdl-snackbar--danger": this.type == "danger",
+                "mdl-snackbar--success": this.type == "success"
+            };
+        }
     },
     methods: {
         showSnackbar: function (message) {
             var snackbarContainer = document.querySelector('#snackbar');
-            componentHandler.upgradeElement(snackbarContainer);
             var data = { message: message };
+            componentHandler.upgradeElement(snackbarContainer);
             snackbarContainer.MaterialSnackbar.showSnackbar(data);
         }
     }
@@ -233,7 +250,7 @@ exports.AboutViewComponent = {
 },{}],8:[function(require,module,exports){
 "use strict";
 
-var html = "<div class=\"grid-block align-center\">\r\n\t<div class=\"grid-block grid-page-content\">\r\n\t\t<div class=\"grid-content\">\r\n\r\n\t\t\t<!-- Toast snackbar -->\r\n\t\t\t<div id=\"snackbar--danger\" class=\"mdl-js-snackbar mdl-snackbar mdl-snackbar--danger\">\r\n\t\t\t\t<div class=\"mdl-snackbar__text\"></div>\r\n\t\t\t\t<button class=\"mdl-snackbar__action\" type=\"button\"></button>\r\n\t\t\t</div>\r\n\r\n\t\t\t<!-- Toast snackbar -->\r\n\t\t\t<div id=\"snackbar\" class=\"mdl-js-snackbar mdl-snackbar\">\r\n\t\t\t\t<div class=\"mdl-snackbar__text\"></div>\r\n\t\t\t\t<button class=\"mdl-snackbar__action\" type=\"button\"></button>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t\r\n\t\t\t<div class=\"grid-block\" v-if=\"snippetDataStatus=='loading'\">\r\n\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t<div class=\"grid-block align-center\">\r\n\t\t\t\t\t\t<div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<div v-show=\"snippetDataStatus=='loaded'\">\r\n\t\t\t\t<!--List of snippets-->\r\n\t\t\t\t<ul class=\"c-snippets\">\r\n\r\n\t\t\t\t\t<li class=\"c-snippet\" v-for=\"snippet in snippets\">\r\n\t\t\t\t\t\t<snippet v-bind:snippet=\"snippet\"></snippet>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\t\t\t</div>\r\n\r\n\t\t\t<p class=\"o-text--info\" v-show=\"snippetDataStatus=='loaded'\"><span class=\"o-text--strong\"><i class=\"fa fa-fw fa-info-circle\" aria-hidden=\"true\"></i>Didn't find what you were looking for?</span>\r\n\t\t\t<span class=\"o-text--block\">\r\n\t\t\t\tCheck out <router-link :to=\"'/user/1479481497854175'\">Foobarbot's profile</router-link> or try Foobarbot Search and search for something e.g.: <router-link :to=\"'/search/javascript'\">javascript</router-link>!</p>\r\n\t\t\t</span>\r\n\r\n\t\t</div>\r\n\t</div>\r\n</div>";
+var html = "<div class=\"grid-block align-center\">\r\n\t<div class=\"grid-block grid-page-content\">\r\n\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t\t\r\n\t\t\t<div class=\"grid-block\" v-if=\"snippetDataStatus=='loading'\">\r\n\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t<div class=\"grid-block align-center\">\r\n\t\t\t\t\t\t<div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\r\n\r\n\t\t\t<div v-show=\"snippetDataStatus=='loaded'\">\r\n\t\t\t\t<!--List of snippets-->\r\n\t\t\t\t<ul class=\"c-snippets\">\r\n\r\n\t\t\t\t\t<li class=\"c-snippet\" v-for=\"snippet in snippets\">\r\n\t\t\t\t\t\t<snippet v-bind:snippet=\"snippet\"></snippet>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\t\t\t</div>\r\n\r\n\t\t\t<p class=\"o-text--info\" v-show=\"snippetDataStatus=='loaded'\"><span class=\"o-text--strong\"><i class=\"fa fa-fw fa-info-circle\" aria-hidden=\"true\"></i>Didn't find what you were looking for?</span>\r\n\t\t\t<span class=\"o-text--block\">\r\n\t\t\t\tCheck out <router-link :to=\"'/user/1479481497854175'\">Foobarbot's profile</router-link> or try Foobarbot Search and search for something e.g.: <router-link :to=\"'/search/javascript'\">javascript</router-link>!</p>\r\n\t\t\t</span>\r\n\r\n\t\t</div>\r\n\t</div>\r\n</div>";
 var marked = require('marked');
 var hljs = require("highlight.js");
 var _ = require("lodash");
@@ -267,7 +284,6 @@ exports.DiscoverViewComponent = {
         });
     },
     created: function () {
-        this.$emit("showsnackbar");
     },
     methods: {
         getSnippets: function () {
@@ -307,25 +323,6 @@ exports.DiscoverViewComponent = {
             else {
                 DiscoverComponent.showSnackbarDanger("You have to be logged in to star snippets.");
             }
-        },
-        showSnackbarDanger: function (message) {
-            var snackbarContainer = document.querySelector('#snackbar--danger');
-            componentHandler.upgradeElement(snackbarContainer);
-            var data = { message: message };
-            snackbarContainer.MaterialSnackbar.showSnackbar(data);
-        },
-        showSnackBar: function (message) {
-            var snackbarContainer = document.querySelector('#snackbar');
-            componentHandler.upgradeElement(snackbarContainer);
-            var data = { message: message };
-            snackbarContainer.MaterialSnackbar.showSnackbar(data);
-        },
-        showInDevelopmentSnackbar: function (feature) {
-            var snackbarContainer = document.querySelector('#snackbar--danger');
-            componentHandler.upgradeElement(snackbarContainer);
-            var message = "This feature is still in development: " + feature;
-            var data = { message: message };
-            snackbarContainer.MaterialSnackbar.showSnackbar(data);
         }
     }
 };
@@ -1482,11 +1479,6 @@ exports.MainStore = new Vuex.Store({
                     console.log("state.userClient.userName is undefined.");
                 return false;
             }
-        }
-    },
-    actions: {
-        showSnackbar: function (context) {
-            console.log("action triggered in main store", context);
         }
     },
     mutations: {
