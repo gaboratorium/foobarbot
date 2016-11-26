@@ -363,6 +363,13 @@ apiRoutes.post('/foobarbotsnippet', function(req, res) {
 	var myToken = req.body.token;
 
 	mySnippet.gistId = mySnippet.snippetId;
+	mySnippet.gistUrl = mySnippet.snippetUrl;
+	mySnippet.gistUserId = mySnippet.userId;
+	mySnippet.gistUserUrl = mySnippet.userUrl;
+	mySnippet.readme += "\n\nOriginally fetched from [" + mySnippet.gistId + "]("+ mySnippet.gistUrl +")";
+	if (mySnippet.userId !== "Unknown") {
+		mySnippet.readme += " by [" + mySnippet.gistUserId + "]("+ mySnippet.gistUserUrl +")";
+	}
 
 	Snippet.find({gistId: mySnippet.gistId, userId: FOOBARBOT_ID}, function(err, snippets){
 		if (err) throw err;

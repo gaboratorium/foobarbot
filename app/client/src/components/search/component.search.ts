@@ -139,6 +139,10 @@ export const SearchViewComponent = {
 				this.$store.dispatch({
 					type: 'starSnippetFromExternalApi',
 					snippet: snippet
+				}).then((response:any) => {
+					SearchComponent.showSnackbar("Snippet was succesfully starred!");
+				}, (fail: any) => {
+					SearchComponent.showSnackbarDanger("Something went wrong!");
 				});
 			}
 			else {
@@ -154,7 +158,7 @@ export const SearchViewComponent = {
 		},
 
 		showSnackbar: function(message: string){
-			var snackbarContainer = document.querySelector('#snackbar--danger');
+			var snackbarContainer = document.querySelector('#snackbar');
 			componentHandler.upgradeElement(snackbarContainer);
 			var data = {message: message};
 			snackbarContainer.MaterialSnackbar.showSnackbar(data);
