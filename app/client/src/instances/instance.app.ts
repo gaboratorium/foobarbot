@@ -3,14 +3,14 @@ import { RouterInstance } from './instance.router';
 import { MainStore } from './../stores/store.main';
 
 // View Components
-import { AboutViewComponent } from './../components/about/component.about';
-import { LoginViewComponent } from  './../components/login/component.login';
-import { SignupViewComponent } from  './../components/signup/component.signup';
-import { SettingsViewComponent } from './../components/settings/component.settings';
-import { NotificationsViewComponent } from './../components/notifications/component.notifications';
-import { SnippetViewComponent } from './../components/snippet/component.snippet';
-import { DiscoverViewComponent } from './../components/discover/component.discover';
-import { SearchViewComponent } from './../components/search/component.search';
+import { AboutViewComponent } from './../components/view.about/component.about';
+import { LoginViewComponent } from  './../components/view.login/component.login';
+import { SignupViewComponent } from  './../components/view.signup/component.signup';
+import { SettingsViewComponent } from './../components/view.settings/component.settings';
+import { NotificationsViewComponent } from './../components/view.notifications/component.notifications';
+import { SnippetViewComponent } from './../components/view.snippet/component.snippet';
+import { DiscoverViewComponent } from './../components/view.discover/component.discover';
+import { SearchViewComponent } from './../components/view.search/component.search';
 
 // Other components
 import { NavbarComponent } from './../components/navbar/component.navbar';
