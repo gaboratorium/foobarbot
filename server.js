@@ -363,24 +363,35 @@ apiRoutes.post('/foobarbotsnippet', function(req, res) {
 	var myToken = req.body.token;
 
 	mySnippet.gistId = mySnippet.snippetId;
+	mySnippet.gistUrl = mySnippet.snippetUrl;
+	mySnippet.gistUserId = mySnippet.userId;
+	mySnippet.gistUserUrl = mySnippet.userUrl;
+	mySnippet.readme += "\n\nOriginally fetched from [" + mySnippet.gistId + "]("+ mySnippet.gistUrl +")";
+	if (mySnippet.userId !== "Unknown") {
+		mySnippet.readme += " by [" + mySnippet.gistUserId + "]("+ mySnippet.gistUserUrl +")";
+	}
 
 	Snippet.find({gistId: mySnippet.gistId, userId: FOOBARBOT_ID}, function(err, snippets){
 		if (err) throw err;
 
 		if (snippets.length == 0) {
-			console.log('There is a snippet like this');
-			//TODO: post snippet as Foobarbot, star snippet as user
+			console.log('There is no snippet like this');
+			mySnippet.snippetId = String(new Date().getTime())+String(Math.floor(Math.random()*1000));
+			mySnippet.userId = FOOBARBOT_ID;
 
+			var mySnippetModel = new Snippet(mySnippet);
+			
+			mySnippetModel.save((err) => {
+				if (err) throw err;
+				res.json({success: true, snippetId: mySnippet.snippetId});
+			});
 			
 		} else {
-			console.log('There is no snippet like this');
-			// do stuff here
+			console.log('There is a snippet like this');
+			res.status(500).send({success: false, message: "Something went wrong"});
 			
 		}
-
-  		res.json({ message: 'Welcome to the coolest API on earth!' });
 	})
-	
 })
 
 
@@ -481,7 +492,7 @@ apiRoutes.post('/snippets', function(req, res) {
 	var decoded = jwt.decode(token, {complete: true, json: true});
 	var tempSnippet = req.body.snippet;
 	tempSnippet.userId = decoded.payload.userId;
-	tempSnippet.snippetId = String(new Date().getTime())+String(Math.floor(Math.random()*1000))
+	tempSnippet.snippetId = String(new Date().getTime())+String(Math.floor(Math.random()*1000));
 	
 	var mySnippet = new Snippet(tempSnippet);
 
