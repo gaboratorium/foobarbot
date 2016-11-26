@@ -745,11 +745,15 @@ exports.UserSnippetsComponent = {
 },{"./../snippet/component.snippet":6,"highlight.js":253,"marked":423}],17:[function(require,module,exports){
 "use strict";
 
+var component_snippet_1 = require("./../snippet/component.snippet");
 var hljs = require("highlight.js");
 var marked = require('marked');
 exports.UserStarsComponent = {
     name: "UserStarsComponent",
     template: "<!-- Page content -->\r\n<div class=\"grid-block align-center\">\r\n    <div class=\"grid-block grid-page-content\">\r\n        <div class=\"grid-content\">\r\n\r\n            <!-- Toast snackbar danger -->\r\n\t\t\t<div id=\"snackbar--danger\" class=\"mdl-js-snackbar mdl-snackbar mdl-snackbar--danger\">\r\n\t\t\t\t<div class=\"mdl-snackbar__text\"></div>\r\n\t\t\t\t<button class=\"mdl-snackbar__action\" type=\"button\"></button>\r\n\t\t\t</div>\r\n\r\n            <div class=\"c-card c-card__section\" v-show=\"snippetDataStatus=='loaded' && snippets.length == 0\">\r\n                <p>There are no snippets to show.</p>\r\n            </div>\r\n\r\n            <!--Loaded snippets -->\r\n            <div class=\"grid-block\" v-show=\"snippetDataStatus=='loaded' && snippets.length > 0\">\r\n                <div class=\"grid-content\">\r\n                    <!--List of snippets-->\r\n                    <ul class=\"c-snippets\">\r\n\r\n                        <li class=\"c-snippet\" v-for=\"snippet in snippets\">\r\n                            <snippet v-bind:snippet=\"snippet\"></snippet>\r\n                        </li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n\r\n            <!--Loading snippets-->\r\n            <div class=\"grid-block\" v-if=\"snippetDataStatus=='loading'\">\r\n                <div class=\"grid-content\">\r\n                    <div class=\"grid-block align-center\">\r\n                        <div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>",
+    components: {
+        "snippet": component_snippet_1.SnippetComponent
+    },
     data: function () {
         return {
             userDataStatus: String,
@@ -805,7 +809,7 @@ exports.UserStarsComponent = {
     }
 };
 
-},{"highlight.js":253,"marked":423}],18:[function(require,module,exports){
+},{"./../snippet/component.snippet":6,"highlight.js":253,"marked":423}],18:[function(require,module,exports){
 "use strict";
 
 exports.UserViewComponent = {
@@ -1043,7 +1047,11 @@ exports.ApiInstance = new Vue({
             return myPromise;
         },
         getSnippets: function (myUserId, mySnippetsMaxNumber, mySearchText) {
-            var params;
+            var params = {
+                userId: "",
+                snippetsMaxNumber: null,
+                searchText: null
+            };
             var options = { params: params };
             if (myUserId) {
                 options = {
@@ -1069,7 +1077,10 @@ exports.ApiInstance = new Vue({
             return myPromise;
         },
         getStarredSnippets: function (myUserId, mySnippetsMaxNumber) {
-            var params;
+            var params = {
+                userId: "",
+                snippetsMaxNumber: null
+            };
             params.userId = myUserId;
             var options = {
                 params: params

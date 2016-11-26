@@ -248,7 +248,17 @@ export const ApiInstance: IApiInstance= new Vue({
 		// Get all snippets or all by user
 		getSnippets: (myUserId?: string, mySnippetsMaxNumber?: number, mySearchText?: string) => {
 			
-			var params: any;
+			interface IParams {
+				userId: String,
+				snippetsMaxNumber?: number,
+				searchText?: String
+			}
+
+			var params: IParams = {
+				userId: "",
+				snippetsMaxNumber: null,
+				searchText: null
+			};
 
 			var options = { params: params};	
 
@@ -285,7 +295,15 @@ export const ApiInstance: IApiInstance= new Vue({
 
 		getStarredSnippets: (myUserId: string, mySnippetsMaxNumber?: number) => {
 			
-			var params: any;
+			interface IParams {
+				userId: String
+				snippetsMaxNumber?: number
+			}
+
+			var params: IParams = {
+				userId: "",
+				snippetsMaxNumber: null
+			};
 			params.userId = myUserId;
 
 			var options = {

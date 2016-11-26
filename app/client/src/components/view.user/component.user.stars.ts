@@ -1,10 +1,16 @@
 import * as fs from "fs";
+import { SnippetComponent } from "./../snippet/component.snippet";
+
 var hljs = require("highlight.js");
 var marked = require('marked');
 
 export const UserStarsComponent = {
     name: "UserStarsComponent",
 	template: fs.readFileSync(__dirname + '/component.user.snippets.html', 'utf8'),
+
+	components: {
+		"snippet": SnippetComponent
+	},
 
 	data: function(){
 		return {
