@@ -11,5 +11,12 @@ hljs.configure({
 export const SnippetComponent = {
 	name: "SnippetComponent",
 	template: html,
-    props: ["snippet"]
+  props: {
+    snippet: {type: Object, required: true}
+  },
+  methods: {
+    sayHello: (snippetId: any) => {
+      console.log("I am ", snippetId);
+    }
+  }
 };

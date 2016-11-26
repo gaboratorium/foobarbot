@@ -22,7 +22,8 @@
                 <span v-if="snippet.userUrl !== ''">by <router-link :to="'/user/' + snippet.userId">#{{ snippet.userId }}</router-link></span>
             </div>
             <div>
-                <i class="fa fa-clipboard c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar('Copying code to clipboard')"></i>
+                <i class="fa fa-clipboard c-nav-icon-button" aria-hidden="true" v-on:click="sayHello(snippet.snippetId)"></i>
+                <!--<i class="fa fa-clipboard c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar('Copying code to clipboard')"></i>-->
                 <i class="fa fa-star c-nav-icon-button" aria-hidden="true" v-on:click="starSnippet(snippet.snippetId, snippet)"></i>
                 <i class="fa fa-expand c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar('Expanding snippet view')"></i>
             </div>

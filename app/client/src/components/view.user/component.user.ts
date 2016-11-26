@@ -1,6 +1,7 @@
 var fs = require('fs');
 var html = fs.readFileSync(__dirname + '/component.user.html', 'utf8');
 
+
 // Export global component
 export const UserViewComponent = {
 	name: "UserComponent",

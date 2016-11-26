@@ -5,6 +5,8 @@ var html = fs.readFileSync(__dirname + '/component.search.html', 'utf8');
 var marked = require('marked');
 var hljs = require("highlight.js");
 
+import { SnippetComponent } from "./../snippet/component.snippet";
+
 hljs.configure({
   tabReplace: '  ', // 4 spaces
 //   classPrefix: ''     // don't append class prefix
@@ -15,6 +17,9 @@ hljs.configure({
 export const SearchViewComponent = {
 	name: "SearchComponent",
 	template: html,
+	components: {
+		"snippet": SnippetComponent
+	},
 	data: function(){
 		return {
 			users: Array,

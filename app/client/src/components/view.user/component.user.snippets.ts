@@ -3,10 +3,16 @@ var html = fs.readFileSync(__dirname + '/component.user.snippets.html', 'utf8');
 var hljs = require("highlight.js");
 var marked = require('marked');
 
+import { SnippetComponent } from "./../snippet/component.snippet";
+
 // Export global component
 export const UserSnippetsComponent = {
 	name: "UserSnippetsComponent",
 	template: html,
+
+	components: {
+		"snippet": SnippetComponent
+	},
 
 	// Data
 	data: function(){

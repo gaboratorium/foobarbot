@@ -31,43 +31,7 @@
 				<ul class="c-snippets">
 
 					<li class="c-snippet" v-for="snippet in snippets">
-						<!--Snippet code -->
-						<pre><code class="php c-snippet__code c-snippet__code--condensed">{{ snippet.snippetCode }}</code></pre>
-
-						<div class="c-snippet__readme">
-
-							<!--Readme meta-->
-							<div class="c-snippet__readme-meta">
-								<div class="c-snippet__readme-meta-title">
-									<span><router-link :to="'/snippet/' + snippet.snippetId">#{{snippet.snippetId}}</router-link> in </span>
-									<span class="mdl-chip">
-										<span class="mdl-chip__text">
-											<router-link :to="'/search/' + snippet.tag1">{{snippet.tag1}}</router-link>
-										</span>
-									</span>
-									<span class="mdl-chip">
-										<span class="mdl-chip__text">
-											<router-link :to="'/search/' + snippet.tag2">{{snippet.tag2}}</router-link>
-										</span>
-									</span>
-									<span class="mdl-chip">
-										<span class="mdl-chip__text">
-											<router-link :to="'/search/' + snippet.tag3">{{snippet.tag3}}</router-link>
-										</span>
-									</span>
-									<span v-if="snippet.userUrl !== ''">by <router-link :to="'/user/' + snippet.userId">#{{ snippet.userId }}</router-link></span>
-								</div>
-								<div>
-									<i class="fa fa-clipboard c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar('Copying code to clipboard')"></i>
-									<i class="fa fa-star c-nav-icon-button" aria-hidden="true" v-on:click="starSnippet(snippet.snippetId)"></i>
-									<i class="fa fa-expand c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar('Expanding snippet view')"></i>
-								</div>
-								<!--<a href="#" v-on:click.prevent="starSnippet(snippet.snippetId)">Star it</a>-->
-							</div>
-
-							<!--Readme text in markdown-->
-							<div v-html="snippet.readme" class="c-snippet__readme-text"></div>
-						</div>
+						<snippet v-bind:snippet="snippet"></snippet>
 					</li>
 				</ul>
 			</div>
@@ -80,41 +44,9 @@
 				<ul class="c-snippets">
 
 					<li class="c-snippet" v-for="snippet in snippetsFromGithub">
-						<!--Snippet code -->
-						<pre><code class="php c-snippet__code c-snippet__code--condensed">{{ snippet.snippetCode }}</code></pre>
-
-						<div class="c-snippet__readme">
-
-							<!--Readme meta-->
-							<div class="c-snippet__readme-meta">
-								<div class="c-snippet__readme-meta-title">
-									<span><a v-bind:href="snippet.snippetUrl" target="_blank">GitHub Gist</a> in </span>
-									<span class="mdl-chip">
-										<span class="mdl-chip__text">
-											{{ searchText }}
-										</span>
-									</span>
-									<span class="mdl-chip">
-										<span class="mdl-chip__text">
-											GitHub
-										</span>
-									</span>
-									<span v-if="snippet.userUrl !== ''">by <a v-bind:href="snippet.userUrl" target="_blank">#{{ snippet.userId }}</a></span>
-								</div>
-								<div>
-									<i class="fa fa-clipboard c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar('Copying code to clipboard')"></i>
-									<i class="fa fa-star c-nav-icon-button" aria-hidden="true" v-on:click="starSnippetFromExternalApi(snippet)"></i>
-									<i class="fa fa-expand c-nav-icon-button" aria-hidden="true" v-on:click="showInDevelopmentSnackbar('Expanding snippet view')"></i>
-								</div>
-								<!--<a href="#" v-on:click.prevent="starSnippet(snippet.snippetId)">Star it</a>-->
-							</div>
-
-							<!--Readme text in markdown-->
-							<div v-html="snippet.readme" class="c-snippet__readme-text"></div>
-						</div>
+						<snippet v-bind:snippet="snippet"></snippet>
 					</li>
 				</ul>
-
 			</div>
 		</div>
 	</div>
