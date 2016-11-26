@@ -15,6 +15,8 @@ import { SearchViewComponent } from './../components/view.search/component.searc
 // Other components
 import { NavbarComponent } from './../components/navbar/component.navbar';
 import { AppfooterComponent } from './../components/appfooter/component.appfooter';
+import { SnackbarComponent } from './../components/snackbar/component.snackbar';
+import { BusComponent } from './../components/bus/component.bus';
 
 // App instance
 export const AppInstance = new Vue({
@@ -24,10 +26,6 @@ export const AppInstance = new Vue({
   name: "myVueApp",
   router: RouterInstance,
   store: MainStore,
-
-  created: function() {
-    // Do some stuff?
-  },
 
   // Components
   components: {
@@ -39,7 +37,9 @@ export const AppInstance = new Vue({
     'snippet-view-component': SnippetViewComponent,
     'discover-view-component': DiscoverViewComponent,
     'search-view-component': SearchViewComponent,
+    'bus': BusComponent,
   	'navbar': NavbarComponent,
+  	'snackbar': SnackbarComponent,
   	'appfooter': AppfooterComponent
   }
 });
