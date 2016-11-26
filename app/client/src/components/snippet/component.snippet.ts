@@ -18,7 +18,6 @@ export const SnippetComponent = {
   },
 
   created: function() {
-    console.log(this.snippet.readme);
     this.snippet.readme = marked(this.snippet.readme);
   },
 
@@ -33,7 +32,6 @@ export const SnippetComponent = {
 
 		starSnippet: function(snippetId: string, snippet: any){
 			var SnippetComponent = this;
-			console.log("Starring snippet...");
 			if (this.$store.getters["mainstore/isUserLoggedIn"]) {
 				this.$store.dispatch({
 					type: 'postStar',
@@ -46,7 +44,6 @@ export const SnippetComponent = {
 				});
 			}
 			else {
-        console.log("Bus component will emit showsnackbar event");
 				BusComponent.$emit("showSnackbar", "Only registered members can star snippets.", "danger");
 			}			
     }

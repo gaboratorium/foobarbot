@@ -29,11 +29,6 @@ export const UserSnippetsComponent = {
 		this.userDataStatus = "loading";
 		this.snippetDataStatus = "loading";
 		var requestedId: string = this.$route.params.id;
-
-		console.log("requested id", requestedId);
-		console.log("is user logged in", this.$store.getters["mainstore/isUserLoggedIn"]);
-		
-		
 		if (requestedId == "me" && this.$store.getters["mainstore/isUserLoggedIn"]) {
 			requestedId = this.$store.getters["mainstore/userId"];
 		}
@@ -52,9 +47,6 @@ export const UserSnippetsComponent = {
 					// Double redirection for forcing router state change
 					this.user = response.user;
 					this.userDataStatus = "loaded";
-					console.log("loaded this user:", this.user.userName);
-					
-					
 				}, (fail: any) => {
 					this.userDataStatus = "failed";
 					this.$router.push({name: "about"});
@@ -63,7 +55,6 @@ export const UserSnippetsComponent = {
 	  	},
 
 		getSnippets: function(userId: number){
-			console.log("loadSnippets fired")
 			var UserComponent = this;
 			this.$store.dispatch({
 				type: "getSnippets",
@@ -78,16 +69,13 @@ export const UserSnippetsComponent = {
 				this.snippets = response;
 
 				setTimeout(function(){
-					console.log("Highlighting code...");
 					hljs.initHighlighting.called=false;
 					hljs.initHighlighting();
 					UserComponent.snippetDataStatus = "loaded";
 
 				  }, 200);
-				console.log(response.snippets);
 			}, (fail: any) => {
 				this.snippetDataStatus = "failed";
-				console.log(fail);
 			})
 		},
 

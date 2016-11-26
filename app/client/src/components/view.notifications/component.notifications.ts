@@ -53,17 +53,12 @@ export const NotificationsViewComponent =  {
 
 
 		loadNotifications: function() {
-			console.log('notification dispatches getnotifications');
 			this.$store.dispatch({
 				type: 'getNotifications'
 			}).then((response: any) => {
-				console.log('Noti comp gets Response: ', response);
 				this.notifications = response;
 				this.dataStatus = "loaded";
-				
 			}, (fail: any) => {
-				//fail
-				console.log('failll', fail);
 				this.dataStatus = "failed";
 				
 			});
@@ -74,21 +69,16 @@ export const NotificationsViewComponent =  {
 			this.$store.dispatch({
 				type: 'deleteNotification'
 			}).then((response: any) => {
-				console.log(response);
 				this.notifications = [];
-				
 			}, (fail: any) => {
-				console.log(fail);
-				
+
 			})
 		},
 
 		// Push notification
 		notifyMe: function(){
 			var NotificationComponent = this;
-			console.log(NotificationComponent.formNotifDelay);
 			
-			// Notify user if notifications are not supported
 			if (!("Notification" in window)) {
 				alert("This browser does not support desktop notification");
 				return;
@@ -129,10 +119,8 @@ export const NotificationsViewComponent =  {
 				type: "postNotification",
 				notificationMessage: NotificationComponent.formNotifMessage
 			}).then((response: any) => {
-				console.log('Notification component recieves response:', response);
 				this.loadNotifications();
 			}, (fail: any) => {
-				console.log('Notification component request went wrong', fail);
 				
 			});
 		}

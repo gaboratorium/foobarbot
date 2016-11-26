@@ -26,7 +26,6 @@ export const SnippetViewComponent = {
 
 	// Created hook
 	created: function(){
-		console.log("Snippet component created");
 		var snippetId: string = this.$route.params.id;
         this.getSnippet(snippetId);
 	},
@@ -36,12 +35,10 @@ export const SnippetViewComponent = {
 		
 		getSnippet: function(snippetId: number){
 			var SnippetComponent = this;
-			console.log("snippet component get snippet recieves snippet id", snippetId);
 			this.$store.dispatch({
 				type: "getSnippet",
 				snippetId: snippetId,
 			}).then((response: any) => {
-				console.log("snippet component recieves response obj", response[0]);
 				response[0].readme = marked(response[0].readme);
 				SnippetComponent.snippet = response[0];
 				hljs.initHighlighting.called = false;

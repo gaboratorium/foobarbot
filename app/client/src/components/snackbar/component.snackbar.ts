@@ -9,7 +9,6 @@ export const SnackbarComponent =  {
     created: function(){
         var SnackbarComponent = this;
         BusComponent.$on("showSnackbar", function(message: string, type:string = "default") {
-            console.log("Snackbar is about to show up");
             SnackbarComponent.type = "default";
             SnackbarComponent.type = type == "danger" ? "danger" : SnackbarComponent.type;
             SnackbarComponent.type = type == "success" ? "success" : SnackbarComponent.type;

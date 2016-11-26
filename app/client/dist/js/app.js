@@ -42,12 +42,10 @@ exports.ComposeModalComponent = {
                 type: "postSnippet",
                 snippet: snippet
             }).then(function (response) {
-                console.log("ok");
             });
             this.$emit("close");
         },
         closeModal: function () {
-            console.log("You are trying to close the modal...");
             this.$emit("close");
         }
     }
@@ -128,7 +126,6 @@ exports.SnackbarComponent = {
         var SnackbarComponent = this;
         component_bus_1.BusComponent.$on("showSnackbar", function (message, type) {
             if (type === void 0) { type = "default"; }
-            console.log("Snackbar is about to show up");
             SnackbarComponent.type = "default";
             SnackbarComponent.type = type == "danger" ? "danger" : SnackbarComponent.type;
             SnackbarComponent.type = type == "success" ? "success" : SnackbarComponent.type;
@@ -176,7 +173,6 @@ exports.SnippetComponent = {
         snippet: { type: Object, required: true }
     },
     created: function () {
-        console.log(this.snippet.readme);
         this.snippet.readme = marked(this.snippet.readme);
     },
     methods: {
@@ -188,7 +184,6 @@ exports.SnippetComponent = {
         },
         starSnippet: function (snippetId, snippet) {
             var SnippetComponent = this;
-            console.log("Starring snippet...");
             if (this.$store.getters["mainstore/isUserLoggedIn"]) {
                 this.$store.dispatch({
                     type: 'postStar',
@@ -201,7 +196,6 @@ exports.SnippetComponent = {
                 });
             }
             else {
-                console.log("Bus component will emit showsnackbar event");
                 component_bus_1.BusComponent.$emit("showSnackbar", "Only registered members can star snippets.", "danger");
             }
         }
@@ -247,26 +241,20 @@ exports.AboutViewComponent = {
             this.$store.dispatch({
                 type: 'getSnippets',
             }).then(function (response) {
-                console.log("about component get snippets recieves:", response);
                 _this.snippets = response;
             }, function (fail) {
-                console.log("about component get snippets fails:", fail);
             });
         },
         starSnippet: function (snippetId) {
-            console.log("You are trying to star this snippet:", snippetId);
             if (this.$store.getters["mainstore/isUserLoggedIn"]) {
                 this.$store.dispatch({
                     type: 'postStar',
                     snippetId: snippetId
                 }).then(function (response) {
-                    console.log("You have succesfully starred the snippet", response);
                 }, function (fail) {
-                    console.log("about component postStar fails", fail);
                 });
             }
             else {
-                console.log("No login, no star.");
             }
         }
     }
@@ -342,12 +330,10 @@ exports.LoginViewComponent = {
                 _this.$router.replace('dummy-replacement-so-we-force-router-change');
                 _this.$router.push('discover');
             }, function (fail) {
-                console.log('Oops, something went wrong!');
                 _this.errorMsg = "Wrong credentials! Try again!";
             });
         },
         showToast: function (message) {
-            console.log("show toast");
             var snackbarContainer = document.querySelector('#demo-toast-example');
             var data = { message: message };
             snackbarContainer.MaterialSnackbar.showSnackbar(data);
@@ -397,15 +383,12 @@ exports.NotificationsViewComponent = {
     methods: {
         loadNotifications: function () {
             var _this = this;
-            console.log('notification dispatches getnotifications');
             this.$store.dispatch({
                 type: 'getNotifications'
             }).then(function (response) {
-                console.log('Noti comp gets Response: ', response);
                 _this.notifications = response;
                 _this.dataStatus = "loaded";
             }, function (fail) {
-                console.log('failll', fail);
                 _this.dataStatus = "failed";
             });
         },
@@ -414,15 +397,12 @@ exports.NotificationsViewComponent = {
             this.$store.dispatch({
                 type: 'deleteNotification'
             }).then(function (response) {
-                console.log(response);
                 _this.notifications = [];
             }, function (fail) {
-                console.log(fail);
             });
         },
         notifyMe: function () {
             var NotificationComponent = this;
-            console.log(NotificationComponent.formNotifDelay);
             if (!("Notification" in window)) {
                 alert("This browser does not support desktop notification");
                 return;
@@ -457,10 +437,8 @@ exports.NotificationsViewComponent = {
                 type: "postNotification",
                 notificationMessage: NotificationComponent.formNotifMessage
             }).then(function (response) {
-                console.log('Notification component recieves response:', response);
                 _this.loadNotifications();
             }, function (fail) {
-                console.log('Notification component request went wrong', fail);
             });
         }
     }
@@ -536,7 +514,6 @@ exports.SearchViewComponent = {
         },
         getSnippetsFromGithub: function () {
             var _this = this;
-            console.log("Getting snippets from Github... in Search Componen");
             var DiscoverComponent = this;
             this.$store.dispatch({
                 type: 'getSnippetsFromGithub',
@@ -552,14 +529,11 @@ exports.SearchViewComponent = {
                     DiscoverComponent.snippetDataFromGithubStatus = "loaded";
                 }, 200);
             }, function (fail) {
-                console.log("Github request failed", fail);
             });
         },
         starSnippetFromExternalApi: function (snippet) {
             var SearchComponent = this;
-            console.log("starSnippetFromExternalApi isUserLoggedIn", this.$store.getters["mainstore/isUserLoggedIn"]);
             if (this.$store.getters["mainstore/isUserLoggedIn"]) {
-                console.log("search component sends request");
                 this.$store.dispatch({
                     type: 'starSnippetFromExternalApi',
                     snippet: snippet
@@ -598,11 +572,9 @@ exports.SettingsViewComponent = {
     },
     methods: {
         updateUser: function () {
-            console.log("Updating user...");
         },
         deleteUser: function () {
             var SettingsViewComponent = this;
-            console.log("Deleting user...");
             this.errorMsg = "Something went wrong...";
             this.$store.dispatch({
                 type: 'deleteUser',
@@ -646,10 +618,8 @@ exports.SignupViewComponent = {
                 userEmail: this.signupform__email,
                 userPassword: passwordHash.generate(this.signupform__password)
             }).then(function (response) {
-                console.log("Signup component recieves:", response);
                 _this.isRegistrationSuccesful = true;
             }, function (fail) {
-                console.log('Signup component recieves error:', fail);
                 _this.errorMsg = fail.body.message;
             });
         }
@@ -678,7 +648,6 @@ exports.SnippetViewComponent = {
         };
     },
     created: function () {
-        console.log("Snippet component created");
         var snippetId = this.$route.params.id;
         this.getSnippet(snippetId);
     },
@@ -686,12 +655,10 @@ exports.SnippetViewComponent = {
         getSnippet: function (snippetId) {
             var _this = this;
             var SnippetComponent = this;
-            console.log("snippet component get snippet recieves snippet id", snippetId);
             this.$store.dispatch({
                 type: "getSnippet",
                 snippetId: snippetId,
             }).then(function (response) {
-                console.log("snippet component recieves response obj", response[0]);
                 response[0].readme = marked(response[0].readme);
                 SnippetComponent.snippet = response[0];
                 hljs.initHighlighting.called = false;
@@ -740,8 +707,6 @@ exports.UserSnippetsComponent = {
         this.userDataStatus = "loading";
         this.snippetDataStatus = "loading";
         var requestedId = this.$route.params.id;
-        console.log("requested id", requestedId);
-        console.log("is user logged in", this.$store.getters["mainstore/isUserLoggedIn"]);
         if (requestedId == "me" && this.$store.getters["mainstore/isUserLoggedIn"]) {
             requestedId = this.$store.getters["mainstore/userId"];
         }
@@ -757,7 +722,6 @@ exports.UserSnippetsComponent = {
             }).then(function (response) {
                 _this.user = response.user;
                 _this.userDataStatus = "loaded";
-                console.log("loaded this user:", _this.user.userName);
             }, function (fail) {
                 _this.userDataStatus = "failed";
                 _this.$router.push({ name: "about" });
@@ -765,7 +729,6 @@ exports.UserSnippetsComponent = {
         },
         getSnippets: function (userId) {
             var _this = this;
-            console.log("loadSnippets fired");
             var UserComponent = this;
             this.$store.dispatch({
                 type: "getSnippets",
@@ -776,15 +739,12 @@ exports.UserSnippetsComponent = {
                 }
                 _this.snippets = response;
                 setTimeout(function () {
-                    console.log("Highlighting code...");
                     hljs.initHighlighting.called = false;
                     hljs.initHighlighting();
                     UserComponent.snippetDataStatus = "loaded";
                 }, 200);
-                console.log(response.snippets);
             }, function (fail) {
                 _this.snippetDataStatus = "failed";
-                console.log(fail);
             });
         },
         showSnackbarDanger: function (message) {
@@ -816,8 +776,6 @@ exports.UserStarsComponent = {
         this.userDataStatus = "loading";
         this.snippetDataStatus = "loading";
         var requestedId = this.$route.params.id;
-        console.log("requested id", requestedId);
-        console.log("is user logged in", this.$store.getters["mainstore/isUserLoggedIn"]);
         if (requestedId == "me" && this.$store.getters["mainstore/isUserLoggedIn"]) {
             requestedId = this.$store.getters["mainstore/userId"];
         }
@@ -833,7 +791,6 @@ exports.UserStarsComponent = {
             }).then(function (response) {
                 _this.user = response.user;
                 _this.userDataStatus = "loaded";
-                console.log("loaded this user:", _this.user.userName);
             }, function (fail) {
                 _this.userDataStatus = "failed";
                 _this.$router.push({ name: "about" });
@@ -841,27 +798,22 @@ exports.UserStarsComponent = {
         },
         getSnippets: function (userId) {
             var _this = this;
-            console.log("loadSnippets fired");
             var UserComponent = this;
             this.$store.dispatch({
                 type: "getStarredSnippets",
                 userId: userId,
             }).then(function (response) {
-                console.log("loadsnippets got this response", response);
                 for (var i = 0; i < response.length; i++) {
                     response[i].readme = marked(response[i].readme);
                 }
                 _this.snippets = response;
                 setTimeout(function () {
-                    console.log("Highlighting code...");
                     hljs.initHighlighting.called = false;
                     hljs.initHighlighting();
                     UserComponent.snippetDataStatus = "loaded";
                 }, 200);
-                console.log(response.snippets);
             }, function (fail) {
                 _this.snippetDataStatus = "failed";
-                console.log(fail);
             });
         },
         showSnackbarDanger: function (message) {
@@ -906,7 +858,6 @@ exports.UserViewComponent = {
             }).then(function (response) {
                 _this.user = response.user;
                 _this.userDataStatus = "loaded";
-                console.log("loaded this user:", _this.user.userName);
             }, function (fail) {
                 _this.userDataStatus = "failed";
                 _this.$router.push({ name: "about" });
@@ -914,7 +865,6 @@ exports.UserViewComponent = {
         },
         getSnippets: function (userId) {
             var _this = this;
-            console.log("loadSnippets fired");
             var UserComponent = this;
             this.$store.dispatch({
                 type: "getSnippets",
@@ -923,12 +873,10 @@ exports.UserViewComponent = {
                 _this.snippets = response;
             }, function (fail) {
                 _this.snippetDataStatus = "failed";
-                console.log(fail);
             });
         },
         getStarredSnippets: function (userId) {
             var _this = this;
-            console.log("loadSnippets fired");
             var UserComponent = this;
             this.$store.dispatch({
                 type: "getStarredSnippets",
@@ -937,7 +885,6 @@ exports.UserViewComponent = {
                 _this.starredSnippets = response;
             }, function (fail) {
                 _this.snippetDataStatus = "failed";
-                console.log(fail);
             });
         }
     }
@@ -1106,10 +1053,8 @@ exports.ApiInstance = new Vue({
                 snippet: snippet,
                 token: myToken
             };
-            console.log("api recieved and makes postFoobarbotSnippet request this body", body);
             var myPromise = new Promise(function (resolve, reject) {
                 Vue.http.post('/api/foobarbotsnippet/', body).then(function (response) {
-                    console.log(" postfoobarbotsnippet recieved package", response);
                     resolve(response.body);
                 }, function (fail) {
                     reject(fail);
@@ -1143,7 +1088,6 @@ exports.ApiInstance = new Vue({
             return myPromise;
         },
         getStarredSnippets: function (myUserId, mySnippetsMaxNumber) {
-            console.log("getStarredsnippets fired in api");
             var options = {
                 params: {
                     userId: myUserId
@@ -1152,9 +1096,7 @@ exports.ApiInstance = new Vue({
             if (mySnippetsMaxNumber)
                 options.params.snippetsMaxNumber = mySnippetsMaxNumber;
             var myPromise = new Promise(function (resolve, reject) {
-                console.log("sending request...");
                 Vue.http.get('/api/starredsnippets', options).then(function (response) {
-                    console.log("getstarredsnippets in api recieved this response", response);
                     var snippets = _.reverse(response.body.snippets);
                     resolve(snippets);
                 }, function (fail) {
@@ -1164,10 +1106,8 @@ exports.ApiInstance = new Vue({
             return myPromise;
         },
         getSnippetsFromGithub: function () {
-            console.log("getSnippetsFromGithub in Api fired");
             var myPromise = new Promise(function (resolve, reject) {
                 Vue.http.get("https://api.github.com/gists/public").then(function (response) {
-                    console.log("getSnippetsFromGithub in Api returned", response);
                     resolve(response.body);
                 }, function (fail) {
                     reject(fail);
@@ -1260,10 +1200,8 @@ exports.AppLoaderInstance = new Vue({
         }
         store_main_1.MainStore.dispatch({ type: 'verifyToken', token: userToken }).then(function (responseAsUserClient) {
             store_main_1.MainStore.commit('setUserClient', responseAsUserClient);
-            console.log("User client has been set in store");
         }, function (fail) {
             store_main_1.MainStore.commit('unsetUserClient');
-            console.log("User client has been unset in store");
         });
     }
 });
@@ -1492,7 +1430,6 @@ exports.SnippetStore = {
             }
         },
         getStarredSnippets: function (context, payload) {
-            console.log("getStarredSnippets in snippet store fired");
             var userId = payload.userId;
             if (payload.snippetsMaxNumber && payload.searchText) {
                 return instance_api_1.ApiInstance.getStarredSnippets(userId, payload.snippetsMaxNumber);
@@ -1502,10 +1439,8 @@ exports.SnippetStore = {
             }
         },
         getSnippetsFromGithub: function (context, payload) {
-            console.log("getSnippetsFromGithub in snippet store fired");
             var myPromise = new Promise(function (resolve, reject) {
                 instance_api_1.ApiInstance.getSnippetsFromGithub().then(function (response) {
-                    console.log("getSnippetsFromGithub store returbed", response);
                     response = _.shuffle(response);
                     var maxNumber = 10;
                     var snippets = [];
@@ -1534,27 +1469,21 @@ exports.SnippetStore = {
                             Vue.http.get(gistCodeLink).then(function (response) {
                                 resolve(response.body);
                             }, function (fail) {
-                                console.log("Getting Gist code fails", fail);
                                 reject(fail);
                             });
                         });
                         snippets.push(snippet);
                         getGistCodePromises.push(getGistCode);
                     }
-                    console.log("Snippets length", snippets.length);
-                    console.log("gistCodeLinks length", getGistCodePromises.length);
                     Promise.all(getGistCodePromises).then(function (gistCodes) {
-                        console.log("all promises resolved");
                         for (var i = 0; i < snippets.length; i++) {
                             snippets[i].snippetCode = gistCodes[i];
                         }
                         resolve(snippets);
                     }, function (fail) {
-                        console.log("Getting one of the Gist Codes failed, therefore everything fails.", fail);
                         reject(fail);
                     });
                 }, function (fail) {
-                    console.log("Snippet store fails from getsnippetsfromgithub", fail);
                     reject(fail);
                 });
             });
@@ -1615,13 +1544,11 @@ exports.TokenStore = {
             return myPromise;
         },
         createToken: function (context, payload) {
-            console.log('Create token in token store has been called....');
             var myPromise = new Promise(function (resolve, reject) {
                 var myUserEmail = payload.userEmail;
                 var myUserPassword = payload.userPassword;
                 instance_api_1.ApiInstance.createToken(myUserEmail, myUserPassword).then(function (response) {
                     var userClient = response.userClient;
-                    console.log('token store create token gets this userClient response', response.userClient);
                     context.commit('setUserClient', userClient);
                     resolve();
                 }, function (fail) {
@@ -1640,10 +1567,7 @@ var instance_api_1 = require('./../instances/instance.api');
 exports.UserStore = {
     actions: {
         loadUsers: function (context, payload) {
-            console.log("store.user loadUsers is fired");
             var myUserToken = context.getters["mainstore/userToken"];
-            console.log("store.user gets this userToken:", myUserToken);
-            console.log("store.user has this apiInstance:", instance_api_1.ApiInstance);
             instance_api_1.ApiInstance.postUserLog();
             return instance_api_1.ApiInstance.loadUsers(myUserToken);
         },

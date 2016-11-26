@@ -14,12 +14,10 @@ export const SettingsViewComponent =  {
 	},
 	methods: {
 		updateUser: function(){
-			console.log("Updating user...");
 	  	},
 
 		deleteUser: function(){
 			var SettingsViewComponent = this;
-			console.log("Deleting user...");
 			this.errorMsg = "Something went wrong...";
 			this.$store.dispatch({
 					type: 'deleteUser',

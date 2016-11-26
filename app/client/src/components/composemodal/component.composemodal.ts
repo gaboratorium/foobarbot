@@ -41,7 +41,7 @@ export const ComposeModalComponent = {
                 type: "postSnippet",
                 snippet: snippet
             }).then((response: any) => {
-                console.log("ok");
+
             });
             this.$emit("close");
 
@@ -49,7 +49,7 @@ export const ComposeModalComponent = {
         },
 
         closeModal: function(){
-            console.log("You are trying to close the modal...");
+
             this.$emit("close");
         }
     }

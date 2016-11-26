@@ -26,7 +26,6 @@ var Schema = mongoose.Schema;
 db.on('error', console.error.bind(console, 'connection error:'));
 //if we can connect
 db.once('open', function() {
-	console.log("mLab Database Connected");
 	testQuery();
 });
 
@@ -56,31 +55,7 @@ function testQuery() {
 
 	//save a variable to the database
 	//User1.save();
-
-	// console.log("Name: "+ User1.firstname + " " + User1.lastname);
-	// console.log("Email address: "+ User1.email);
-	// console.log("Age: "+ User1.age);
-	// console.log("Profile picture: "+ User1.avatar);
-	
-	
+		
 	// this is the query that is searching
-	var query = User.find({age:20});
-
-
-	var testPromise = query.exec(function(err, results){
-		//is there's an error, we throw error
-		if(err) return console.log("error");
-		//return the results we found
-		console.log(results);
-
-		if (results.length>0) {
-			results[0].age = 30;
-			results[1].age = 21;
-			results[0].save();
-			results[1].save();			
-		}
-	});
-
-	
-
+	var query = User.find({age:20});	
 }

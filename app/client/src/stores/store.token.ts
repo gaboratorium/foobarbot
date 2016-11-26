@@ -41,7 +41,6 @@ export const TokenStore = {
         // Saves token to state and localStorage
         createToken: (context: any, payload: any) => {
 
-            console.log('Create token in token store has been called....');
             // ApiInstance.postUserLog();
             var myPromise = new Promise((resolve, reject) => {
 
@@ -52,7 +51,6 @@ export const TokenStore = {
                 ApiInstance.createToken(myUserEmail, myUserPassword).then((response: any) => {
                 
                     let userClient = response.userClient;
-                    console.log('token store create token gets this userClient response', response.userClient);                    
 
                     context.commit('setUserClient', userClient);
                     resolve();

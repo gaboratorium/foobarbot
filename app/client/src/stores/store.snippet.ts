@@ -18,8 +18,6 @@ export const SnippetStore = {
         },
 
         getStarredSnippets: (context: any, payload: any) => {
-
-            console.log("getStarredSnippets in snippet store fired");
             
             var userId = payload.userId;
             if (payload.snippetsMaxNumber && payload.searchText){
@@ -30,11 +28,9 @@ export const SnippetStore = {
         },
 
         getSnippetsFromGithub: (context: any, payload: any) => {
-            console.log("getSnippetsFromGithub in snippet store fired");
             
             var myPromise = new Promise((resolve, reject) => {
                 ApiInstance.getSnippetsFromGithub().then((response: any) =>{
-                    console.log("getSnippetsFromGithub store returbed", response);
 
                     // Simulate search by shuffling results
                     response = _.shuffle(response);
@@ -80,7 +76,6 @@ export const SnippetStore = {
                             Vue.http.get(gistCodeLink).then((response: any) => {
                                 resolve(response.body);
                             }, (fail: any) => {
-                                console.log("Getting Gist code fails", fail);
                                 reject(fail);
                             })
                         });
@@ -88,17 +83,10 @@ export const SnippetStore = {
                         snippets.push(snippet);
                         getGistCodePromises.push(getGistCode);
                     }
-
-
-
-                    console.log("Snippets length", snippets.length);
-                    console.log("gistCodeLinks length", getGistCodePromises.length);
                     
-
                     // Get all gist codes from gistcode links, resolve when all finished
                     // reject if one fials
                     Promise.all(getGistCodePromises).then((gistCodes) => {
-                        console.log("all promises resolved");
                         
                         for (var i = 0; i < snippets.length; i++) {
 
@@ -109,14 +97,10 @@ export const SnippetStore = {
                         // not the current one
                         resolve(snippets);
                     }, (fail) => {
-                        // Same with this
-                        console.log("Getting one of the Gist Codes failed, therefore everything fails.", fail);
                         reject(fail);
                     })
 
                 }, (fail: any) => {
-                    // Fail
-                    console.log("Snippet store fails from getsnippetsfromgithub", fail);
                     reject(fail);
                 })
             })

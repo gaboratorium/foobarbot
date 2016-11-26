@@ -86,7 +86,6 @@ export const SearchViewComponent = {
 		},
 
 		getSnippetsFromGithub: function() {
-			console.log("Getting snippets from Github... in Search Componen");
 			var DiscoverComponent = this;
 			this.$store.dispatch({
 				type: 'getSnippetsFromGithub',
@@ -105,7 +104,6 @@ export const SearchViewComponent = {
 				  }, 200);
 				
 			}, (fail: any) =>{
-				console.log("Github request failed", fail);
 				
 			})
 			
@@ -113,10 +111,8 @@ export const SearchViewComponent = {
 
 		starSnippetFromExternalApi: function(snippet: any){
 			var SearchComponent = this;
-			console.log("starSnippetFromExternalApi isUserLoggedIn", this.$store.getters["mainstore/isUserLoggedIn"]);
 			
 			if (this.$store.getters["mainstore/isUserLoggedIn"]) {
-				console.log("search component sends request");
 				
 				this.$store.dispatch({
 					type: 'starSnippetFromExternalApi',

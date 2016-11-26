@@ -35,9 +35,6 @@ export const UserViewComponent = {
 					// Double redirection for forcing router state change
 					this.user = response.user;
 					this.userDataStatus = "loaded";
-					console.log("loaded this user:", this.user.userName);
-					
-					
 				}, (fail: any) => {
 					this.userDataStatus = "failed";
 					this.$router.push({name: "about"});
@@ -46,7 +43,6 @@ export const UserViewComponent = {
 	  	},
 
 		getSnippets: function(userId: number){
-			console.log("loadSnippets fired")
 			var UserComponent = this;
 			this.$store.dispatch({
 				type: "getSnippets",
@@ -57,12 +53,10 @@ export const UserViewComponent = {
 
 			}, (fail: any) => {
 				this.snippetDataStatus = "failed";
-				console.log(fail);
 			})
 		},
 
 		getStarredSnippets: function(userId: number){
-			console.log("loadSnippets fired")
 			var UserComponent = this;
 			this.$store.dispatch({
 				type: "getStarredSnippets",
@@ -71,7 +65,6 @@ export const UserViewComponent = {
 				this.starredSnippets = response;
 			}, (fail: any) => {
 				this.snippetDataStatus = "failed";
-				console.log(fail);
 			})
 		}
   	}

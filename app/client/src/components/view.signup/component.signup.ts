@@ -27,10 +27,8 @@ export const SignupViewComponent = {
                     userEmail: this.signupform__email,
 					userPassword: passwordHash.generate(this.signupform__password)
 				}).then((response: any) => {
-					console.log("Signup component recieves:", response);
                     this.isRegistrationSuccesful = true;
 				}, (fail: any) => {
-					console.log('Signup component recieves error:', fail);		
 					this.errorMsg = fail.body.message;			
 				});
 

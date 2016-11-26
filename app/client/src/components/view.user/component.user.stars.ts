@@ -19,10 +19,6 @@ export const UserStarsComponent = {
 		this.userDataStatus = "loading";
 		this.snippetDataStatus = "loading";
 		var requestedId: string = this.$route.params.id;
-
-		console.log("requested id", requestedId);
-		console.log("is user logged in", this.$store.getters["mainstore/isUserLoggedIn"]);
-		
 		
 		if (requestedId == "me" && this.$store.getters["mainstore/isUserLoggedIn"]) {
 			requestedId = this.$store.getters["mainstore/userId"];
@@ -40,9 +36,7 @@ export const UserStarsComponent = {
 				}).then((response: any) => {
 					// Double redirection for forcing router state change
 					this.user = response.user;
-					this.userDataStatus = "loaded";
-					console.log("loaded this user:", this.user.userName);
-					
+					this.userDataStatus = "loaded";					
 					
 				}, (fail: any) => {
 					this.userDataStatus = "failed";
@@ -52,14 +46,11 @@ export const UserStarsComponent = {
 	  	},
 
 		getSnippets: function(userId: number){
-			console.log("loadSnippets fired")
 			var UserComponent = this;
 			this.$store.dispatch({
 				type: "getStarredSnippets",
 				userId: userId,
 			}).then((response: any) => {
-				console.log("loadsnippets got this response", response);
-				
 
 				// Converting text to markdown
 				for (var i = 0; i < response.length; i++) {
@@ -69,16 +60,13 @@ export const UserStarsComponent = {
 				this.snippets = response;
 
 				setTimeout(function(){
-					console.log("Highlighting code...");
 					hljs.initHighlighting.called=false;
 					hljs.initHighlighting();
 					UserComponent.snippetDataStatus = "loaded";
 
 				  }, 200);
-				console.log(response.snippets);
 			}, (fail: any) => {
 				this.snippetDataStatus = "failed";
-				console.log(fail);
 			})
 		},
 
