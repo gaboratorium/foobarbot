@@ -20,4 +20,9 @@
 
 .mdl-chip a {
     color: inherit;
+    color: $primary-color;
+}
+
+.mdl-chip:hover a {
+    color: #fff;
 }

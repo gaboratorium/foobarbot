@@ -64,7 +64,7 @@ input[type="search"]:focus {
   color: #F44336; }
 
 .o-text--info {
-  color: #263238;
+  color: #503b1d;
   background-color: #fdf1e0;
   border: 1px solid #FFE0B2;
   border-radius: 4px;
@@ -302,6 +302,13 @@ pre {
 .c-snippet__readme-meta-title > span {
   margin-right: .5rem; }
 
+.c-snippet__author, .c-snippet__author > a {
+  color: #888;
+  font-weight: 400; }
+
+.c-snippet__author > a:hover {
+  color: #2196F3; }
+
 .c-snippet__readme-text > *:first-child {
   margin-top: 0rem; }
 
@@ -499,7 +506,11 @@ pre {
   color: #fff; }
 
 .mdl-chip a {
-  color: inherit; }
+  color: inherit;
+  color: #2196F3; }
+
+.mdl-chip:hover a {
+  color: #fff; }
 
 .c-nav-icon-button {
   color: #888;

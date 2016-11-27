@@ -59,6 +59,15 @@
     margin-right: .5rem;
 }
 
+.c-snippet__author, .c-snippet__author > a {
+    color: $raw-text-color;
+    font-weight: 400;
+}
+
+.c-snippet__author > a:hover {
+    color: $primary-color;
+}
+
 .c-snippet__readme-text > *:first-child { margin-top: 0rem; }
 .c-snippet__readme-text > *:last-child { margin-bottom: 0rem; }
 .c-snippet__readme-text > h1,

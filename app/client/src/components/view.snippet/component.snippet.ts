@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import { ISnippet } from "./../../interfaces/ISnippet";
+import { SnippetComponent } from "./../snippet/component.snippet";
 
 var hljs = require("highlight.js");
 var marked = require('marked');
@@ -7,8 +8,10 @@ var marked = require('marked');
 export const SnippetViewComponent = {
 	name: "SnippetComponent",
 	template: fs.readFileSync(__dirname + '/component.snippet.html', 'utf8'),
+	components: {
+		"snippet": SnippetComponent
+	},
 
-	// Data
 	data: function(){
 		return {
 			snippet: {

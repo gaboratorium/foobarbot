@@ -19,13 +19,17 @@
                         <router-link :to="'/search/' + snippet.tag3">{{snippet.tag3}}</router-link>
                     </span>
                 </span>
-                <span v-if="snippet.userUrl !== ''">by <router-link :to="'/user/' + snippet.userId">#{{ snippet.userId }}</router-link></span>
+                <span v-if="snippet.userUrl !== ''" class="c-snippet__author">by <router-link :to="'/user/' + snippet.userId">#{{ snippet.userId }}</router-link></span>
             </div>
             <div>
-                <i class="fa fa-clipboard c-nav-icon-button" aria-hidden="true" v-on:click="copyCode()"></i>
-                <i class="fa fa-star c-nav-icon-button" aria-hidden="true" v-on:click="starSnippet(snippet.snippetId, snippet)"></i>
-                <router-link :to="'/snippet/' + snippet.snippetId">
-                    <i class="fa fa-expand c-nav-icon-button" aria-hidden="true"></i>
+                <span class="c-nav-icon-button" v-on:click="copyCode()">
+                    <i class="fa fa-fw fa-clipboard" aria-hidden="true" ></i> Copy
+                </span>
+                <span class="c-nav-icon-button" v-on:click="starSnippet(snippet.snippetId, snippet)">
+                    <i class="fa fa-fw fa-star" aria-hidden="true"></i> Star
+                </span>
+                <router-link :to="'/snippet/' + snippet.snippetId" class="c-nav-icon-button">
+                    <i class="fa fa-fw fa-expand" aria-hidden="true"></i> View
                 </router-link>
             </div>
         </div>
