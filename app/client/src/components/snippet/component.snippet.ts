@@ -14,7 +14,8 @@ export const SnippetComponent = {
 	name: "SnippetComponent",
 	template: fs.readFileSync(__dirname + '/component.snippet.html', 'utf8'),
   props: {
-    snippet: {type: Object, required: true}
+    snippet: {type: Object, required: true},
+		isExpanded: {type: Boolean}
   },
 
   created: function() {
