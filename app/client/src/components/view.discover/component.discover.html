@@ -14,7 +14,7 @@
 			<!--Loaded list-->
 			<div v-show="snippetDataStatus=='loaded'">
 				<!-- List of newest snippets -->
-				<snippet-list v-if="snippetDataStatus=='loaded'" v-bind:snippets="snippets" v-bind:page-size="2" list-name="Newest snippets"></snippet-list>
+				<snippet-list v-if="snippetDataStatus=='loaded'" v-bind:snippets="snippets" v-bind:page-size="4" list-name="Newest snippets"></snippet-list>
 
 				<!-- Pro tip-->
 				<p class="o-text--info" v-show="snippetDataStatus=='loaded'"><span class="o-text--strong"><i class="fa fa-fw fa-info-circle" aria-hidden="true"></i>Didn't find what you were looking for?</span>

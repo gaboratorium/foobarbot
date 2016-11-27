@@ -2,51 +2,18 @@
 	<div class="grid-block grid-page-content">
 		<div class="grid-content">
 
-			<!-- Toast snackbar danger -->
-			<div id="snackbar--danger" class="mdl-js-snackbar mdl-snackbar mdl-snackbar--danger">
-				<div class="mdl-snackbar__text"></div>
-				<button class="mdl-snackbar__action" type="button"></button>
-			</div>
-
-			<!-- Toast snackbar -->
-			<div id="snackbar" class="mdl-js-snackbar mdl-snackbar">
-				<div class="mdl-snackbar__text"></div>
-				<button class="mdl-snackbar__action" type="button"></button>
-			</div>
-			
-			<div class="grid-block" v-if="snippetDataStatus=='loading'">
-				<div class="grid-content">
-					<div class="grid-block align-center">
-						<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
-					</div>
-				</div>
-			</div>
-
-
+			<!--Snippets-->
 			<div v-show="snippetDataStatus=='loaded'">
-					
 				<h1 v-if="isSearch">Search results for "<span class="o-text--strong">{{ searchText }}</span>"</h1>
 				<p class="o-text--info"><span class="o-text--strong"><i class="fa fa-fw fa-info-circle" aria-hidden="true"></i>Heads up!</span> This feature is not yet completely implemented, so what we have is a random list of snippets.</p>
-				<!--List of snippets-->
-				<ul class="c-snippets">
-
-					<li class="c-snippet" v-for="snippet in snippets">
-						<snippet v-bind:snippet="snippet"></snippet>
-					</li>
-				</ul>
+				<snippet-list v-if="snippetDataStatus=='loaded'" v-bind:snippets="snippets" v-bind:page-size="4"></snippet-list>
 			</div>
 
-			<div v-show="snippetDataFromGithubStatus == 'loaded'" style="margin-top: 6rem">
+			<!--Github Snippets-->
+			<div v-show="snippetDataFromGithubStatus == 'loaded'">
 				<h1>GitHub search results for "<span class="o-text--strong">{{ searchText }}</span>"</h1>
 				<p class="o-text--info"><span class="o-text--strong"><i class="fa fa-fw fa-info-circle" aria-hidden="true"></i>Heads up!</span> GitHub API limits the number of requests coming from a given unauthenticated source, which means you may experience disconnection in case of high traffic.</p>
-
-				<!--List of snippets-->
-				<ul class="c-snippets">
-
-					<li class="c-snippet" v-for="snippet in snippetsFromGithub">
-						<snippet v-bind:snippet="snippet"></snippet>
-					</li>
-				</ul>
+				<snippet-list v-if="snippetDataStatus=='loaded'" v-bind:snippets="snippetsFromGithub" v-bind:page-size="4"></snippet-list>
 			</div>
 		</div>
 	</div>

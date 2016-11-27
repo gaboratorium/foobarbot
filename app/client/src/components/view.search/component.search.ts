@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { SnippetComponent } from "./../snippet/component.snippet";
+import { SnippetListComponent } from "./../snippet-list/component.snippet-list";
 import { BusComponent } from './../bus/component.bus';
 
 var marked = require('marked');
@@ -14,7 +14,7 @@ export const SearchViewComponent = {
 	name: "SearchComponent",
 	template: fs.readFileSync(__dirname + '/component.search.html', 'utf8'),
 	components: {
-		"snippet": SnippetComponent
+		"snippet-list": SnippetListComponent
 	},
 	data: function(){
 		return {
@@ -61,27 +61,15 @@ export const SearchViewComponent = {
 
 			this.$store.dispatch({
 				  type: 'getSnippets',
-				  searchText: DiscoverComponent.searchText,
-				  snippetsMaxNumber: 3
+				  searchText: DiscoverComponent.searchText
 			  }).then((response: any) => {
-				  
-				  // Converting text to markdown
-				  for (var i = 0; i < response.length; i++) {
-					 response[i].readme = marked(response[i].readme);
-				  }
-
-				  // Initialize Highlightjs
 				  this.snippets = response;
 				  setTimeout(function(){
 					hljs.initHighlighting.called = false;
 					hljs.initHighlighting();
 					DiscoverComponent.snippetDataStatus = "loaded";
-				  }, 200);
-
-
+				  }, 0);
 			  }, (fail: any) => {
-				  
-				  // Fail
 			  });
 		},
 
@@ -91,17 +79,12 @@ export const SearchViewComponent = {
 				type: 'getSnippetsFromGithub',
 				snippetsMaxNumber: 5
 			}).then((response: any) => {
-
-				for (var i = 0; i < response.length; i++) {
-					response[i].readme = marked(response[i].readme);
-				}
-
 				this.snippetsFromGithub = response;
 				setTimeout(function(){
 					hljs.initHighlighting.called = false;
 					hljs.initHighlighting();
 					DiscoverComponent.snippetDataFromGithubStatus = "loaded";
-				  }, 200);
+				  }, 0);
 				
 			}, (fail: any) =>{
 				
