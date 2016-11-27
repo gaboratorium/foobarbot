@@ -165,7 +165,7 @@ hljs.configure({
 });
 exports.SnippetListComponent = {
     name: "SnippetListComponent",
-    template: "<div>\r\n    <h1 v-if=\"listName\">{{ listName }}</h1>\r\n    <ul class=\"c-snippets\">\r\n       <li class=\"c-snippet\" v-for=\"(snippet, index) in currentPage\">\r\n            <snippet v-bind:snippet=\"snippet\"></snippet>\r\n        </li>\r\n    </ul>\r\n    <div class=\"grid-block align-center\">\r\n        <!--<button v-on:click.prevent=\"loadMore()\" class=\"\">Load more</button>-->\r\n        <div class=\"grid-block vertical shrink\" style=\"margin-bottom: 2rem\">\r\n            <button class=\"mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab\" v-on:click.prevent=\"loadMore()\">\r\n                <i class=\"material-icons\">expand_more</i>\r\n            </button>\r\n            <span class=\"mdl-button--mini-fab__caption\">Load more<span v-if=\"listName\"> in \"{{ listName }}\"</span></span>\r\n        </div>\r\n    </div>\r\n</div>\r\n",
+    template: "<div>\r\n    <!--Title of list-->\r\n    <h1 v-if=\"listName\">{{ listName }}</h1>\r\n\r\n    <!--List of snippets-->\r\n    <ul class=\"c-snippets\">\r\n       <li class=\"c-snippet\" v-for=\"(snippet, index) in currentPage\">\r\n            <snippet v-bind:snippet=\"snippet\"></snippet>\r\n        </li>\r\n    </ul>\r\n\r\n    <!--Button to load more-->\r\n    <div class=\"grid-block align-center\" v-if=\"showLoadMoreButton\">\r\n        <div class=\"grid-block vertical shrink\" style=\"margin-bottom: 2rem\">\r\n            <button class=\"mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab\" v-on:click.prevent=\"loadMore()\">\r\n                <i class=\"material-icons\">expand_more</i>\r\n            </button>\r\n            <span class=\"mdl-button--mini-fab__caption\">Load more<span v-if=\"listName\"> in \"{{ listName }}\"</span></span>\r\n        </div>\r\n    </div>\r\n</div>\r\n",
     components: {
         "snippet": component_snippet_1.SnippetComponent
     },
@@ -185,7 +185,8 @@ exports.SnippetListComponent = {
     data: function () {
         return {
             pageIndex: -1,
-            currentPage: Array
+            currentPage: Array,
+            showLoadMoreButton: true
         };
     },
     created: function () {
@@ -194,9 +195,10 @@ exports.SnippetListComponent = {
     methods: {
         loadMore: function () {
             this.pageIndex += 1;
-            var calculatedlastElemOnPage = this.pageIndex * this.pageSize + this.pageSize;
-            var lastElemOnPage = calculatedlastElemOnPage <= this.snippets.length ? calculatedlastElemOnPage : this.snippets.length;
-            this.currentPage = _.slice(this.snippets, 0, lastElemOnPage);
+            var lastIndex = this.pageIndex * this.pageSize + this.pageSize;
+            lastIndex = lastIndex <= this.snippets.length ? lastIndex : this.snippets.length;
+            this.showLoadMoreButton = lastIndex !== this.snippets.length;
+            this.currentPage = _.slice(this.snippets, 0, lastIndex);
             setTimeout(function () {
                 hljs.initHighlighting.called = false;
                 hljs.initHighlighting();
@@ -317,7 +319,7 @@ var hljs = require("highlight.js");
 var _ = require("lodash");
 exports.DiscoverViewComponent = {
     name: "DiscoverComponent",
-    template: "<div class=\"grid-block align-center\">\r\n\t<div class=\"grid-block grid-page-content\">\r\n\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t\t\r\n\t\t\t<div class=\"grid-block\" v-if=\"snippetDataStatus=='loading'\">\r\n\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t<div class=\"grid-block align-center\">\r\n\t\t\t\t\t\t<div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div v-show=\"snippetDataStatus=='loaded'\">\r\n\t\t\t\t<snippet-list v-if=\"snippetDataStatus=='loaded'\" v-bind:snippets=\"snippets\" v-bind:page-size=\"2\" list-name=\"Newest snippets\"></snippet-list>\r\n\t\t\t</div>\r\n\r\n\t\t\t<p class=\"o-text--info\" v-show=\"snippetDataStatus=='loaded'\"><span class=\"o-text--strong\"><i class=\"fa fa-fw fa-info-circle\" aria-hidden=\"true\"></i>Didn't find what you were looking for?</span>\r\n\t\t\t<span class=\"o-text--block\">\r\n\t\t\t\tCheck out <router-link :to=\"'/user/1479481497854175'\">Foobarbot's profile</router-link> or try Foobarbot Search and search for something e.g.: <router-link :to=\"'/search/javascript'\">javascript</router-link>!</p>\r\n\t\t\t</span>\r\n\r\n\t\t</div>\r\n\t</div>\r\n</div>",
+    template: "<div class=\"grid-block align-center\">\r\n\t<div class=\"grid-block grid-page-content\">\r\n\t\t<div class=\"grid-content\">\r\n\t\t\t\r\n\t\t\t<!--Spinner for loading-->\r\n\t\t\t<div class=\"grid-block\" v-if=\"snippetDataStatus=='loading'\">\r\n\t\t\t\t<div class=\"grid-content\">\r\n\t\t\t\t\t<div class=\"grid-block align-center\">\r\n\t\t\t\t\t\t<div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\r\n\t\t\t<!--Loaded list-->\r\n\t\t\t<div v-show=\"snippetDataStatus=='loaded'\">\r\n\t\t\t\t<!-- List of newest snippets -->\r\n\t\t\t\t<snippet-list v-if=\"snippetDataStatus=='loaded'\" v-bind:snippets=\"snippets\" v-bind:page-size=\"2\" list-name=\"Newest snippets\"></snippet-list>\r\n\r\n\t\t\t\t<!-- Pro tip-->\r\n\t\t\t\t<p class=\"o-text--info\" v-show=\"snippetDataStatus=='loaded'\"><span class=\"o-text--strong\"><i class=\"fa fa-fw fa-info-circle\" aria-hidden=\"true\"></i>Didn't find what you were looking for?</span>\r\n\t\t\t\t<span class=\"o-text--block\">\r\n\t\t\t\t\tCheck out <router-link :to=\"'/user/1479481497854175'\">Foobarbot's profile</router-link> or try Foobarbot Search and search for something e.g.: <router-link :to=\"'/search/javascript'\">javascript</router-link>!</p>\r\n\t\t\t\t</span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>",
     components: {
         "snippet-list": component_snippet_list_1.SnippetListComponent
     },

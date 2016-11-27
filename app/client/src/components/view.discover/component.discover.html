@@ -1,7 +1,8 @@
 <div class="grid-block align-center">
 	<div class="grid-block grid-page-content">
 		<div class="grid-content">
-						
+			
+			<!--Spinner for loading-->
 			<div class="grid-block" v-if="snippetDataStatus=='loading'">
 				<div class="grid-content">
 					<div class="grid-block align-center">
@@ -10,15 +11,17 @@
 				</div>
 			</div>
 
+			<!--Loaded list-->
 			<div v-show="snippetDataStatus=='loaded'">
+				<!-- List of newest snippets -->
 				<snippet-list v-if="snippetDataStatus=='loaded'" v-bind:snippets="snippets" v-bind:page-size="2" list-name="Newest snippets"></snippet-list>
+
+				<!-- Pro tip-->
+				<p class="o-text--info" v-show="snippetDataStatus=='loaded'"><span class="o-text--strong"><i class="fa fa-fw fa-info-circle" aria-hidden="true"></i>Didn't find what you were looking for?</span>
+				<span class="o-text--block">
+					Check out <router-link :to="'/user/1479481497854175'">Foobarbot's profile</router-link> or try Foobarbot Search and search for something e.g.: <router-link :to="'/search/javascript'">javascript</router-link>!</p>
+				</span>
 			</div>
-
-			<p class="o-text--info" v-show="snippetDataStatus=='loaded'"><span class="o-text--strong"><i class="fa fa-fw fa-info-circle" aria-hidden="true"></i>Didn't find what you were looking for?</span>
-			<span class="o-text--block">
-				Check out <router-link :to="'/user/1479481497854175'">Foobarbot's profile</router-link> or try Foobarbot Search and search for something e.g.: <router-link :to="'/search/javascript'">javascript</router-link>!</p>
-			</span>
-
 		</div>
 	</div>
 </div>

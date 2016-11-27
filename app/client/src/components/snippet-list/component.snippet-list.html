@@ -1,12 +1,16 @@
 <div>
+    <!--Title of list-->
     <h1 v-if="listName">{{ listName }}</h1>
+
+    <!--List of snippets-->
     <ul class="c-snippets">
        <li class="c-snippet" v-for="(snippet, index) in currentPage">
             <snippet v-bind:snippet="snippet"></snippet>
         </li>
     </ul>
-    <div class="grid-block align-center">
-        <!--<button v-on:click.prevent="loadMore()" class="">Load more</button>-->
+
+    <!--Button to load more-->
+    <div class="grid-block align-center" v-if="showLoadMoreButton">
         <div class="grid-block vertical shrink" style="margin-bottom: 2rem">
             <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" v-on:click.prevent="loadMore()">
                 <i class="material-icons">expand_more</i>
