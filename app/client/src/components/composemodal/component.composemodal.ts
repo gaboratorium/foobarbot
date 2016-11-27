@@ -1,5 +1,6 @@
-import { ISnippet } from "./../../interfaces/ISnippet"
+import { ISnippet } from "./../../interfaces/ISnippet";
 import * as fs from "fs";
+import { BusComponent } from "./../bus/component.bus";
 
 // Component
 export const ComposeModalComponent = {
@@ -18,6 +19,10 @@ export const ComposeModalComponent = {
 			composeform__readme: "",
 			errorMsg: ""
         }
+    },
+
+    components: {
+        "bus": BusComponent
     },
 
     // Component methods
@@ -41,7 +46,7 @@ export const ComposeModalComponent = {
                 type: "postSnippet",
                 snippet: snippet
             }).then((response: any) => {
-
+                BusComponent.$emit("showSnackbar", "Your snippet has been posted succesfully.", "success");
             });
             this.$emit("close");
 
