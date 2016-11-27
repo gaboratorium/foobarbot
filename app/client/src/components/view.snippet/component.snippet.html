@@ -1,30 +1,38 @@
 <!--Snippet-->
 <div class="grid-block align-center">
 	<div class="grid-block grid-page-content">
-		<div class="grid-content">
+		<div class="grid-content grid-page-content__fullwidth">
 			
 			<!--Spinner-->
 			<div class="grid-block" v-if="snippetDataStatus=='loading'">
 				<div class="grid-content">
 					<div class="grid-block align-center">
-						<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
+						<div class="mdl-spinner mdl-js-spinner is-active"></div>
 					</div>
 				</div>
 			</div>
 			
-			<!--Snippet-->
-			<div class="c-snippet"  v-show="snippetDataStatus == 'loaded'">
-				<snippet v-bind:snippet="snippet" v-bind:is-expanded="true"></snippet>
-			</div>
+			<!--Content-->
+			<transition name="component-fade" mode="out-in">
+				<div v-show="snippetDataStatus == 'loaded'">
+					
+					<!--Snippet-->
+					<div class="c-snippet">
+						<snippet v-bind:snippet="snippet" v-bind:is-expanded="true" v-bind:hljs-init="true"></snippet>
+					</div>
 
-			<div class="c-card c-card__section">
-				<h1>Related</h1>
-				<p>There are no related snippets.</p>
-			</div>
+					<!--Related-->
+					<div class="c-card c-card__section">
+						<h1>Related</h1>
+						<p>There are no related snippets.</p>
+					</div>
 
-			<p class="o-text--info">
-				<span class="o-text--strong"><i class="fa fa-fw fa-info-circle" aria-hidden="true"></i>There are no comments.</span> Soon you will be able to add your thoughts and remarks on snippets.
-			</p>
+					<!--Comments-->
+					<p class="o-text--info">
+						<span class="o-text--strong"><i class="fa fa-fw fa-info-circle" aria-hidden="true"></i>There are no comments.</span> Soon you will be able to add your thoughts and remarks on snippets.
+					</p>
+				</div>
+			</transition>
 		</div>
 	</div>
 </div>

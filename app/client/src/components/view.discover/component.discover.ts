@@ -37,11 +37,7 @@ export const DiscoverViewComponent = {
 				  type: 'getSnippets',
 			}).then((response: any) => {
 				this.snippets = response;
-				setTimeout(function(){
-					hljs.initHighlighting.called = false;
-					hljs.initHighlighting();
-					DiscoverComponent.snippetDataStatus = "loaded";
-				}, 0);
+				DiscoverComponent.snippetDataStatus = "loaded";
 			}, (fail: any) => {
 				// Fail
 			});

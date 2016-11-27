@@ -1,21 +1,34 @@
 <div>
-    <!--Title of list-->
-    <h1 v-if="listName">{{ listName }}</h1>
-
-    <!--List of snippets-->
-    <ul class="c-snippets">
-       <li class="c-snippet" v-for="(snippet, index) in currentPage">
-            <snippet v-bind:snippet="snippet"></snippet>
-        </li>
-    </ul>
-
-    <!--Button to load more-->
-    <div class="grid-block align-center" v-if="showLoadMoreButton">
-        <div class="grid-block vertical shrink" style="margin-bottom: 2rem">
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" v-on:click.prevent="loadMore()">
-                <i class="material-icons">expand_more</i>
-            </button>
-            <span class="mdl-button--mini-fab__caption">Show more<span v-if="listName"> in "{{ listName }}"</span></span>
+    <!--Spinner for loading-->
+    <div class="grid-block" v-if="!showSnippets">
+        <div class="grid-content">
+            <div class="grid-block align-center">
+                <div class="mdl-spinner mdl-js-spinner is-active"></div>
+            </div>
         </div>
     </div>
+
+    <transition name="component-fade" mode="out-in">
+        <div v-show="showSnippets">
+            <!--Title of list-->
+            <h1 v-if="listName">{{ listName }}</h1>
+
+            <!--List of snippets-->
+            <ul class="c-snippets">
+            <li class="c-snippet" v-for="(snippet, index) in currentPage">
+                    <snippet v-bind:snippet="snippet"></snippet>
+                </li>
+            </ul>
+
+            <!--Button to load more-->
+            <div class="grid-block align-center" v-if="showLoadMoreButton">
+                <div class="grid-block vertical shrink" style="margin-bottom: 2rem">
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" v-on:click.prevent="loadMore()">
+                        <i class="material-icons">expand_more</i>
+                    </button>
+                    <span class="mdl-button--mini-fab__caption">Show more<span v-if="listName"> in "{{ listName }}"</span></span>
+                </div>
+            </div>
+        </div>
+    </transition>
 </div>

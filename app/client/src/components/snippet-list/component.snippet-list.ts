@@ -33,12 +33,14 @@ export const SnippetListComponent = {
         return {
             pageIndex: -1,
             currentPage: Array,
-            showLoadMoreButton: true
+            showLoadMoreButton: true,
+            showSnippets: false
         }
     },
 
     created: function() {
         this.loadMore();
+        this.showSnippets = false;
     },
 
     methods: {
@@ -48,10 +50,12 @@ export const SnippetListComponent = {
             lastIndex = lastIndex <= this.snippets.length ? lastIndex : this.snippets.length;
             this.showLoadMoreButton = lastIndex !== this.snippets.length;
             this.currentPage = _.slice(this.snippets, 0, lastIndex);
-                        
+            var SnippetListComponent = this;
+            
             setTimeout(function(){
                 hljs.initHighlighting.called = false;
                 hljs.initHighlighting();
+                SnippetListComponent.showSnippets = true;
             }, 0)
 
         }

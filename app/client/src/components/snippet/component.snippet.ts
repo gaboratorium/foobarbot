@@ -15,11 +15,28 @@ export const SnippetComponent = {
 	template: fs.readFileSync(__dirname + '/component.snippet.html', 'utf8'),
   props: {
     snippet: {type: Object, required: true},
-		isExpanded: {type: Boolean}
+		isExpanded: {type: Boolean},
+		hljsInit: {type: Boolean}
   },
+
+	data: function(){
+		return {
+			readyToShow: true
+		}
+	},
 
   created: function() {
     this.snippet.readme = marked(this.snippet.readme);
+
+		if (this.hljsInit) {
+			var SnippetComponent = this;
+			SnippetComponent.readyToShow = false;
+			setTimeout(function(){
+				hljs.initHighlighting.called = false;
+				hljs.initHighlighting();
+				SnippetComponent.readyToShow = true;
+			}, 0)
+		}
   },
 
   methods: {
