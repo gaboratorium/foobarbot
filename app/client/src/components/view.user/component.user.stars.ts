@@ -1,15 +1,16 @@
 import * as fs from "fs";
-import { SnippetComponent } from "./../snippet/component.snippet";
+import { SnippetListComponent } from "./../snippet-list/component.snippet-list";
 
 var hljs = require("highlight.js");
 var marked = require('marked');
+var _ = require('lodash');
 
 export const UserStarsComponent = {
     name: "UserStarsComponent",
 	template: fs.readFileSync(__dirname + '/component.user.snippets.html', 'utf8'),
 
 	components: {
-		"snippet": SnippetComponent
+		"snippet-list": SnippetListComponent
 	},
 
 	data: function(){
@@ -58,19 +59,9 @@ export const UserStarsComponent = {
 				userId: userId,
 			}).then((response: any) => {
 
-				// Converting text to markdown
-				for (var i = 0; i < response.length; i++) {
-					response[i].readme = marked(response[i].readme);
-				}
+				this.snippets = _.pull(response, null);
+				this.snippetDataStatus = "loaded";
 
-				this.snippets = response;
-
-				setTimeout(function(){
-					hljs.initHighlighting.called=false;
-					hljs.initHighlighting();
-					UserComponent.snippetDataStatus = "loaded";
-
-				  }, 0);
 			}, (fail: any) => {
 				this.snippetDataStatus = "failed";
 			})

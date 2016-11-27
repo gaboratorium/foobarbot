@@ -827,14 +827,15 @@ exports.UserSnippetsComponent = {
 },{"./../snippet-list/component.snippet-list":6,"highlight.js":254,"marked":424}],18:[function(require,module,exports){
 "use strict";
 
-var component_snippet_1 = require("./../snippet/component.snippet");
+var component_snippet_list_1 = require("./../snippet-list/component.snippet-list");
 var hljs = require("highlight.js");
 var marked = require('marked');
+var _ = require('lodash');
 exports.UserStarsComponent = {
     name: "UserStarsComponent",
     template: "<!-- Page content -->\r\n<div class=\"grid-block align-center\">\r\n    <div class=\"grid-block grid-page-content\">\r\n        <div class=\"grid-content grid-page-content__fullwidth\">\r\n\r\n            <!-- Toast snackbar danger -->\r\n\t\t\t<div id=\"snackbar--danger\" class=\"mdl-js-snackbar mdl-snackbar mdl-snackbar--danger\">\r\n\t\t\t\t<div class=\"mdl-snackbar__text\"></div>\r\n\t\t\t\t<button class=\"mdl-snackbar__action\" type=\"button\"></button>\r\n\t\t\t</div>\r\n\r\n            <div class=\"c-card c-card__section\" v-show=\"snippetDataStatus=='loaded' && snippets.length == 0\">\r\n                <p>There are no snippets to show.</p>\r\n            </div>\r\n\r\n            <!--Loaded snippets -->\r\n            <div class=\"grid-block\" v-show=\"snippetDataStatus=='loaded' && snippets.length > 0\">\r\n                <div class=\"grid-content\">\r\n                    <!--List of snippets-->\r\n                    <snippet-list v-bind:snippets=\"snippets\" v-bind:page-size=\"6\" v-if=\"snippetDataStatus=='loaded'\"></snippet-list>\r\n                </div>\r\n            </div>\r\n\r\n            <!--Loading snippets-->\r\n            <div class=\"grid-block\" v-if=\"snippetDataStatus=='loading'\">\r\n                <div class=\"grid-content\">\r\n                    <div class=\"grid-block align-center\">\r\n                        <div class=\"mdl-spinner mdl-js-spinner is-active\"></div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>",
     components: {
-        "snippet": component_snippet_1.SnippetComponent
+        "snippet-list": component_snippet_list_1.SnippetListComponent
     },
     data: function () {
         return {
@@ -875,15 +876,8 @@ exports.UserStarsComponent = {
                 type: "getStarredSnippets",
                 userId: userId,
             }).then(function (response) {
-                for (var i = 0; i < response.length; i++) {
-                    response[i].readme = marked(response[i].readme);
-                }
-                _this.snippets = response;
-                setTimeout(function () {
-                    hljs.initHighlighting.called = false;
-                    hljs.initHighlighting();
-                    UserComponent.snippetDataStatus = "loaded";
-                }, 0);
+                _this.snippets = _.pull(response, null);
+                _this.snippetDataStatus = "loaded";
             }, function (fail) {
                 _this.snippetDataStatus = "failed";
             });
@@ -891,9 +885,10 @@ exports.UserStarsComponent = {
     }
 };
 
-},{"./../snippet/component.snippet":7,"highlight.js":254,"marked":424}],19:[function(require,module,exports){
+},{"./../snippet-list/component.snippet-list":6,"highlight.js":254,"lodash":423,"marked":424}],19:[function(require,module,exports){
 "use strict";
 
+var _ = require("lodash");
 exports.UserViewComponent = {
     name: "UserComponent",
     template: "<!--User-->\r\n<div>\r\n\r\n\t<!-- Hero cover -->\r\n\t<div class=\"c-hero-cover c-hero-cover--with-navigation grid-block align-center\">\r\n\r\n\t\t<!--Loaded user info-->\r\n\t\t<div class=\"c-hero-cover__profile-logo grid-content\" v-if=\"userDataStatus=='loaded'\">\r\n\t\t\t<div class=\"c-hero-cover__profile-logo-image\" v-bind:class=\"{ 'c-hero-cover__profile-logo-image--foobarbot' : user.userId == 1479481497854175 }\"></div>\r\n\t\t\t<h1 class=\"c-hero-cover__profile-logo-text\">{{ user.userName }}</h1>\r\n\t\t\t<h2 class=\"c-hero-cover__profile-logo-sub-text\">Copenhagen, Denmark</h2>\r\n\t\t\t<span>\r\n\t\t\t\t<i class=\"fa fa-twitter c-hero-cover__profile-logo-social fa-fw\" aria-hidden=\"true\"></i>\r\n\t\t\t\t<i class=\"fa fa-github c-hero-cover__profile-logo-social fa-fw\" aria-hidden=\"true\"></i>\r\n\t\t\t</span>\r\n\t\t</div>\r\n\r\n\t\t<!--Loading user info-->\r\n\t\t<div class=\"c-hero-cover__profile-logo grid-content\" v-if=\"userDataStatus=='loading'\">\r\n\t\t\t<div class=\"mdl-spinner mdl-js-spinner is-active\"></div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<!-- Navigation -->\r\n\t<div class=\"grid-block align-center c-hero-cover__navigation\">\r\n\t\t<div class=\"grid-block grid-page-content align-justify\">\r\n\t\t\t<!--Left navigation -->\r\n\t\t\t<div class=\"grid-block align-center\">\r\n\t\t\t\t<!--Snippets-->\r\n\t\t\t\t<span class=\"c-hero-cover__navigation-item\">\r\n\t\t\t\t\t<router-link to=\"snippets\">\r\n\t\t\t\t\t\t<span class=\"secondary badge c-hero-cover__navigation-item-badge\">{{ snippets.length }}</span><span>Snippets</span>\r\n\t\t\t\t\t</router-link>\r\n\t\t\t\t</span>\r\n\t\t\t\t<span class=\"c-hero-cover__navigation-item\">\r\n\t\t\t\t\t<router-link to=\"stars\">\r\n\t\t\t\t\t\t<span class=\"secondary badge c-hero-cover__navigation-item-badge\">{{ starredSnippets.length }}</span><span>Stars</span>\r\n\t\t\t\t\t</router-link>\r\n\t\t\t\t</span>\r\n\t\t\t\t<span class=\"c-hero-cover__navigation-item\">\r\n\t\t\t\t\t<router-link to=\"comments\">\r\n\t\t\t\t\t\t<span class=\"secondary badge c-hero-cover__navigation-item-badge\">0</span><span>Comments</span>\r\n\t\t\t\t\t</router-link>\r\n\t\t\t\t</span>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<!--Right navigation -->\r\n\t\t\t<div>\r\n\t\t\t\t<!--<i class=\"fa fa-envelope c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar('Copying code to clipboard')\"></i>-->\r\n\t\t\t\t<!--<i class=\"fa fa-eye c-nav-icon-button\" aria-hidden=\"true\" v-on:click=\"showInDevelopmentSnackbar('Copying code to clipboard')\"></i>-->\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<!-- Page content -->\r\n\t<router-view></router-view>\r\n\r\n</div>\r\n",
@@ -948,7 +943,7 @@ exports.UserViewComponent = {
                 type: "getStarredSnippets",
                 userId: userId,
             }).then(function (response) {
-                _this.starredSnippets = response;
+                _this.starredSnippets = _.pull(response, null);
             }, function (fail) {
                 _this.snippetDataStatus = "failed";
             });
@@ -956,7 +951,7 @@ exports.UserViewComponent = {
     }
 };
 
-},{}],20:[function(require,module,exports){
+},{"lodash":423}],20:[function(require,module,exports){
 "use strict";
 var _ = require('lodash');
 exports.ApiInstance = new Vue({

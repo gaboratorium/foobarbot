@@ -1,5 +1,7 @@
 import * as fs from "fs";
 
+var _ = require("lodash");
+
 export const UserViewComponent = {
 	name: "UserComponent",
 	template: fs.readFileSync(__dirname + '/component.user.html', 'utf8'),
@@ -62,7 +64,7 @@ export const UserViewComponent = {
 				type: "getStarredSnippets",
 				userId: userId,
 			}).then((response: any) => {
-				this.starredSnippets = response;
+				this.starredSnippets = _.pull(response, null);
 			}, (fail: any) => {
 				this.snippetDataStatus = "failed";
 			})
