@@ -796,7 +796,7 @@ exports.UserSnippetsComponent = {
                     hljs.initHighlighting.called = false;
                     hljs.initHighlighting();
                     UserComponent.snippetDataStatus = "loaded";
-                }, 200);
+                }, 0);
             }, function (fail) {
                 _this.snippetDataStatus = "failed";
             });
@@ -863,7 +863,7 @@ exports.UserStarsComponent = {
                     hljs.initHighlighting.called = false;
                     hljs.initHighlighting();
                     UserComponent.snippetDataStatus = "loaded";
-                }, 200);
+                }, 0);
             }, function (fail) {
                 _this.snippetDataStatus = "failed";
             });

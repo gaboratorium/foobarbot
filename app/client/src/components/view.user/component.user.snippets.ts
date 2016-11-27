@@ -73,7 +73,7 @@ export const UserSnippetsComponent = {
 					hljs.initHighlighting();
 					UserComponent.snippetDataStatus = "loaded";
 
-				  }, 200);
+				  }, 0);
 			}, (fail: any) => {
 				this.snippetDataStatus = "failed";
 			})
