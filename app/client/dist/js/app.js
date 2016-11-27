@@ -165,7 +165,7 @@ hljs.configure({
 });
 exports.SnippetListComponent = {
     name: "SnippetListComponent",
-    template: "<div>\r\n    <!--Title of list-->\r\n    <h1 v-if=\"listName\">{{ listName }}</h1>\r\n\r\n    <!--List of snippets-->\r\n    <ul class=\"c-snippets\">\r\n       <li class=\"c-snippet\" v-for=\"(snippet, index) in currentPage\">\r\n            <snippet v-bind:snippet=\"snippet\"></snippet>\r\n        </li>\r\n    </ul>\r\n\r\n    <!--Button to load more-->\r\n    <div class=\"grid-block align-center\" v-if=\"showLoadMoreButton\">\r\n        <div class=\"grid-block vertical shrink\" style=\"margin-bottom: 2rem\">\r\n            <button class=\"mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab\" v-on:click.prevent=\"loadMore()\">\r\n                <i class=\"material-icons\">expand_more</i>\r\n            </button>\r\n            <span class=\"mdl-button--mini-fab__caption\">Load more<span v-if=\"listName\"> in \"{{ listName }}\"</span></span>\r\n        </div>\r\n    </div>\r\n</div>\r\n",
+    template: "<div>\r\n    <!--Title of list-->\r\n    <h1 v-if=\"listName\">{{ listName }}</h1>\r\n\r\n    <!--List of snippets-->\r\n    <ul class=\"c-snippets\">\r\n       <li class=\"c-snippet\" v-for=\"(snippet, index) in currentPage\">\r\n            <snippet v-bind:snippet=\"snippet\"></snippet>\r\n        </li>\r\n    </ul>\r\n\r\n    <!--Button to load more-->\r\n    <div class=\"grid-block align-center\" v-if=\"showLoadMoreButton\">\r\n        <div class=\"grid-block vertical shrink\" style=\"margin-bottom: 2rem\">\r\n            <button class=\"mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab\" v-on:click.prevent=\"loadMore()\">\r\n                <i class=\"material-icons\">expand_more</i>\r\n            </button>\r\n            <span class=\"mdl-button--mini-fab__caption\">Show more<span v-if=\"listName\"> in \"{{ listName }}\"</span></span>\r\n        </div>\r\n    </div>\r\n</div>\r\n",
     components: {
         "snippet": component_snippet_1.SnippetComponent
     },
@@ -708,9 +708,11 @@ exports.SnippetViewComponent = {
             }).then(function (response) {
                 response[0].readme = marked(response[0].readme);
                 SnippetComponent.snippet = response[0];
-                hljs.initHighlighting.called = false;
-                hljs.initHighlighting();
                 _this.snippetDataStatus = "loaded";
+                setTimeout(function () {
+                    hljs.initHighlighting.called = false;
+                    hljs.initHighlighting();
+                }, 0);
                 if (response.length == 0) {
                     _this.$router.push({ name: "about" });
                 }

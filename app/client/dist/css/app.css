@@ -230,8 +230,11 @@ input[type="search"]:focus {
 .mdl-button--raised.mdl-button--colored, .mdl-button--raised.mdl-button--colored:hover {
   background-color: #3F51B5; }
 
-.mdl-button--fab:focus:not(:active), .mdl-button.mdl-button--colored:focus:not(:active) {
+.mdl-button.mdl-button--colored:focus:not(:active) {
   box-shadow: none; }
+
+.mdl-button--fab:focus:not(:active) {
+  box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24); }
 
 .mdl-button--mini-fab__caption {
   margin-top: .5rem;

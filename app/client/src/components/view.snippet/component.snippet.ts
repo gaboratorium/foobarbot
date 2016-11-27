@@ -41,9 +41,14 @@ export const SnippetViewComponent = {
 			}).then((response: any) => {
 				response[0].readme = marked(response[0].readme);
 				SnippetComponent.snippet = response[0];
-				hljs.initHighlighting.called = false;
-				hljs.initHighlighting();
+				
 				this.snippetDataStatus = "loaded";
+				
+				setTimeout(function(){
+					hljs.initHighlighting.called = false;
+					hljs.initHighlighting();
+				}, 0);
+				
 				if (response.length == 0) {
 					this.$router.push({name: "about"});
 				}
