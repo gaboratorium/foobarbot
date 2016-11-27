@@ -90,7 +90,8 @@ var Snippet = mongoose.model('snippet', new Schema({
 	tag1: String,
 	tag2: String,
 	tag3: String,
-	readme: String
+	readme: String,
+	vendor: Boolean
 }));
 
 // Notification model
@@ -155,10 +156,7 @@ apiRoutes.post('/token/create', function(req, res){
 apiRoutes.post('/token/verify', function(req, res){
 	
 	// check header or url parameters or post parameters for token
-	var token = req.body.token || req.query.token || req.headers['x-access-token'];
-
-	console.log('token/verify recieves this token:', token);
-	
+	var token = req.body.token || req.query.token || req.headers['x-access-token'];	
 
 	if (token){
 		jwt.verify(token, app.get('superSecret'), function(err, decoded){
@@ -212,10 +210,7 @@ apiRoutes.post('/users', function(req, res) {
 
 apiRoutes.get('/user', function(req, res) {
 	var myUserId = req.query.userId;
-
-	console.log('Endpoint recieved this userID', myUserId);
 	
-
 	User.findOne({ userId: myUserId}, function(err, user){
 		if (user) {
 			// if user profile is public
@@ -230,7 +225,7 @@ apiRoutes.get('/user', function(req, res) {
 apiRoutes.get('/snippets', function(req, res) {
 	
 	// IF userId or snippetId is provided
-	var snippetsMaxNumber = req.query.snippetsMaxNumber ? req.query.snippetsMaxNumber : 10;
+	var snippetsMaxNumber = req.query.snippetsMaxNumber ? req.query.snippetsMaxNumber : 100;
 	var searchText = req.query.searchText ? req.query.searchText : null;
 
 
@@ -243,14 +238,11 @@ apiRoutes.get('/snippets', function(req, res) {
 
 	var mySnippet = new Snippet(req.body.snippet);
 
-	console.log('getting snippets trying to find em in db');
 	
 	Snippet.find(options, function(err, snippets){
-		console.log('snippets found', snippets);
 		if (snippets) {
 
 			if (searchText !== null) {
-				console.log('Search text was provided so I shuffle the snippets');
 				
 				snippets = _.shuffle(snippets);
 			}
@@ -269,8 +261,6 @@ apiRoutes.get('/snippets', function(req, res) {
 
 apiRoutes.get('/starredsnippets', function(req, res) {
 
-	console.log('get starred snippets endpoint hit');
-	console.log('get starred snippets user id:', req.query.userId);
 	
 
 	var snippetsMaxNumber = req.query.snippetsMaxNumber ? req.query.snippetsMaxNumber : 10;
@@ -280,7 +270,6 @@ apiRoutes.get('/starredsnippets', function(req, res) {
 
 	var myPromises = [];
 	Star.find({userId: myUserId}, (err, stars) => {
-		console.log('Star find was ok and found these stars: ', stars);
 		
 		if (err) throw err;
 		for (var i = 0; i < stars.length; i++) {
@@ -288,7 +277,6 @@ apiRoutes.get('/starredsnippets', function(req, res) {
 			var myPromise = new Promise((resolve, reject) => {
 				Snippet.find({snippetId: stars[i].snippetId}, (err, snippets) => {
 					if (err) reject(err);
-					console.log('A promise has been resolved...');
 					resolve(snippets[0]);
 				});
 			});
@@ -297,15 +285,11 @@ apiRoutes.get('/starredsnippets', function(req, res) {
 
 		}
 
-		console.log('For loop ends. I have this myPromises.length', myPromises.length);
 
-		console.log('Finding stars ends. I have this myPromises.length', myPromises.length);
 
 		Promise.all(myPromises).then(resolvings => {
-			console.log('All promises resolved this is the result', resolvings);	
 			return res.json({succes: true, message: "You know some shit", snippets: resolvings});
 		}).catch(reason => {
-			console.log('error 500');
 			return res.status(500).send({success: false, message: "Something went wrong... I am so, so sorry..."});
 		});
 	});
@@ -328,12 +312,10 @@ apiRoutes.use(function(req, res, next){
 			// Succesfull authentication
 			} else {
 				req.decoded = decoded;
-				console.log('Middleware token verification was succesful');
 				next();
 			}
 		});
 	} else {
-		console.log('Middleware token verification failed. No token was provided');
 		return res.status(403).send({success: false, message: "No token provided."});
 	}
 });
@@ -353,7 +335,6 @@ apiRoutes.use(function(req, res, next){
 //   nick.save(function(err) {
 //     if (err) throw err;
 
-//     console.log('User saved successfully');
 //     res.json({ success: true });
 //   });
 // });
@@ -375,9 +356,9 @@ apiRoutes.post('/foobarbotsnippet', function(req, res) {
 		if (err) throw err;
 
 		if (snippets.length == 0) {
-			console.log('There is no snippet like this');
 			mySnippet.snippetId = String(new Date().getTime())+String(Math.floor(Math.random()*1000));
 			mySnippet.userId = FOOBARBOT_ID;
+			mySnippet.vendor = false;
 
 			var mySnippetModel = new Snippet(mySnippet);
 			
@@ -387,7 +368,6 @@ apiRoutes.post('/foobarbotsnippet', function(req, res) {
 			});
 			
 		} else {
-			console.log('There is a snippet like this');
 			res.status(500).send({success: false, message: "Something went wrong"});
 			
 		}
@@ -411,13 +391,10 @@ apiRoutes.get('/users', function(req, res) {
 
 // route to return all notifications from admin (GET http://localhost:8080/api/users/admin/notifications)
 apiRoutes.get('/notifications', function(req, res) {
-	console.log('getnotification recieves this query', req.query);
-	console.log('getnotification recieves this body', req.body);
 	
 	myUserEmail = req.query.userEmail;
 	Notification.find({userEmail: myUserEmail}, function(err, notifications) {
 		if (err) {
-			console.log('notification query went wrong');
 			
 			throw err;
 		}
@@ -465,7 +442,6 @@ apiRoutes.post('/notifications', function(req, res) {
 
 
 	var userEmail = req.body.userEmail;
-	console.log('serverjs apiroutes post notification recieves this body', req.body);
 	
 
 	
@@ -486,7 +462,6 @@ apiRoutes.post('/notifications', function(req, res) {
 });
 
 apiRoutes.post('/snippets', function(req, res) {
-	console.log("YOU ARE HITTING THE SNIPPETS ENDPOINT recieved snippet:", req.body.snippet);
 
 	var token = req.body.token;
 	var decoded = jwt.decode(token, {complete: true, json: true});
@@ -504,7 +479,6 @@ apiRoutes.post('/snippets', function(req, res) {
 });
 
 apiRoutes.delete('/notifications', function(req, res) {
-	console.log('apiroutes delete /notifications recieves body:', req.body);
 	
 	var myUserEmail = req.body.userEmail;
 
@@ -544,7 +518,7 @@ apiRoutes.delete('/user', function(req, res) {
 
 // Start listening on port 5000
 app.listen(process.env.PORT || defaultPort, function (data) {
-  console.log(`Example app listening on port ` + defaultPort);
+	console.log("Server is listening on ", defaultPort);
 });
 
 

@@ -1,60 +1,101 @@
-var fs = require('fs');
-var html = fs.readFileSync(__dirname + '/component.snippet.html', 'utf8');
-var hljs = require("highlight.js");
+import * as fs from "fs";
+import { BusComponent } from './../bus/component.bus';
+// import * as hljs from "highlight.js";
+// import * as marked from "marked";
+
 var marked = require('marked');
-import { ISnippet } from "./../../interfaces/ISnippet";
+var hljs = require("highlight.js");
 
-// Export global component
-export const SnippetViewComponent = {
+hljs.configure({
+  tabReplace: '  '
+})
+
+export const SnippetComponent = {
 	name: "SnippetComponent",
-	template: html,
+	template: fs.readFileSync(__dirname + '/component.snippet.html', 'utf8'),
+  props: {
+    snippet: {type: Object, required: true},
+		isExpanded: {type: Boolean},
+		hljsInit: {type: Boolean}
+  },
 
-	// Data
 	data: function(){
 		return {
-			snippet: {
-				snippetCode: "",
-				tag1: "",
-				tag2: "",
-				tag3: "",
-				readme: "",
-				userId: ""
-
-			} as ISnippet,
-            snippetDataStatus: "loading" as String
-		};
+			readyToShow: true
+		}
 	},
 
-	// Created hook
-	created: function(){
-		console.log("Snippet component created");
-		var snippetId: string = this.$route.params.id;
-        this.getSnippet(snippetId);
-	},
+  created: function() {
+    this.snippet.readme = marked(this.snippet.readme);
 
-	// Methods
-	methods: {
-		
-		getSnippet: function(snippetId: number){
+		if (this.hljsInit) {
 			var SnippetComponent = this;
-			console.log("snippet component get snippet recieves snippet id", snippetId);
-			this.$store.dispatch({
-				type: "getSnippet",
-				snippetId: snippetId,
-			}).then((response: any) => {
-				console.log("snippet component recieves response obj", response[0]);
-				response[0].readme = marked(response[0].readme);
-				SnippetComponent.snippet = response[0];
+			SnippetComponent.readyToShow = false;
+			setTimeout(function(){
 				hljs.initHighlighting.called = false;
 				hljs.initHighlighting();
-				this.snippetDataStatus = "loaded";
-				if (response.length == 0) {
-					this.$router.push({name: "about"});
-				}
-			}, (fail: any) => {
-				this.snippetDataStatus = "failed";
-				this.$router.push({name: "about"});
-			})
+				SnippetComponent.readyToShow = true;
+			}, 0)
 		}
-  	}
+  },
+
+  methods: {
+    copyCode: (snippetId: any) => {
+      BusComponent.$emit("showSnackbar", "This feature is still in development: copy code to clipboard.", "danger");
+    },
+
+    expandView: (snippetId: any) => {
+      BusComponent.$emit("showSnackbar", "This feature is still in development: expand view.", "danger");
+    },
+
+		starSnippet: function(snippetId: string, snippet: any){
+			if (this.snippet.vendor) {
+				this.starExternal(snippetId, snippet);
+			} else {
+				this.starInternal(snippetId, snippet);
+			}
+    },
+
+		starInternal: function(snippetId: string, snippet: any) {
+			if (this.$store.getters["mainstore/isUserLoggedIn"]) {
+				this.$store.dispatch({
+					type: 'postStar',
+					snippetId: snippetId,
+					snippet: snippet
+				}).then((response: any) => {
+					BusComponent.$emit("showSnackbar", "Snippet succesfully starred.", "success");
+				}, (fail: any) =>{
+					BusComponent.$emit("showSnackbar", "You have already starred this item.", "danger");
+				});
+			}
+			else {
+				BusComponent.$emit("showSnackbar", "Only registered members can star snippets.", "danger");
+			}			
+		},
+
+		starExternal: function(snippetId: string, snippet: any) {
+			var SnippetComponent = this;
+			if (this.$store.getters["mainstore/isUserLoggedIn"]) {
+				
+				this.$store.dispatch({
+					type: 'starSnippetFromExternalApi',
+					snippet: snippet
+				}).then((response:any) => {
+					
+					SnippetComponent.$store.dispatch({
+						type: 'postStar',
+						snippetId: response.snippetId
+					}).then((response: any) => {
+						BusComponent.$emit("showSnackbar", "Starring snippet was succesful!", "success");
+					})
+					
+				}, (fail: any) => {
+						BusComponent.$emit("showSnackbar", "Something went wrong", "danger");
+				});
+			}
+			else {
+					BusComponent.$emit("showSnackbar", "You have to be logged in to star snippets.", "danger");
+			}
+		}
+  }
 };

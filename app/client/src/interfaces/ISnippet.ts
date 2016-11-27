@@ -6,4 +6,5 @@ export interface ISnippet {
 	tag2: string,
 	tag3: string,
 	readme: string
+	vendor: boolean
 }

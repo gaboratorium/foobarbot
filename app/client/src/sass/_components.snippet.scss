@@ -12,12 +12,14 @@
     border-top-left-radius: 4px;
     padding: 1.5rem;
     overflow-y: scroll;
+    overflow-x: hidden;
     transition: max-height 400ms;
     max-height: 100%;
+    max-height: 19.5rem;
 }
 
-.c-snippet__code--condensed {
-    max-height: 19.5rem;
+.c-snippet__code--expanded {
+    max-height: 100%;
 }
 
 .c-snippet__code--condensed {
@@ -57,6 +59,15 @@
 
 .c-snippet__readme-meta-title > span {
     margin-right: .5rem;
+}
+
+.c-snippet__author, .c-snippet__author > a {
+    color: $raw-text-color;
+    font-weight: 400;
+}
+
+.c-snippet__author > a:hover {
+    color: $primary-color;
 }
 
 .c-snippet__readme-text > *:first-child { margin-top: 0rem; }

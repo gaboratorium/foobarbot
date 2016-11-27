@@ -1,12 +1,8 @@
-	// Settings component
-// Template
-var fs = require('fs');
-var html = fs.readFileSync(__dirname + '/component.settings.html', 'utf8')
+import * as fs from "fs";
 
-// Export global component
 export const SettingsViewComponent =  {
 	name: "SettingsComponent",
-	template: html,
+	template: fs.readFileSync(__dirname + '/component.settings.html', 'utf8'),
 	data: function(){
 		return {
 			user: {
@@ -18,12 +14,10 @@ export const SettingsViewComponent =  {
 	},
 	methods: {
 		updateUser: function(){
-			console.log("Updating user...");
 	  	},
 
 		deleteUser: function(){
 			var SettingsViewComponent = this;
-			console.log("Deleting user...");
 			this.errorMsg = "Something went wrong...";
 			this.$store.dispatch({
 					type: 'deleteUser',

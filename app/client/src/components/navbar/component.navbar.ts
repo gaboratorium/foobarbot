@@ -1,16 +1,12 @@
-// Settings component
-// Template
-var fs = require('fs');
-var html = fs.readFileSync(__dirname + '/component.navbar.html', 'utf8');
-
+import * as fs from "fs";
 import { ComposeModalComponent } from './../composemodal/component.composemodal';
+import { BusComponent } from './../bus/component.bus';
 
 declare const localStorage: any;
 
-// Export global component
 export const NavbarComponent =  {
 	name: "NavbarComponent",
-	template: html,
+	template: fs.readFileSync(__dirname + '/component.navbar.html', 'utf8'),
 	components: {
 		"modal": ComposeModalComponent
 	},
@@ -58,13 +54,7 @@ export const NavbarComponent =  {
 			// Double redirection for forcing router state change
 			this.$router.replace('dummy-replacement-so-we-force-router-change');
 			this.$router.replace('about');
-			this.showToast("You have succesfully logged out.")
-		},
-
-		showToast: function(message: string){
-			var snackbarContainer = document.querySelector('#demo-toast-example');
-			var data = {message: message};
-			snackbarContainer.MaterialSnackbar.showSnackbar(data);
+			BusComponent.$emit("showSnackbar", "You have succesfully logged out.", "success");
 		},
 
 		search: function() {

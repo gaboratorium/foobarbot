@@ -1,0 +1,34 @@
+<!-- Page content -->
+<div class="grid-block align-center">
+    <div class="grid-block grid-page-content">
+        <div class="grid-content grid-page-content__fullwidth">
+
+            <!-- Toast snackbar danger -->
+			<div id="snackbar--danger" class="mdl-js-snackbar mdl-snackbar mdl-snackbar--danger">
+				<div class="mdl-snackbar__text"></div>
+				<button class="mdl-snackbar__action" type="button"></button>
+			</div>
+
+            <div class="c-card c-card__section" v-show="snippetDataStatus=='loaded' && snippets.length == 0">
+                <p>There are no snippets to show.</p>
+            </div>
+
+            <!--Loaded snippets -->
+            <div class="grid-block" v-show="snippetDataStatus=='loaded' && snippets.length > 0">
+                <div class="grid-content">
+                    <!--List of snippets-->
+                    <snippet-list v-bind:snippets="snippets" v-bind:page-size="6" v-if="snippetDataStatus=='loaded'"></snippet-list>
+                </div>
+            </div>
+
+            <!--Loading snippets-->
+            <div class="grid-block" v-if="snippetDataStatus=='loading'">
+                <div class="grid-content">
+                    <div class="grid-block align-center">
+                        <div class="mdl-spinner mdl-js-spinner is-active"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

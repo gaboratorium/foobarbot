@@ -49,13 +49,15 @@ module.exports = {
             // TS files to compile. Order matters!
 
             // Components
-            globalPath.src + "components/about/component.about.ts",
-            globalPath.src + "components/login/component.login.ts",
+            globalPath.src + "components/view.about/component.about.ts",
+            globalPath.src + "components/view.login/component.login.ts",
+            globalPath.src + "components/view.notifications/component.notifications.ts",
+            globalPath.src + "components/view.settings/component.settings.ts",
+            globalPath.src + "components/view.signup/component.signup.ts",
+            globalPath.src + "components/view.user/component.user.ts",
+
+
             globalPath.src + "components/navbar/component.navbar.ts",
-            globalPath.src + "components/notifications/component.notifications.ts",
-            globalPath.src + "components/settings/component.settings.ts",
-            globalPath.src + "components/signup/component.signup.ts",
-            globalPath.src + "components/user/component.user.ts",
             globalPath.src + "components/appfooter/component.appfooter.ts",
 
             // Instances

@@ -1,14 +1,20 @@
-var fs = require('fs');
-var html = fs.readFileSync(__dirname + '/component.user.snippets.html', 'utf8');
+import * as fs from "fs";
+import { SnippetListComponent } from "./../snippet-list/component.snippet-list";
+
 var hljs = require("highlight.js");
 var marked = require('marked');
 
-// Export global component
-export const UserStarsComponent = {
-    name: "UserStarsComponent",
-	template: html,
 
-    // Data
+// Export global component
+export const UserSnippetsComponent = {
+	name: "UserSnippetsComponent",
+	template: fs.readFileSync(__dirname + '/component.user.snippets.html', 'utf8'),
+
+	components: {
+		"snippet-list": SnippetListComponent
+	},
+
+	// Data
 	data: function(){
 		return {
 			userDataStatus: String,
@@ -18,16 +24,11 @@ export const UserStarsComponent = {
 		};
 	},
 
-    // Created hook
+	// Created hook
 	created: function(){
 		this.userDataStatus = "loading";
 		this.snippetDataStatus = "loading";
 		var requestedId: string = this.$route.params.id;
-
-		console.log("requested id", requestedId);
-		console.log("is user logged in", this.$store.getters["mainstore/isUserLoggedIn"]);
-		
-		
 		if (requestedId == "me" && this.$store.getters["mainstore/isUserLoggedIn"]) {
 			requestedId = this.$store.getters["mainstore/userId"];
 		}
@@ -36,7 +37,7 @@ export const UserStarsComponent = {
 		this.getSnippets(requestedId);
 	},
 
-    	// Methods
+	// Methods
 	methods: {
 		loadUser: function(userId: string){
 			this.$store.dispatch({
@@ -46,9 +47,6 @@ export const UserStarsComponent = {
 					// Double redirection for forcing router state change
 					this.user = response.user;
 					this.userDataStatus = "loaded";
-					console.log("loaded this user:", this.user.userName);
-					
-					
 				}, (fail: any) => {
 					this.userDataStatus = "failed";
 					this.$router.push({name: "about"});
@@ -57,14 +55,11 @@ export const UserStarsComponent = {
 	  	},
 
 		getSnippets: function(userId: number){
-			console.log("loadSnippets fired")
 			var UserComponent = this;
 			this.$store.dispatch({
-				type: "getStarredSnippets",
+				type: "getSnippets",
 				userId: userId,
 			}).then((response: any) => {
-				console.log("loadsnippets got this response", response);
-				
 
 				// Converting text to markdown
 				for (var i = 0; i < response.length; i++) {
@@ -74,24 +69,14 @@ export const UserStarsComponent = {
 				this.snippets = response;
 
 				setTimeout(function(){
-					console.log("Highlighting code...");
 					hljs.initHighlighting.called=false;
 					hljs.initHighlighting();
 					UserComponent.snippetDataStatus = "loaded";
 
-				  }, 200);
-				console.log(response.snippets);
+				  }, 0);
 			}, (fail: any) => {
 				this.snippetDataStatus = "failed";
-				console.log(fail);
 			})
-		},
-
-		showSnackbarDanger: function(message: string){
-			var snackbarContainer = document.querySelector('#snackbar--danger');
-			componentHandler.upgradeElement(snackbarContainer);
-			var data = {message: message};
-			snackbarContainer.MaterialSnackbar.showSnackbar(data);
-		},
+		}
   	}
-}
+};

@@ -46,3 +46,23 @@
     background-color: $primary-color;
 }
 
+.mdl-button.mdl-button--colored:focus:not(:active) {
+    box-shadow: none;
+}
+
+.mdl-button--mini-fab, .mdl-button--mini-fab:focus, .mdl-button--mini-fab:active {
+    box-shadow: none;
+    background: rgba(158,158,158,.2);
+}
+
+.mdl-button--fab:focus:not(:active) {
+    box-shadow: 0 1px 1.5px 0 rgba(0,0,0,.12),0 1px 1px 0 rgba(0,0,0,.24);
+}
+
+.mdl-button--mini-fab__caption {
+    margin-top: .5rem;
+    text-transform: uppercase;
+    font-size: .9rem;
+    font-weight: 500;
+    color: $raw-text-color;
+}

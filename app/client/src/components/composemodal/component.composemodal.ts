@@ -1,13 +1,13 @@
-// Requirements
-var fs = require('fs');
-var html = fs.readFileSync(__dirname + '/component.composemodal.html', 'utf8');
+import { ISnippet } from "./../../interfaces/ISnippet";
+import * as fs from "fs";
+import { BusComponent } from "./../bus/component.bus";
 
 // Component
 export const ComposeModalComponent = {
 
     // Component properties
     name: "modal",
-    template: html,
+    template: fs.readFileSync(__dirname + '/component.composemodal.html', 'utf8'),
 
     // Component data
     data: function(){
@@ -21,17 +21,24 @@ export const ComposeModalComponent = {
         }
     },
 
+    components: {
+        "bus": BusComponent
+    },
+
     // Component methods
     methods: {
         postSnippet: function(){
             
             // Create snippet object
-            var snippet = {
+            var snippet: ISnippet = {
+                snippetId: null,
+                userId: null,
                 snippetCode: this.composeform__snippet,
                 tag1: this.composeform__tag1,
                 tag2: this.composeform__tag2,
                 tag3: this.composeform__tag3,
                 readme: this.composeform__readme,
+                vendor: false
             }
 
             // Dispatch postSnippet action
@@ -39,7 +46,7 @@ export const ComposeModalComponent = {
                 type: "postSnippet",
                 snippet: snippet
             }).then((response: any) => {
-                console.log("ok");
+                BusComponent.$emit("showSnackbar", "Your snippet has been posted succesfully.", "success");
             });
             this.$emit("close");
 
@@ -47,7 +54,7 @@ export const ComposeModalComponent = {
         },
 
         closeModal: function(){
-            console.log("You are trying to close the modal...");
+
             this.$emit("close");
         }
     }

@@ -1,12 +1,9 @@
-// Login Component
-// Template
-var fs = require('fs');
-var html = fs.readFileSync(__dirname + '/component.about.html', 'utf8');
+import * as fs from "fs";
 
-// Export global component
 export const AboutViewComponent = {
 	name: "AboutComponent",
-	template: html,
+	template: fs.readFileSync(__dirname + '/component.about.html', 'utf8'),
+	
 	data: function(){
 		return {
 			users: Array,
@@ -45,30 +42,26 @@ export const AboutViewComponent = {
 			this.$store.dispatch({
 				  type: 'getSnippets',
 			  }).then((response: any) => {
-				  console.log("about component get snippets recieves:", response);
 				  
 				  this.snippets = response;
 			  }, (fail: any) => {
 				  // Fail
-				  console.log("about component get snippets fails:", fail);
 			  });
 		},
 
 		starSnippet: function(snippetId: string){
-			console.log("You are trying to star this snippet:", snippetId);
 			if (this.$store.getters["mainstore/isUserLoggedIn"]) {
 				this.$store.dispatch({
 					type: 'postStar',
 					snippetId: snippetId
 				}).then((response: any) => {
-					console.log("You have succesfully starred the snippet", response);
+
 				}, (fail: any) =>{
-					console.log("about component postStar fails", fail);
 					
 				});
 			}
 			else {
-				console.log("No login, no star.");
+
 			}
 			
 		}
