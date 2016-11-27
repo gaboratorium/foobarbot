@@ -13,7 +13,7 @@
 			<div v-show="snippetDataFromGithubStatus == 'loaded'">
 				<h1>GitHub search results for "<span class="o-text--strong">{{ searchText }}</span>"</h1>
 				<p class="o-text--info"><span class="o-text--strong"><i class="fa fa-fw fa-info-circle" aria-hidden="true"></i>Heads up!</span> GitHub API limits the number of requests coming from a given unauthenticated source, which means you may experience disconnection in case of high traffic.</p>
-				<snippet-list v-if="snippetDataStatus=='loaded'" v-bind:snippets="snippetsFromGithub" v-bind:page-size="4"></snippet-list>
+				<snippet-list v-if="snippetDataFromGithubStatus=='loaded'" v-bind:snippets="snippetsFromGithub" v-bind:page-size="4"></snippet-list>
 			</div>
 		</div>
 	</div>

@@ -218,14 +218,13 @@ hljs.configure({
 });
 exports.SnippetComponent = {
     name: "SnippetComponent",
-    template: "<div>\r\n    <pre><code class=\"php c-snippet__code\" v-bind:class=\"{'c-snippet__code--expanded' : isExpanded }\">{{ snippet.snippetCode }}</code></pre>\r\n    <div class=\"c-snippet__readme\">\r\n        <div class=\"c-snippet__readme-meta\">\r\n            <div class=\"c-snippet__readme-meta-title\">\r\n                <!--<span><router-link :to=\"'/snippet/' + snippet.snippetId\">#{{snippet.snippetId}}</router-link> in </span>-->\r\n                <span class=\"mdl-chip\">\r\n                    <span class=\"mdl-chip__text\">\r\n                        <router-link :to=\"'/search/' + snippet.tag1\">{{snippet.tag1}}</router-link>\r\n                    </span>\r\n                </span>\r\n                <span class=\"mdl-chip\">\r\n                    <span class=\"mdl-chip__text\">\r\n                        <router-link :to=\"'/search/' + snippet.tag2\">{{snippet.tag2}}</router-link>\r\n                    </span>\r\n                </span>\r\n                <span class=\"mdl-chip\">\r\n                    <span class=\"mdl-chip__text\">\r\n                        <router-link :to=\"'/search/' + snippet.tag3\">{{snippet.tag3}}</router-link>\r\n                    </span>\r\n                </span>\r\n                <span v-if=\"snippet.userUrl !== ''\" class=\"c-snippet__author\">by <router-link :to=\"'/user/' + snippet.userId\">#{{ snippet.userId }}</router-link></span>\r\n            </div>\r\n            <div>\r\n                <span class=\"c-nav-icon-button\" v-on:click=\"copyCode()\">\r\n                    <i class=\"fa fa-fw fa-clipboard\" aria-hidden=\"true\" ></i> Copy\r\n                </span>\r\n                <span class=\"c-nav-icon-button\" v-on:click=\"starSnippet(snippet.snippetId, snippet)\">\r\n                    <i class=\"fa fa-fw fa-star\" aria-hidden=\"true\"></i> Star\r\n                </span>\r\n                <router-link :to=\"'/snippet/' + snippet.snippetId\" class=\"c-nav-icon-button\">\r\n                    <i class=\"fa fa-fw fa-expand\" aria-hidden=\"true\"></i> View\r\n                </router-link>\r\n            </div>\r\n        </div>\r\n        <div v-html=\"snippet.readme\" class=\"c-snippet__readme-text\"></div>\r\n    </div>\r\n</div>",
+    template: "<div>\r\n    <pre><code class=\"php c-snippet__code\" v-bind:class=\"{'c-snippet__code--expanded' : isExpanded }\">{{ snippet.snippetCode }}</code></pre>\r\n    <div class=\"c-snippet__readme\">\r\n        <div class=\"c-snippet__readme-meta\">\r\n            <div class=\"c-snippet__readme-meta-title\">\r\n                <!--<span><router-link :to=\"'/snippet/' + snippet.snippetId\">#{{snippet.snippetId}}</router-link> in </span>-->\r\n                <span class=\"mdl-chip\">\r\n                    <span class=\"mdl-chip__text\">\r\n                        <router-link :to=\"'/search/' + snippet.tag1\">{{snippet.tag1}}</router-link>\r\n                    </span>\r\n                </span>\r\n                <span class=\"mdl-chip\">\r\n                    <span class=\"mdl-chip__text\">\r\n                        <router-link :to=\"'/search/' + snippet.tag2\">{{snippet.tag2}}</router-link>\r\n                    </span>\r\n                </span>\r\n                <span class=\"mdl-chip\">\r\n                    <span class=\"mdl-chip__text\">\r\n                        <router-link :to=\"'/search/' + snippet.tag3\">{{snippet.tag3}}</router-link>\r\n                    </span>\r\n                </span>\r\n                <span v-if=\"snippet.userUrl !== ''\" class=\"c-snippet__author\">by <router-link :to=\"'/user/' + snippet.userId\">#{{ snippet.userId }}</router-link></span>\r\n            </div>\r\n            <div>\r\n                <span class=\"c-nav-icon-button\" v-on:click=\"copyCode()\">\r\n                    <i class=\"fa fa-fw fa-clipboard\" aria-hidden=\"true\" ></i> Copy\r\n                </span>\r\n                <span class=\"c-nav-icon-button\" v-on:click=\"starSnippet(snippet.snippetId, snippet)\">\r\n                    <i class=\"fa fa-fw fa-star\" aria-hidden=\"true\"></i> Star\r\n                </span>\r\n                <router-link :to=\"'/snippet/' + snippet.snippetId\" class=\"c-nav-icon-button\" v-if=\"!snippet.vendor\">\r\n                    <i class=\"fa fa-fw fa-expand\" aria-hidden=\"true\"></i> View\r\n                </router-link>\r\n            </div>\r\n        </div>\r\n        <div v-html=\"snippet.readme\" class=\"c-snippet__readme-text\"></div>\r\n    </div>\r\n</div>",
     props: {
         snippet: { type: Object, required: true },
         isExpanded: { type: Boolean }
     },
     created: function () {
         this.snippet.readme = marked(this.snippet.readme);
-        console.log("this.isExpanded", this.isExpanded);
     },
     methods: {
         copyCode: function (snippetId) {
@@ -235,7 +234,14 @@ exports.SnippetComponent = {
             component_bus_1.BusComponent.$emit("showSnackbar", "This feature is still in development: expand view.", "danger");
         },
         starSnippet: function (snippetId, snippet) {
-            var SnippetComponent = this;
+            if (this.snippet.vendor) {
+                this.starExternal(snippetId, snippet);
+            }
+            else {
+                this.starInternal(snippetId, snippet);
+            }
+        },
+        starInternal: function (snippetId, snippet) {
             if (this.$store.getters["mainstore/isUserLoggedIn"]) {
                 this.$store.dispatch({
                     type: 'postStar',
@@ -249,6 +255,27 @@ exports.SnippetComponent = {
             }
             else {
                 component_bus_1.BusComponent.$emit("showSnackbar", "Only registered members can star snippets.", "danger");
+            }
+        },
+        starExternal: function (snippetId, snippet) {
+            var SnippetComponent = this;
+            if (this.$store.getters["mainstore/isUserLoggedIn"]) {
+                this.$store.dispatch({
+                    type: 'starSnippetFromExternalApi',
+                    snippet: snippet
+                }).then(function (response) {
+                    SnippetComponent.$store.dispatch({
+                        type: 'postStar',
+                        snippetId: response.snippetId
+                    }).then(function (response) {
+                        component_bus_1.BusComponent.$emit("showSnackbar", "Starring snippet was succesful!", "success");
+                    });
+                }, function (fail) {
+                    component_bus_1.BusComponent.$emit("showSnackbar", "Something went wrong", "danger");
+                });
+            }
+            else {
+                component_bus_1.BusComponent.$emit("showSnackbar", "You have to be logged in to star snippets.", "danger");
             }
         }
     }
@@ -504,7 +531,7 @@ hljs.configure({
 });
 exports.SearchViewComponent = {
     name: "SearchComponent",
-    template: "<div class=\"grid-block align-center\">\r\n\t<div class=\"grid-block grid-page-content\">\r\n\t\t<div class=\"grid-content\">\r\n\r\n\t\t\t<!--Snippets-->\r\n\t\t\t<div v-show=\"snippetDataStatus=='loaded'\">\r\n\t\t\t\t<h1 v-if=\"isSearch\">Search results for \"<span class=\"o-text--strong\">{{ searchText }}</span>\"</h1>\r\n\t\t\t\t<p class=\"o-text--info\"><span class=\"o-text--strong\"><i class=\"fa fa-fw fa-info-circle\" aria-hidden=\"true\"></i>Heads up!</span> This feature is not yet completely implemented, so what we have is a random list of snippets.</p>\r\n\t\t\t\t<snippet-list v-if=\"snippetDataStatus=='loaded'\" v-bind:snippets=\"snippets\" v-bind:page-size=\"4\"></snippet-list>\r\n\t\t\t</div>\r\n\r\n\t\t\t<!--Github Snippets-->\r\n\t\t\t<div v-show=\"snippetDataFromGithubStatus == 'loaded'\">\r\n\t\t\t\t<h1>GitHub search results for \"<span class=\"o-text--strong\">{{ searchText }}</span>\"</h1>\r\n\t\t\t\t<p class=\"o-text--info\"><span class=\"o-text--strong\"><i class=\"fa fa-fw fa-info-circle\" aria-hidden=\"true\"></i>Heads up!</span> GitHub API limits the number of requests coming from a given unauthenticated source, which means you may experience disconnection in case of high traffic.</p>\r\n\t\t\t\t<snippet-list v-if=\"snippetDataStatus=='loaded'\" v-bind:snippets=\"snippetsFromGithub\" v-bind:page-size=\"4\"></snippet-list>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>",
+    template: "<div class=\"grid-block align-center\">\r\n\t<div class=\"grid-block grid-page-content\">\r\n\t\t<div class=\"grid-content\">\r\n\r\n\t\t\t<!--Snippets-->\r\n\t\t\t<div v-show=\"snippetDataStatus=='loaded'\">\r\n\t\t\t\t<h1 v-if=\"isSearch\">Search results for \"<span class=\"o-text--strong\">{{ searchText }}</span>\"</h1>\r\n\t\t\t\t<p class=\"o-text--info\"><span class=\"o-text--strong\"><i class=\"fa fa-fw fa-info-circle\" aria-hidden=\"true\"></i>Heads up!</span> This feature is not yet completely implemented, so what we have is a random list of snippets.</p>\r\n\t\t\t\t<snippet-list v-if=\"snippetDataStatus=='loaded'\" v-bind:snippets=\"snippets\" v-bind:page-size=\"4\"></snippet-list>\r\n\t\t\t</div>\r\n\r\n\t\t\t<!--Github Snippets-->\r\n\t\t\t<div v-show=\"snippetDataFromGithubStatus == 'loaded'\">\r\n\t\t\t\t<h1>GitHub search results for \"<span class=\"o-text--strong\">{{ searchText }}</span>\"</h1>\r\n\t\t\t\t<p class=\"o-text--info\"><span class=\"o-text--strong\"><i class=\"fa fa-fw fa-info-circle\" aria-hidden=\"true\"></i>Heads up!</span> GitHub API limits the number of requests coming from a given unauthenticated source, which means you may experience disconnection in case of high traffic.</p>\r\n\t\t\t\t<snippet-list v-if=\"snippetDataFromGithubStatus=='loaded'\" v-bind:snippets=\"snippetsFromGithub\" v-bind:page-size=\"4\"></snippet-list>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>",
     components: {
         "snippet-list": component_snippet_list_1.SnippetListComponent
     },
@@ -572,27 +599,6 @@ exports.SearchViewComponent = {
                 }, 0);
             }, function (fail) {
             });
-        },
-        starSnippetFromExternalApi: function (snippet) {
-            var SearchComponent = this;
-            if (this.$store.getters["mainstore/isUserLoggedIn"]) {
-                this.$store.dispatch({
-                    type: 'starSnippetFromExternalApi',
-                    snippet: snippet
-                }).then(function (response) {
-                    SearchComponent.$store.dispatch({
-                        type: 'postStar',
-                        snippetId: response.snippetId
-                    }).then(function (response) {
-                        SearchComponent.showSnackbar("Starring snippet was succesful!");
-                    });
-                }, function (fail) {
-                    SearchComponent.showSnackbarDanger("Something went wrong!");
-                });
-            }
-            else {
-                SearchComponent.showSnackbarDanger("You have to be logged in to star snippets.");
-            }
         }
     }
 };
@@ -734,14 +740,14 @@ exports.UserCommentsComponent = {
 },{}],17:[function(require,module,exports){
 "use strict";
 
-var component_snippet_1 = require("./../snippet/component.snippet");
+var component_snippet_list_1 = require("./../snippet-list/component.snippet-list");
 var hljs = require("highlight.js");
 var marked = require('marked');
 exports.UserSnippetsComponent = {
     name: "UserSnippetsComponent",
-    template: "<!-- Page content -->\r\n<div class=\"grid-block align-center\">\r\n    <div class=\"grid-block grid-page-content\">\r\n        <div class=\"grid-content\">\r\n\r\n            <!-- Toast snackbar danger -->\r\n\t\t\t<div id=\"snackbar--danger\" class=\"mdl-js-snackbar mdl-snackbar mdl-snackbar--danger\">\r\n\t\t\t\t<div class=\"mdl-snackbar__text\"></div>\r\n\t\t\t\t<button class=\"mdl-snackbar__action\" type=\"button\"></button>\r\n\t\t\t</div>\r\n\r\n            <div class=\"c-card c-card__section\" v-show=\"snippetDataStatus=='loaded' && snippets.length == 0\">\r\n                <p>There are no snippets to show.</p>\r\n            </div>\r\n\r\n            <!--Loaded snippets -->\r\n            <div class=\"grid-block\" v-show=\"snippetDataStatus=='loaded' && snippets.length > 0\">\r\n                <div class=\"grid-content\">\r\n                    <!--List of snippets-->\r\n                    <ul class=\"c-snippets\">\r\n\r\n                        <li class=\"c-snippet\" v-for=\"snippet in snippets\">\r\n                            <snippet v-bind:snippet=\"snippet\"></snippet>\r\n                        </li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n\r\n            <!--Loading snippets-->\r\n            <div class=\"grid-block\" v-if=\"snippetDataStatus=='loading'\">\r\n                <div class=\"grid-content\">\r\n                    <div class=\"grid-block align-center\">\r\n                        <div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>",
+    template: "<!-- Page content -->\r\n<div class=\"grid-block align-center\">\r\n    <div class=\"grid-block grid-page-content\">\r\n        <div class=\"grid-content\">\r\n\r\n            <!-- Toast snackbar danger -->\r\n\t\t\t<div id=\"snackbar--danger\" class=\"mdl-js-snackbar mdl-snackbar mdl-snackbar--danger\">\r\n\t\t\t\t<div class=\"mdl-snackbar__text\"></div>\r\n\t\t\t\t<button class=\"mdl-snackbar__action\" type=\"button\"></button>\r\n\t\t\t</div>\r\n\r\n            <div class=\"c-card c-card__section\" v-show=\"snippetDataStatus=='loaded' && snippets.length == 0\">\r\n                <p>There are no snippets to show.</p>\r\n            </div>\r\n\r\n            <!--Loaded snippets -->\r\n            <div class=\"grid-block\" v-show=\"snippetDataStatus=='loaded' && snippets.length > 0\">\r\n                <div class=\"grid-content\">\r\n                    <!--List of snippets-->\r\n                    <snippet-list v-bind:snippets=\"snippets\" v-bind:page-size=\"6\" v-if=\"snippetDataStatus=='loaded'\"></snippet-list>\r\n                </div>\r\n            </div>\r\n\r\n            <!--Loading snippets-->\r\n            <div class=\"grid-block\" v-if=\"snippetDataStatus=='loading'\">\r\n                <div class=\"grid-content\">\r\n                    <div class=\"grid-block align-center\">\r\n                        <div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>",
     components: {
-        "snippet": component_snippet_1.SnippetComponent
+        "snippet-list": component_snippet_list_1.SnippetListComponent
     },
     data: function () {
         return {
@@ -798,7 +804,7 @@ exports.UserSnippetsComponent = {
     }
 };
 
-},{"./../snippet/component.snippet":7,"highlight.js":254,"marked":424}],18:[function(require,module,exports){
+},{"./../snippet-list/component.snippet-list":6,"highlight.js":254,"marked":424}],18:[function(require,module,exports){
 "use strict";
 
 var component_snippet_1 = require("./../snippet/component.snippet");
@@ -806,7 +812,7 @@ var hljs = require("highlight.js");
 var marked = require('marked');
 exports.UserStarsComponent = {
     name: "UserStarsComponent",
-    template: "<!-- Page content -->\r\n<div class=\"grid-block align-center\">\r\n    <div class=\"grid-block grid-page-content\">\r\n        <div class=\"grid-content\">\r\n\r\n            <!-- Toast snackbar danger -->\r\n\t\t\t<div id=\"snackbar--danger\" class=\"mdl-js-snackbar mdl-snackbar mdl-snackbar--danger\">\r\n\t\t\t\t<div class=\"mdl-snackbar__text\"></div>\r\n\t\t\t\t<button class=\"mdl-snackbar__action\" type=\"button\"></button>\r\n\t\t\t</div>\r\n\r\n            <div class=\"c-card c-card__section\" v-show=\"snippetDataStatus=='loaded' && snippets.length == 0\">\r\n                <p>There are no snippets to show.</p>\r\n            </div>\r\n\r\n            <!--Loaded snippets -->\r\n            <div class=\"grid-block\" v-show=\"snippetDataStatus=='loaded' && snippets.length > 0\">\r\n                <div class=\"grid-content\">\r\n                    <!--List of snippets-->\r\n                    <ul class=\"c-snippets\">\r\n\r\n                        <li class=\"c-snippet\" v-for=\"snippet in snippets\">\r\n                            <snippet v-bind:snippet=\"snippet\"></snippet>\r\n                        </li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n\r\n            <!--Loading snippets-->\r\n            <div class=\"grid-block\" v-if=\"snippetDataStatus=='loading'\">\r\n                <div class=\"grid-content\">\r\n                    <div class=\"grid-block align-center\">\r\n                        <div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>",
+    template: "<!-- Page content -->\r\n<div class=\"grid-block align-center\">\r\n    <div class=\"grid-block grid-page-content\">\r\n        <div class=\"grid-content\">\r\n\r\n            <!-- Toast snackbar danger -->\r\n\t\t\t<div id=\"snackbar--danger\" class=\"mdl-js-snackbar mdl-snackbar mdl-snackbar--danger\">\r\n\t\t\t\t<div class=\"mdl-snackbar__text\"></div>\r\n\t\t\t\t<button class=\"mdl-snackbar__action\" type=\"button\"></button>\r\n\t\t\t</div>\r\n\r\n            <div class=\"c-card c-card__section\" v-show=\"snippetDataStatus=='loaded' && snippets.length == 0\">\r\n                <p>There are no snippets to show.</p>\r\n            </div>\r\n\r\n            <!--Loaded snippets -->\r\n            <div class=\"grid-block\" v-show=\"snippetDataStatus=='loaded' && snippets.length > 0\">\r\n                <div class=\"grid-content\">\r\n                    <!--List of snippets-->\r\n                    <snippet-list v-bind:snippets=\"snippets\" v-bind:page-size=\"6\" v-if=\"snippetDataStatus=='loaded'\"></snippet-list>\r\n                </div>\r\n            </div>\r\n\r\n            <!--Loading snippets-->\r\n            <div class=\"grid-block\" v-if=\"snippetDataStatus=='loading'\">\r\n                <div class=\"grid-content\">\r\n                    <div class=\"grid-block align-center\">\r\n                        <div class=\"mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active\"></div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>",
     components: {
         "snippet": component_snippet_1.SnippetComponent
     },

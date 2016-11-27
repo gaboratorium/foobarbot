@@ -49,9 +49,7 @@ export const SearchViewComponent = {
 	},
 
 	created: function(){
-		// this.snippetDataStatus = "loading";
-		// this.getSnippets();
-		
+
 	},
 
 	methods: {
@@ -89,33 +87,6 @@ export const SearchViewComponent = {
 			}, (fail: any) =>{
 				
 			})
-			
-		},
-
-		starSnippetFromExternalApi: function(snippet: any){
-			var SearchComponent = this;
-			
-			if (this.$store.getters["mainstore/isUserLoggedIn"]) {
-				
-				this.$store.dispatch({
-					type: 'starSnippetFromExternalApi',
-					snippet: snippet
-				}).then((response:any) => {
-					
-					SearchComponent.$store.dispatch({
-						type: 'postStar',
-						snippetId: response.snippetId
-					}).then((response: any) => {
-						SearchComponent.showSnackbar("Starring snippet was succesful!");
-					})
-					
-				}, (fail: any) => {
-					SearchComponent.showSnackbarDanger("Something went wrong!");
-				});
-			}
-			else {
-				SearchComponent.showSnackbarDanger("You have to be logged in to star snippets.");
-			}
 		}
 	}
 };

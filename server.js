@@ -90,7 +90,8 @@ var Snippet = mongoose.model('snippet', new Schema({
 	tag1: String,
 	tag2: String,
 	tag3: String,
-	readme: String
+	readme: String,
+	vendor: Boolean
 }));
 
 // Notification model
@@ -224,7 +225,7 @@ apiRoutes.get('/user', function(req, res) {
 apiRoutes.get('/snippets', function(req, res) {
 	
 	// IF userId or snippetId is provided
-	var snippetsMaxNumber = req.query.snippetsMaxNumber ? req.query.snippetsMaxNumber : 10;
+	var snippetsMaxNumber = req.query.snippetsMaxNumber ? req.query.snippetsMaxNumber : 100;
 	var searchText = req.query.searchText ? req.query.searchText : null;
 
 
@@ -357,6 +358,7 @@ apiRoutes.post('/foobarbotsnippet', function(req, res) {
 		if (snippets.length == 0) {
 			mySnippet.snippetId = String(new Date().getTime())+String(Math.floor(Math.random()*1000));
 			mySnippet.userId = FOOBARBOT_ID;
+			mySnippet.vendor = false;
 
 			var mySnippetModel = new Snippet(mySnippet);
 			

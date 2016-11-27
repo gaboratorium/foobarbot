@@ -32,7 +32,14 @@ export const SnippetComponent = {
     },
 
 		starSnippet: function(snippetId: string, snippet: any){
-			var SnippetComponent = this;
+			if (this.snippet.vendor) {
+				this.starExternal(snippetId, snippet);
+			} else {
+				this.starInternal(snippetId, snippet);
+			}
+    },
+
+		starInternal: function(snippetId: string, snippet: any) {
 			if (this.$store.getters["mainstore/isUserLoggedIn"]) {
 				this.$store.dispatch({
 					type: 'postStar',
@@ -47,6 +54,31 @@ export const SnippetComponent = {
 			else {
 				BusComponent.$emit("showSnackbar", "Only registered members can star snippets.", "danger");
 			}			
-    }
+		},
+
+		starExternal: function(snippetId: string, snippet: any) {
+			var SnippetComponent = this;
+			if (this.$store.getters["mainstore/isUserLoggedIn"]) {
+				
+				this.$store.dispatch({
+					type: 'starSnippetFromExternalApi',
+					snippet: snippet
+				}).then((response:any) => {
+					
+					SnippetComponent.$store.dispatch({
+						type: 'postStar',
+						snippetId: response.snippetId
+					}).then((response: any) => {
+						BusComponent.$emit("showSnackbar", "Starring snippet was succesful!", "success");
+					})
+					
+				}, (fail: any) => {
+						BusComponent.$emit("showSnackbar", "Something went wrong", "danger");
+				});
+			}
+			else {
+					BusComponent.$emit("showSnackbar", "You have to be logged in to star snippets.", "danger");
+			}
+		}
   }
 };

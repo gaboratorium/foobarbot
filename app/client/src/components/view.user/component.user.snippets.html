@@ -17,12 +17,7 @@
             <div class="grid-block" v-show="snippetDataStatus=='loaded' && snippets.length > 0">
                 <div class="grid-content">
                     <!--List of snippets-->
-                    <ul class="c-snippets">
-
-                        <li class="c-snippet" v-for="snippet in snippets">
-                            <snippet v-bind:snippet="snippet"></snippet>
-                        </li>
-                    </ul>
+                    <snippet-list v-bind:snippets="snippets" v-bind:page-size="6" v-if="snippetDataStatus=='loaded'"></snippet-list>
                 </div>
             </div>
 
