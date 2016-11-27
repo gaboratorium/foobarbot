@@ -23,12 +23,16 @@ export const SnippetListComponent = {
         pageSize: {
             type: Number,
             required: true
+        },
+        listName: {
+            type: String
         }
     },
 
     data: function(){
         return {
             pageIndex: -1,
+            currentPage: Array
         }
     },
 
@@ -42,10 +46,7 @@ export const SnippetListComponent = {
             let calculatedlastElemOnPage = this.pageIndex * this.pageSize + this.pageSize;
             let lastElemOnPage = calculatedlastElemOnPage <= this.snippets.length ? calculatedlastElemOnPage : this.snippets.length;
             this.currentPage = _.slice(this.snippets, 0, lastElemOnPage);
-
-            console.log("loadMore this.currentPage", this.currentPage);
-            
-            
+                        
             setTimeout(function(){
                 hljs.initHighlighting.called = false;
                 hljs.initHighlighting();

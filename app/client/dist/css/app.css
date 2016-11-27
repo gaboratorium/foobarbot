@@ -175,7 +175,8 @@ input[type="search"]:focus {
   opacity: 0; }
 
 .footer {
-  text-align: center; }
+  border-top: 1px solid #dadada;
+  padding-top: .85rem; }
 
 .footer__text {
   font-size: .8rem;
@@ -228,6 +229,16 @@ input[type="search"]:focus {
 /* MDL button*/
 .mdl-button--raised.mdl-button--colored, .mdl-button--raised.mdl-button--colored:hover {
   background-color: #3F51B5; }
+
+.mdl-button--fab:focus:not(:active), .mdl-button.mdl-button--colored:focus:not(:active) {
+  box-shadow: none; }
+
+.mdl-button--mini-fab__caption {
+  margin-top: .5rem;
+  text-transform: uppercase;
+  font-size: .9rem;
+  font-weight: 500;
+  color: #888; }
 
 pre {
   padding: 0;
@@ -453,7 +464,7 @@ pre {
 .block-list li:last-child {
   border-bottom: none; }
 
-.mdl-snackbar {
+.mdl-snackbar--success {
   background-color: #00796B; }
 
 .mdl-snackbar--danger {

@@ -1,9 +1,17 @@
 <div>
-    <h1>This is a snippet list component</h1>
+    <h1 v-if="listName">{{ listName }}</h1>
     <ul class="c-snippets">
        <li class="c-snippet" v-for="(snippet, index) in currentPage">
             <snippet v-bind:snippet="snippet"></snippet>
         </li>
     </ul>
-    <button v-on:click.prevent="loadMore()">Load more</button>
+    <div class="grid-block align-center">
+        <!--<button v-on:click.prevent="loadMore()" class="">Load more</button>-->
+        <div class="grid-block vertical shrink" style="margin-bottom: 2rem">
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" v-on:click.prevent="loadMore()">
+                <i class="material-icons">expand_more</i>
+            </button>
+            <span class="mdl-button--mini-fab__caption">Load more<span v-if="listName"> in "{{ listName }}"</span></span>
+        </div>
+    </div>
 </div>
