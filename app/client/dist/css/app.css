@@ -322,11 +322,21 @@ pre {
 .c-snippet__readme-text > *:last-child {
   margin-bottom: 0rem; }
 
+.c-snippet__readme-text > h1 {
+  font-size: 1.5rem;
+  font-weight: bold; }
+
+.c-snippet__readme-text > h2, h3, h4, h5, h6 {
+  font-size: 1.25rem;
+  font-weight: bold; }
+
 .c-snippet__readme-text > h1,
 .c-snippet__readme-text > h2,
 .c-snippet__readme-text > h3,
 .c-snippet__readme-text > h4 {
-  margin-bottom: 1rem; }
+  margin-top: 0rem;
+  margin-bottom: 1rem;
+  line-height: 1.35rem; }
 
 .c-hero-cover {
   min-height: 280px;

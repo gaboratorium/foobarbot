@@ -19,7 +19,8 @@
                         <router-link :to="'/search/' + snippet.tag3">{{snippet.tag3}}</router-link>
                     </span>
                 </span>
-                <span v-if="snippet.userUrl !== ''" class="c-snippet__author">by <router-link :to="'/user/' + snippet.userId">#{{ snippet.userId }}</router-link></span>
+                <span v-if="snippet.userUrl !== '' && !snippet.vendor" class="c-snippet__author">by <router-link :to="'/user/' + snippet.userId">#{{ snippet.userId }}</router-link></span>
+                <span v-if="snippet.userUrl !== '' && snippet.vendor" class="c-snippet__author">by <a :href="snippet.userUrl">#{{ snippet.userId }}</a></span>
             </div>
             <div>
                 <span class="c-nav-icon-button" v-on:click="copyCode()">
@@ -31,6 +32,9 @@
                 <router-link :to="'/snippet/' + snippet.snippetId" class="c-nav-icon-button" v-if="!snippet.vendor">
                     <i class="fa fa-fw fa-expand" aria-hidden="true"></i> View
                 </router-link>
+                <a :href="snippet.snippetUrl" class="c-nav-icon-button" v-if="snippet.vendor">
+                    <i class="fa fa-fw fa-expand" aria-hidden="true"></i> Open in GitHub
+                </a>
             </div>
         </div>
         <div v-html="snippet.readme" class="c-snippet__readme-text"></div>
