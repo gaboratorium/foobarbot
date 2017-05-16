@@ -410,7 +410,7 @@ apiRoutes.delete('/user', function(req, res) {
 	});
 });
 
-// Start listening on port 5000
+// Start listening on port 3000
 app.listen(process.env.PORT || defaultPort, function (data) {
 	console.log("Server is listening on ", defaultPort);
 });
