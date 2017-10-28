@@ -1,10 +1,10 @@
 # Foobarbot
 
-Web application built with the purpose of having fun and learning new web technologies. Built with **Heroku** and **MEAN stack**.
+Web application built with the purpose of having fun and learning new web technologies.
 
 ## Preview
 
-Site is available at [http://project-lines.herokuapp.com/](http://project-lines.herokuapp.com/).
+Site is available at [http://www.foobarbot.com](http://www.foobarbot.com).
 
 ## Structure
 
